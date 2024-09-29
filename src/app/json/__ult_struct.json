@@ -1,0 +1,1052 @@
+{
+	"stages": [
+		{
+			"name": "Bob-omb Battlefield",
+			"color": "lb-green",
+			"rta_len": 2,
+			"stars": [
+				{
+					"name": "Big Bob-omb on the Summit",
+					"rows": [
+						["JP"],
+						["US"],
+						["misc"],
+						["Left Side", "JP"],
+						["Left Side", "US"],
+						["misc"],
+						["misc"],
+						["misc"]
+					]
+				},
+				{
+					"name": "Footrace with Koopa the Quick",
+					"rows": [
+						["JP"],
+						["US"]
+					]
+				},
+				{
+					"name": "Shoot to the Island in the Sky",
+					"variants": [
+						"w/o Camera Glitch"
+					],
+					"rows": [
+						["Skyjump", "JP"],
+						["Skyjump", "JP", "alt:0"],
+						["Skyjump", "US"],
+						["Slope Start", "JP"],
+						["Slope Start", "JP", "alt:0"],
+						["Slope Start", "US"],
+						["Island Hop", "second"]
+					]
+				},
+				{
+					"name": "100c + Find the 8 Red Coins",
+					"100c": true,
+					"rows": [
+						["JP"],
+						["US"]
+					]
+				},
+				{
+					"name": "Mario Wings to the Sky",
+					"variants": [
+						"w/o Camera Glitch"
+					],
+					"rows": [
+						["Skyjump", "Skyjump", "JP"],
+						["Skyjump", "JP", "alt:0"],
+						["Skyjump", "US"],
+						["Slope Start", "JP"],
+						["Slope Start", "JP", "alt:0"],
+						["Slope Start", "US"]
+					]
+				},
+				{
+					"name": "Behind Chain Chomp's Gate",
+					"rows": [
+						["Bomb Clip"],
+						["Backflip Clip"],
+						["misc"]
+					]
+				}
+			]
+		},
+
+		{
+			"name": "Whomp's Fortress",
+			"color": "lb-gray",
+			"rta_len": 2,
+			"stars": [
+				{
+					"name": "Chip off Whomp's Block",
+					"rows": [
+						["JP"],
+						["misc"],
+						["US"],
+						["misc"]
+					]
+				},
+				{
+					"name": "To the Top of the Fortress",
+					"rows": [
+						["Triple Jump"],
+						["Double Jump"]
+					],
+					"beg": ["Sideflip"]
+				},
+				{
+					"name": "Shoot into the Wild Blue",
+					"variants": [
+						"no speedkick"
+					],
+					"rows": [
+						[],
+						["Single Jump"],
+						["Single Jump", "alt:0"]
+					]
+				},
+				{
+					"name": "100c + Red Coins on the Floating Isle",
+					"100c": true,
+					"rows": [
+						["Pro Cycle", "JP"],
+						["Pro Cycle", "US"],
+						["misc"],
+						["Half Cycle Skip", "JP", "easy"],
+						["Half Cycle Skip", "US", "easy"],
+						["misc"]
+					]
+				},
+				{
+					"name": "Fall onto the Caged Island",
+					"rows": [
+						["TJ Owlless"],
+						["DJ Owlless"],
+						["Owl", "JP", "easy"],
+						["Owl", "US", "easy"]
+					]
+				},
+				{
+					"name": "Blast Away the Wall",
+					"rows": [
+						["Sockfolder"],
+						["Texture"],
+						["Salt"],
+						["OG", "hard"],
+						["LJ", "hard"]
+					]
+				}
+			]
+		},
+
+		{
+			"name": "Jolly Roger Bay",
+			"color": "lb-blue",
+			"rta_len": 3,
+			"stars": [
+				{
+					"name": "Plunder in the Sunken Ship",
+					"rows": [
+						["Ship Clip"],
+						["misc"],
+						["misc"]
+					]
+				},
+				{
+					"name": "Can the Eel Come Out to Play?",
+					"rows": [
+						[]
+					]
+				},
+				{
+					"name": "Treasure of the Ocean Cave",
+					"rows": [
+						[]
+					]
+				},
+				{
+					"name": "100c + Red Coins on the Ship Afloat",
+					"100c": true,
+					"rows": [
+						["JP"],
+						["US"],
+						["JP", "No Cutscene", "second"],
+						["US", "No Cutscene", "second"],
+						["misc"]
+					]
+				},
+				{
+					"name": "Blast to the Stone Pillar",
+					"variants": [
+						"TJ Start", "no WK"
+					],
+					"rows": [
+						["Cannon (Direct)", "JP"],
+						["Cannon (Direct)", "US"],
+						["misc"],
+						["Cannon (Direct)", "JP", "alt:0"],
+						["Cannon (Direct)", "US", "alt:0"],
+						["misc"],
+						["Ship LJ", "JP", "second"],
+						["Framewalk", "JP", "alt:1", "second"],
+						["Framewalk", "JP", "second"]
+					],
+					"beg": ["Cannon (Pole)"]
+				},
+				{
+					"name": "Through the Jet Stream",
+					"rows": [
+						[]
+					]
+				}
+			]
+		},
+
+		{
+			"name": "Cool Cool Mountain",
+			"color": "lb-snow",
+			"rta_len": 4,
+			"stars": [
+				{
+					"name": "Slip Slidin' Away",
+					"rows": [
+						[],
+						["No Clip"]
+					]
+				},
+				{
+					"name": "100c + Slip Slidin' Away",
+					"100c": true,
+					"rows": [
+						["JP"],
+						["US"],
+						["misc"],
+						["misc"]
+					]
+				},
+				{
+					"name": "Li'l Penguin Lost",
+					"rows": [
+						["JP"],
+						["US"],
+						["Pingu Trick", "US"]
+					]
+				},
+				{
+					"name": "100c + Big Penguin Race",
+					"100c": true,
+					"rows": [
+						["JP"],
+						["misc"],
+						["US"],
+						["misc"],
+						["misc"],
+						["Atmpas Route", "JP"],
+						["misc"],
+						["Atmpas Route", "US"],
+						["misc"],
+						["misc"]
+					]
+				},
+				{
+					"name": "Frosty Slide for 8 Red Coins",
+					"rows": [
+						[]
+					]
+				},
+				{
+					"name": "Snowman's Lost His Head",
+					"rows": [
+						["JP"],
+						["US"],
+						["misc"],
+						["Head Manip", "JP"],
+						["Head Manip", "US"],
+						["misc"]
+					]
+				},
+				{
+					"name": "Wall Kicks Will Work",
+					"rows": [
+						["Backflip WK"]
+					],
+					"beg": ["Beginner"]
+				}
+			]
+		},
+
+		{
+			"name": "Big Boo's Haunt",
+			"color": "lb-gray",
+			"rta_len": 2,
+			"stars": [
+				{
+					"name": "Go on a Ghost Hunt",
+					"variants": ["first door", "last door"],
+					"rows": [
+						["JP"],
+						["Door Skips", "JP", "alt:0"],
+						["Door Skips", "JP", "alt:1"],
+						["Door Skips", "JP", "alt:0", "alt:1"],
+						["misc"],
+						["misc"],
+						["US"],
+						["Text Skip", "US"],
+						["misc"]
+					]
+				},
+				{
+					"name": "Ride Big Boo's Merry-Go-Round",
+					"rows": [
+						[],
+						["misc"],
+						["DJ Dive"],
+						["misc"]
+					]
+				},
+				{
+					"name": "Secret of the Haunted Books",
+					"rows": [
+						[],
+						["Right WK", "easy"]
+					]
+				},
+				{
+					"name": "100c + Seek the 8 Red Coins",
+					"100c": true,
+					"rows": [
+						["JP"],
+						["US"],
+						["misc"],
+						["misc"]
+					]
+				},
+				{
+					"name": "Big Boo's Balcony",
+					"rows": [
+						[],
+						["2nd Hit Punch", "easy"],
+						["misc"]
+					]
+				},
+				{
+					"name": "Eye to Eye in the Secret Room",
+					"rows": [
+						[],
+						["misc"]
+					]
+				}
+			]
+		},
+
+		{
+			"name": "Hazy Maze Cave",
+			"color": "lb-green",
+			"rta_len": 4,
+			"stars": [
+				{
+					"name": "Swimming Beast in the Cavern",
+					"rows": [
+						["Box Triple"]
+					],
+					"beg": ["Elevator Clip"]
+				},
+				{
+					"name": "100C + Elevate for 8 Red Coins",
+					"100c": true,
+					"rows": [
+						["JP"],
+						["US"],
+						["misc"]
+					]
+				},
+				{
+					"name": "Metal-Head Mario Can Move!",
+					"variants": ["Small WK"],
+					"rows": [
+						["Xmas Miracle", "alt:0"],
+						["Xmas Miracle"],
+						["misc"]
+					]
+				},
+				{
+					"name": "Navigating the Toxic Maze",
+					"rows": [
+						["BLJ"],
+						["Wall Clip", "easy"],
+						["misc"]
+					],
+					"beg": ["No Clip"]
+				},
+				{
+					"name": "A-Maze-ing Emergency Exit",
+					"rows": [
+						["Rightside"],
+						["Leftside"]
+					]
+				},
+				{
+					"name": "Watch for Rolling Rocks",
+					"rows": [
+						[],
+						["GTM Slide"]
+					]
+				}
+			]
+		},
+
+		{
+			"name": "Lethal Lava Land",
+			"color": "lb-red",
+			"rta_len": 3,
+			"stars": [
+				{
+					"name": "Boil the Big Bully",
+					"rows": [
+						["No Ledgegrab"],
+						["Right GP Kill"],
+						["Double Burn"]
+					],
+					"beg": ["Ledgegrab"]
+				},
+				{
+					"name": "Bully the Bullies",
+					"rows": [
+						["Ledgegrab"],
+						["No Ledgegrab"],
+						["LJ Rightside"],
+						["Xiah Rightside", "hard"]
+					]
+				},
+				{
+					"name": "8-Coin Puzzle with 15 Pieces",
+					"rows": [
+						[],
+						["Beginner", "easy"],
+						["3x LJ"]
+					]
+				},
+				{
+					"name": "Red-Hot Log Rolling",
+					"rows": [
+						[],
+						["TJ Strat"],
+						["2x LJ Sidehop", "second"],
+						["LJ JD Sidehop", "second"]
+					]
+				},
+				{
+					"name": "Hot-Foot-it into the Volcano",
+					"rows": [
+						["Pro Boost"],
+						["misc"],
+						["Akira Boost"],
+						["misc"],
+						["Double Pole Skip"],
+						["misc"],
+						["misc"]
+					],
+					"beg": ["Beginner", "TJ Boost"]
+				},
+				{
+					"name": "100c + Hot-Foot-it into the Volcano",
+					"100c": true,
+					"rows": [
+						["JP"],
+						["misc"],
+						["US"],
+						["misc"],
+						["misc"],
+						["misc"]
+					]
+				},
+				{
+					"name": "Elevator Tour in the Volcano",
+					"rows": [
+						[],
+						["misc"]
+					]
+				}
+			]
+		},
+
+		{
+			"name": "Shifting Sand Land",
+			"color": "lb-yellow",
+			"rta_len": 3,
+			"stars": [
+				{
+					"name": "In the Talons of the Big Bird",
+					"variants": ["speed sj + dive", "speed sj x2", "side lj"],
+					"rows": [
+						[],
+						["Speed Pres", "alt:0"],
+						["Speed Pres", "alt:1"],
+						["Speed Pres", "alt:2"],
+						["Flyguyless"]
+					]
+				},
+				{
+					"name": "Shining Atop the Pyramid",
+					"rows": [
+						[]
+					]
+				},
+				{
+					"name": "Inside the Ancient Pyramid",
+					"rows": [
+						["Pillarless"],
+						["SJ Pless"],
+						["Tama Pless"]
+					],
+					"beg": ["Shell"]
+				},
+				{
+					"name": "Pyramid Puzzle",
+					"variants": ["SJ", "Tama"],
+					"rows": [
+						["Solo Secrets"],
+						["Solo Secrets", "alt:0"],
+						["Solo Secrets", "alt:1"],
+						["misc"]
+					]
+				},
+				{
+					"name": "Stand Tall on the Four Pillars",
+					"rows": [
+						["Topless", "JP"],
+						["misc"],
+						["Topless", "US"],
+						["misc"],
+						["misc"]
+					],
+					"beg": ["Backside", "TJWK"]
+				},
+				{
+					"name": "Free Flying for 8 Red Coins",
+					"variants": ["no speed jump"],
+					"rows": [
+						["Wall Bounce"],
+						["No Wall Bounce", "easy"],
+						["Z-Slide"],
+						["Z-Slide", "alt:0"]
+					]
+				},
+				{
+					"name": "100c + Pyramid Puzzle",
+					"100c": true,
+					"rows": [
+						["JP"],
+						["misc"],
+						["US"],
+						["misc"],
+						["misc"],
+						["misc"]
+					]
+				}
+			]
+		},
+
+		{
+			"name": "Dire, Dire Docks",
+			"color": "lb-blue",
+			"rta_len": 3,
+			"stars": [
+				{
+					"name": "Board Bowser's Sub",
+					"rows": [
+						["Front Sub"],
+						["Back Sub", "easy"],
+						["Chip Clip"]
+					]
+				},
+				{
+					"name": "Chests in the Current",
+					"rows": [
+						[]
+					]
+				},
+				{
+					"name": "100c + Pole-Jumping for Red Coins",
+					"100c": true,
+					"rows": [
+						["JP"],
+						["US"],
+						["misc"],
+						["misc"],
+						["misc"]
+					]
+				},
+				{
+					"name": "Through the Jet Stream",
+					"rows": [
+						[],
+						["Chip Clip"],
+						["Chip Clip", "rt"]
+					]
+				},
+				{
+					"name": "The Manta Ray's Reward",
+					"rows": [
+						[]
+					]
+				},
+				{
+					"name": "Collect the Caps...",
+					"rows": [
+						[],
+						["Chip Clip"],
+						["Chip Clip", "rt"]
+					]
+				}
+			]
+		},
+
+		{
+			"name": "Snowman's Land",
+			"color": "lb-snow",
+			"rta_len": 3,
+			"stars": [
+				{
+					"name": "Snowman's Big Head",
+					"variants": ["sj strat"],
+					"rows": [
+						[],
+						["alt:0"]
+					],
+					"beg": ["Cannon", "Beginner"]
+				},
+				{
+					"name": "Chill with the Bully",
+					"rows": [
+						[],
+						["Crouch Kill"]
+					]
+				},
+				{
+					"name": "In the Deep Freeze",
+					"rows": [
+						[],
+						["TJ Strat", "easy"]
+					]
+				},
+				{
+					"name": "Whirl from the Freezing Pond",
+					"rows": [
+						[]
+					]
+				},
+				{
+					"name": "Shell Shreddin' for Red Coins",
+					"rows": [
+						["Solo Reds"]
+					]
+				},
+				{
+					"name": "100c + Shell Shreddin' for Red Coins",
+					"100c": true,
+					"rows": [
+						["JP"],
+						["US"],
+						["misc"],
+						["misc"],
+						["Para Route", "JP"],
+						["Para Route", "US"],
+						["misc"],
+						["misc"]
+					]
+				},
+				{
+					"name": "Into the Igloo",
+					"rows": [
+						[],
+						["misc"],
+						["misc"]
+					]
+				}
+			]
+		},
+
+		{
+			"name": "Wet-Dry World",
+			"color": "lb-gray",
+			"rta_len": 3,
+			"stars": [
+				{
+					"name": "Shocking Arrow Lifts!",
+					"rows": [
+						[]
+					]
+				},
+				{
+					"name": "Top o' the Town",
+					"rows": [
+						["Cage TJWK"],
+						["Purple Switch", "easy"]
+					]
+				},
+				{
+					"name": "Secrets in the Shallows and Sky",
+					"rows": [
+						["Solo Secrets", "JP"],
+						["Solo Secrets", "US"],
+						["misc"]
+					]
+				},
+				{
+					"name": "100c + Secrets in the Shallows and Sky",
+					"100c": true,
+					"rows": [
+						["JP"],
+						["US"],
+						["misc"]
+					]
+				},
+				{
+					"name": "Express Elevator--Hurry Up!",
+					"rows": [
+						["Cage TJWK"],
+						["Early Box Break"],
+						["Purple Switch", "easy"]
+					]
+				},
+				{
+					"name": "100c + Go to Town for Red Coins",
+					"100c": true,
+					"rows": [
+						["JP"],
+						["US"],
+						["misc"],
+						["misc"]
+					]
+				},
+				{
+					"name": "Quick Race Through Downtown!",
+					"rows": [
+						["CCW"],
+						["misc"],
+						["CW"],
+						["misc"]
+					]
+				}
+			]
+		},
+
+		{
+			"name": "Tall, Tall Mountain",
+			"color": "lb-red",
+			"rta_len": 3,
+			"stars": [
+				{
+					"name": "Scale the Mountain",
+					"rows": [
+						["Log WK"],
+						["Log Firsty"]
+					],
+					"beg": ["No Log WK"]
+				},
+				{
+					"name": "Mystery of the Monkey Cage",
+					"rows": [
+						["Log WK", "JP"],
+						["Log WK", "US"],
+						["Log Firsty", "JP"],
+						["Log Firsty", "US"]
+					],
+					"beg": ["No Log WK"]
+				},
+				{
+					"name": "Scary 'Shrooms, Red Coins",
+					"variants": ["lj after 4th red"],
+					"rows": [
+						[],
+						["alt:0"]
+					]
+				},
+				{
+					"name": "100C + Scary 'Shrooms, Red Coins",
+					"100c": true,
+					"rows": [
+						["JP"],
+						["misc"],
+						["US"],
+						["misc"],
+						["misc"],
+						["Late Red", "JP"],
+						["misc"],
+						["Late Red", "US"],
+						["misc"],
+						["misc"],
+						["misc"]
+					]
+				},
+				{
+					"name": "Mysterious Mountainside",
+					"rows": [
+						["Breezeless"],
+						["Slowturn Bless"],
+						["Breeze", "easy"]
+					]
+				},
+				{
+					"name": "Breathtaking View from Bridge",
+					"rows": [
+						["Log WK"],
+						["Log Firsty"]
+					],
+					"beg": ["Slidekick", "No Log WK"]
+				},
+				{
+					"name": "Blast to the Lonely Mushroom",
+					"rows": [
+						[]
+					],
+					"beg": ["Beginner"]
+				}
+			]
+		},
+
+		{
+			"name": "Tiny-Huge Island",
+			"color": "lb-green",
+			"rta_len": 2,
+			"stars": [
+				{
+					"name": "Pluck the Piranha Flower",
+					"rows": [
+						["CCW"],
+						["CW"],
+						["misc"]
+					]
+				},
+				{
+					"name": "The Tip Top of the Huge Island",
+					"rows": [
+						["Rightside Clip"],
+						["misc"],
+						["Leftside Clip"],
+						["misc"],
+						["No Clip", "easy"],
+						["misc"],
+						["misc"]
+					]
+				},
+				{
+					"name": "Rematch with Koopa the Quick",
+					"variants": ["14.7-14.9 race"],
+					"rows": [
+						["JP"],
+						["US"],
+						["JP", "alt:0"],
+						["US", "alt:0"]
+					],
+					"beg": ["Intended"]
+				},
+				{
+					"name": "Five Itty Bitty Secrets",
+					"rows": [
+						[],
+						["Slide Strat"]
+					],
+					"beg": "Beginner"
+				},
+				{
+					"name": "Wiggler's Red Coins",
+					"rows": [
+						["Solo Reds"],
+						["misc"],
+						["misc"]
+					]
+				},
+				{
+					"name": "100c + Wiggler's Red Coin",
+					"100c": true,
+					"rows": [
+						["16c Start", "JP"],
+						["misc"],
+						["16c Start", "US"],
+						["misc"],
+						["misc"],
+						["misc"],
+						["13c Start + Pole", "JP", "easy"],
+						["13c Start + Pole", "US", "easy"],
+						["misc"],
+						["misc"],
+						["11c Start + Pole", "JP", "easy"],
+						["11c Start + Pole", "US", "easy"],
+						["misc"],
+						["misc"]
+					]
+				},
+				{
+					"name": "Make Wiggler Squirm",
+					"rows": [
+						["JP"],
+						["misc"],
+						["US"],
+						["misc"],
+						["misc"]
+					]
+				}
+			]
+		},
+
+		{
+			"name": "Tick Tock Clock",
+			"color": "lb-yellow",
+			"rta_len": 2,
+			"stars": [
+				{
+					"name": "Roll into the Cage",
+					"rows": [
+						["Flippies"],
+						["Gear Rollout"],
+						["Time Stop", "easy"]
+					]
+				},
+				{
+					"name": "The Pit and the Pendulums",
+					"rows": [
+						["Flippies"],
+						["Gear Rollout"],
+						["Time Stop", "easy"]
+					]
+				},
+				{
+					"name": "Get a Hand",
+					"rows": [
+						["Flippies"],
+						["Time Stop", "easy"]
+					]
+				},
+				{
+					"name": "Stomp on the Thwomp",
+					"rows": [
+						[]
+					]
+				},
+				{
+					"name": "100c + Stomp on the Thwomp",
+					"100c": true,
+					"rows": [
+						["JP"],
+						["US"],
+						["misc"],
+						["misc"],
+						["Safety Red", "JP"],
+						["Safety Red", "US"],
+						["misc"],
+						["misc"]
+					]
+				},
+				{
+					"name": "Timed Jumps on Moving Bars",
+					"rows": [
+						["Time Stop"]
+					]
+				},
+				{
+					"name": "Stop Time for Red Coins",
+					"variants": ["jd ending", "sideflip + wk strat"],
+					"rows": [
+						["Time Stop"],
+						["Time Stop", "alt:0"],
+						["Time Stop", "alt:1"],
+						["Time Stop", "alt:0", "alt:1"],
+						["Hanoji Reds", "second"],
+						["Moving Reds", "second"]
+					]
+				}
+			]
+		},
+
+		{
+			"name": "Rainbow Ride",
+			"color": "lb-red",
+			"rta_len": 4,
+			"stars": [
+				{
+					"name": "Cruiser Crossing the Rainbow",
+					"variants": ["full wk + full sj"],
+					"rows": [
+						["Lakitu Bounce"],
+						["misc"],
+						["Lakitu Bounce", "alt:0"],
+						["misc"],
+						["Sideflip Bounce"],
+						["misc"],
+						["Assless"],
+						["misc"]
+					],
+					"beg": ["No Bounce"]
+				},
+				{
+					"name": "The Big House in the Sky",
+					"rows": [
+						["Carpetless"],
+						["JD Ending"],
+						["misc"],
+						["misc"],
+						["misc"]
+					]
+				},
+				{
+					"name": "100c + The Big House in the Sky",
+					"rows": [
+						["Carpetful", "JP", "easy"],
+						["Carpetful", "US", "easy"],
+						["No Cutscene", "JP", "second"],
+						["No Cutscene", "US", "second"]
+					]
+				},
+				{
+					"name": "Coins Amassed in a Maze",
+					"rows": [
+						["Kick Back End", "hard"],
+						["Kick Recoil End"]
+					]
+				},
+				{
+					"name": "Swingin' in the Breeze",
+					"rows": [
+						["Sideflip"],
+						["Pro Strat"]
+					],
+					"beg": ["Flame TJ"]
+				},
+				{
+					"name": "Tricky Triangles!",
+					"rows": [
+						[],
+						["Low Dive"]
+					]
+				},
+				{
+					"name": "Somewhere over the Rainbow",
+					"variants": ["dj dive", "full wk + full sj"],
+					"rows": [
+						["Lakitu Bounce"],
+						["Lakitu Bounce", "alt:0"],
+						["Lakitu Bounce", "alt:1"],
+						["Lakitu Bounce", "alt:1", "alt:0"],
+						["Sideflip Bounce"],
+						["Sideflip Bounce", "alt:0"],
+						["Assless"],
+						["Assless", "alt:0"]
+					],
+					"beg": ["No Bounce"]
+				},
+				{
+					"name": "100c + Somewhere over the Rainbow",
+					"rows": [
+						["JP"],
+						["US"],
+						["No Cutscene", "JP", "second"],
+						["No Cutscene", "US", "second"]
+					]
+				}
+			]
+		}		
+	]
+}
