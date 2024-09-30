@@ -10,7 +10,7 @@ import { xcamRecordMap, sortColList } from './xcam_record_map'
 //import { hasExt, addTimePool, buildTimeTable } from './timetable'
 //import { rawMS, formatFrames, addFrames, readVerOffset, applyVerOffset,
 //	stratRowVer, starVerData, orgRecordMap, applyRecordMap } from './vercalc'
-import { StarTable } from './startable'
+import { StarTable } from './rx_star_table'
 import { ExtToggle } from './exttoggle'
 import { VerToggle } from './vertoggle'
 

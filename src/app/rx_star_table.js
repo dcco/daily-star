@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import playData from './json/player_data.json'
 import { formatTime, formatTimeDat, newVerOffset } from "./time_dat"
-import { filterTimeTable, sortTimeTable } from "./timetable"
+import { filterTimeTable, sortTimeTable } from "./time_table"
 	/*
 		##########
 		STAR TABLE

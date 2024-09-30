@@ -4,7 +4,7 @@ import rowData from './json/row_data.json'
 
 import { rawMS, newTimeDat, applyVerOffset } from "./time_dat"
 import { rowDefStratDef } from "./strat_def"
-import { addTimeMap, buildTimeTable } from "./timetable"
+import { addTimeMap, buildTimeTable } from "./time_table"
 
 	/* derived "sort_data" (determines a canonical order for column sorting) */
 
