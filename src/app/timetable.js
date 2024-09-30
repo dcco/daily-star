@@ -1,9 +1,169 @@
 
-import orgData from './json/org_data.json'
-import playerData from './json/player_data.json'
+//import orgData from './json/org_data.json'
+//import playerData from './json/player_data.json'
 
-import { mergeStratSet, filterExtStratSet } from "./strat_def"
+	/*
+		time_map: mapping of names to { map[column id, time_dat] }
+			intermediate data structure used to create time tables
+	*/
 
+export function addTimeMap(timeMap, name, colId, timeDat) {
+	if (timeMap[name] === undefined) timeMap[name] = {};
+	var curDat = timeMap[name][colId];
+	if (curDat === undefined || timeDat.time < curDat.time) {
+		timeMap[name][colId] = timeDat;
+	}
+}
+
+	/* time table: array of
+		* name: string - player names
+		* tmList: array[time_dat] - player times
+	*/
+
+	// creates a time table from a time pool
+
+export function buildTimeTable(timeMap, colTotal) {
+	// transform player map >> player table
+	var timeTable = Object.entries(timeMap).map((user) => {
+		// transform column map >> column list
+		var [name, userDat] = user;
+		var timeList = [];
+		var metaList = [];
+		for (let i = 0; i < colTotal; i++) {
+			if (userDat[i]) {
+				timeList.push(userDat[i]);
+			} else {
+				timeList.push(null);
+			}
+		}
+		// row object
+		return {
+			"name": name,
+			"tmList": timeList,
+		};
+	});
+	return timeTable;
+}
+
+	// filter table based on columns
+
+export function filterTimeTable(timeTable, colList) {
+	var filterTable = [];
+	for (let i = 0; i < timeTable.length; i++) {
+		var userDat = timeTable[i];
+		var empty = true;
+		var timeList = colList.map((_strat, j) => {
+			var [colId, strat] = _strat;
+			var timeDat = userDat.tmList[colId];
+			if (timeDat !== null) empty = false;
+			return timeDat;
+		});
+		if (!empty) filterTable.push({
+			"name": userDat.name,
+			"tmList": timeList
+		});
+	}
+	return filterTable;
+}
+
+	// sorts a time table
+
+function sortTimeList(tmList)
+{
+	var sortList = tmList.filter((v) => v !== null);
+	return sortList.sort(function (a, b) {
+		return a.time - b.time;
+	});
+}
+
+function compTimeList(l1, l2)
+{
+	// start with the "best" times
+	var diff = l1[0].time - l2[0].time;
+	if (diff !== 0) return diff;
+	// otherwise, iterate through remaining times
+	var ml = Math.min(l1.length, l2.length);
+	for (let i = 1; i < ml; i++) {
+		var diff = l1[i].time - l2[i].time;
+		if (diff !== 0) return diff;
+	}
+	// length final tiebreaker
+	return l2.length - l1.length;
+}
+
+export function sortTimeTable(timeTable, sortId) {
+	// do an initial sort of all times
+	timeTable.map(function (v) {
+		v["_sort"] = sortTimeList(v.tmList);
+	});
+	// use these time arrays to sort
+	if (sortId === 0) {
+		return timeTable.toSorted(function (a, b) {
+			return compTimeList(a._sort, b._sort);
+		});
+	} else {
+		return timeTable.toSorted(function (a, b) {
+			var si = sortId - 1;
+			if (a.tmList[si] === null) {
+				if (b.tmList[si] === null) return compTimeList(a._sort, b._sort);
+				else return 1;
+			} else if (b.tmList[si] === null) return -1;
+			var diff = a.tmList[si].time - b.tmList[si].time;
+			if (diff !== 0) return diff;
+			return compTimeList(a._sort, b._sort);
+		});
+	}
+}
+
+/*
+
+export function hasTimeTable(timeTable, name) {
+	for (let i = 0; i < timeTable.length; i++) {
+		if (timeTable[i].name === name) return i;
+	}
+	return -1;
+}
+
+export function updateTimeTable(timeTable, name, newList) {
+	var tt = timeTable.map((x) => x);
+	if (hasTimeTable(tt, name) === -1) {
+		tt.push({
+			"name": name,
+			"timeList": Array(newList.length).fill(null),
+			"metaList": Array(newList.length).fill(null),
+			//"bestTime": 999900,
+			"playStd": "Unranked"
+		})
+	}
+	// new time list calc
+	var rowId = hasTimeTable(tt, name);
+	var timeList = tt[rowId].timeList.map((x) => x);
+	//var bestTime = tt[rowId].bestTime;
+	for (let i = 0; i < timeList.length; i++) {
+		var time = newList[i];
+		if (time !== null) {
+			if (timeList[i] === null || time < timeList[i]) {
+				timeList[i] = {
+					"time": time,
+					// need to actually include version info
+					"ver": "both"
+				}
+			}
+			//if (bestTime < time) bestTime = time;
+		}
+	}
+	tt[rowId].tmList = timeList;
+	//tt[rowId].bestTime = bestTime; 
+	// DEPRECATED
+	var standard = "Unranked";
+	if (playerData[name] !== undefined && playerData[name].standard) {
+		standard = playerData[name].standard;
+	}
+	return tt;
+}
+
+
+*/
 	// converts a list of structs to a map
 
 export function asPool(list, k, ix) {
@@ -14,19 +174,6 @@ export function asPool(list, k, ix) {
 		if (ix) pool[obj[k]][ix] = i;
 	}
 	return pool;
-}
-
-	// misc star information
-
-export function hasExt(starDef) {
-	var fullSet = Object.entries(starDef.jp_set);
-	fullSet = fullSet.concat(Object.entries(starDef.us_set));
-	for (const [name, strat] of fullSet) {
-		for (const ref of strat.id_list) {
-			if (ref[0] === "ext") return true;
-		}
-	}
-	return false;
 }
 
 	// column generation algorithm
@@ -106,24 +253,6 @@ function filterExtVerSet(vs) {
 	return vsx;
 }*/
 
-export function orgColList(stageId, starId, verState, extFlag) {
-	var starDef = orgData[stageId].starList[starId];
-	// merge version sets if needed
-	var verSet = {};
-	if (verState[0] && verState[1]) verSet = mergeStratSet(starDef.jp_set, starDef.us_set);
-	else if (verState[1]) verSet = starDef.us_set;
-	else verSet = starDef.jp_set;
-	// extension filter
-	if (extFlag === false) verSet = filterExtStratSet(verSet);
-	// build column list
-	var colList = [];
-	Object.entries(verSet).map((strat) => {
-		var [stratName, stratDef] = strat;
-		if (stratDef.virtual || stratDef.id_list.length !== 0) colList.push(stratDef);
-	});
-	return colList;
-}
-
 /*
 export function orgVariantList(colList, variant) {
 	var vList = [];
@@ -136,152 +265,8 @@ export function orgVariantList(colList, variant) {
 	return vList;
 }
 */
-export function orgVarColList(colList, variant) {
-	var vList = [];
-	colList.map((strat, i) => {
-		var second = strat.diff.includes("second");
-		if ((variant === null) === !second) {
-			vList.push([i, colList[i]]);
-		}
-	})
-	return vList;
-}
 
-	// time pool data structure
-	// -- intermediate data structure used to create time tables
-	// -- will only update with better times
-	// : mapping of names to { map<column ids, pooldata> }
-	// : pooldata { rawTime: int, time: int, ver: "jp"/"us"/"both", variant_list: array[int] }
 
-export function addTimePool(timePool, name, colId, timeDat) {
-	if (timeDat.variant_list === undefined) timeDat.variant_list = [];
-	if (timePool[name] === undefined) timePool[name] = {};
-	var colData = timePool[name][colId];
-	if (colData === undefined) {
-		timePool[name][colId] = timeDat;
-		return;
-	}
-	if (timeDat.time < colData.time) {
-		colData.rawTime = timeDat.rawTime;
-		colData.time = timeDat.time;
-		colData.ver = timeDat.ver;
-		colData.variant_list = timeDat.variant_list;
-	}
-}
-
-	/* time table data structure
-		: 2d array of {
-			name: string,
-			tmList: array[pooldata],
-			-- bestTime: int,
-			<playStd>: string -- deprecated, standards lookup will be done separately
-		}
-	*/
-
-	// creates a time table from a time pool
-
-export function buildTimeTable(timePool, colTotal) {
-	// transform player map >> player table
-	var timeTable = Object.entries(timePool).map((user) => {
-		var [name, userDat] = user;
-		//var bestTime = 999900;
-		// transform column map >> column list + calc best time
-		var timeList = [];
-		var metaList = [];
-		for (let i = 0; i < colTotal; i++) {
-			if (userDat[i]) {
-				timeList.push(userDat[i]);
-				//if (userDat[i] < bestTime) { bestTime = userDat[i]; }
-			} else {
-				timeList.push(null);
-			}
-		}
-		// DEPRECATED
-		var standard = "Unranked";
-		if (playerData[name] !== undefined && playerData[name].standard) {
-			standard = playerData[name].standard;
-		}
-		// row object
-		return {
-			"name": name,
-			"tmList": timeList,
-			//"bestTime": bestTime,
-			"playStd": standard
-		};
-	});
-	return timeTable;
-}
-
-export function hasTimeTable(timeTable, name) {
-	for (let i = 0; i < timeTable.length; i++) {
-		if (timeTable[i].name === name) return i;
-	}
-	return -1;
-}
-
-export function updateTimeTable(timeTable, name, newList) {
-	var tt = timeTable.map((x) => x);
-	if (hasTimeTable(tt, name) === -1) {
-		tt.push({
-			"name": name,
-			"timeList": Array(newList.length).fill(null),
-			"metaList": Array(newList.length).fill(null),
-			//"bestTime": 999900,
-			"playStd": "Unranked"
-		})
-	}
-	// new time list calc
-	var rowId = hasTimeTable(tt, name);
-	var timeList = tt[rowId].timeList.map((x) => x);
-	//var bestTime = tt[rowId].bestTime;
-	for (let i = 0; i < timeList.length; i++) {
-		var time = newList[i];
-		if (time !== null) {
-			if (timeList[i] === null || time < timeList[i]) {
-				timeList[i] = {
-					"time": time,
-					// need to actually include version info
-					"ver": "both"
-				}
-			}
-			//if (bestTime < time) bestTime = time;
-		}
-	}
-	tt[rowId].tmList = timeList;
-	//tt[rowId].bestTime = bestTime; 
-	// DEPRECATED
-	var standard = "Unranked";
-	if (playerData[name] !== undefined && playerData[name].standard) {
-		standard = playerData[name].standard;
-	}
-	return tt;
-}
-
-	// filter table based on columns + adds best times
-export function filterTimeTable(timeTable, colList) {
-	var filterTable = [];
-	for (let i = 0; i < timeTable.length; i++) {
-		var userDat = timeTable[i];
-		var empty = true;
-		var bestTime = 999900;
-		var timeList = colList.map((_strat, j) => {
-			var [colId, strat] = _strat;
-			var timeDat = userDat.tmList[colId];
-			if (timeDat !== null) {
-				empty = false;
-				if (timeDat.time < bestTime) bestTime = timeDat.time;
-			}
-			return timeDat;
-		});
-		if (!empty) filterTable.push({
-			"name": userDat.name,
-			"tmList": timeList,
-			"bestTime": bestTime,
-			"playStd": userDat.playStd // DEPRECATE
-		});
-	}
-	return filterTable;
-}
 
 function firstColName(colList, nameList) {
 	// for loops because the exact ordering matters + early return
@@ -340,37 +325,3 @@ export function mergeColTimeTable(timeTable, colList, nameList) {
 		userDat.tmList = newList;
 	}
 }
-
-/*
-export function updateTimeTable(timeTable, name, timeList) {
-
-}*/
-
-/*
-export function buildTimeTable(colTotal, timePool, stdFlag) {
-	var timeTable = Object.entries(timePool).map((user) => {
-		var [name, userDat] = user;
-		var bestTime = 999900;
-		var timeList = [];
-		for (let i = 0; i < colTotal; i++) {
-			if (userDat[i]) {
-				timeList.push(userDat[i]);
-				if (userDat[i] < bestTime) { bestTime = userDat[i]; }
-			} else {
-				timeList.push(null);
-			}
-		}
-		var standard = "Unranked";
-		if (stdFlag && playerData[name] !== undefined && playerData[name].standard) {
-			standard = playerData[name].standard;
-		}
-		return {
-			"name": name,
-			"timeList": timeList,
-			"bestTime": bestTime,
-			"playStd": standard
-		};
-	});
-	timeTable.sort(function(a, b) { return a.bestTime - b.bestTime });
-	return timeTable;
-}*/

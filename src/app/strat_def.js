@@ -1,9 +1,37 @@
 
 	/*
-		strat_id: [string, int] - a tuple referencing an xcam sheet + row id
-		ver: { jp, us, both }
+		row_id: [string, int] - a tuple referencing an xcam sheet + row id
+		ver: "jp" | "us" | "both" - original version of an xcam row
+			null - unknown
 
-		ver_map: an abstraction that maps an xcam row (strat_id) to its
+		row_def: definition of an xcam row
+		* name: string - parent strat name
+		* ver: ver - version
+		* variant_list: array[int] - list of variants used by row
+	*/
+
+export function newRowDef(name, ver, v_list)
+{
+	if (v_list === undefined) throw("Attempted to create row definition for " + name + " with undefined variant list.");
+	return {
+		"name": name,
+		"ver": ver,
+		"variant_list": v_list
+	};
+}
+
+export function zeroRowDef(name)
+{
+	return newRowDef(name, "jp", []);
+}
+
+export function begRowDef(name)
+{
+	return newRowDef(name, "both", []);
+}
+
+	/*
+		ver_map: an abstraction that maps an xcam row (row_id) to its
 			version information (may be undefined)
 	*/
 
@@ -35,7 +63,7 @@ export function addVerMap(verMap, ref, v)
 		* diff: string - difficulty identifier (purely visual)
 		* virtual: bool - indicates whether the strat comes from an xcam sheet or not
 		* virtId: string? - if the strat is virtual, gives a key for the virtual sheet
-		* id_list: array[strat_id] - a list of xcam row references
+		* id_list: array[row_id] - a list of xcam row references
 		* variant_map: strat_id => array[int] - maps an xcam row to a list of its variants 
 		* ver_map: ver_map 
 	*/
@@ -96,6 +124,19 @@ function mergeRefListVerMap(l1, l2) {
 	return [lx, ver_map];
 }
 
+function mergeVariantMap(v1, v2) {
+	var variant_map = {};
+	Object.entries(v1).map((entry) => {
+		var [ref, l] = entry;
+		variant_map[ref] = l;
+	});
+	Object.entries(v2).map((entry) => {
+		var [ref, l] = entry;
+		variant_map[ref] = l;
+	});
+	return variant_map;
+}
+
 export function mergeVerStratDef(sDef1, sDef2)
 {
 	// for simplicity, we assume that this function will only be used to merge
@@ -104,12 +145,47 @@ export function mergeVerStratDef(sDef1, sDef2)
 	var newDef = copyStratDef(sDef1);
 	var [ref_list, ver_map] = mergeRefListVerMap(sDef1.id_list, sDef2.id_list);
 	newDef.id_list = ref_list;
+	newDef.variant_map = mergeVariantMap(sDef1.variant_map, sDef2.variant_map);
 	newDef.ver_map = ver_map;
 	return newDef;
 }
 
+	/* because the original organizational structure is fractured, this lookup must be done in parts */
+
+function verStratDef(sDef, ref)
+{
+	var ver = lookupVerMap(sDef.ver_map, ref);
+	if (ver === null) return "both";
+	return ver;
+}
+
+function vListStratDef(sDef, ref)
+{
+	var key = ref[0] + "_" + ref[1];
+	if (sDef.variant_map[key] === undefined) {
+		console.log(sDef.variant_map);
+		throw("Could not find variant map for " + sDef.name + " for variant " + key);
+	}
+	return sDef.variant_map[key];
+}
+
+export function rowDefStratDef(sDef, ref)
+{
+	return newRowDef(sDef.name, verStratDef(sDef, ref), vListStratDef(sDef, ref));
+}
+
+	/* functions for specific rows of a strat_def */
+/*
+
+export function rowTimeDatStratDef(sDef, ref, time)
+{
+	var ver = rowVerStratDef(sDef, ref);
+	var vList = rowVariantListStratDef(sDef, ref);
+	return newTimeDat(sDef.name, time, ver, vList);
+}*/
+
 	/*
-		strat_set: a mapping of strat naemes into strat defs
+		strat_set: a mapping of strat names into strat defs
 	*/
 
 export function mergeStratSet(vs1, vs2)
@@ -132,6 +208,15 @@ export function mergeStratSet(vs1, vs2)
 	return vsx;
 }
 
+export function hasExtStratSet(vs) {
+	for (const [name, strat] of vs) {
+		for (const ref of strat.id_list) {
+			if (ref[0] === "ext") return true;
+		}
+	}
+	return false;
+}
+
 export function filterExtStratSet(vs) {
 	var vsx = {};
 	Object.entries(vs).map((strat) => {
@@ -141,4 +226,29 @@ export function filterExtStratSet(vs) {
 		vsx[stratName] = newDef;
 	});
 	return vsx;
+}
+
+	/*
+		column_list: a list of [index, strat definition] tuples
+	*/
+
+export function stratSetToColList(vs) {
+	var colList = [];
+	Object.entries(vs).map((strat, i) => {
+		var [stratName, stratDef] = strat;
+		if (stratDef.virtual || stratDef.id_list.length !== 0) colList.push([i, stratDef]);
+	});
+	return colList;
+}
+
+export function filterVarColList(colList, variant) {
+	var vList = [];
+	colList.map((_strat) => {
+		var [i, strat] = _strat;
+		var second = strat.diff.includes("second");
+		if ((variant === null) === !second) {
+			vList.push([i, strat]);
+		}
+	})
+	return vList;
 }

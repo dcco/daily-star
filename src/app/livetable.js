@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
-import { asPool, orgColList, orgVariantList, orgVarColList,
-	addTimePool, buildTimeTable, updateTimeTable } from "./timetable"
+import { orgColList, filterVarColList } from "./org_star_def"
+import { asPool, orgVariantList, addTimePool, buildTimeTable, updateTimeTable } from "./timetable"
 import { rawMS, orgRecordMap, applyRecordMap } from "./vercalc"
 import { StarTable } from "./startable"
 
@@ -100,7 +100,7 @@ export function LiveStarTable(props)
 	const stageId = props.stageId;
 	const starId = props.starId;
 	const variant = props.variant;
-	const verState = props.verState;
+	const fs = props.fs;
 
 	// time table
 	const [timeTable, setTimeTable] = useState([]);
@@ -110,7 +110,7 @@ export function LiveStarTable(props)
 	useEffect(() => {
 		var dirty = (reload !== 0);
 		const f = async () => {
-			if (dirty === 2) setTimeTable(await loadTimeTable(stageId, starId, verState));
+			if (dirty === 2) setTimeTable(await loadTimeTable(stageId, starId, fs));
 		}
 		setTimeout(f, reload);
 		setReload(0);
@@ -119,7 +119,7 @@ export function LiveStarTable(props)
 	// edit function
 	const editTT = (name, dfText, colOrder) => {
 		// get columns / column total
-		var colList = orgColList(stageId, starId, verState, true);
+		var colList = orgColList(stageId, starId, fs);
 		// complete the row and update time table
 		//var newRow = completeEditRow(stageId, starId, variant, dfText, colOrder);
 		var newRow = completeEditRow(colList, dfText, colOrder);
@@ -130,15 +130,15 @@ export function LiveStarTable(props)
 		setReload(1000); // slight offset so the database has time to actually update
 	}
 
-	var _colList = orgColList(stageId, starId, verState, true);
+	var _colList = orgColList(stageId, starId, fs);
 
 	// add sort record + relevant records
 	var sortRM = orgRecordMap(stageId, starId, [true, true], true);
-	var relRM = orgRecordMap(stageId, starId, verState, true);
+	var relRM = orgRecordMap(stageId, starId, fs, true);
 	applyRecordMap(_colList, "sortRecord", sortRM);
 	applyRecordMap(_colList, "record", relRM);
 
-	var colList = orgVarColList(_colList, variant);
+	var colList = filterVarColList(_colList, variant);
 
 	return (<StarTable colList={ colList } timeTable={ timeTable } canWrite="true" editTT={ editTT }></StarTable>);
 }

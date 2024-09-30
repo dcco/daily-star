@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import orgData from './json/org_data.json'
 
-import { orgColList, orgVarColList } from "./timetable"
+import { newFilterState, orgColList, filterVarColList } from "./org_star_def"
 import { LiveStarTable } from "./livetable"
 
 	/*
@@ -95,7 +95,7 @@ export function StageBoard() {
 	const starId = starIdCache[stageId];
 
 	// version state
-	const [verState, setVerState] = useState([true, false]);
+	const [fs, setFilterState] = useState(newFilterState());
 
 	// star functions
 	const changeStage = (e) => {
@@ -141,14 +141,14 @@ export function StageBoard() {
 	// -- main column list
 	//var mainColList = orgVarColList(colList, null);
 	tableList.push(<LiveStarTable key={ stageId + "_" + starId + "_0" }
-		stageId={ stageId } starId={ starId } verState={ verState } variant={ null }> </LiveStarTable>
+		stageId={ stageId } starId={ starId } fs={ fs } variant={ null }> </LiveStarTable>
 	);
 	// -- variant table
-	var colList = orgColList(stageId, starId, verState);
-	var varColList = orgVarColList(colList, 1);
+	var colList = orgColList(stageId, starId, fs);
+	var varColList = filterVarColList(colList, 1);
 	if (varColList.length !== 0) {
 		tableList.push(<LiveStarTable key={ stageId + "_" + starId + "_1" }
-			stageId={ stageId } starId={ starId } verState={ verState } variant={ 1 }> </LiveStarTable>
+			stageId={ stageId } starId={ starId } fs={ fs } variant={ 1 }> </LiveStarTable>
 		);
 	}
 

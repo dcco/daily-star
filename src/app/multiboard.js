@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { StageBoard } from './stageboard'
+//import { StageBoard } from './stageboard'
 import { ViewBoard } from './viewboard'
 
 function MenuOpt(props)
@@ -14,11 +14,11 @@ function MenuOpt(props)
 }
 
 export function MultiBoard(props) {
-	const [menuId, setMenuId] = useState(0);
+	const [menuId, setMenuId] = useState(1);
 	// select board
 	var board = null;
 	if (menuId === 0) {
-		board = <StageBoard/>;
+		//board = <StageBoard/>;
 	} else if (menuId === 1) {
 		board = <ViewBoard/>;
 	}

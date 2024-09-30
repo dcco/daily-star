@@ -1,55 +1,25 @@
 
 import React, { useState, useEffect } from 'react'
 import orgData from './json/org_data.json'
-import xcamData from './json/xcam_dump.json'
-import rowData from './json/row_data.json'
 
-import { hasExt, addTimePool, orgColList, orgVarColList, buildTimeTable } from './timetable'
-import { rawMS, formatFrames, addFrames, readVerOffset, applyVerOffset,
-	stratRowVer, starVerData, orgRecordMap, applyRecordMap } from './vercalc'
+import { filterVarColList } from './strat_def'
+import { newFilterState, copyFilterState, fullFilterState,
+	orgStarDef, verOffsetStarDef, hasExtStarDef, colListStarDef } from './org_star_def'
+import { xcamTimeTable } from './xcam_time_table'
+import { xcamRecordMap, sortColList } from './xcam_record_map'
+//import { hasExt, addTimePool, buildTimeTable } from './timetable'
+//import { rawMS, formatFrames, addFrames, readVerOffset, applyVerOffset,
+//	stratRowVer, starVerData, orgRecordMap, applyRecordMap } from './vercalc'
 import { StarTable } from './startable'
 import { ExtToggle } from './exttoggle'
 import { VerToggle } from './vertoggle'
-
-function xcamTimeTable(stageId, starId, verState, verData, extFlag) {
-	// for every xcam column
-	//var focusVer = verData.focusVer;
-	var colList = orgColList(stageId, starId, verState, extFlag);
-	const timePool = {};
-	for (let i = 0; i < colList.length; i++) {
-		var stratDef = colList[i];
-		// for every relevant row in the xcam sheet
-		for (const xcamRef of stratDef.id_list) {
-			var [xs, xcamId] = xcamRef;
-			if (xcamData[xs][xcamId] === undefined) continue;
-			var record = rowData[xs][xcamId].record;
-			var timeList = xcamData[xs][xcamId].times;
-			// check whether the xcam row is relevant to both versions 
-			var rowVer = stratRowVer(stratDef, xcamRef);
-			// iterate through every time listed for the xcam row
-			for (const data of timeList) {
-				// use offset when not default + the alt version is enabled
-				var ms = applyVerOffset(verData, rowVer, data.ms, stratDef.name);
-				if (record === undefined || data.ms >= rawMS(record)) {
-					addTimePool(timePool, data.player, i, {
-						"rawTime": data.ms,
-						"time": ms,
-						"ver": rowVer,
-						"variant_list": stratDef.variant_map[xs + "_" + xcamId]
-					});
-				}
-			}
-		}
-	}
-	return buildTimeTable(timePool, colList.length);
-	//timeTable.sort(function(a, b) { return a.bestTime - b.bestTime });
-}
 
 export function ViewBoard(props) {
 	// star state
 	const [stageId, setStageId] = useState(0);
 	const [starIdCache, setStarIdCache] = useState(Array(orgData.length).fill(0));
 	const starId = starIdCache[stageId];
+	var starDef = orgStarDef(stageId, starId);
 
 	// star functions
 	const changeStage = (e) => {
@@ -61,23 +31,23 @@ export function ViewBoard(props) {
 		setStarIdCache(starIdCache.map((x) => x));
 	};
 
-	// version state
-	const [verState, setVerState] = useState([true, false]);
-	var starDef = orgData[stageId].starList[starId];
-	var verData = starVerData(starDef, verState);
+	// filter state
+	const [fs, setFS] = useState(newFilterState());
+	var verOffset = verOffsetStarDef(starDef, fs);
 
 	const toggleVer = (i) => {
-		var newState = [verState[0], verState[1]];
-		newState[i] = !newState[i];
-		if (!newState[i] && !newState[1 - i]) newState[1 - i] = true;
-		setVerState(newState); 
+		var ns = copyFilterState(fs);
+		ns.verState[i] = !ns.verState[i];
+		if (!ns.verState[i] && !ns.verState[1 - i]) ns.verState[1 - i] = true;
+		setFS(ns);
 	}
 
 	// extension state
-	const [extState, setExtState] = useState(true);
 
 	const toggleExt = () => {
-		setExtState(!extState);
+		var ns = copyFilterState(fs);
+		ns.extFlag = !ns.extFlag;
+		setFS(ns);
 	}
 
 	// stage select option nodes
@@ -96,14 +66,13 @@ export function ViewBoard(props) {
 	// version toggle node (enable when relevant)
 	var verToggle = <div></div>;
 	if (starDef.def !== "na") {
-		verToggle = <VerToggle state={ verState } verData={ verData }
-			toggle={ toggleVer }/>;
+		verToggle = <VerToggle state={ fs.verState } verOffset={ verOffset } toggle={ toggleVer }/>;
 	}
 
 	// extension toggle node (enable when relevant)
 	var extToggle = <div></div>;
-	if (hasExt(starDef)) {
-		extToggle = <ExtToggle state={ extState } toggle={ toggleExt }/>;
+	if (hasExtStarDef(starDef)) {
+		extToggle = <ExtToggle state={ fs.extFlag } toggle={ toggleExt }/>;
 	}
 
 	// variant information
@@ -113,7 +82,7 @@ export function ViewBoard(props) {
 		starDef.variants.map((vName, i) => {
 			if (i !== 0) vstr.push(", ");
 			vstr.push("[" + (i + 1) + "] - ")
-			vstr.push(<i>{ vName }</i>); 
+			vstr.push(<i key={ i }>{ vName }</i>); 
 		})
 		varCont = (<div className="variant-cont">
 			<div className="variant-box">{ vstr }</div>
@@ -121,27 +90,26 @@ export function ViewBoard(props) {
 	}
 
 	// load time table from xcam data
-	var timeTable = xcamTimeTable(stageId, starId, verState, verData, extState);
-;
+	var colList = colListStarDef(starDef, fs);
+	var timeTable = xcamTimeTable(colList, fs, verOffset);
+
 	// create tables
 	var tableList = [];
-	var colList = orgColList(stageId, starId, verState, extState);
 	
 	// add sort record + relevant records
-	var sortRM = orgRecordMap(stageId, starId, [true, true]);
-	var relRM = orgRecordMap(stageId, starId, verState);
-	applyRecordMap(colList, "sortRecord", sortRM);
-	applyRecordMap(colList, "record", relRM);
+	var sortRM = xcamRecordMap(colList, fullFilterState(), verOffset);
+	var relRM = xcamRecordMap(colList, fs, verOffset);
+	sortColList(colList, sortRM);
 
-	var mainColList = orgVarColList(colList, null);
-	tableList.push(<StarTable colList={ mainColList } verData={ verData } timeTable={ timeTable }
-		canWrite="false" key={ stageId + "_" + starId + "_0" }></StarTable>);
+	var mainColList = filterVarColList(colList, null);
+	tableList.push(<StarTable colList={ mainColList } timeTable={ timeTable } verOffset={ verOffset }
+		recordMap={ relRM } canWrite="false" key={ stageId + "_" + starId + "_0" }></StarTable>);
 
-	var varColList = orgVarColList(colList, 1);
+	var varColList = filterVarColList(colList, 1);
 	if (varColList.length > 0) {
-		tableList.push(<StarTable colList={ varColList } verData={ verData } timeTable={ timeTable }
-			canWrite="false" key={ stageId + "_" + starId + "_1" }></StarTable>);
-	}
+		tableList.push(<StarTable colList={ varColList } timeTable={ timeTable } verOffset={ verOffset }
+			recordMap={ relRM }	canWrite="false" key={ stageId + "_" + starId + "_1" }></StarTable>);
+	}	
 
 	return (<div>
 		<div className="row-wrap">

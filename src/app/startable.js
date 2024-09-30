@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 
-import rowData from './json/row_data.json'
-import { filterTimeTable } from "./timetable"
-import { rawMS, stratRowVer } from './vercalc'
-
+import playData from './json/player_data.json'
+import { formatTime, formatTimeDat, newVerOffset } from "./time_dat"
+import { filterTimeTable, sortTimeTable } from "./timetable"
 	/*
 		##########
 		STAR TABLE
@@ -19,38 +18,6 @@ function updateArray(a, i, v) {
 }
 
 	// time manipulation
-
-export function formatFrames(frames) {
-	// absolute value frames
-	var neg = frames < 0;
-	frames = Math.abs(frames);
-	// calc each section
-	var triFrames = Math.floor(frames / 3);
-	var triMS = frames % 3;
-	var sec = Math.floor(triFrames / 10);
-	var tSec = Math.floor(triFrames % 10);
-	var hSec = 0;
-	if (triMS === 1) hSec = 3;
-	else if (triMS === 2) hSec = 6;
-	// final string
-	var fs = "" + sec + "." + tSec + hSec;
-	if (neg) fs = "-" + fs;
-	return fs;
-}
-
-function formatTime(time) {
-	var ms = time % 100;
-	var sec = Math.floor(time / 100) % 60;
-	var min = Math.floor(time / 6000);
-	if (sec === 0 && min === 0) return "0." + ms;
-	else if (min === 0) return sec + "." + ms.toString().padStart(2, '0');
-	return min + ":" + sec.toString().padStart(2, '0') + "." + ms.toString().padStart(2, '0');
-}
-
-function formatTimeDat(timeDat) {
-	if (timeDat === null) return "";
-	return formatTime(timeDat.time);
-}
 
 function validName(s) {
 	return s.match(/^[a-zA-Z0-9 _]+$/) !== null;
@@ -151,17 +118,15 @@ function verAdjustTime(ver, rawTime, time) {
 
 export function StarTable(props) {
 	var colList = props.colList;
-	var focusVer = null;
-	var offset = 0;
+	var recordMap = props.recordMap;
 	var stratTotal = colList.length;
 	var timeTable = props.timeTable;
 	var canWrite = props.canWrite === "true";
 	var editTT = props.editTT;
 
-	var verData = props.verData;
-	if (verData !== undefined) {
-		focusVer = verData.focusVer;
-		offset = verData.offset;
+	var verOffset = newVerOffset("jp", false, 0);
+	if (props.verOffset !== undefined) {
+		verOffset = props.verOffset;
 	}
 
 	// sort state
@@ -170,13 +135,6 @@ export function StarTable(props) {
 	// edit state
 	const [eState, setEditState] = useState(nullEditState());
 	const [editText, setEditText] = useState([]);
-
-	// sort columns
-	colList = colList.sort(function (a, b) {
-		if (a[1].name === "Open") return -1;
-		else if (b[1].name === "Open") return 1;
-		return a[1].sortRecord.time - b[1].sortRecord.time;
-	});
 
 	// edit functions
 	var editClick = () => {};
@@ -226,11 +184,12 @@ export function StarTable(props) {
 	// wr header
 	var recordNodes = colList.map((_strat, i) => {
 		var [colId, strat] = _strat;
-		var timeNode = formatTime(strat.record.time);
-		if ((focusVer === "jp" && strat.record.ver === "us") ||
-			(focusVer === "us" && strat.record.ver === "jp")) {
-			timeNode = (<span>{ formatTime(strat.record.time) } {
-				verAdjustTime(strat.record.ver, strat.record.rawTime, strat.record.time) }</span>);
+		var record = recordMap[strat.name];
+		var timeNode = formatTime(record.time);
+		if ((verOffset.focusVer === "jp" && record.rowDef.ver === "us") ||
+			(verOffset.focusVer === "us" && record.rowDef.ver === "jp")) {
+			timeNode = (<span>{ formatTime(record.time) } {
+				verAdjustTime(record.rowDef.ver, record.rawTime, record.time) }</span>);
 		}
 		return (<td className="record-cell" key={ strat.name }>{ timeNode }</td>);
 	});
@@ -240,20 +199,7 @@ export function StarTable(props) {
 	// filter table by colums + sort table data
 	var filterTable = filterTimeTable(timeTable, colList);
 	if (sortId > colList.length) setSortId(0);
-	if (sortId === 0 || sortId > colList.length) {
-		filterTable.sort(function(a, b) { return a.bestTime - b.bestTime });
-	} else {
-		filterTable.sort(function(a, b) {
-			var si = sortId - 1;
-			if (a.tmList[si] === null) {
-				if (b.tmList[si] === null) return a.bestTime - b.bestTime;
-				else return 1;
-			} else if (b.tmList[si] === null) return -1;
-			var diff = a.tmList[si].time - b.tmList[si].time;
-			if (diff === 0) return a.bestTime - b.bestTime;
-			return diff;
-		});
-	}
+	filterTable = sortTimeTable(filterTable, sortId);
 
 	// build time table
 	var timeTableNodes = filterTable.map((userDat, i) => {
@@ -270,9 +216,9 @@ export function StarTable(props) {
 			if (!canWrite) active = "false";
 			var cellText = formatTimeDat(timeDat);
 			// variant text
-			if (timeDat !== null && timeDat.variant_list.length > 0) {
+			if (timeDat !== null && timeDat.rowDef.variant_list.length > 0) {
 				cellText = cellText + " [";
-				timeDat.variant_list.map((v, i) => {
+				timeDat.rowDef.variant_list.map((v, i) => {
 					if (i !== 0) cellText = cellText + ",";
 					var vpp = parseInt(v) + 1;
 					cellText = cellText + vpp;
@@ -280,19 +226,24 @@ export function StarTable(props) {
 				cellText = cellText + "]";
 			}
 			// if the version matters
-			if (timeDat !== null && focusVer !== null) {
-				if ((focusVer === "jp" && timeDat.ver === "us") ||
-					(focusVer === "us" && timeDat.ver === "jp")) {
+			if (timeDat !== null) { // && verOffset.focusVer !== null) {
+				if ((verOffset.focusVer === "jp" && timeDat.rowDef.ver === "us") ||
+					(verOffset.focusVer === "us" && timeDat.rowDef.ver === "jp")) {
 					cellText = (<span>{ cellText } <em>
-						{ verAdjustTime(timeDat.ver, timeDat.rawTime, timeDat.time) }</em></span>);
+						{ verAdjustTime(timeDat.rowDef.ver, timeDat.rawTime, timeDat.time) }</em></span>);
 				}
 			}
 			return (<td className="time-cell" key={ j } active={ active }
 				onClick={ () => editClick(i, j, timeText) }>{ cellText }</td>);
 		})
+		// get play standard when applicable
+		var playStd = "Unranked";
+		if (playData[userDat.name] !== undefined && playData[userDat.name].standard) {
+			playStd = playData[userDat.name].standard;
+		}
 		// name + ending cell
-		timeRowNodes.unshift(<td key="user" ps={ userDat.playStd }>{ userDat.name }</td>);
-		timeRowNodes.push(<td key="empty"></td>)
+		timeRowNodes.unshift(<td key="user" ps={ playStd }>{ userDat.name }</td>);
+		timeRowNodes.push(<td key="empty"></td>);
 		var dataRow = "yes";
 		if (i === timeTable.length - 1) dataRow="no";
 		return (<tr className="time-row" datarow={ dataRow } key={ userDat.name }>

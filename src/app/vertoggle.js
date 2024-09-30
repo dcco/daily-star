@@ -1,5 +1,5 @@
 
-import { formatFrames } from "./startable"
+import { formatFrames } from "./time_dat"
 
 export function VerButton(props) {
 	return (<div className="toggle-button" active={ props.active.toString() } onClick={ props.toggle }>
@@ -11,20 +11,20 @@ export function VerButton(props) {
 
 export function VerToggle(props) {
 	var state = props.state;
-	var verData = props.verData;
+	var verOffset = props.verOffset;
 	// version text
-	var focusUS = verData.focusVer === "us"; 
+	var focusUS = verOffset.focusVer === "us"; 
 	var offDef = "US";
 	if (focusUS) offDef = "JP";
 	// offset node
 	var offsetNode = null;
-	if (!verData.complexOff) {
-		var dispOffset = focusUS ? formatFrames(-verData.offset) : formatFrames(verData.offset);
+	if (!verOffset.complexOff) {
+		var dispOffset = focusUS ? formatFrames(-verOffset.offset) : formatFrames(verOffset.offset);
 		offsetNode = (<div className="offset-box">{ offDef } Offset: { dispOffset }</div>);
 	} else {
 		// complex offset
 		var specList = [];
-		Object.entries(verData.offset).map((_offset, i) => {
+		Object.entries(verOffset.offset).map((_offset, i) => {
 			var [strat, offset] = _offset;
 			if (focusUS) offset = -offset;
 			if (offset !== 0) specList.push(<p key={ i }>{ strat + ": " + formatFrames(offset) }</p>);

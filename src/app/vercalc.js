@@ -2,8 +2,7 @@
 import orgData from './json/org_data.json'
 import rowData from './json/row_data.json'
 
-import { orgColList } from "./timetable"
-	
+	/*
 function _secMS(secText) {
 	if (!secText.includes('.')) return parseInt(secText) * 100;
 	var ft = secText.split('.');
@@ -22,93 +21,11 @@ export function rawMS(fillText) {
 	} catch (err) {
 		return null;
 	}
-}
-
-export function msToFrames(ms) {
-	var dFrames = Math.floor(ms / 10) * 3;
-	var hs = ms % 10;
-	var hFrames = 0;
-	if (hs >= 3 && hs < 6) hFrames = 1;
-	else if (hs >= 6) hFrames = 2;
-	return dFrames + hFrames; 
-}
-
-export function framesToMS(frames) {
-	// absolute value frames
-	var neg = frames < 0;
-	frames = Math.abs(frames);
-	// calc each section
-	var ts = Math.floor(frames / 3) * 10;
-	var triMS = frames % 3;
-	var hs = 0;
-	if (triMS === 1) hs = 3;
-	else if (triMS === 2) hs = 6;
-	// final number
-	var fs = ts + hs;
-	if (neg) fs = -fs;
-	return fs;
-}
-
-export function addFrames(frames, ms) {
-	return framesToMS(frames + msToFrames(ms));
-}
-
-export function subFrames(frames, ms) {
-	return framesToMS(msToFrames(ms) - frames);
-}
-
-	// version data
-
-	/* focusVer: optional parameter, overrides focusVer in verData */
-export function applyVerOffset(verData, rowVer, time, name, focusVer) {
-	// calc offset
-	var offset = verData.offset;
-	if (verData.complexOff) {
-		if (verData.offset[name] !== undefined) offset = verData.offset[name];
-		else offset = 0;
-	}
-	// apply offset
-	if (focusVer === undefined) focusVer = verData.focusVer;
-	if (focusVer === "jp" && rowVer === "us") return addFrames(offset, time);
-	else if (focusVer === "us" && rowVer === "jp") return addFrames(-offset, time);
-	return time;
-}
-
-/*function readVerDef(verState, verText) {
-	// if no version specified, there is no version diff
-	if (verText === undefined) return "both";
-	// if only one version is enabled, only one version matters
-	if (verState[0] && !verState[1]) return "jp";
-	if (verState[1] && !verState[0]) return "us";
-	// if both columns matter, select jp by default
-	if (verText === null || verText === "offset") return "jp";
-	// otherwise, default to sepcified column
-	if (verText === "jp" || verText === "us") return verText;
-	return "none";
 }*/
 
-function _focusVer(verState, verText) {
-	// if no version specified, no version diff
-	if (verText === undefined) return null;
-	// if only one US is enabled, focus on it
-	if (!verState[0] && verState[1]) return "us";
-	// in all cases except US, default to JP
-	if (verText === "us") return "us";
-	return "jp";
-}
-
-export function starVerData(starDef, verState) {
-	var focusVer = _focusVer(verState, starDef.def);
-	var offset = starDef.offset;
-	var complexOff = (offset !== null && typeof offset !== "number");
-	return {
-		"focusVer": focusVer,
-		"complexOff": complexOff,
-		"offset": offset
-	}
-}
-
 	// record map generation
+
+	/*
 
 export function stratRowVer(stratDef, rowRef) {
 	if (stratDef.ver_all !== undefined) return stratDef.ver_all;
@@ -116,10 +33,10 @@ export function stratRowVer(stratDef, rowRef) {
 	return "both";
 }
 
-export function orgRecordMap(stageId, starId, verState) {
+export function orgRecordMap(stageId, starId, fs) {
 	// extract column + version offset data
-	var colList = orgColList(stageId, starId, verState, true);
-	var verData = starVerData(orgData[stageId].starList[starId], verState);
+	var colList = orgColList(stageId, starId, fs);
+	var verData = starVerData(orgData[stageId].starList[starId], fs);
 	// build record map
 	var recordMap = {};
 	function recObj(rawTime, time, ver) {
@@ -153,3 +70,4 @@ export function applyRecordMap(colList, key, recordMap) {
 		col[key] = recordMap[col.name];
 	})
 }
+*/
