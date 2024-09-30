@@ -142,18 +142,3 @@ export function applyVerOffset(timeDat, verOffset)
 	else if (focusVer === "us" && timeDat.rowDef.ver === "jp") time = addFrames(-offset, time);
 	timeDat.time = time;
 }
-
-	/* focusVer: optional parameter, overrides focusVer in verData */
-/*export function applyVerOffset(timeDat, verOffset, rowVer, time, name, focusVer) {
-	// calc offset
-	var offset = verData.offset;
-	if (verData.complexOff) {
-		if (verData.offset[name] !== undefined) offset = verData.offset[name];
-		else offset = 0;
-	}
-	// apply offset
-	if (focusVer === undefined) focusVer = verData.focusVer;
-	if (focusVer === "jp" && rowVer === "us") return addFrames(offset, time);
-	else if (focusVer === "us" && rowVer === "jp") return addFrames(-offset, time);
-	return time;
-}*/

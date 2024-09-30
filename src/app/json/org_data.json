@@ -69,7 +69,8 @@
               ]
             ]
           }
-        }
+        },
+        "open": []
       },
       {
         "name": "Footrace with Koopa the Quick",
@@ -138,7 +139,8 @@
               ]
             ]
           }
-        }
+        },
+        "open": []
       },
       {
         "name": "Shoot to the Island in the Sky",
@@ -277,6 +279,10 @@
         },
         "variants": [
           "Camera Glitch"
+        ],
+        "open": [
+          "Slope Start",
+          "TJ Ihop"
         ]
       },
       {
@@ -343,7 +349,10 @@
               ]
             ]
           }
-        }
+        },
+        "open": [
+          "DSS"
+        ]
       },
       {
         "name": "Mario Wings to the Sky",
@@ -426,6 +435,9 @@
         },
         "variants": [
           "Camera Glitch"
+        ],
+        "open": [
+          "Slope Start"
         ]
       },
       {
@@ -740,7 +752,8 @@
           "Backflip End",
           "SJ Throw",
           "Goomba Bounce"
-        ]
+        ],
+        "open": []
       }
     ],
     "extCheckId": 0
@@ -819,7 +832,8 @@
         "variants": [
           "Double JD",
           "Tree Backflip"
-        ]
+        ],
+        "open": []
       },
       {
         "name": "To the Top of the Fortress",
@@ -976,6 +990,9 @@
           "Double JD",
           "Elevator TJ",
           "Tree Backflip"
+        ],
+        "open": [
+          "Double Jump"
         ]
       },
       {
@@ -1059,7 +1076,8 @@
         },
         "variants": [
           "No Speedkick"
-        ]
+        ],
+        "open": null
       },
       {
         "name": "100c + Red Coins on the Floating Isle",
@@ -1163,6 +1181,9 @@
         },
         "variants": [
           "Double Piranha"
+        ],
+        "open": [
+          "Kanno Cycle"
         ]
       },
       {
@@ -1420,6 +1441,9 @@
           "Direct GP",
           "Double JD + Stairs Speedkick",
           "Tree Backflip"
+        ],
+        "open": [
+          "Sideflip"
         ]
       },
       {
@@ -1648,6 +1672,9 @@
         "variants": [
           "Tree Backflip",
           "Plank JD Clip"
+        ],
+        "open": [
+          "LJ"
         ]
       }
     ],
@@ -1712,7 +1739,8 @@
         },
         "variants": [
           "Punch Ending"
-        ]
+        ],
+        "open": []
       },
       {
         "name": "Can the Eel Come Out to Play?",
@@ -1778,7 +1806,10 @@
               ]
             ]
           }
-        }
+        },
+        "open": [
+          "BLJ"
+        ]
       },
       {
         "name": "Treasure of the Ocean Cave",
@@ -1844,7 +1875,10 @@
               ]
             ]
           }
-        }
+        },
+        "open": [
+          "BLJ"
+        ]
       },
       {
         "name": "100c + Red Coins on the Ship Afloat",
@@ -1910,7 +1944,8 @@
               ]
             ]
           }
-        }
+        },
+        "open": null
       },
       {
         "name": "Blast to the Stone Pillar",
@@ -2052,7 +2087,8 @@
         "variants": [
           "TJ Start",
           "no WK"
-        ]
+        ],
+        "open": []
       },
       {
         "name": "Through the Jet Stream",
@@ -2090,7 +2126,8 @@
               ]
             ]
           }
-        }
+        },
+        "open": []
       }
     ],
     "extCheckId": 61
@@ -2165,7 +2202,8 @@
               ]
             ]
           }
-        }
+        },
+        "open": []
       },
       {
         "name": "100c + Slip Slidin' Away",
@@ -2253,6 +2291,9 @@
         "variants": [
           "Blue Coin Switch",
           "No Teleport"
+        ],
+        "open": [
+          "Special"
         ]
       },
       {
@@ -2319,7 +2360,8 @@
               ]
             ]
           }
-        }
+        },
+        "open": []
       },
       {
         "name": "100c + Big Penguin Race",
@@ -2435,6 +2477,9 @@
         "variants": [
           "Blue Coin Switch",
           "No Teleport"
+        ],
+        "open": [
+          "Special"
         ]
       },
       {
@@ -2490,7 +2535,8 @@
         },
         "variants": [
           "Teleporter Red Late"
-        ]
+        ],
+        "open": []
       },
       {
         "name": "Snowman's Lost His Head",
@@ -2573,7 +2619,8 @@
         },
         "variants": [
           "SJ Start"
-        ]
+        ],
+        "open": null
       },
       {
         "name": "Wall Kicks Will Work",
@@ -2655,7 +2702,8 @@
               ]
             ]
           }
-        }
+        },
+        "open": []
       }
     ],
     "extCheckId": 69
@@ -2795,7 +2843,8 @@
           "First Door",
           "Last Door",
           "JP Text Skip"
-        ]
+        ],
+        "open": []
       },
       {
         "name": "Ride Big Boo's Merry-Go-Round",
@@ -2861,7 +2910,8 @@
               ]
             ]
           }
-        }
+        },
+        "open": []
       },
       {
         "name": "Secret of the Haunted Books",
@@ -2977,7 +3027,8 @@
         "variants": [
           "Phantaxx Ending",
           "Bottom Door"
-        ]
+        ],
+        "open": []
       },
       {
         "name": "100c + Seek the 8 Red Coins",
@@ -3043,7 +3094,10 @@
               ]
             ]
           }
-        }
+        },
+        "open": [
+          "DSS"
+        ]
       },
       {
         "name": "Big Boo's Balcony",
@@ -3109,7 +3163,8 @@
               ]
             ]
           }
-        }
+        },
+        "open": null
       },
       {
         "name": "Eye to Eye in the Secret Room",
@@ -3147,7 +3202,8 @@
               ]
             ]
           }
-        }
+        },
+        "open": []
       }
     ],
     "extCheckId": 92
@@ -3210,7 +3266,8 @@
             "id_list": [],
             "virtId": "5_1_Elevator Clip"
           }
-        }
+        },
+        "open": []
       },
       {
         "name": "100c + Elevate for 8 Red Coins",
@@ -3295,7 +3352,8 @@
           "Salt Clip",
           "No BLJ",
           "Eye Early"
-        ]
+        ],
+        "open": []
       },
       {
         "name": "Metal-Head Mario Can Move!",
@@ -3378,6 +3436,9 @@
         },
         "variants": [
           "Small WK"
+        ],
+        "open": [
+          "BLJ"
         ]
       },
       {
@@ -3477,7 +3538,8 @@
         },
         "variants": [
           "Fast Clip"
-        ]
+        ],
+        "open": []
       },
       {
         "name": "A-Maze-ing Emergency Exit",
@@ -3588,7 +3650,8 @@
         },
         "variants": [
           "LJ + TJ"
-        ]
+        ],
+        "open": []
       },
       {
         "name": "Watch for Rolling Rocks",
@@ -3671,7 +3734,8 @@
         },
         "variants": [
           "Rightside End"
-        ]
+        ],
+        "open": []
       }
     ],
     "extCheckId": 104
@@ -3807,7 +3871,8 @@
         },
         "variants": [
           "Platform Rollout"
-        ]
+        ],
+        "open": []
       },
       {
         "name": "Bully the Bullies",
@@ -3933,7 +3998,8 @@
         "variants": [
           "Speedkick DJ Dive",
           "LJx2 DJ Dive"
-        ]
+        ],
+        "open": []
       },
       {
         "name": "8-Coin Puzzle with 15 Pieces",
@@ -4027,7 +4093,8 @@
               ]
             ]
           }
-        }
+        },
+        "open": null
       },
       {
         "name": "Red-Hot Log Rolling",
@@ -4212,6 +4279,9 @@
         },
         "variants": [
           "DJ + LJ"
+        ],
+        "open": [
+          "DJ Sidehop"
         ]
       },
       {
@@ -4338,7 +4408,8 @@
             "id_list": [],
             "virtId": "6_5_TJ Boost"
           }
-        }
+        },
+        "open": null
       },
       {
         "name": "100c + Hot-Foot-it into the Volcano",
@@ -4404,7 +4475,10 @@
               ]
             ]
           }
-        }
+        },
+        "open": [
+          "Lavaboost"
+        ]
       },
       {
         "name": "Elevator Tour in the Volcano",
@@ -4442,7 +4516,8 @@
               ]
             ]
           }
-        }
+        },
+        "open": []
       }
     ],
     "extCheckId": 119
@@ -4597,7 +4672,8 @@
           "Speed SJ x2",
           "Side LJ",
           "Speed Punch x2"
-        ]
+        ],
+        "open": null
       },
       {
         "name": "Shining Atop the Pyramid",
@@ -4635,7 +4711,8 @@
               ]
             ]
           }
-        }
+        },
+        "open": []
       },
       {
         "name": "Inside the Ancient Pyramid",
@@ -4773,7 +4850,10 @@
               ]
             ]
           }
-        }
+        },
+        "open": [
+          "Nuts Pless"
+        ]
       },
       {
         "name": "Pyramid Puzzle",
@@ -4871,6 +4951,9 @@
         "variants": [
           "SJ",
           "Tama"
+        ],
+        "open": [
+          "Nuts Pless"
         ]
       },
       {
@@ -4941,7 +5024,8 @@
             "id_list": [],
             "virtId": "7_5_TJWK"
           }
-        }
+        },
+        "open": []
       },
       {
         "name": "Free Flying for 8 Red Coins",
@@ -5067,7 +5151,8 @@
         "variants": [
           "No Speed Jump",
           "Speed Wing"
-        ]
+        ],
+        "open": []
       },
       {
         "name": "100c + Pyramid Puzzle",
@@ -5133,7 +5218,8 @@
               ]
             ]
           }
-        }
+        },
+        "open": []
       }
     ],
     "extCheckId": 129
@@ -5288,6 +5374,9 @@
         "variants": [
           "Chip Clip",
           "Side Sub"
+        ],
+        "open": [
+          "Chip Clip"
         ]
       },
       {
@@ -5354,7 +5443,8 @@
               ]
             ]
           }
-        }
+        },
+        "open": null
       },
       {
         "name": "100c + Pole-Jumping for Red Coins",
@@ -5392,7 +5482,8 @@
               ]
             ]
           }
-        }
+        },
+        "open": []
       },
       {
         "name": "Through the Jet Stream",
@@ -5468,7 +5559,8 @@
               ]
             ]
           }
-        }
+        },
+        "open": []
       },
       {
         "name": "The Manta Ray's Reward",
@@ -5506,7 +5598,8 @@
               ]
             ]
           }
-        }
+        },
+        "open": null
       },
       {
         "name": "Collect the Caps...",
@@ -5582,7 +5675,8 @@
               ]
             ]
           }
-        }
+        },
+        "open": []
       }
     ],
     "extCheckId": 140
@@ -5690,7 +5784,8 @@
         },
         "variants": [
           "SJ Strat"
-        ]
+        ],
+        "open": null
       },
       {
         "name": "Chill with the Bully",
@@ -5787,7 +5882,8 @@
         },
         "variants": [
           "Slidekick"
-        ]
+        ],
+        "open": null
       },
       {
         "name": "In the Deep Freeze",
@@ -5853,7 +5949,8 @@
               ]
             ]
           }
-        }
+        },
+        "open": []
       },
       {
         "name": "Whirl from the Freezing Pond",
@@ -5956,7 +6053,8 @@
           "Intermediate",
           "Below Box Break",
           "Double Slide"
-        ]
+        ],
+        "open": null
       },
       {
         "name": "Shell Shreddin' for Red Coins",
@@ -6011,7 +6109,8 @@
         },
         "variants": [
           "Intermediate"
-        ]
+        ],
+        "open": []
       },
       {
         "name": "100c + Shell Shreddin' for Red Coins",
@@ -6077,7 +6176,8 @@
               ]
             ]
           }
-        }
+        },
+        "open": []
       },
       {
         "name": "Into the Igloo",
@@ -6205,7 +6305,8 @@
         "variants": [
           "Phantaxx Ending",
           "Side Igloo"
-        ]
+        ],
+        "open": null
       }
     ],
     "extCheckId": 147
@@ -6297,6 +6398,9 @@
         },
         "variants": [
           "Extra Frame"
+        ],
+        "open": [
+          "Mid Water"
         ]
       },
       {
@@ -6423,6 +6527,9 @@
         "variants": [
           "Sideflip TJWK",
           "TJ Dive"
+        ],
+        "open": [
+          "Direct TJ"
         ]
       },
       {
@@ -6461,7 +6568,8 @@
               ]
             ]
           }
-        }
+        },
+        "open": []
       },
       {
         "name": "100c + Secrets in the Shallows and Sky",
@@ -6499,7 +6607,8 @@
               ]
             ]
           }
-        }
+        },
+        "open": []
       },
       {
         "name": "Express Elevator--Hurry Up!",
@@ -6610,7 +6719,8 @@
         },
         "variants": [
           "Sideflip TJWK"
-        ]
+        ],
+        "open": []
       },
       {
         "name": "100c + Go to Town for Red Coins",
@@ -6648,7 +6758,8 @@
               ]
             ]
           }
-        }
+        },
+        "open": []
       },
       {
         "name": "Quick Race Through Downtown!",
@@ -6714,7 +6825,8 @@
               ]
             ]
           }
-        }
+        },
+        "open": []
       }
     ],
     "extCheckId": 169
@@ -6805,7 +6917,8 @@
             "id_list": [],
             "virtId": "11_1_No Log WK"
           }
-        }
+        },
+        "open": []
       },
       {
         "name": "Mystery of the Monkey Cage",
@@ -6918,7 +7031,8 @@
         },
         "variants": [
           "Cage WK"
-        ]
+        ],
+        "open": []
       },
       {
         "name": "Scary 'Shrooms, Red Coins",
@@ -6973,7 +7087,8 @@
         },
         "variants": [
           "LJ After 4th Red"
-        ]
+        ],
+        "open": []
       },
       {
         "name": "100c + Scary 'Shrooms, Red Coins",
@@ -7039,7 +7154,8 @@
               ]
             ]
           }
-        }
+        },
+        "open": []
       },
       {
         "name": "Mysterious Mountainside",
@@ -7133,7 +7249,8 @@
               ]
             ]
           }
-        }
+        },
+        "open": []
       },
       {
         "name": "Breathtaking View from Bridge",
@@ -7231,7 +7348,8 @@
             "id_list": [],
             "virtId": "11_5_No Log WK"
           }
-        }
+        },
+        "open": []
       },
       {
         "name": "Blast to the Lonely Mushroom",
@@ -7313,7 +7431,10 @@
               ]
             ]
           }
-        }
+        },
+        "open": [
+          "No Setup"
+        ]
       }
     ],
     "extCheckId": 178
@@ -7388,7 +7509,8 @@
               ]
             ]
           }
-        }
+        },
+        "open": []
       },
       {
         "name": "The Tip Top of the Huge Island",
@@ -7527,7 +7649,8 @@
         },
         "variants": [
           "Ledgegrab Cancel"
-        ]
+        ],
+        "open": []
       },
       {
         "name": "Rematch with Koopa the Quick",
@@ -7659,7 +7782,8 @@
         "variants": [
           "14.7-14.9 race",
           "Mountain Clip"
-        ]
+        ],
+        "open": []
       },
       {
         "name": "100c + Rematch with Koopa the Quick",
@@ -7725,7 +7849,8 @@
               ]
             ]
           }
-        }
+        },
+        "open": []
       },
       {
         "name": "Five Itty Bitty Secrets",
@@ -7807,7 +7932,8 @@
             "id_list": [],
             "virtId": "12_4_Beginner"
           }
-        }
+        },
+        "open": []
       },
       {
         "name": "Wiggler's Red Coins",
@@ -7845,7 +7971,8 @@
               ]
             ]
           }
-        }
+        },
+        "open": []
       },
       {
         "name": "100c + Wiggler's Red Coin",
@@ -7939,7 +8066,8 @@
               ]
             ]
           }
-        }
+        },
+        "open": []
       },
       {
         "name": "Make Wiggler Squirm",
@@ -8005,7 +8133,8 @@
               ]
             ]
           }
-        }
+        },
+        "open": []
       }
     ],
     "extCheckId": 186
@@ -8196,6 +8325,9 @@
         "variants": [
           "Low Dive",
           "GP Ending"
+        ],
+        "open": [
+          "Side Flippies"
         ]
       },
       {
@@ -8290,7 +8422,8 @@
               ]
             ]
           }
-        }
+        },
+        "open": []
       },
       {
         "name": "Get a Hand",
@@ -8373,7 +8506,8 @@
         },
         "variants": [
           "3x LJ"
-        ]
+        ],
+        "open": []
       },
       {
         "name": "Stomp on the Thwomp",
@@ -8411,7 +8545,8 @@
               ]
             ]
           }
-        }
+        },
+        "open": []
       },
       {
         "name": "100c + Stomp on the Thwomp",
@@ -8477,7 +8612,8 @@
               ]
             ]
           }
-        }
+        },
+        "open": []
       },
       {
         "name": "Timed Jumps on Moving Bars",
@@ -8588,7 +8724,8 @@
         },
         "variants": [
           "Cog Rollout"
-        ]
+        ],
+        "open": []
       },
       {
         "name": "Stop Time for Red Coins",
@@ -8776,7 +8913,8 @@
           "Sideflip + WK Strat",
           "Rollout Ending",
           "LJ Ending"
-        ]
+        ],
+        "open": []
       }
     ],
     "extCheckId": 204
@@ -8927,7 +9065,8 @@
         "variants": [
           "Full WK + Full SJ",
           "Low DJ"
-        ]
+        ],
+        "open": []
       },
       {
         "name": "The Big House in the Sky",
@@ -8993,7 +9132,8 @@
               ]
             ]
           }
-        }
+        },
+        "open": []
       },
       {
         "name": "100c + The Big House in the Sky",
@@ -9115,7 +9255,8 @@
               ]
             ]
           }
-        }
+        },
+        "open": []
       },
       {
         "name": "Coins Amassed in a Maze",
@@ -9212,7 +9353,8 @@
         },
         "variants": [
           "GWK Start"
-        ]
+        ],
+        "open": []
       },
       {
         "name": "Swingin' in the Breeze",
@@ -9311,7 +9453,8 @@
         },
         "variants": [
           "TJ Dive End"
-        ]
+        ],
+        "open": []
       },
       {
         "name": "Tricky Triangles!",
@@ -9393,7 +9536,8 @@
             "id_list": [],
             "virtId": "14_5_Beginner"
           }
-        }
+        },
+        "open": []
       },
       {
         "name": "Somewhere over the Rainbow",
@@ -9594,7 +9738,8 @@
           "DJ Dive",
           "Full WK + Full SJ",
           "Low DJ"
-        ]
+        ],
+        "open": []
       },
       {
         "name": "100c + Somewhere over the Rainbow",
@@ -9660,7 +9805,8 @@
               ]
             ]
           }
-        }
+        },
+        "open": []
       }
     ],
     "extCheckId": 218
@@ -9763,7 +9909,8 @@
               ]
             ]
           }
-        }
+        },
+        "open": []
       },
       {
         "name": "Vanish Cap under the Moat",
@@ -9858,7 +10005,8 @@
             ]
           }
         },
-        "variants": []
+        "variants": [],
+        "open": []
       },
       {
         "name": "CotMC Entry",
@@ -9897,7 +10045,8 @@
             ]
           }
         },
-        "variants": []
+        "variants": [],
+        "open": []
       },
       {
         "name": "Cavern of the Metal Cap",
@@ -9980,7 +10129,8 @@
         },
         "variants": [
           "Intermediate"
-        ]
+        ],
+        "open": []
       },
       {
         "name": "The Secret Aquarium",
@@ -10019,7 +10169,8 @@
             ]
           }
         },
-        "variants": []
+        "variants": [],
+        "open": null
       },
       {
         "name": "Wing Mario over the Rainbow",
@@ -10264,7 +10415,8 @@
         },
         "variants": [
           "Early Cannon"
-        ]
+        ],
+        "open": []
       },
       {
         "name": "Princess' Secret Slide",
@@ -10361,7 +10513,8 @@
         },
         "variants": [
           "Late Wall Bounce"
-        ]
+        ],
+        "open": []
       }
     ],
     "extCheckId": 230
@@ -10437,7 +10590,10 @@
             ]
           }
         },
-        "variants": []
+        "variants": [],
+        "open": [
+          "Framewalk"
+        ]
       },
       {
         "name": "BitDW Reds",
@@ -10672,7 +10828,11 @@
             ]
           }
         },
-        "variants": []
+        "variants": [],
+        "open": [
+          "Salt Flip (Pipe)",
+          "Salt Flip (Star)"
+        ]
       },
       {
         "name": "BitDW Battle",
@@ -10742,7 +10902,8 @@
         "variants": [
           "3/4 Spin",
           "Bowser Dance"
-        ]
+        ],
+        "open": null
       },
       {
         "name": "BitFS No Reds",
@@ -10837,7 +10998,8 @@
             ]
           }
         },
-        "variants": []
+        "variants": [],
+        "open": []
       },
       {
         "name": "BitFS Reds",
@@ -10904,7 +11066,8 @@
             ]
           }
         },
-        "variants": []
+        "variants": [],
+        "open": null
       },
       {
         "name": "BitFS Battle",
@@ -10974,7 +11137,8 @@
         "variants": [
           "3/4 Spin",
           "Half Spin"
-        ]
+        ],
+        "open": null
       },
       {
         "name": "BitS No Reds",
@@ -11129,6 +11293,9 @@
         },
         "variants": [
           "w/ Manamo"
+        ],
+        "open": [
+          "TAS LJ + Ult"
         ]
       },
       {
@@ -11308,7 +11475,8 @@
             ]
           }
         },
-        "variants": []
+        "variants": [],
+        "open": []
       },
       {
         "name": "BitS Battle",
@@ -11378,7 +11546,8 @@
             ]
           }
         },
-        "variants": []
+        "variants": [],
+        "open": null
       }
     ],
     "extCheckId": 239

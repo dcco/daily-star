@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 
 import { orgColList, filterVarColList } from "./org_star_def"
 import { asPool, orgVariantList, addTimePool, buildTimeTable, updateTimeTable } from "./timetable"
-import { rawMS, orgRecordMap, applyRecordMap } from "./vercalc"
 import { StarTable } from "./startable"
 
 	/*

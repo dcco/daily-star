@@ -9920,6 +9920,10 @@
           "ms": 5893
         },
         {
+          "player": "Nils",
+          "ms": 5906
+        },
+        {
           "player": "Nebula",
           "ms": 5913
         },
@@ -9945,10 +9949,6 @@
         },
         {
           "player": "FrostxBytex",
-          "ms": 5933
-        },
-        {
-          "player": "Nils",
           "ms": 5933
         },
         {
@@ -10000,6 +10000,10 @@
           "ms": 5970
         },
         {
+          "player": "AJLane",
+          "ms": 5973
+        },
+        {
           "player": "Keubab",
           "ms": 5983
         },
@@ -10009,10 +10013,6 @@
         },
         {
           "player": "itsbeeve",
-          "ms": 5986
-        },
-        {
-          "player": "AJLane",
           "ms": 5986
         },
         {
@@ -26775,10 +26775,6 @@
           [
             "main",
             143
-          ],
-          [
-            "ext",
-            100
           ]
         ]
       },
@@ -27160,10 +27156,6 @@
           [
             "main",
             144
-          ],
-          [
-            "ext",
-            101
           ]
         ]
       },
@@ -43854,6 +43846,10 @@
           "ms": 696
         },
         {
+          "player": "Prismatic_Fast",
+          "ms": 696
+        },
+        {
           "player": "Rambok",
           "ms": 696
         },
@@ -43943,10 +43939,6 @@
         },
         {
           "player": "oatslice",
-          "ms": 706
-        },
-        {
-          "player": "Prismatic_Fast",
           "ms": 706
         },
         {
@@ -64427,6 +64419,10 @@
         {
           "player": "Xein64",
           "ms": 9970
+        },
+        {
+          "player": "hotdwgboy",
+          "ms": 10846
         },
         {
           "player": "husTlie",
@@ -101560,12 +101556,8 @@
       "strat": {
         "stage": "Big Boo's Haunt",
         "star": "100c + Seek the 8 Red Coins",
-        "strat": "Standard",
+        "strat": "DSS",
         "idList": [
-          [
-            "main",
-            143
-          ],
           [
             "ext",
             100
@@ -101585,12 +101577,8 @@
       "strat": {
         "stage": "Big Boo's Haunt",
         "star": "100c + Seek the 8 Red Coins",
-        "strat": "Standard",
+        "strat": "DSS",
         "idList": [
-          [
-            "main",
-            144
-          ],
           [
             "ext",
             101

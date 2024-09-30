@@ -7,6 +7,7 @@ import { newFilterState, copyFilterState, fullFilterState,
 	orgStarDef, verOffsetStarDef, hasExtStarDef, colListStarDef } from './org_star_def'
 import { xcamTimeTable } from './xcam_time_table'
 import { xcamRecordMap, sortColList } from './xcam_record_map'
+import { openListMergeView, formatMergeView } from './merge_view'
 //import { hasExt, addTimePool, buildTimeTable } from './timetable'
 //import { rawMS, formatFrames, addFrames, readVerOffset, applyVerOffset,
 //	stratRowVer, starVerData, orgRecordMap, applyRecordMap } from './vercalc'
@@ -99,16 +100,19 @@ export function ViewBoard(props) {
 	// add sort record + relevant records
 	var sortRM = xcamRecordMap(colList, fullFilterState(), verOffset);
 	var relRM = xcamRecordMap(colList, fs, verOffset);
-	sortColList(colList, sortRM);
+	sortColList(colList, sortRM, starDef.open);
 
 	var mainColList = filterVarColList(colList, null);
+	var mainMV = openListMergeView(mainColList, starDef.open);
 	tableList.push(<StarTable colList={ mainColList } timeTable={ timeTable } verOffset={ verOffset }
-		recordMap={ relRM } canWrite="false" key={ stageId + "_" + starId + "_0" }></StarTable>);
+		recordMap={ relRM } mv={ mainMV } canWrite="false" key={ stageId + "_" + starId + "_0" }></StarTable>);
 
 	var varColList = filterVarColList(colList, 1);
+	var varMV = null;
 	if (varColList.length > 0) {
+		varMV = openListMergeView(varColList, starDef.open);
 		tableList.push(<StarTable colList={ varColList } timeTable={ timeTable } verOffset={ verOffset }
-			recordMap={ relRM }	canWrite="false" key={ stageId + "_" + starId + "_1" }></StarTable>);
+			recordMap={ relRM }	mv={ varMV } canWrite="false" key={ stageId + "_" + starId + "_1" }></StarTable>);
 	}	
 
 	return (<div>
@@ -131,5 +135,7 @@ export function ViewBoard(props) {
 		{ tableList }
 	</div>);
 
-		/* { tableList } */
+	/* 
+		{ formatMergeView(mainMV) }
+		{ "   " + formatMergeView(varMV) } */
 }

@@ -1,5 +1,6 @@
 
-import rowData from './json/row_data.json'
+//import rowData from './json/row_data.json'
+import { G_SHEET } from './xcam_wrap'
 
 import { zeroRowDef, begRowDef, rowDefStratDef } from './strat_def'
 import { rawMS, newTimeDat, maxTimeDat, applyVerOffset } from './time_dat'
@@ -10,6 +11,7 @@ import { rawMS, newTimeDat, maxTimeDat, applyVerOffset } from './time_dat'
 
 export function xcamRecordMap(colList, fs, verOffset)
 {
+	var rowData = G_SHEET.rowData;
 	// build record map
 	var recordMap = {};
 	for (let i = 0; i < colList.length; i++) {
@@ -36,46 +38,22 @@ export function xcamRecordMap(colList, fs, verOffset)
 	return recordMap;
 }
 
-export function sortColList(colList, recordMap)
+function openName(openList, name)
+{
+	if (name === "Open") return true;
+	if (openList === null) return false;
+	return openList.includes(name);
+}
+
+export function sortColList(colList, recordMap, openList)
 {
 	colList.sort(function (a, b) {
-		if (a[1].name === "Open") return -1;
-		else if (b[1].name === "Open") return 1;
+		var open1 = openName(openList, a[1].name);
+		var open2 = openName(openList, b[1].name);
+		if (open1 && !open2) return -1;
+		else if (!open1 && open2) return 1;
 		var time1 = recordMap[a[1].name];
 		var time2 = recordMap[b[1].name];
 		return time1.time - time2.time;
 	});
 }
-
-/*
-export function orgRecordMap(stageId, starId, fs) {
-	// extract column + version offset data
-	var colList = orgColList(stageId, starId, fs);
-	var verData = starVerData(orgData[stageId].starList[starId], fs);
-	// build record map
-	var recordMap = {};
-	function recObj(rawTime, time, ver) {
-		return { "rawTime": rawTime, "time": time, "ver": ver };
-	}
-	for (let i = 0; i < colList.length; i++) {
-		var stratDef = colList[i];
-		var record = recObj(999900, 999900, "jp");
-		if (!stratDef.virtual) {
-			for (const xcamRef of stratDef.id_list) {
-				var [xs, xcamId] = xcamRef;
-				var rawTime = rawMS(rowData[xs][xcamId].record);
-				if (rawTime === null) continue;
-				// apply version offset
-				var rowVer = stratRowVer(stratDef, xcamRef);
-				var time = applyVerOffset(verData, rowVer, rawTime, stratDef.name);
-				if (time < record.time) record = recObj(rawTime, time, rowVer);
-			}
-		} else {
-			var rawTime = rawMS(rowData.beg[stratDef.virtId][0]);
-			var time = applyVerOffset(verData, "jp", rawTime, stratDef.name, "jp");
-			if (time < record.time) record = recObj(rawTime, time, "jp");
-		}
-		recordMap[stratDef.name] = record;
-	}
-	return recordMap;
-}*/

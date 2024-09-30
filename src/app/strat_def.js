@@ -140,8 +140,9 @@ function mergeVariantMap(v1, v2) {
 export function mergeVerStratDef(sDef1, sDef2)
 {
 	// for simplicity, we assume that this function will only be used to merge
-	// - strats originating from the same strat (same name, etc)
-	// - strats lacking an initial version
+	// raw strats that are JP/US variants. meaning:
+	// - they originate from the same strat (same name, etc)
+	// - they lack initial versioning
 	var newDef = copyStratDef(sDef1);
 	var [ref_list, ver_map] = mergeRefListVerMap(sDef1.id_list, sDef2.id_list);
 	newDef.id_list = ref_list;

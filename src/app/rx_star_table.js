@@ -2,7 +2,9 @@ import React, { useState } from 'react'
 
 import playData from './json/player_data.json'
 import { formatTime, formatTimeDat, newVerOffset } from "./time_dat"
-import { filterTimeTable, sortTimeTable } from "./time_table"
+import { sortTimeTable } from "./time_table"
+import { nameListMergeView, recordListMergeView, filterTableMergeView } from "./merge_view"
+
 	/*
 		##########
 		STAR TABLE
@@ -119,10 +121,13 @@ function verAdjustTime(ver, rawTime, time) {
 export function StarTable(props) {
 	var colList = props.colList;
 	var recordMap = props.recordMap;
-	var stratTotal = colList.length;
+	var mv = props.mv;
 	var timeTable = props.timeTable;
 	var canWrite = props.canWrite === "true";
 	var editTT = props.editTT;
+
+	var stratTotal = colList.length;
+	if (mv !== null) stratTotal = mv.list.length;
 
 	var verOffset = newVerOffset("jp", false, 0);
 	if (props.verOffset !== undefined) {
@@ -170,10 +175,15 @@ export function StarTable(props) {
 	var imgNode = (active) => (<div className="float-frame">
 		<img src="/icons/sort-icon.png" active={ active.toString() } className="float-icon" alt=""></img></div>);
 	var tdWidth = "" + Math.floor(77 / stratTotal) + "%";
-	var headerNodes = colList.map((_strat, i) => {
+	/*var headerNodes = colList.map((_strat, i) => {
 		var [colId, strat] = _strat;
 		return (<td className="time-cell" key={ strat.name } active={ eActive } width={ tdWidth }
 			onClick={ () => { if (!eState.active) setSortId(i + 1) } }>{ strat.name } { imgNode(sortId === i + 1) }</td>);
+	});*/
+	var nameList = nameListMergeView(mv, colList);
+	var headerNodes = nameList.map((name, i) => {
+		return (<td className="time-cell" key={ name } active={ eActive } width={ tdWidth }
+			onClick={ () => { if (!eState.active) setSortId(i + 1) } }>{ name } { imgNode(sortId === i + 1) }</td>);
 	});
 	{
 		headerNodes.unshift(<td className="time-cell" key="strat" active={ eActive } width="15%"
@@ -182,7 +192,7 @@ export function StarTable(props) {
 	headerNodes.push(<td key="act">*</td>);
 
 	// wr header
-	var recordNodes = colList.map((_strat, i) => {
+	/*var recordNodes = colList.map((_strat, i) => {
 		var [colId, strat] = _strat;
 		var record = recordMap[strat.name];
 		var timeNode = formatTime(record.time);
@@ -192,13 +202,24 @@ export function StarTable(props) {
 				verAdjustTime(record.rowDef.ver, record.rawTime, record.time) }</span>);
 		}
 		return (<td className="record-cell" key={ strat.name }>{ timeNode }</td>);
+	});*/
+	var recordList = recordListMergeView(mv, colList, recordMap);
+	var recordNodes = recordList.map((record) => {
+		var timeNode = formatTime(record.time);
+		if ((verOffset.focusVer === "jp" && record.rowDef.ver === "us") ||
+			(verOffset.focusVer === "us" && record.rowDef.ver === "jp")) {
+			timeNode = (<span>{ formatTime(record.time) } {
+				verAdjustTime(record.rowDef.ver, record.rawTime, record.time) }</span>);
+		}
+		return (<td className="record-cell" key={ record.rowDef.name }>{ timeNode }</td>);
 	});
 	recordNodes.unshift(<td className="record-cell" key="wr">WR</td>);
 	recordNodes.push(<td key="act"></td>);
 
 	// filter table by colums + sort table data
-	var filterTable = filterTimeTable(timeTable, colList);
-	if (sortId > colList.length) setSortId(0);
+	//var filterTable = filterTimeTable(timeTable, colList);
+	var filterTable = filterTableMergeView(timeTable, mv, colList);
+	if (sortId > stratTotal) setSortId(0);
 	filterTable = sortTimeTable(filterTable, sortId);
 
 	// build time table
