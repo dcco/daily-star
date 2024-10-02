@@ -1,0 +1,4 @@
+[[redirects]]
+  from = "/.well-known/acme-challenge/*"
+  to = "/well-known/acme-challenge/:splat"
+  status = 200
