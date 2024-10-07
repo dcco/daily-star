@@ -88,7 +88,8 @@ export function copyStratDef(stratDef)
 		"virtual": stratDef.virtual,
 		"virtId": stratDef.virtId,
 		"id_list": stratDef.id_list,
-		"variant_map": stratDef.variant_map
+		"variant_map": stratDef.variant_map,
+		"ver_map": stratDef.ver_map
 	}
 }
 
@@ -227,6 +228,17 @@ export function filterExtStratSet(vs) {
 		vsx[stratName] = newDef;
 	});
 	return vsx;
+}
+
+export function toStratSet(list) {
+	var vs = {};
+	for (let i = 0; i < list.length; i++) {
+		var obj = list[i];
+		vs[obj.name] = obj;
+		// special parameter to remember column id
+		vs[obj.name]["colId"] = i;
+	}
+	return vs;
 }
 
 	/*

@@ -32,9 +32,10 @@ function _signOut()
 	auth.signOut();
 }
 
-export function AuthButton()
+export function AuthButton(props)
 {
-	const [user, setUser] = useState(null);
+	var user = props.user;
+	var setUser = props.setUser;
 
 	// when authorization state changes, save token
 	useEffect(() => {
@@ -42,7 +43,7 @@ export function AuthButton()
 			if (_user) {
 				console.log(_user);
 				setUser(_user);
-			} else setUser(null)
+			} else setUser(null);
 		});
 	}, []);
 
@@ -50,7 +51,11 @@ export function AuthButton()
 	var loginNode = (
 		<div className="login-button" onClick={ _signIn }>Log in</div>
 	);
-	var logoutNode = "";
+
+	if (user !== null) {
+		loginNode = (<img className="login-pic" height="25px" src={ user.photoURL }></img>);
+	}
+	/*var logoutNode = "";
 	if (user !== null) {
 		loginNode = (
 			<div className="login-button" image="true" onClick={ _signIn }>
@@ -60,8 +65,25 @@ export function AuthButton()
 		logoutNode = (<div className="logout-button" onClick={ _signOut }>Logout</div>);
 	}
 
-	return (<div className="login-cont">
-		{ loginNode }
-		{ logoutNode }
+	return (<div className="ident-cont">
+		<div>Nick: <div className="nick-box">Twig</div></div>
+		<div className="login-cont">
+			{ loginNode }
+			{ logoutNode }
+		</div>
+	</div>);*/
+	return (<div className="ident-cont">
+		<div className="login-cont">
+			{ loginNode }
+			<div>
+				<div className="nick-cont">
+					<div className="nick-disp">Twig</div>
+					<img src="/icons/edit-icon.png" className="edit-icon"></img>
+					<div className="log-ctrl-box">
+						<div className="log-ctrl">Logout</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>);
 }

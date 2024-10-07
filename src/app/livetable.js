@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react'
 
-import { orgColList, filterVarColList } from "./org_star_def"
-import { asPool, orgVariantList, addTimePool, buildTimeTable, updateTimeTable } from "./timetable"
-import { StarTable } from "./startable"
+import { newTimeDat, applyVerOffset } from "./time_dat"
+import { begRowDef, rowDefStratDef, filterVarColList, toStratSet } from './strat_def'
+import { fullFilterState,
+	orgStarDef, verOffsetStarDef, colListStarDef } from './org_star_def'
+import { xcamRecordMap, sortColList } from './xcam_record_map'
+import { openListMergeView } from './merge_view'
+import { addTimeMap, buildTimeTable } from './time_table'
+import { StarTable } from './rx_star_table'
 
 	/*
 		###############
@@ -12,7 +17,7 @@ import { StarTable } from "./startable"
 		is synced with our backend database.
 	*/
 
-async function loadTimeTable(stageId, starId, verState) {
+async function loadTimeTable(stageId, starId, colList, fs, verOffset) {
 	// load rows
 	const getReq = await fetch("http://ec2-52-15-55-53.us-east-2.compute.amazonaws.com:5500/times/read?stage=" +
 		stageId + "&star=" + starId);
@@ -22,20 +27,30 @@ async function loadTimeTable(stageId, starId, verState) {
 		return [];
 	}
 	// enumerate strats
-	var colList = orgColList(stageId, starId, verState);
-	var stratPool = asPool(colList, "name", "colId");
+	//var colList = orgColList(stageId, starId, verState);
+	var stratSet = toStratSet(colList);
 	// build time table
-	const timePool = {};
+	const timeMap = {};
 	for (const data of res.res) {
-		var stratId = stratPool[data.stratname].colId;
-		var verMap = stratPool[data.stratname].ver_map;
-		if (stratId !== undefined) {
-			var ver = "both";
-			if (verMap !== undefined) ver = verMap[stratId];
-			addTimePool(timePool, data.player, stratId, data.time, data.time, ver);
+		var playerName = "Unknown";
+		var stratDef = stratSet[data.stratname];
+		if (stratDef === undefined) continue;
+		var stratId = stratDef.colId;
+		// get row definition (if not in xcam sheet, use beginner template)
+		var rowDef = null;
+		if (stratDef.virtual) {
+			rowDef = begRowDef(stratDef.name);
+		} else {
+			var xcamRef = stratDef.id_list[0];
+			rowDef = rowDefStratDef(stratDef, xcamRef);	
 		}
+		// add time data
+		var timeDat = newTimeDat(data.time, data.link, data.note, rowDef);
+		applyVerOffset(timeDat, verOffset);
+		addTimeMap(timeMap, playerName, stratId, timeDat);
 	}
-	return buildTimeTable(timePool, colList.length);
+	console.log("Successfully loaded live table data.");
+	return buildTimeTable(timeMap, colList.length);
 }
 
 function completeEditRow(colTotal, editText, colOrder) {
@@ -98,8 +113,11 @@ export function LiveStarTable(props)
 {
 	const stageId = props.stageId;
 	const starId = props.starId;
-	const variant = props.variant;
 	const fs = props.fs;
+
+	var starDef = orgStarDef(stageId, starId);
+	var verOffset = verOffsetStarDef(starDef, fs);
+	var colList = colListStarDef(starDef, fs);
 
 	// time table
 	const [timeTable, setTimeTable] = useState([]);
@@ -109,7 +127,7 @@ export function LiveStarTable(props)
 	useEffect(() => {
 		var dirty = (reload !== 0);
 		const f = async () => {
-			if (dirty === 2) setTimeTable(await loadTimeTable(stageId, starId, fs));
+			if (dirty) setTimeTable(await loadTimeTable(stageId, starId, colList, fs, verOffset));
 		}
 		setTimeout(f, reload);
 		setReload(0);
@@ -117,8 +135,6 @@ export function LiveStarTable(props)
 
 	// edit function
 	const editTT = (name, dfText, colOrder) => {
-		// get columns / column total
-		var colList = orgColList(stageId, starId, fs);
 		// complete the row and update time table
 		//var newRow = completeEditRow(stageId, starId, variant, dfText, colOrder);
 		var newRow = completeEditRow(colList, dfText, colOrder);
@@ -129,7 +145,7 @@ export function LiveStarTable(props)
 		setReload(1000); // slight offset so the database has time to actually update
 	}
 
-	var _colList = orgColList(stageId, starId, fs);
+	/*var _colList = orgColList(stageId, starId, fs);
 
 	// add sort record + relevant records
 	var sortRM = orgRecordMap(stageId, starId, [true, true], true);
@@ -139,5 +155,17 @@ export function LiveStarTable(props)
 
 	var colList = filterVarColList(_colList, variant);
 
-	return (<StarTable colList={ colList } timeTable={ timeTable } canWrite="true" editTT={ editTT }></StarTable>);
+	return (<StarTable colList={ colList } timeTable={ timeTable } canWrite="true" editTT={ editTT }></StarTable>);*/
+
+	// add sort record + relevant records
+	var sortRM = xcamRecordMap(colList, fullFilterState(), verOffset);
+	var relRM = xcamRecordMap(colList, fs, verOffset);
+	sortColList(colList, sortRM, starDef.open);
+
+	// create star table
+	var filterColList = filterVarColList(colList, null);
+	var filterMV = openListMergeView(filterColList, starDef.open);
+	
+	return(<StarTable colList={ filterColList } timeTable={ timeTable } verOffset={ verOffset }
+		recordMap={ relRM } mv={ filterMV } canWrite="true" editTT={ editTT }></StarTable>);
 }

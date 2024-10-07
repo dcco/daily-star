@@ -91,26 +91,39 @@ export function formatFrames(frames) {
 		time_dat:
 		* rawTime: int - unadjusted time
 		* time: int - adjusted time
+		* link: string
+		* note: string
 		* rowDef: row_def - xcam row represented by the time cell
+
+		 multi_dat (time cell): an array of time_dats used to represent
+			multiple rows in the same column
 	*/
 
-export function newTimeDat(time, rowDef)
+export function newTimeDat(time, link, note, rowDef)
 {
+	if (rowDef === undefined) throw("New time datum created with incomplete arguments.")
 	return {
 		"rawTime": time,
 		"time": time,
+		"link": link,
+		"note": note,
 		"rowDef": rowDef
 	};
 }
 
 export function maxTimeDat(rowDef)
 {
-	return newTimeDat(999900, 999900, rowDef);
+	return newTimeDat(999900, null, null, rowDef);
 }
 
 export function formatTimeDat(timeDat) {
 	if (timeDat === null) return "";
 	return formatTime(timeDat.time);
+}
+
+export function formatMultiDat(mDat) {
+	if (mDat === null) return "";
+	return formatTime(mDat[0].time);
 }
 
 	/*

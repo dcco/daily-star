@@ -20,5 +20,5 @@ export async function updateGSheet(callback)
 	G_SHEET.rowData = newRD;
 	G_SHEET.xcamData = newXD;
 	console.log("Succesfully loaded online xcam data.");
-	callback();
+	callback(true);
 }

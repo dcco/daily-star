@@ -114,3 +114,9 @@ approximate flow:
 * xcam_record_map : converts xcam data + column lists into record maps / sorting for time tables
 
 * merge_view: takes column lists and more sharply defines column behavior / filters time tables to match
+
+
+
+sudo -u postgres psql
+\c xcam_db
+\dt (shows all tables)
