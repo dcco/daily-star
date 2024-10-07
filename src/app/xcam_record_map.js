@@ -20,16 +20,17 @@ export function xcamRecordMap(colList, fs, verOffset)
 		if (!stratDef.virtual) {
 			for (const xcamRef of stratDef.id_list) {
 				var [xs, xcamId] = xcamRef;
-				var rawTime = rawMS(rowData[xs][xcamId].record);
+				var cellDat = rowData[xs][xcamId];
+				var rawTime = rawMS(cellDat.record);
 				if (rawTime === null) continue;
 				// apply version offset
-				var timeDat = newTimeDat(rawTime, rowDefStratDef(stratDef, xcamRef));
+				var timeDat = newTimeDat(rawTime, cellDat.link, cellDat.note, rowDefStratDef(stratDef, xcamRef));
 				applyVerOffset(timeDat, verOffset);
 				if (timeDat.time < record.time) record = timeDat;
 			}
 		} else {
 			var rawTime = rawMS(rowData.beg[stratDef.virtId][0]);
-			var timeDat = newTimeDat(rawTime, begRowDef(stratDef.name));
+			var timeDat = newTimeDat(rawTime, null, null, begRowDef(stratDef.name));
 			applyVerOffset(timeDat, verOffset);
 			if (timeDat.time < record.time) record = timeDat;
 		}

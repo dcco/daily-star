@@ -24,7 +24,7 @@ export function xcamTimeTable(colList, fs, verOffset) {
 			var timeList = xcamData[xs][xcamId].times;
 			// iterate through every time for the xcam row
 			for (const data of timeList) {
-				var timeDat = newTimeDat(data.ms, rowDefStratDef(stratDef, xcamRef));
+				var timeDat = newTimeDat(data.ms, data.link, data.note, rowDefStratDef(stratDef, xcamRef));
 				applyVerOffset(timeDat, verOffset);
 				// do not include times better than posted record
 				if (record === undefined || data.ms >= rawMS(record)) {

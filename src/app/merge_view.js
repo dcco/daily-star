@@ -171,7 +171,7 @@ export function filterTableMergeView(timeTable, mv, colList)
 	for (let i = 0; i < timeTable.length; i++) {
 		var userDat = timeTable[i];
 		var empty = true;
-		var timeList = mv.list.map((sl) => {
+		/*var timeRow = mv.list.map((sl) => {
 			var timeDat = null;
 			for (const _strat of sl) {
 				var [colId, strat] = _strat;
@@ -181,10 +181,23 @@ export function filterTableMergeView(timeTable, mv, colList)
 				if (timeDat === null || curDat.time < timeDat.time) timeDat = curDat;
 			}
 			return timeDat;
+		});*/
+		var mergeRow = mv.list.map((sl) => {
+			var mergeCell = [];
+			for (const _strat of sl) {
+				var [colId, strat] = _strat;
+				var timeCell = userDat.timeRow[colId];
+				if (timeCell === null) continue;
+				empty = false;
+				mergeCell = mergeCell.concat(timeCell);
+			}
+			mergeCell.sort(function(a, b) { return a.time - b.time });
+			if (mergeCell.length === 0) mergeCell = null;
+			return mergeCell;
 		});
 		if (!empty) filterTable.push({
 			"name": userDat.name,
-			"tmList": timeList
+			"timeRow": mergeRow
 		});
 	}
 	return filterTable;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 import playData from './json/player_data.json'
-import { formatTime, formatTimeDat, newVerOffset } from "./time_dat"
+import { formatTime, formatMultiDat, newVerOffset } from "./time_dat"
 import { sortTimeTable } from "./time_table"
 import { nameListMergeView, recordListMergeView, filterTableMergeView } from "./merge_view"
 
@@ -41,6 +41,142 @@ function validEdit(cellText) {
 		}
 	}
 	return isDirty;
+}
+
+function RawCell(props, cellText, exText) {
+	var active = props.active;
+	var onClick = props.onClick;
+	var multiFlag = props.multiFlag;
+	var mainNode = cellText;
+	if (exText !== null) {
+		mainNode = (<span>{ cellText } <em>{ exText }</em></span>);
+	}
+	var eeText = "";
+	if (multiFlag) eeText = "*";
+	return (<td className="time-cell" active={ active.toString() } onClick={ onClick }>{ mainNode } { eeText }</td>);
+}
+
+function TimeCell(props) {
+	var timeDat = props.timeDat;
+	var verOffset = props.verOffset;
+	// -- these properties are present, but used in raw cell
+	// var active = props.active;
+	// var onClick = props.onClick;
+	// var multiFlag = props.multiFlag;
+	// null case
+	if (timeDat === null) return RawCell(props, "", null);
+	var cellText = formatTime(timeDat.time);
+	// variant text
+	if (timeDat.rowDef.variant_list.length > 0) {
+		cellText = cellText + " [";
+		timeDat.rowDef.variant_list.map((v, i) => {
+			if (i !== 0) cellText = cellText + ",";
+			var vpp = parseInt(v) + 1;
+			cellText = cellText + vpp;
+		})
+		cellText = cellText + "]";
+	}
+	// if the version matters
+	var exText = null;
+	if ((verOffset.focusVer === "jp" && timeDat.rowDef.ver === "us") ||
+		(verOffset.focusVer === "us" && timeDat.rowDef.ver === "jp")) {
+		exText = verAdjustTime(timeDat.rowDef.ver, timeDat.rawTime, timeDat.time);
+	//(<span>{ linkText } <em>
+	//		{ verAdjustTime(timeDat.rowDef.ver, timeDat.rawTime, timeDat.time) }</em></span>);
+	}
+	// link if link is relevant
+	if (timeDat.link !== null) {
+		cellText = (<a href={ timeDat.link }>{ cellText }</a>);
+	}
+	return RawCell(props, cellText, exText)
+}
+
+function NameCell(props) {
+	// get play standard when applicable
+	var playStd = "Unranked";
+	if (playData[props.name] !== undefined && playData[props.name].standard) {
+		playStd = playData[props.name].standard;
+	}
+	// name + ending cell
+	return(<td ps={ playStd }>{ props.name }</td>);
+}
+
+function DataRow(props) {
+	var userDat = props.userDat;
+	var verOffset = props.verOffset;
+	var action = props.action;
+	var rowId = props.rowId;
+	var onClick = props.onClick;
+	var datarow = props.datarow;
+	// get text for initializing edit row
+	var timeText = userDat.timeRow.map(formatMultiDat);
+	timeText.unshift(userDat.name);
+	// active (clickable)
+	var active = (action !== "none");
+	// build time cells
+	var timeRowNodes = userDat.timeRow.map((multiDat, j) => {
+		// get representative time cell
+		var timeDat = null;
+		var multiFlag = false;
+		if (multiDat !== null) {
+			timeDat = multiDat[0];
+			multiFlag = multiDat.length > 1;
+		}
+		return <TimeCell timeDat={ timeDat } verOffset={ verOffset } active={ active }
+			onClick={ () => onClick(action, rowId, j, timeText) } multiFlag={ multiFlag } key={ j }/>; 
+	})
+	// name cell
+	timeRowNodes.unshift(<NameCell name={ userDat.name } key="user"/>);
+	return (<tr className="time-row" datarow={ datarow }>
+		{ timeRowNodes }
+	</tr>);
+}
+
+function FullDataRow(userDat, verOffset, rowId, onClick) {
+	// get total rows needed
+	var dispTotal = 1;
+	userDat.timeRow.map((multiDat) => {
+		if (multiDat !== null && multiDat.length > 1) {
+			if (multiDat.length > dispTotal) dispTotal = multiDat.length;
+		}
+	});
+	var rowNodeList = [];
+	// print out each row one by one
+	for (let i = 0; i < dispTotal; i++) {
+		var timeRowNodes = userDat.timeRow.map((multiDat, j) => {
+			var timeDat = null;
+			if (multiDat !== null && i < multiDat.length) {
+				timeDat = multiDat[i];
+			}
+			if (timeDat === null) {
+				return <td className="dark-cell" key={ j }></td>; 
+			}
+			return <TimeCell timeDat={ timeDat } verOffset={ verOffset } active="true"
+				onClick={ () => onClick("view-toggle", rowId, j, [""]) } multiFlag={ false } key={ j }/>;
+		})
+		if (i === 0) timeRowNodes.unshift(<NameCell name={ userDat.name } key="user"/>);
+		else timeRowNodes.unshift(<td className="dark-cell" key="empty"></td>);
+		/*rowNodeList.push(<tr className="time-row" key={ rowId + "#" + i }>
+			<td onClick={ () => onClick("view-toggle", rowId, 0, [""]) }>Test</td></tr>);
+*/
+		rowNodeList.push(<tr className="time-row" key={ rowId + "#" + i} datarow="yes">{ timeRowNodes }</tr>);
+	}
+	// draw separators
+	var sepList1 = [];
+	var sepList2 = [];
+	for (let i = 0; i < userDat.timeRow.length + 1; i++) {
+		sepList1.push(<td className="sep-cell" key={ i }></td>);
+		sepList2.push(<td className="sep-cell" key={ i }></td>);
+	};
+	rowNodeList.unshift(<tr className="sep-row" key={ rowId + "#A" }>{ sepList1 }</tr>);
+	rowNodeList.push(<tr className="sep-row" key={ rowId + "#B" }>{ sepList2 }</tr>);
+	return rowNodeList;
+}
+
+function nullViewState() {
+	return {
+		openRow: null
+	};
 }
 
 function EditCell(props) {
@@ -137,25 +273,40 @@ export function StarTable(props) {
 	// sort state
 	const [sortId, setSortId] = useState(0);
 
+	// view state
+	const [vState, setVState] = useState(nullViewState());
+
+	// view functions
+	const viewClick = (row) => {
+		if (vState.rowId !== row) {
+			setVState({ rowId: row });
+		} else {
+			setVState({ rowId: null });
+		}
+	};
+
 	// edit state
 	const [eState, setEditState] = useState(nullEditState());
 	const [editText, setEditText] = useState([]);
 
 	// edit functions
-	var editClick = () => {};
-	if (canWrite) {
-		editClick = (row, col, eData) => {
-			var oldText = eState.oldText;
-			if (row !== eState.rowId) oldText = eData;
-			setEditState({
-				active: true,
-				rowId: row,
-				colId: col,
-				oldText: oldText
-			});
-			setEditText(eData);
-		};
+	const editClick = (row, col, eData) => {
+		var oldText = eState.oldText;
+		if (row !== eState.rowId) oldText = eData;
+		setEditState({
+			active: true,
+			rowId: row,
+			colId: col,
+			oldText: oldText
+		});
+		setEditText(eData);
+	};
+
+	const cellClick = (action, row, col, eData) => {
+		if (action === "edit") editClick(row, col, eData);
+		else if (action === "view-toggle") viewClick(row);
 	}
+
 	const editWrite = (col, v) => {
 		setEditText(updateArray(editText, col, v));
 	};
@@ -166,7 +317,7 @@ export function StarTable(props) {
 	};
 
 	eState.eData = editText;
-	eState.click = editClick;
+	eState.click = cellClick;
 	eState.write = editWrite;
 	eState.submit = editSubmit;
 
@@ -174,12 +325,8 @@ export function StarTable(props) {
 	var eActive = (!eState.active).toString();
 	var imgNode = (active) => (<div className="float-frame">
 		<img src="/icons/sort-icon.png" active={ active.toString() } className="float-icon" alt=""></img></div>);
-	var tdWidth = "" + Math.floor(77 / stratTotal) + "%";
-	/*var headerNodes = colList.map((_strat, i) => {
-		var [colId, strat] = _strat;
-		return (<td className="time-cell" key={ strat.name } active={ eActive } width={ tdWidth }
-			onClick={ () => { if (!eState.active) setSortId(i + 1) } }>{ strat.name } { imgNode(sortId === i + 1) }</td>);
-	});*/
+	// -- was 77% with "extra"
+	var tdWidth = "" + Math.floor(85 / stratTotal) + "%";
 	var nameList = nameListMergeView(mv, colList);
 	var headerNodes = nameList.map((name, i) => {
 		return (<td className="time-cell" key={ name } active={ eActive } width={ tdWidth }
@@ -189,20 +336,9 @@ export function StarTable(props) {
 		headerNodes.unshift(<td className="time-cell" key="strat" active={ eActive } width="15%"
 			onClick={ () => setSortId(0) }>Strat { imgNode(sortId === 0) }</td>);
 	}
-	headerNodes.push(<td key="act">*</td>);
+	//headerNodes.push(<td key="act">*</td>);
 
 	// wr header
-	/*var recordNodes = colList.map((_strat, i) => {
-		var [colId, strat] = _strat;
-		var record = recordMap[strat.name];
-		var timeNode = formatTime(record.time);
-		if ((verOffset.focusVer === "jp" && record.rowDef.ver === "us") ||
-			(verOffset.focusVer === "us" && record.rowDef.ver === "jp")) {
-			timeNode = (<span>{ formatTime(record.time) } {
-				verAdjustTime(record.rowDef.ver, record.rawTime, record.time) }</span>);
-		}
-		return (<td className="record-cell" key={ strat.name }>{ timeNode }</td>);
-	});*/
 	var recordList = recordListMergeView(mv, colList, recordMap);
 	var recordNodes = recordList.map((record) => {
 		var timeNode = formatTime(record.time);
@@ -214,7 +350,7 @@ export function StarTable(props) {
 		return (<td className="record-cell" key={ record.rowDef.name }>{ timeNode }</td>);
 	});
 	recordNodes.unshift(<td className="record-cell" key="wr">WR</td>);
-	recordNodes.push(<td key="act"></td>);
+	//recordNodes.push(<td key="act"></td>);
 
 	// filter table by colums + sort table data
 	//var filterTable = filterTimeTable(timeTable, colList);
@@ -223,53 +359,33 @@ export function StarTable(props) {
 	filterTable = sortTimeTable(filterTable, sortId);
 
 	// build time table
-	var timeTableNodes = filterTable.map((userDat, i) => {
+	var timeTableNodes = [];
+	filterTable.map((userDat, i) => {
 		// -- edit case
 		if (eState.active && eState.rowId === i) {
-			return (<EditRow stratTotal={ stratTotal } key={ i } rowId={ i } eState={ eState }></EditRow>);
+			timeTableNodes.push(<EditRow stratTotal={ stratTotal } key={ i } rowId={ i } eState={ eState }></EditRow>);
+			return;
 		}
+		// can expand row
+		var canExpandRow = false;
+		userDat.timeRow.map((multiDat) => {
+			if (multiDat !== null && multiDat.length > 1) canExpandRow = true;
+		});
+		// edit action
+		var action = "none"
+		if (canWrite) action = "edit";
+		else if (canExpandRow) action = "view-toggle";
+		// special CSS for last row 
+		var datarow = "yes";
+		if (i === timeTable.length - 1) datarow = "no";
+		// -- expanded view case
+		if (vState.rowId === i) {
+			timeTableNodes = timeTableNodes.concat(FullDataRow(userDat, verOffset, i, cellClick));
 		// -- normal case
-		var timeText = userDat.tmList.map(formatTimeDat);
-		timeText.unshift(userDat.name);
-		// build time cells
-		var timeRowNodes = userDat.tmList.map((timeDat, j) => {
-			var active = "true";
-			if (!canWrite) active = "false";
-			var cellText = formatTimeDat(timeDat);
-			// variant text
-			if (timeDat !== null && timeDat.rowDef.variant_list.length > 0) {
-				cellText = cellText + " [";
-				timeDat.rowDef.variant_list.map((v, i) => {
-					if (i !== 0) cellText = cellText + ",";
-					var vpp = parseInt(v) + 1;
-					cellText = cellText + vpp;
-				})
-				cellText = cellText + "]";
-			}
-			// if the version matters
-			if (timeDat !== null) { // && verOffset.focusVer !== null) {
-				if ((verOffset.focusVer === "jp" && timeDat.rowDef.ver === "us") ||
-					(verOffset.focusVer === "us" && timeDat.rowDef.ver === "jp")) {
-					cellText = (<span>{ cellText } <em>
-						{ verAdjustTime(timeDat.rowDef.ver, timeDat.rawTime, timeDat.time) }</em></span>);
-				}
-			}
-			return (<td className="time-cell" key={ j } active={ active }
-				onClick={ () => editClick(i, j, timeText) }>{ cellText }</td>);
-		})
-		// get play standard when applicable
-		var playStd = "Unranked";
-		if (playData[userDat.name] !== undefined && playData[userDat.name].standard) {
-			playStd = playData[userDat.name].standard;
+		} else {
+			timeTableNodes.push(<DataRow userDat={ userDat } verOffset={ verOffset } action={ action }
+				rowId={ i } onClick={ cellClick } datarow={ datarow } key={ userDat.name }/>);
 		}
-		// name + ending cell
-		timeRowNodes.unshift(<td key="user" ps={ playStd }>{ userDat.name }</td>);
-		timeRowNodes.push(<td key="empty"></td>);
-		var dataRow = "yes";
-		if (i === timeTable.length - 1) dataRow="no";
-		return (<tr className="time-row" datarow={ dataRow } key={ userDat.name }>
-			{ timeRowNodes }
-		</tr>);
 	});
 
 	var infoRowNode = null;

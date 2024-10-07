@@ -3,21 +3,34 @@
 //import playerData from './json/player_data.json'
 
 	/*
-		time_map: mapping of names to { map[column id, time_dat] }
+		time_map: mapping of names to { map[column id, multi_dat] }
 			intermediate data structure used to create time tables
 	*/
 
+function sortInsert(list, v, compareFn) {
+	// invariant:
+	// -- FORALL i >= r. v < list[i]
+	// -- FORALL i < l. list[i] <= v
+	function sih(l, r) {
+		if (r === 0) { list.unshift(v); return; }
+		if (r <= l) { list.splice(l, 0, v); return; }
+		var m = Math.floor((l + r) / 2);
+		if (compareFn(v, list[m]) < 0) sih(l, m);
+		else sih(m + 1, r);
+	}
+	sih(0, list.length);
+} 
+
 export function addTimeMap(timeMap, name, colId, timeDat) {
 	if (timeMap[name] === undefined) timeMap[name] = {};
+	if (timeMap[name][colId] === undefined) timeMap[name][colId] = [];
 	var curDat = timeMap[name][colId];
-	if (curDat === undefined || timeDat.time < curDat.time) {
-		timeMap[name][colId] = timeDat;
-	}
+	sortInsert(curDat, timeDat, function(a, b) { return a.time - b.time; });
 }
 
 	/* time table: array of
 		* name: string - player names
-		* tmList: array[time_dat] - player times
+		* tmList: array[multi_dat] - player times
 	*/
 
 	// creates a time table from a time pool
@@ -27,19 +40,19 @@ export function buildTimeTable(timeMap, colTotal) {
 	var timeTable = Object.entries(timeMap).map((user) => {
 		// transform column map >> column list
 		var [name, userDat] = user;
-		var timeList = [];
+		var timeRow = [];
 		var metaList = [];
 		for (let i = 0; i < colTotal; i++) {
 			if (userDat[i]) {
-				timeList.push(userDat[i]);
+				timeRow.push(userDat[i]);
 			} else {
-				timeList.push(null);
+				timeRow.push(null);
 			}
 		}
 		// row object
 		return {
 			"name": name,
-			"tmList": timeList,
+			"timeRow": timeRow,
 		};
 	});
 	return timeTable;
@@ -52,15 +65,15 @@ export function filterTimeTable(timeTable, colList) {
 	for (let i = 0; i < timeTable.length; i++) {
 		var userDat = timeTable[i];
 		var empty = true;
-		var timeList = colList.map((_strat, j) => {
+		var timeRow = colList.map((_strat, j) => {
 			var [colId, strat] = _strat;
-			var timeDat = userDat.tmList[colId];
-			if (timeDat !== null) empty = false;
-			return timeDat;
+			var timeCell = userDat.timeRow[colId];
+			if (timeCell !== null) empty = false;
+			return timeCell;
 		});
 		if (!empty) filterTable.push({
 			"name": userDat.name,
-			"tmList": timeList
+			"timeRow": timeRow
 		});
 	}
 	return filterTable;
@@ -68,49 +81,53 @@ export function filterTimeTable(timeTable, colList) {
 
 	// sorts a time table
 
-function sortTimeList(tmList)
+function sortTimeRow(timeRow)
 {
-	var sortList = tmList.filter((v) => v !== null);
-	return sortList.sort(function (a, b) {
-		return a.time - b.time;
+	var sortRow = timeRow.filter((v) => v !== null);
+	return sortRow.sort(function (a, b) {
+		return a[0].time - b[0].time;
 	});
 }
 
-function compTimeList(l1, l2)
+function compTimeRow(l1, l2)
 {
 	// start with the "best" times
-	var diff = l1[0].time - l2[0].time;
+	var diff = l1[0][0].time - l2[0][0].time;
 	if (diff !== 0) return diff;
 	// otherwise, iterate through remaining times
 	var ml = Math.min(l1.length, l2.length);
 	for (let i = 1; i < ml; i++) {
-		var diff = l1[i].time - l2[i].time;
+		var diff = l1[i][0].time - l2[i][0].time;
 		if (diff !== 0) return diff;
 	}
 	// length final tiebreaker
 	return l2.length - l1.length;
 }
 
+function sortCopy(table, fun) {
+	return table.map((x) => x).sort(fun);
+}
+
 export function sortTimeTable(timeTable, sortId) {
 	// do an initial sort of all times
 	timeTable.map(function (v) {
-		v["_sort"] = sortTimeList(v.tmList);
+		v["_sort"] = sortTimeRow(v.timeRow);
 	});
 	// use these time arrays to sort
 	if (sortId === 0) {
-		return timeTable.toSorted(function (a, b) {
-			return compTimeList(a._sort, b._sort);
+		return sortCopy(timeTable, function (a, b) {
+			return compTimeRow(a._sort, b._sort);
 		});
 	} else {
-		return timeTable.toSorted(function (a, b) {
+		return sortCopy(timeTable, function (a, b) {
 			var si = sortId - 1;
-			if (a.tmList[si] === null) {
-				if (b.tmList[si] === null) return compTimeList(a._sort, b._sort);
+			if (a.timeRow[si] === null) {
+				if (b.timeRow[si] === null) return compTimeRow(a._sort, b._sort);
 				else return 1;
-			} else if (b.tmList[si] === null) return -1;
-			var diff = a.tmList[si].time - b.tmList[si].time;
+			} else if (b.timeRow[si] === null) return -1;
+			var diff = a.timeRow[si][0].time - b.timeRow[si][0].time;
 			if (diff !== 0) return diff;
-			return compTimeList(a._sort, b._sort);
+			return compTimeRow(a._sort, b._sort);
 		});
 	}
 }
