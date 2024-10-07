@@ -12,6 +12,7 @@ import { openListMergeView, formatMergeView } from './merge_view'
 //import { rawMS, formatFrames, addFrames, readVerOffset, applyVerOffset,
 //	stratRowVer, starVerData, orgRecordMap, applyRecordMap } from './vercalc'
 import { StarTable } from './rx_star_table'
+import { AuthButton } from './rx_auth_button'
 import { ExtToggle } from './exttoggle'
 import { VerToggle } from './vertoggle'
 
@@ -44,7 +45,6 @@ export function ViewBoard(props) {
 	}
 
 	// extension state
-
 	const toggleExt = () => {
 		var ns = copyFilterState(fs);
 		ns.extFlag = !ns.extFlag;
@@ -94,13 +94,13 @@ export function ViewBoard(props) {
 	var colList = colListStarDef(starDef, fs);
 	var timeTable = xcamTimeTable(colList, fs, verOffset);
 
-	// create tables
-	var tableList = [];
-	
 	// add sort record + relevant records
 	var sortRM = xcamRecordMap(colList, fullFilterState(), verOffset);
 	var relRM = xcamRecordMap(colList, fs, verOffset);
 	sortColList(colList, sortRM, starDef.open);
+
+	// create tables
+	var tableList = [];
 
 	var mainColList = filterVarColList(colList, null);
 	var mainMV = openListMergeView(mainColList, starDef.open);
@@ -132,6 +132,7 @@ export function ViewBoard(props) {
 			{ starBtnNodes }
 		</div>
 		{ varCont }
+		<AuthButton/>
 		{ tableList }
 	</div>);
 
