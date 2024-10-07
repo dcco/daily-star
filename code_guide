@@ -1,0 +1,116 @@
+
+  ## JSON DEFINITIONS ##
+
+org_data
+- stores information about all strats
+
+row_data / xcam_data
+- stores times / records for strats
+
+
+  ## strat_def ##
+
+row_id
+- identifier for individual row of the xcam sheet
+
+row_def
+- the definition of an xcam row
+
+strat_def
+- types/functions for a strat def (as read from org_data)
+
+strat_set
+- a mapping of names to strat_defs
+
+col_list (strat_list)
+- a list of [index, strat_def] tuples (constructed from org_data)
+
+
+  ## time_dat ##
+
+-- uses [row_def] in definition of time_dat
+
+ms
+- functions for conversion from MS to regular text
+
+time_dat
+- time (in ms) + version information, used to build a time table
+
+frames
+- mathematical unit of time
+
+ver_offset
+- version offset information (in frames), used to adjust time data
+
+
+  ## org_star_def ##
+
+-- reads from org_data
+-- uses strat_def [strat_set, col_list] + time_dat [ver_offset] in functionality of star_def
+
+filter_state
+- type for filtering column data
+
+star_def
+- types/functions for a star def (as read from org_data)
+
+
+  ## time_table ##
+
+-- depends on time_dat 
+
+time_map
+- auxiliary data structure used to construct time tables
+
+time_table
+- an array of players + their times
+
+
+  ## xcam_time_table ##
+
+-- reads from xcam_data
+-- auxiliary [time_table] functions
+
+xcamTimeTable
+- builds a time table from xcam data
+
+
+  ## xcam_record_map ##
+
+-- reads from xcam_data
+
+record_map
+- a mapping of strat names to time dats
+
+sortColList
+- sorts columns with a record map
+
+
+  ## merge_view ##
+
+merge_view
+- a special data structure used to produce merged column information/time tables
+- essentially a stronger column list, used only at the very end
+
+
+  ## rx_star_table ##
+
+-- reads from player_data (for standard display)
+-- defines the time table display
+
+
+------------------
+
+approximate flow:
+
+* strat_def: implements "strat sets" as data structures to be manipulated, merged etc.
+
+* time_dat: implements the finer points of time comparison - reading frames, JP/US conversions, etc.
+
+* org_star_def: obtains "strat sets" / version offsets from the star definition, to generate the column lists
+
+* time_table / xcam_time_table : converts xcam data + column lists into time tables
+
+* xcam_record_map : converts xcam data + column lists into record maps / sorting for time tables
+
+* merge_view: takes column lists and more sharply defines column behavior / filters time tables to match
