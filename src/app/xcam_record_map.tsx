@@ -2,18 +2,23 @@
 //import rowData from './json/row_data.json'
 import { G_SHEET } from './xcam_wrap'
 
-import { zeroRowDef, begRowDef, rowDefStratDef } from './strat_def'
-import { rawMS, newTimeDat, maxTimeDat, applyVerOffset } from './time_dat'
+import { ColList, zeroRowDef, begRowDef, rowDefStratDef } from './strat_def'
+import { TimeDat, VerOffset, rawMS, newTimeDat, maxTimeDat, applyVerOffset } from './time_dat'
+import { FilterState } from './org_star_def'
 
 	/*
 		record_map: a mapping of strat names to time_dats
 	*/
 
-export function xcamRecordMap(colList, fs, verOffset)
+export type RecordMap = {
+	[key: string]: TimeDat;
+}
+
+export function xcamRecordMap(colList: ColList, fs: FilterState, verOffset: VerOffset): RecordMap
 {
 	var rowData = G_SHEET.rowData;
 	// build record map
-	var recordMap = {};
+	var recordMap: RecordMap = {};
 	for (let i = 0; i < colList.length; i++) {
 		var [colId, stratDef] = colList[i];
 		var record = maxTimeDat(zeroRowDef(stratDef.name));
@@ -29,7 +34,9 @@ export function xcamRecordMap(colList, fs, verOffset)
 				if (timeDat.time < record.time) record = timeDat;
 			}
 		} else {
+			if (stratDef.virtId === undefined) throw ("No virtual id for " + stratDef.name);
 			var rawTime = rawMS(rowData.beg[stratDef.virtId][0]);
+			if (rawTime === null) throw ("Bad beginner time listed for " + stratDef.name);
 			var timeDat = newTimeDat(rawTime, null, null, begRowDef(stratDef.name));
 			applyVerOffset(timeDat, verOffset);
 			if (timeDat.time < record.time) record = timeDat;
@@ -39,14 +46,14 @@ export function xcamRecordMap(colList, fs, verOffset)
 	return recordMap;
 }
 
-function openName(openList, name)
+function openName(openList: string[] | null, name: string)
 {
 	if (name === "Open") return true;
 	if (openList === null) return false;
 	return openList.includes(name);
 }
 
-export function sortColList(colList, recordMap, openList)
+export function sortColList(colList: ColList, recordMap: RecordMap, openList: string[] | null)
 {
 	colList.sort(function (a, b) {
 		var open1 = openName(openList, a[1].name);

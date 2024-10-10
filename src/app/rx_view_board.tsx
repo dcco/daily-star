@@ -12,11 +12,11 @@ import { openListMergeView, formatMergeView } from './merge_view'
 //import { rawMS, formatFrames, addFrames, readVerOffset, applyVerOffset,
 //	stratRowVer, starVerData, orgRecordMap, applyRecordMap } from './vercalc'
 import { StarTable } from './rx_star_table'
-import { AuthButton } from './rx_auth_button'
-import { ExtToggle } from './exttoggle'
-import { VerToggle } from './vertoggle'
+import { AuthArea } from './rx_auth_area'
+import { ExtToggle } from './rx_ext_toggle'
+import { VerToggle } from './rx_ver_toggle'
 
-export function ViewBoard(props) {
+export function ViewBoard(props: {}): React.ReactNode {
 	// star state
 	const [stageId, setStageId] = useState(0);
 	const [starIdCache, setStarIdCache] = useState(Array(orgData.length).fill(0));
@@ -24,11 +24,11 @@ export function ViewBoard(props) {
 	var starDef = orgStarDef(stageId, starId);
 
 	// star functions
-	const changeStage = (e) => {
-		setStageId(e.target.value);
+	const changeStage = (e: React.ChangeEvent<HTMLSelectElement>) => {
+		setStageId(parseInt(e.target.value));
 	};
 
-	const changeStar = (i) => {
+	const changeStar = (i: number) => {
 		starIdCache[stageId] = i;
 		setStarIdCache(starIdCache.map((x) => x));
 	};
@@ -37,7 +37,7 @@ export function ViewBoard(props) {
 	const [fs, setFS] = useState(newFilterState());
 	var verOffset = verOffsetStarDef(starDef, fs);
 
-	const toggleVer = (i) => {
+	const toggleVer = (i: number) => {
 		var ns = copyFilterState(fs);
 		ns.verState[i] = !ns.verState[i];
 		if (!ns.verState[i] && !ns.verState[1 - i]) ns.verState[1 - i] = true;
@@ -60,26 +60,26 @@ export function ViewBoard(props) {
 	var starList = orgData[stageId].starList;
 	var starBtnNodes = starList.map((star, i) => {
 		var flag = (starIdCache[stageId] === i) ? "true" : "false";
-		return <div key={ star.name } className="star-name" sel={ flag }
+		return <div key={ star.name } className="star-name" data-sel={ flag }
 			onClick={ () => { changeStar(i) } }>{ star.name }</div>;
 	});
 
 	// version toggle node (enable when relevant)
-	var verToggle = <div></div>;
+	var verToggle: React.ReactNode = <div></div>;
 	if (starDef.def !== "na") {
 		verToggle = <VerToggle state={ fs.verState } verOffset={ verOffset } toggle={ toggleVer }/>;
 	}
 
 	// extension toggle node (enable when relevant)
-	var extToggle = <div></div>;
+	var extToggle: React.ReactNode = <div></div>;
 	if (hasExtStarDef(starDef)) {
 		extToggle = <ExtToggle state={ fs.extFlag } toggle={ toggleExt }/>;
 	}
 
 	// variant information
-	var varCont = <div></div>;
+	var varCont: React.ReactNode = <div></div>;
 	if (starDef.variants && starDef.variants.length > 0) {
-		var vstr = ["Variants: "];
+		var vstr: React.ReactNode[] = ["Variants: "];
 		starDef.variants.map((vName, i) => {
 			if (i !== 0) vstr.push(", ");
 			vstr.push("[" + (i + 1) + "] - ")
@@ -100,7 +100,7 @@ export function ViewBoard(props) {
 	sortColList(colList, sortRM, starDef.open);
 
 	// create tables
-	var tableList = [];
+	var tableList: React.ReactNode[] = [];
 
 	var mainColList = filterVarColList(colList, null);
 	var mainMV = openListMergeView(mainColList, starDef.open);

@@ -2,9 +2,9 @@ import React, { useState, useEffect, useRef } from 'react'
 
 	/* special function for detecting clicks outside an element */
 
-const useOutsideClick = (ref, f) =>
+const useOutsideClick = (ref: any, f: () => void) =>
 {
-	const onClick = (e) => {
+	const onClick = (e: any) => {
 		if (ref.current && !ref.current.contains(e.target)) f();
 	};
 
@@ -18,7 +18,14 @@ const useOutsideClick = (ref, f) =>
 
 	/* dropdown image menu */
 
-export function DropDownImgMenu(props)
+type DropDownMenuProps = {
+	"src": string,
+	"backupSrc": string,
+	"textList": string[],
+	"actList": ((() => void) | null)[]
+};
+
+export function DropDownImgMenu(props: DropDownMenuProps): React.ReactNode
 {
 	var src = props.src;
 	var backupSrc = props.backupSrc;
@@ -30,7 +37,7 @@ export function DropDownImgMenu(props)
 
 	// menu open state
 	const [active, setActive] = useState(false);
-	const ref = useRef();
+	const ref = useRef(null);
 
 	// on outside click
 	useOutsideClick(ref, () => setActive(false));
@@ -38,15 +45,17 @@ export function DropDownImgMenu(props)
 	// build option nodes w/ actions
 	var menuNode = null;
 	if (active) {
-		var optNodes = [];
+		var optNodes: React.ReactNode[] = [];
 		for (let i = 0; i < textList.length; i++) {
 			var optActive = false;
 			var f = () => {};
-			if (actList[i] !== null) {
+			var ax = actList[i];
+			if (ax !== null) {
+				var axFinal: () => void = ax;
 				optActive = true;
-				f = (() => { setActive(false); actList[i](); });
+				f = (() => { setActive(false); axFinal(); });
 			}
-			optNodes.push(<div className="dropdown-opt" active={ optActive.toString() }
+			optNodes.push(<div className="dropdown-opt" data-active={ optActive.toString() }
 				onClick={ f } key={ i }>{ textList[i] }</div>);
 		}
 		menuNode = (<div className="dropdown-menu-inner">{ optNodes }</div>);
@@ -55,7 +64,7 @@ export function DropDownImgMenu(props)
 	// add pic + absolutely positioned options
 	return (<div className="dropdown-cont" ref={ ref }>
 		<img className="login-pic" height="25px" src={ curSrc }
-			onError={ (e) => { e.currentTarget.onError = null; setSrc(backupSrc); } }
+			onError={ (e: React.SyntheticEvent<HTMLImageElement>) => { e.currentTarget.onerror = null; setSrc(backupSrc); } }
 			onClick={ () => setActive(!active) }></img>
 		<div className="dropdown-menu">
 			{ menuNode }

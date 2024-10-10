@@ -1,14 +1,22 @@
 
-import { sameIdent } from './time_table'
+import { Ident, sameIdent } from './time_table'
 
-export function noEditPerm()
+export type EditPerm = {
+	"canEdit": boolean,
+	"writeIdList": Ident[],
+	"newId": Ident | null
+}
+
+export function noEditPerm(): EditPerm
 {
 	return {
-		"canEdit": false
+		"canEdit": false,
+		"writeIdList": [],
+		"newId": null
 	};
 }
 
-export function newEditPerm(writeIdList, newId)
+export function newEditPerm(writeIdList: Ident[], newId: Ident | null): EditPerm
 {
 	return {
 		"canEdit": true,
@@ -17,27 +25,27 @@ export function newEditPerm(writeIdList, newId)
 	};
 }
 
-export function userEditPerm(userId)
+export function userEditPerm(userId: Ident | null): EditPerm
 {
 	if (userId === null) return noEditPerm();
 	return {
 		"canEdit": true,
-		"writeList": [userId],
+		"writeIdList": [userId],
 		"newId": userId
 	}
 }
 
-export function hasWritePerm(ep, id)
+export function hasWritePerm(ep: EditPerm, id: Ident): boolean
 {
 	if (!ep.canEdit) return false;
-	for (const writeId of writeIdList) {
+	for (const writeId of ep.writeIdList) {
 		if (sameIdent(writeId, id)) return true;
 	}
 	return false;
 }
 
-export function hasNewPerm(ep)
+export function checkNewPerm(ep: EditPerm): Ident | null
 {
-	if (!ep.canEdit) return false;
-	return ep.newId !== null;
+	if (!ep.canEdit) return null;
+	return ep.newId;
 }

@@ -2,19 +2,26 @@
 
 import React, { useState, useEffect } from 'react'
 import { updateGSheet } from './xcam_wrap'
-import { EditBoard } from './editboard'
-import { ViewBoard } from './viewboard'
+import { EditBoard } from './rx_edit_board'
+import { ViewBoard } from './rx_view_board'
 
-function MenuOpt(props)
+type MenuOptProps = {
+	"id": number,
+	"selId": number,
+	"setSelId": (i: number) => void,
+	"children": React.ReactNode
+};
+
+function MenuOpt(props: MenuOptProps): React.ReactNode
 {
 	var active = (props.id === props.selId).toString()
 	return (
-		<div className="menu-button" active={ active }
+		<div className="menu-button" data-active={ active }
 			onClick={ () => props.setSelId(props.id) }>{ props.children }</div>
 	);
 }
 
-export function MultiBoard(props) {
+export function MultiBoard(props: {}): React.ReactNode {
 	const [menuId, setMenuId] = useState(0);
 	const [reloadFlag, setReloadFlag] = useState(false);
 

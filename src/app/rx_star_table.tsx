@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
 
-import { formatTime, newVerOffset } from "./time_dat"
-import { keyIdent, freshTimeRow, hasSubRows, sortTimeTable } from "./time_table"
-import { strIdNick } from "./play_wrap"
-import { nameListMergeView, recordListMergeView, filterTableMergeView } from "./merge_view"
-import { noEditPerm, hasWritePerm, hasNewPerm } from "./edit_perm"
-import { verAdjustTime, TimeCell, RecordCell, EditCell, NameCell } from "./rx_star_cell"
-import { DataRow } from "./rx_star_row"
-import { nullEditPos, EditRow } from "./rx_edit_row"
+import { ColList } from './strat_def'
+import { VerOffset, formatTime, zeroVerOffset } from './time_dat'
+import { TimeTable, keyIdent, freshUserDat, hasSubRows, sortTimeTable } from './time_table'
+import { strIdNick } from './play_wrap'
+import { MergeView, nameListMergeView, recordListMergeView, filterTableMergeView } from './merge_view'
+import { EditPerm, noEditPerm, hasWritePerm, checkNewPerm } from './edit_perm'
+import { RecordMap } from './xcam_record_map'
+import { verAdjustTime, TimeCell, RecordCell, NameCell } from './rx_star_cell'
+import { CellAct, DataRow } from './rx_star_row'
+import { nullEditPos } from './rx_edit_row'
 
 	/*
 		##########
@@ -19,10 +21,10 @@ import { nullEditPos, EditRow } from "./rx_edit_row"
 
 	// time manipulation
 
-function validName(s) {
+function validName(s: string): boolean {
 	return s.match(/^[a-zA-Z0-9 _]+$/) !== null;
 }
-
+/*
 function validEdit(cellText) {
 	// valid player name
 	if (!validName(cellText[0])) return false;
@@ -60,10 +62,10 @@ function FullDataRow(userDat, verOffset, rowId, onClick) {
 				onClick={ () => onClick("view-toggle", rowId, j, [""]) } multiFlag={ false } key={ j }/>;
 		})
 		if (i === 0) timeRowNodes.unshift(<NameCell id={ userDat.id } key="user"/>);
-		else timeRowNodes.unshift(<td className="dark-cell" key="empty"></td>);
+		else timeRowNodes.unshift(<td className="dark-cell" key="empty"></td>);*/
 		/*rowNodeList.push(<tr className="time-row" key={ rowId + "#" + i }>
 			<td onClick={ () => onClick("view-toggle", rowId, 0, [""]) }>Test</td></tr>);
-*/
+*//*
 		rowNodeList.push(<tr className="time-row" key={ rowId + "#" + i} datarow="yes">{ timeRowNodes }</tr>);
 	}
 	// draw separators
@@ -76,16 +78,18 @@ function FullDataRow(userDat, verOffset, rowId, onClick) {
 	rowNodeList.unshift(<tr className="sep-row" key={ rowId + "#A" }>{ sepList1 }</tr>);
 	rowNodeList.push(<tr className="sep-row" key={ rowId + "#B" }>{ sepList2 }</tr>);
 	return rowNodeList;
+}*/
+
+type ViewState = {
+	"rowId": number | null	
 }
 
-function nullViewState() {
+function nullViewState(): ViewState {
 	return {
-		openRow: null
+		"rowId": null
 	};
 }
-
-
-
+/*
 function diffText(oldText, editText) {
 	var dText = [];
 	for (let i = 1; i < editText.length; i++) {
@@ -96,7 +100,7 @@ function diffText(oldText, editText) {
 		}
 	}
 	return dText;
-}
+}*/
 
 	/*
 		star table: displays times from a time table
@@ -107,23 +111,32 @@ function diffText(oldText, editText) {
 		* editPerm / editTT - params for editable tables
 	*/
 
-export function StarTable(props) {
+type StarTableProps = {
+	"colList": ColList,
+	"mv": MergeView | null,
+	"verOffset"?: VerOffset,
+	"recordMap": RecordMap,
+	"timeTable": TimeTable,
+	"editPerm"?: EditPerm,
+	"editTT"?: () => void
+}
+
+export function StarTable(props: StarTableProps): React.ReactNode {
 	var colList = props.colList;
 	var mv = props.mv;
 	var recordMap = props.recordMap;
 	var timeTable = props.timeTable;
-	var editTT = props.editTT;
 
-	var editPerm = props.editPerm;
-	if (editPerm === undefined) editPerm = noEditPerm();
+	var editPerm = noEditPerm();
+	var editTT = () => {};
+	if (props.editPerm !== undefined) editPerm = props.editPerm;
+	if (props.editTT !== undefined) editTT = props.editTT;
 
 	var stratTotal = colList.length;
 	if (mv !== null) stratTotal = mv.list.length;
 
-	var verOffset = newVerOffset("jp", false, 0);
-	if (props.verOffset !== undefined) {
-		verOffset = props.verOffset;
-	}
+	var verOffset = zeroVerOffset();
+	if (props.verOffset !== undefined) verOffset = props.verOffset;
 
 	// sort state
 	const [sortId, setSortId] = useState(0);
@@ -132,7 +145,7 @@ export function StarTable(props) {
 	const [vState, setVState] = useState(nullViewState());
 
 	// view functions
-	const viewClick = (row) => {
+	const viewClick = (row: number) => {
 		if (vState.rowId !== row) {
 			setVState({ rowId: row });
 		} else {
@@ -144,7 +157,7 @@ export function StarTable(props) {
 	const [editPos, setEditPos] = useState(nullEditPos());
 
 	// edit functions
-	const editClick = (row, col, subRow) => {
+	const editClick = (row: number | null, col: number, subRow: number) => {
 		setEditPos({
 			active: true,
 			rowId: row,
@@ -153,9 +166,9 @@ export function StarTable(props) {
 		});
 	};
 
-	const cellClick = (action, row, col, subRow) => {
+	const cellClick = (action: CellAct, row: number | null, col: number, subRow: number) => {
 		if (action === "edit") editClick(row, col, subRow);
-		else if (action === "view-toggle") viewClick(row);
+		else if (action === "view-toggle" && row !== null) viewClick(row);
 	}
 
 	/*const editWrite = (col, v) => {
@@ -163,8 +176,9 @@ export function StarTable(props) {
 	};*/
 
 	const editSubmit = () => {
-		setEditPos(nullEditState());
-		editTT(editText[0], diffText(eState.oldText, editText), colList);
+		setEditPos(nullEditPos());
+		//editTT(editText[0], diffText(eState.oldText, editText), colList);
+		editTT();
 	};
 /*
 	eState.eData = editText;
@@ -179,13 +193,13 @@ export function StarTable(props) {
 	var tdWidth = "" + Math.floor(85 / stratTotal) + "%";
 	var nameList = nameListMergeView(mv, colList);
 
-	var imgNodeFun = (active) => (<div className="float-frame">
-		<img src="/icons/sort-icon.png" active={ active.toString() } className="float-icon" alt=""></img></div>);
-	var headerNodes = nameList.map((name, i) => {
-		return (<td className="time-cell" key={ name } active={ sortActive.toString() } width={ tdWidth }
+	var imgNodeFun = (active: boolean): React.ReactNode => (<div className="float-frame">
+		<img src="/icons/sort-icon.png" data-active={ active.toString() } className="float-icon" alt=""></img></div>);
+	var headerNodes: React.ReactNode[] = nameList.map((name, i) => {
+		return (<td className="time-cell" key={ name } data-active={ sortActive.toString() } width={ tdWidth }
 			onClick={ () => { if (sortActive) setSortId(i + 1) } }>{ name } { imgNodeFun(sortId === i + 1) }</td>);
 	});
-	headerNodes.unshift(<td className="time-cell" key="strat" active={ sortActive.toString() } width="15%"
+	headerNodes.unshift(<td className="time-cell" key="strat" data-active={ sortActive.toString() } width="15%"
 		onClick={ () => setSortId(0) }>Strat { imgNodeFun(sortId === 0) }</td>);
 
 	/* ----- RECORD ROW ----- */
@@ -213,15 +227,14 @@ export function StarTable(props) {
 		}
 		// -- normal row case
 		// click action
-		var action = "none"
+		var action: CellAct = "none"
 		if (editPerm.canEdit && hasWritePerm(editPerm, userDat.id)) action = "edit";
 		else if (hasSubRows(userDat.timeRow)) action = "view-toggle";
-		// special CSS for last row [TODO: refactor] 
-		var datarow = "yes";
-		if (i === timeTable.length - 1) datarow = "no";
+		// special CSS for last row
+		var endRow = i !== timeTable.length - 1;
 		// add row
 		timeTableNodes.push(<DataRow userDat={ userDat } verOffset={ verOffset } rowId={ i }
-			action={ action } onClick={ viewClick } datarow={ datarow } key={ keyIdent(userDat.id) }/>);
+			action={ action } onClick={ cellClick } endRow={ endRow } key={ keyIdent(userDat.id) }/>);
 	});
 	/*filterTable.map((userDat, i) => {
 		// -- edit case
@@ -256,23 +269,24 @@ export function StarTable(props) {
 	
 	// build initial submit row
 	// -- normal case (must not have any editable rows)
-	if (hasNewPerm(editPerm) && (!editPos.active || editPos.rowId !== null)) {
-		var exRowNodes = [];
+	var newPerm = checkNewPerm(editPerm);
+	if (newPerm !== null && (!editPos.active || editPos.rowId !== null)) {
+		var exRowNodes: React.ReactNode[] = [];
 		for (let i = 0; i < stratTotal; i++) {
 			exRowNodes.push(<td className="init-cell" key={ i }
-				onClick={ () => editClick(null, i, Array(stratTotal + 1).fill("")) }></td>);
+				onClick={ () => editClick(null, i, /*Array(stratTotal + 1).fill(""),*/ 0) }></td>);
 		}
-		var nText = strIdNick(editPerm.newId);
+		var nText = strIdNick(newPerm);
 		if (nText === "@me") nText = "New";
 		exRowNodes.unshift(<td className="init-cell" key="name"
-			onClick={ () => editClick(null, -1, Array(stratTotal + 1).fill("")) }><i>{ nText }</i></td>);
+			onClick={ () => editClick(null, -1, /*Array(stratTotal + 1).fill(""),*/ 0) }><i>{ nText }</i></td>);
 		//exRowNodes.push(<td className="misc-cell" key="act"></td>);
 		timeTableNodes.push(<tr className="time-row" key="init-submit">{ exRowNodes }</tr>);
 	// -- edit case
 	} else if (editPerm.canEdit) {
-		var newDat = freshTimeRow(stratTotal, editPerm.newId);
-		timeTableNodes.push(<EditRow userDat={ newDat } rowId={ null } editPos={ editPos }
-			cellClick={ cellClick } key="edit"></EditRow>)
+		//var newDat = freshTimeRow(stratTotal, editPerm.newId);
+		//timeTableNodes.push(<EditRow userDat={ newDat } rowId={ null } editPos={ editPos }
+		//	cellClick={ cellClick } key="edit"></EditRow>)
 	}
 
 	return (

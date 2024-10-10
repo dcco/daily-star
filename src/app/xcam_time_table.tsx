@@ -3,13 +3,14 @@
 //import rowData from './json/row_data.json'
 import { G_SHEET } from './xcam_wrap' 
 
-import { rawMS, newTimeDat, applyVerOffset } from "./time_dat"
-import { rowDefStratDef } from "./strat_def"
-import { newIdent, addTimeMap, buildTimeTable } from "./time_table"
+import { ColList, rowDefStratDef } from "./strat_def"
+import { VerOffset, rawMS, newTimeDat, applyVerOffset } from "./time_dat"
+import { FilterState } from "./org_star_def"
+import { TimeTable, newIdent, addTimeMap, buildTimeTable } from "./time_table"
 
 	/* derived "sort_data" (determines a canonical order for column sorting) */
 
-export function xcamTimeTable(colList, fs, verOffset) {
+export function xcamTimeTable(colList: ColList, fs: FilterState, verOffset: VerOffset): TimeTable {
 	var rowData = G_SHEET.rowData;
 	var xcamData = G_SHEET.xcamData;
 	const timeMap = {};
@@ -27,7 +28,12 @@ export function xcamTimeTable(colList, fs, verOffset) {
 				var timeDat = newTimeDat(data.ms, data.link, data.note, rowDefStratDef(stratDef, xcamRef));
 				applyVerOffset(timeDat, verOffset);
 				// do not include times better than posted record
-				if (record === undefined || data.ms >= rawMS(record)) {
+				var recordMS = rawMS(record);
+				if (recordMS === null) {
+					console.log("WARNING: Bad record pulled from xcam sheet for " + stratDef.name);
+					recordMS = 999900;
+				}
+				if (record === undefined || data.ms >= recordMS) {
 					var playerId = newIdent("xcam", data.player);
 					addTimeMap(timeMap, playerId, colId, timeDat);
 				}

@@ -3,7 +3,7 @@ import { initializeApp } from 'firebase/app'
 import { GoogleAuthProvider, getAuth, onAuthStateChanged, signInWithPopup } from 'firebase/auth'
 
 import { DropDownImgMenu } from './rx_dropdown_menu'
-import { newIdent } from './time_table'
+import { Ident, newIdent } from './time_table'
 import { lookupNick, strIdNick, updateNick } from './play_wrap'
 
 	// firebase initialization
@@ -38,7 +38,12 @@ function _signOut()
 
 	/* nickname input */
 
-export function NickInput(props)
+type NickInputProps = {
+	"userId": Ident,
+	"setNick": (a: string) => void
+};
+
+export function NickInput(props: NickInputProps): React.ReactNode
 {
 	var userId = props.userId;
 	var setNick = props.setNick;
@@ -55,11 +60,11 @@ export function NickInput(props)
 		setEState({ "active": true, "nick": _nick });
 	};
 
-	const nickEdit = (e) => {
+	const nickEdit = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setEState({ "active": true, "nick": e.target.value });
 	};
 
-	const stopEdit = (v) => {
+	const stopEdit = (v: string | null) => {
 		// cancel signal
 		if (v === null) {
 			setEState({ "active": false, "nick": "" });
@@ -74,7 +79,7 @@ export function NickInput(props)
 	}
 
 	// display node
-	var dispNode = null;
+	var dispNode: React.ReactNode = "";
 	if (!eState.active) {
 		var nick = strIdNick(userId);
 		var nState = "display";
@@ -82,13 +87,13 @@ export function NickInput(props)
 			nick = '---';
 			nState = "none";
 		}
-		dispNode = <div className="nick-disp" state={ nState }>{ nick }</div>;
+		dispNode = <div className="nick-disp" data-state={ nState }>{ nick }</div>;
 	} else {
-		dispNode = <input className="nick-disp" state="edit" value={ eState.nick } onChange={ nickEdit }/>;
+		dispNode = <input className="nick-disp" data-state="edit" value={ eState.nick } onChange={ nickEdit }/>;
 	}
 
 	// action node
-	var actNode = <img src="/icons/edit-icon.png" className="edit-icon" onClick={ startEdit }></img>;
+	var actNode: React.ReactNode = <img src="/icons/edit-icon.png" className="edit-icon" onClick={ startEdit }></img>;
 	if (eState.active) {
 		actNode = [
 			<div className="nick-button" onClick={ () => stopEdit(eState.nick) } key="1">Set</div>,
@@ -101,9 +106,15 @@ export function NickInput(props)
 	</div>);
 }
 
-	/* authorization button */
+	/* authorization area */
 
-export function AuthButton(props)
+type AuthAreaProps = {
+	"userId": Ident | null,
+	"setUserId": (a: any) => void,
+	"setNick": (a: string | null) => void
+};
+
+export function AuthArea(props: AuthAreaProps): React.ReactNode
 {
 	var userId = props.userId;
 	var setUserId = props.setUserId;
@@ -112,17 +123,20 @@ export function AuthButton(props)
 	// when authorization state changes, save token
 	useEffect(() => {
 		onAuthStateChanged(auth, (_user) => {
-			if (_user) {
-				console.log(_user);
+			if (_user && _user.email !== null) {
 				var userId = newIdent("google", _user.email.split('@')[0]);
 				userId.token = _user;
 				setUserId(userId);
-			} else setUserId(null);
+			} else {
+				if (_user) console.log(
+					"WARNING: Must use Google account with associated e-mail (e-mail will not be used, it just serves as username in backend).");
+				setUserId(null);
+			}
 		});
 	}, []);
 
 	// display authorization state
-	var authNode = (<div className="login-cont">
+	var authNode: React.ReactNode = (<div className="login-cont">
 		<div className="login-button" onClick={ _signIn }>Log in</div>
 	</div>);
 

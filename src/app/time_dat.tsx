@@ -1,9 +1,11 @@
 
+import { VerF, RowDef } from './strat_def'
+
 	/*
 		functions for reading time in MS
 	*/
 
-export function formatTime(time) {
+export function formatTime(time: number): string {
 	var ms = time % 100;
 	var sec = Math.floor(time / 100) % 60;
 	var min = Math.floor(time / 6000);
@@ -12,13 +14,13 @@ export function formatTime(time) {
 	return min + ":" + sec.toString().padStart(2, '0') + "." + ms.toString().padStart(2, '0');
 }
 
-function _secMS(secText) {
+function _secMS(secText: string): number {
 	if (!secText.includes('.')) return parseInt(secText) * 100;
 	var ft = secText.split('.');
 	return (parseInt(ft[0]) * 100) + parseInt(ft[1]);
 }
 
-export function rawMS(fillText) {
+export function rawMS(fillText: string): number | null {
 	if (!fillText) return null;
 	try {
 		// does not need to include special fixes from xcam sheet
@@ -36,7 +38,7 @@ export function rawMS(fillText) {
 		functions for doing math in "frames"
 	*/
 
-export function msToFrames(ms) {
+export function msToFrames(ms: number): number {
 	var dFrames = Math.floor(ms / 10) * 3;
 	var hs = ms % 10;
 	var hFrames = 0;
@@ -45,7 +47,7 @@ export function msToFrames(ms) {
 	return dFrames + hFrames; 
 }
 
-export function framesToMS(frames) {
+export function framesToMS(frames: number): number {
 	// absolute value frames
 	var neg = frames < 0;
 	frames = Math.abs(frames);
@@ -61,15 +63,15 @@ export function framesToMS(frames) {
 	return fs;
 }
 
-export function addFrames(frames, ms) {
+export function addFrames(frames: number, ms: number): number {
 	return framesToMS(frames + msToFrames(ms));
 }
 
-export function subFrames(frames, ms) {
+export function subFrames(frames: number, ms: number): number {
 	return framesToMS(msToFrames(ms) - frames);
 }
 
-export function formatFrames(frames) {
+export function formatFrames(frames: number): string {
 	// absolute value frames
 	var neg = frames < 0;
 	frames = Math.abs(frames);
@@ -96,7 +98,15 @@ export function formatFrames(frames) {
 		* rowDef: row_def - xcam row represented by the time cell
 	*/
 
-export function newTimeDat(time, link, note, rowDef)
+export type TimeDat = {
+	"rawTime": number,
+	"time": number,
+	"link": string | null,
+	"note": string | null,
+	"rowDef": RowDef
+}
+
+export function newTimeDat(time: number, link: string | null, note: string | null, rowDef: RowDef): TimeDat
 {
 	if (rowDef === undefined) throw("New time datum created with incomplete arguments.")
 	return {
@@ -108,12 +118,12 @@ export function newTimeDat(time, link, note, rowDef)
 	};
 }
 
-export function maxTimeDat(rowDef)
+export function maxTimeDat(rowDef: RowDef): TimeDat
 {
 	return newTimeDat(999900, null, null, rowDef);
 }
 
-export function formatTimeDat(timeDat) {
+export function formatTimeDat(timeDat: TimeDat): string {
 	if (timeDat === null) return "";
 	return formatTime(timeDat.time);
 }
@@ -123,7 +133,9 @@ export function formatTimeDat(timeDat) {
 			multiple times in the same column
 	*/
 
-export function hasSubTimes(multiDat) {
+export type MultiDat = TimeDat[];
+
+export function hasSubTimes(multiDat: MultiDat | null): boolean {
 	return multiDat !== null && multiDat.length > 1;
 }
 
@@ -137,24 +149,41 @@ export function hasSubTimes(multiDat) {
 		ver_offset: version offset information
 	*/
 
-export function newVerOffset(focusVer, complexOff, offset)
+type SimpleOff = { "a": false, "num": number };
+type ComplexOff = { "a": true, "data": { [key: string]: number } };
+export type OffsetDat = SimpleOff | ComplexOff
+
+export type VerOffset = {
+	"focusVer": VerF | null,
+	"offset": OffsetDat
+};
+
+export function zeroVerOffset(): VerOffset
+{
+	return {
+		"focusVer": null,
+		"offset": { "a": false, "num": 0 }
+	};
+}
+
+export function newVerOffset(focusVer: VerF | null, offset: OffsetDat): VerOffset
 {
 	return {
 		"focusVer": focusVer,
-		"complexOff": complexOff,
 		"offset": offset
-	}
+	};
 }
 
-export function applyVerOffset(timeDat, verOffset)
+export function applyVerOffset(timeDat: TimeDat, verOffset: VerOffset)
 {
 	// calc offset
 	var name = timeDat.rowDef.name;
-	var offset = verOffset.offset;
-	if (verOffset.complexOff) {
-		if (verOffset.offset[name] !== undefined) offset = verOffset.offset[name];
+	var offDat = verOffset.offset;
+	var offset = 0;
+	if (offDat.a) {
+		if (offDat.data[name] !== undefined) offset = offDat.data[name];
 		else offset = 0;
-	}
+	} else offset = offDat.num;
 	// apply offset
 	var focusVer = verOffset.focusVer;
 	var time = timeDat.time;

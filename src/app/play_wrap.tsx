@@ -1,18 +1,22 @@
 
-import { keyIdent } from './time_table'
+import { Ident, keyIdent } from './time_table'
 
-export const P_DATA = {
-	nickMap: {}
+export type NickData = {
+	"nickMap": { [key: string]: string }
 }
 
-export function lookupNick(id)
+export const P_DATA: NickData = {
+	"nickMap": {}
+}
+
+export function lookupNick(id: Ident): string | null
 {
 	var key = keyIdent(id);
 	if (P_DATA.nickMap[key]) return P_DATA.nickMap[key];
 	return null;
 }
 
-export function strIdNick(id)
+export function strIdNick(id: Ident): string
 {
 	var nick = lookupNick(id);
 	if (nick !== null) return nick;
@@ -21,7 +25,7 @@ export function strIdNick(id)
 	return id.name;
 }
 
-export function updateNick(id, nick)
+export function updateNick(id: Ident, nick: string)
 {
 	P_DATA.nickMap[keyIdent(id)] = nick;
 }

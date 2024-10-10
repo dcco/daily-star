@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
 
-import { newTimeDat, applyVerOffset } from "./time_dat"
-import { begRowDef, rowDefStratDef, filterVarColList, toStratSet } from './strat_def'
-import { fullFilterState,
+import { RowDef, StratDef, ColList, begRowDef, rowDefStratDef, filterVarColList, toStratSet } from './strat_def'
+import { VerOffset, newTimeDat, applyVerOffset } from "./time_dat"
+import { FilterState, fullFilterState,
 	orgStarDef, verOffsetStarDef, colListStarDef } from './org_star_def'
-import { xcamRecordMap, sortColList } from './xcam_record_map'
+import { Ident, TimeMap, TimeTable, newIdent, addTimeMap, buildTimeTable } from './time_table'
 import { openListMergeView } from './merge_view'
 import { userEditPerm } from './edit_perm'
-import { addTimeMap, buildTimeTable } from './time_table'
+import { xcamRecordMap, sortColList } from './xcam_record_map'
 import { StarTable } from './rx_star_table'
 
 	/*
@@ -18,7 +18,8 @@ import { StarTable } from './rx_star_table'
 		is synced with our backend database.
 	*/
 
-async function loadTimeTable(stageId, starId, colList, fs, verOffset) {
+async function loadTimeTable(stageId: number, starId: number,
+	colList: ColList, fs: FilterState, verOffset: VerOffset): Promise<TimeTable> {
 	// load rows
 	const getReq = await fetch("http://ec2-52-15-55-53.us-east-2.compute.amazonaws.com:5500/times/read?stage=" +
 		stageId + "&star=" + starId);
@@ -29,19 +30,17 @@ async function loadTimeTable(stageId, starId, colList, fs, verOffset) {
 	}
 	// enumerate strats
 	//var colList = orgColList(stageId, starId, verState);
-	var stratSet = toStratSet(colList);
+	var [stratSet, indexSet] = toStratSet(colList);
 	// build time table
-	const timeMap = {};
+	const timeMap: TimeMap = {};
 	for (const data of res.res) {
-		var playerId = { "service": "google", "name": "Unknown" };
-		var stratDef = stratSet[data.stratname];
+		var playerId = newIdent("remote", "unknown");
+		var stratDef = stratSet[data.stratname as string];
 		if (stratDef === undefined) continue;
-		var stratId = stratDef.colId;
+		var stratId = indexSet[data.stratname as string];
 		// get row definition (if not in xcam sheet, use beginner template)
-		var rowDef = null;
-		if (stratDef.virtual) {
-			rowDef = begRowDef(stratDef.name);
-		} else {
+		var rowDef = begRowDef(stratDef.name);
+		if (!stratDef.virtual) {
 			var xcamRef = stratDef.id_list[0];
 			rowDef = rowDefStratDef(stratDef, xcamRef);	
 		}
@@ -54,7 +53,7 @@ async function loadTimeTable(stageId, starId, colList, fs, verOffset) {
 	return buildTimeTable(timeMap, colList.length);
 }
 
-function completeEditRow(colTotal, editText, colOrder) {
+//function completeEditRow(colTotal:, editText, colOrder) {
 	// get columns / variant indices
 	/*var colList = orgColList(stageId, starId);
 	var variantList = orgVariantList(colList, variant);
@@ -66,15 +65,15 @@ function completeEditRow(colTotal, editText, colOrder) {
 	}
 	return newRow;*/
 	// fill new row
-	var newRow = Array(colTotal).fill(null);
+/*	var newRow = Array(colTotal).fill(null);
 	for (let i = 0; i < editText.length; i++) {
 		var colId = colOrder[i][0];
 		newRow[colId] = rawMS(editText[i]);
 	}
 	return newRow;
-}
+}*/
 
-function postNewTimes(stageId, starId, name, diffText, colOrder) {
+//function postNewTimes(stageId, starId, name, diffText, colOrder) {
 	/*var stratSet = Object.entries(orgData[stageId].starList[starId].jp_set);
 	var stratList = stratSet.map((strat, i) => {
 		const [stratName, stratDef] = strat;
@@ -85,7 +84,7 @@ function postNewTimes(stageId, starId, name, diffText, colOrder) {
 	//var colList = orgColList(stageId, starId);
 	//var variantList = orgVariantList(colList, variant);
 	// get list of times to submit
-	var submitList = [];
+/*	var submitList = [];
 	for (let i = 0; i < diffText.length; i++) {
 		if (diffText[i] !== null) {
 			var time = rawMS(diffText[i]);
@@ -108,9 +107,16 @@ function postNewTimes(stageId, starId, name, diffText, colOrder) {
 			"Content-type": "application/json; charset=UTF-8"
 		}
 	});
-}
+}*/
 
-export function LiveStarTable(props)
+type LiveStarTableProps = {
+	"stageId": number,
+	"starId": number,
+	"fs": FilterState,
+	"userId": Ident | null
+};
+
+export function LiveStarTable(props: LiveStarTableProps): React.ReactNode
 {
 	const stageId = props.stageId;
 	const starId = props.starId;
@@ -122,7 +128,7 @@ export function LiveStarTable(props)
 	var colList = colListStarDef(starDef, fs);
 
 	// time table
-	const [timeTable, setTimeTable] = useState([]);
+	const [timeTable, setTimeTable] = useState([] as TimeTable);
 	const [reload, setReload] = useState(1);
 
 	// time table loader
@@ -136,7 +142,7 @@ export function LiveStarTable(props)
 	}, [reload]);
 
 	// edit function
-	const editTT = (name, dfText, colOrder) => {
+	/*const editTT = (name, dfText, colOrder) => {
 		// complete the row and update time table
 		//var newRow = completeEditRow(stageId, starId, variant, dfText, colOrder);
 		var newRow = completeEditRow(colList, dfText, colOrder);
@@ -145,7 +151,8 @@ export function LiveStarTable(props)
 		// sync the times to the database
 		postNewTimes(stageId, starId, name, dfText, colOrder);
 		setReload(1000); // slight offset so the database has time to actually update
-	}
+	}*/
+	const editTT = () => {};
 
 	/*var _colList = orgColList(stageId, starId, fs);
 

@@ -1,5 +1,8 @@
 
-import { filterTimeTable } from "./time_table"
+import { StratDef, ColList } from './strat_def'
+import { TimeDat, MultiDat } from './time_dat'
+import { TimeTable, filterTimeTable } from './time_table'
+import { RecordMap } from './xcam_record_map'
 
 	/*
 		* how does the open column work?
@@ -21,7 +24,14 @@ import { filterTimeTable } from "./time_table"
 
 	/* merge view creation functions */
 
-export function newMergeView(colList)
+type ColRef = [number, StratDef]
+
+export type MergeView = {
+	"list": ColRef[][],
+	"openName": string | null
+};
+
+export function newMergeView(colList: ColList): MergeView
 {
 	return {
 		"list": colList.map((strat) => [strat]),
@@ -29,7 +39,7 @@ export function newMergeView(colList)
 	};
 }
 
-function findColMergeView(mv, name)
+function findColMergeView(mv: MergeView, name: string): [number, ColRef] | null
 {
 	for (let i = 0; i < mv.list.length; i++) {
 		var sl = mv.list[i];
@@ -38,45 +48,47 @@ function findColMergeView(mv, name)
 			if (strat.name === name) return [i, sl[j]];
 		}
 	}
-	return [-1, null];
+	return null;
 }
 
-function removeColMergeView(mv, name)
+function removeColMergeView(mv: MergeView, name: string): ColRef
 {
-	var [i, _strat] = findColMergeView(mv, name);
-	if (i === -1) throw ("Attempted to remove column with non-existent strat " + name + " from merge view.");
+	var res = findColMergeView(mv, name);
+	if (res === null) throw ("Attempted to remove column with non-existent strat " + name + " from merge view.");
+	var [i, _strat] = res;
 	mv.list.splice(i, 1);
 	return _strat;
 }
 
-function addColMergeView(mv, name, strat)
+function addColMergeView(mv: MergeView, name: string, strat: ColRef)
 {
-	var [i, _s] = findColMergeView(mv, name);
-	if (i === -1) throw ("Attempted to add strat " + strat[1].name + " to column with non-existent strat " + name + " from merge view.");
+	var res = findColMergeView(mv, name);
+	if (res === null) throw ("Attempted to add strat " + strat[1].name + " to column with non-existent strat " + name + " from merge view.");
+	var [i, _s] = res;
 	mv.list[i].push(strat);
 }
 
-function mergeColMergeView(mv, n1, n2)
+function mergeColMergeView(mv: MergeView, n1: string, n2: string)
 {
 	if (n1 === n2) return;
 	var _strat = removeColMergeView(mv, n2);
 	addColMergeView(mv, n1, _strat);
 }
 
-function mergeColListMergeView(mv, n, nl)
+function mergeColListMergeView(mv: MergeView, n: string, nl: string[])
 {
 	for (let i = 0; i < nl.length; i++) {
 		mergeColMergeView(mv, n, nl[i]);
 	}
 }
 
-function filterOpenList(colList, openList)
+function filterOpenList(colList: ColList, openList: string[]): string[]
 {
 	var nameList = colList.map((_strat) => _strat[1].name);
 	return openList.filter((name) => nameList.includes(name));
 }
 
-export function openListMergeView(colList, openList)
+export function openListMergeView(colList: ColList, openList: string[] | null): MergeView | null
 {
 	// if open list is null, dont merge view
 	if (openList === null) return null;
@@ -102,7 +114,7 @@ export function openListMergeView(colList, openList)
 	return mv;
 }
 
-export function formatMergeView(mv)
+export function formatMergeView(mv: MergeView): string
 {
 	if (mv === null) return "mv { null }";
 	var str = "mv {";
@@ -124,7 +136,7 @@ export function formatMergeView(mv)
 
 	/* merge view utilization functions */
 
-function hasNameStratList(sl, name)
+function hasNameStratList(sl: ColRef[], name: string): boolean
 {
 	for (const _strat of sl)
 	{
@@ -133,7 +145,7 @@ function hasNameStratList(sl, name)
 	return false;
 }
 
-function nameListStratList(sl, openName)
+function nameListStratList(sl: ColRef[], openName: string | null): string
 {
 	var str = sl[0][1].name;
 	for (let i = 1; i < sl.length; i++) {
@@ -145,13 +157,13 @@ function nameListStratList(sl, openName)
 	return str;
 }
 
-export function nameListMergeView(mv, colList)
+export function nameListMergeView(mv: MergeView | null, colList: ColList): string[]
 {
 	if (mv === null) return colList.map((_strat) => _strat[1].name);
 	return mv.list.map((sl) => nameListStratList(sl, mv.openName))
 }
 
-export function recordListMergeView(mv, colList, recordMap)
+export function recordListMergeView(mv: MergeView | null, colList: ColList, recordMap: RecordMap): TimeDat[]
 {
 	if (mv === null) return colList.map((_strat) => recordMap[_strat[1].name]);
 	return mv.list.map((sl, i) => {
@@ -164,10 +176,10 @@ export function recordListMergeView(mv, colList, recordMap)
 	});
 }
 
-export function filterTableMergeView(timeTable, mv, colList)
+export function filterTableMergeView(timeTable: TimeTable, mv: MergeView | null, colList: ColList): TimeTable
 {
 	if (mv === null) return filterTimeTable(timeTable, colList);
-	var filterTable = [];
+	var filterTable: TimeTable = [];
 	for (let i = 0; i < timeTable.length; i++) {
 		var userDat = timeTable[i];
 		var empty = true;
@@ -183,7 +195,7 @@ export function filterTableMergeView(timeTable, mv, colList)
 			return timeDat;
 		});*/
 		var mergeRow = mv.list.map((sl) => {
-			var mergeCell = [];
+			var mergeCell: MultiDat | null = [];
 			for (const _strat of sl) {
 				var [colId, strat] = _strat;
 				var timeCell = userDat.timeRow[colId];

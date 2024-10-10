@@ -107,7 +107,7 @@ select {
 	border-right: 0px;
 }
 
-.toggle-button[active="true"] {
+.toggle-button[data-active="true"] {
 	background-color: #404090;
 }
 
@@ -115,15 +115,15 @@ select {
 	cursor: pointer;
 }
 
-.toggle-button[active="true"]:hover {
+.toggle-button[data-active="true"]:hover {
 	background-color: #3A3A80;
 }
 
-.toggle-button[active="false"]:hover {
+.toggle-button[data-active="false"]:hover {
 	background-color: #282850;
 }
 
-.toggle-button[plain="true"] {
+.toggle-button[data-plain="true"] {
 	font-weight: normal;
 }
 
@@ -188,11 +188,11 @@ select {
 	background-color: #383858;
 }
 
-.star-name[sel="true"] {
+.star-name[data-sel="true"] {
 	background-color: #285040;
 }
 
-.star-name[sel="true"]:hover {
+.star-name[data-sel="true"]:hover {
 	cursor: pointer;
 	background-color: #305848;
 }
@@ -236,7 +236,7 @@ select {
 	height: 21px;
 }
 
-.time-row[datarow="yes"] td {
+.time-row[data-endRow="true"] td {
 	border-bottom-color: #A0A0C0;
 }
 
@@ -268,7 +268,7 @@ select {
 	font-weight: bold;
 }
 
-.time-cell[active="true"]:hover {
+.time-cell[data-active="true"]:hover {
 	background-color: #B0B0D6;
 	cursor: pointer;
 }
@@ -369,11 +369,11 @@ input:focus {
 	opacity: 0%;
 }
 
-td:hover .float-icon[active="false"] {
+td:hover .float-icon[data-active="false"] {
 	opacity: 60%;
 }
 
-.float-icon[active="true"] {
+.float-icon[data-active="true"] {
 	opacity: 100%;
 }
 
@@ -416,7 +416,7 @@ td:hover .float-icon[active="false"] {
 	font-weight: bold;
 }
 
-.menu-button[active="true"] { 
+.menu-button[data-active="true"] { 
 	/*border-color: #408040;
 	background-color: #389058;*/
 	border-color: #4870A0;
@@ -429,7 +429,7 @@ td:hover .float-icon[active="false"] {
 	cursor: pointer;
 }
 
-.menu-button[active="true"]:hover {
+.menu-button[data-active="true"]:hover {
 	/*background-color: #40B060;*/
 	background-color: #5878C0;
 }
@@ -466,13 +466,13 @@ td:hover .float-icon[active="false"] {
 	width: 100%;
 }
 
-.dropdown-opt[active="false"] {
+.dropdown-opt[data-active="false"] {
 	cursor: default;
 	color: #C0C0D0;
 	font-style: italic;
 }
 
-.dropdown-opt[active="true"]:hover {
+.dropdown-opt[data-active="true"]:hover {
 	text-decoration: underline;
 }
 
@@ -645,13 +645,13 @@ td:hover .float-icon[active="false"] {
 	text-align: center;
 }
 
-.nick-disp[state="none"] {
+.nick-disp[data-state="none"] {
 	color: #9090B0;
 	font-style: italic;
 	font-weight: normal;
 }
 
-.nick-disp[state="edit"] {
+.nick-disp[data-state="edit"] {
 	color: #C0C0E0;
 	outline: 0px!important;
 	border: 0px;
@@ -712,38 +712,38 @@ td:hover .float-icon[active="false"] {
 
 	/* standard colors */
 
-td[ps="Mario"] {
+td[data-ps="Mario"] {
 	background-color: #CC2222;
 	color: #FFFFFF;
 }
 
-td[ps="Grandmaster"] {
+td[data-ps="Grandmaster"] {
 	background-color: #701010;
 	color: #FFFFFF;
 }
 
-td[ps="Master"] {
+td[data-ps="Master"] {
 	background-color: #701050;
 	color: #FFFFFF;
 }
 
-td[ps="Diamond"] {
+td[data-ps="Diamond"] {
 	background-color: #8080D0;
 }
 
-td[ps="Platinum"] {
+td[data-ps="Platinum"] {
 	background-color: #80D080;
 }
 
-td[ps="Gold"] {
+td[data-ps="Gold"] {
 	background-color: #D0D080;
 }
 
-td[ps="Silver"] {
+td[data-ps="Silver"] {
 	background-color: #D0D0D0;
 }
 
-td[ps="Unranked"] {
+td[data-ps="Unranked"] {
 	color: #404040;
 	font-style: italic;
 }

@@ -9,13 +9,17 @@ import { mainVerStarDef } from './org_star_def'
 	*/
 
 	/*
+		variant_list: a list of variants
+	*/
+
+	/*
 		variant_space: abstract definition of all possible
 			variant combinations for a strat.
 		  * verInfo: version information about the strat (null if it doesn't matter)
 		  * varTable: table of lists representing options for a variant
 		  		TODO: currently every list is just Y/N
 	*/
-
+/*
 function makeVarTable(variants)
 {
 	if (variants === undefined) return [];
@@ -38,12 +42,12 @@ export function varSpaceStarDef(starDef, stratName)
 			"usFlag": starDef.us_set[stratName] !== undefined
 		};
 	}
-	// get s
+	// filter variants relevant to a strat
 	return {
 		"verInfo": verInfo,
 		"varTable": makeVarTable(starDef.variants)
 	};
-}
+}*/
 
 	/*
 		variant_map: a map of which variants for a strat

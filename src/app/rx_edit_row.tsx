@@ -1,33 +1,40 @@
 
 import React, { useState } from 'react'
 
-import { rawMS, formatTime } from './time_dat'
-import { lookupGrid, setGrid } from './sparse-grid'
+import { TimeDat, rawMS, formatTime } from './time_dat'
+import { lookupGrid, setGrid } from './sparse_grid'
 import { strIdNick } from './play_wrap'
-import { EditCell } from './rx_star_cell'
+import { EditCell } from './rx_edit_cell'
 
 	/* auxiliary functions for front-end time submission validity */
-
-function validTimeDat(timeDat) {
+/*
+function validTimeDat(timeDat: TimeDat | null) {
 	if (timeDat === null) return true;
 	return validTime(s);
 }
-
+*/
 	/* 
 		edit pos: tracks which cell is being edited, if any
 			(this state is passed in as a prop because edit mode is triggered externally)
 	 */
 
-export function nullEditPos() {
+export type EditPos = {
+	"active": boolean,
+	"rowId": number | null,
+	"colId": number,
+	"subRowId": number
+}
+
+export function nullEditPos(): EditPos {
 	return {
 		"active": false,
 		"rowId": null,
-		"colId": -1,
-		"subRowId": null
+		"colId": 0,
+		"subRowId": 0
 	};
 }
 
-export function indexEditPos(rowId, colId) {
+export function indexEditPos(rowId: number | null, colId: number): EditPos {
 	return {
 		"active": true,
 		"rowId": rowId,
@@ -43,7 +50,7 @@ export function indexEditPos(rowId, colId) {
 		* dat grid - tracks the row_def + metadata stored in the given cell
 			(tracked separately from the text grid since time_dats cannot contain raw text)
 	*/
-
+/*
 function newDraftState()
 {
 	return {
@@ -82,7 +89,6 @@ function getTimeDatDS(timeRow, ds, colId, subRowId) {
 	return "";
 }
 
-
 function updateDS(ds, colId, subRowId, v) {
 	setGrid(ds.textGrid, colId, subRowId, v);
 	return {
@@ -90,14 +96,14 @@ function updateDS(ds, colId, subRowId, v) {
 		"rowDefGrid": ds.rowDefGrid
 	};
 }
-
+*/
 	/* edit row: displays
 		- all submitted times w/ version + variant information
 		- slots for un-submitted times
 		- "edit toolbar" w/ submission button, warning msgs, version / variant options
 		- auto-creates new boxes when necessary
 	*/
-
+/*
 export function EditRow(props) {
 	const userDat = props.userDat;
 	const timeRow = userDat.timeRow;
@@ -114,12 +120,12 @@ export function EditRow(props) {
 
 	// generate edit cells
 	var editNodes = [];
-	for (let i = 0; i < timeRow.length; i++) {
+	for (let i = 0; i < timeRow.length; i++) {*/
 		/*var multiDat = timeRow[i];
 		var timeDat = null;
 		if (multiDat !== null && multiDat.length > 0) timeDat = multiDat[0];*/
 		// input cell case
-		if (editPos.colId === i) {
+/*		if (editPos.colId === i) {
 			var timeText = getTextDS(timeRow, ds, i, 0);
 			editNodes.push(<InputCell text={ timeText } valid={ validTime(timeText) }/>);
 		// other cell
@@ -135,7 +141,7 @@ export function EditRow(props) {
 
 	// return final row
 	return <tr className="time-row" key="edit-row">{ editNodes }</tr>;
-}
+}*/
 
 /*
 function EditRow(props) {

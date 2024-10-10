@@ -10,7 +10,17 @@
 		* variant_list: array[int] - list of variants used by row
 	*/
 
-export function newRowDef(name, ver, v_list)
+export type VerF = "jp" | "us";
+export type Ver = "jp" | "us" | "both";
+export type RowId = [string, number];
+
+export type RowDef = {
+	"name": string,
+	"ver": Ver,
+	"variant_list": number[]
+};
+
+export function newRowDef(name: string, ver: Ver, v_list: number[]): RowDef
 {
 	if (v_list === undefined) throw("Attempted to create row definition for " + name + " with undefined variant list.");
 	return {
@@ -20,22 +30,28 @@ export function newRowDef(name, ver, v_list)
 	};
 }
 
-export function zeroRowDef(name)
+export function zeroRowDef(name: string): RowDef
 {
 	return newRowDef(name, "jp", []);
 }
 
-export function begRowDef(name)
+export function begRowDef(name: string): RowDef
 {
 	return newRowDef(name, "both", []);
 }
 
 	/*
-		ver_map: an abstraction that maps an xcam row (row_id) to its
-			version information (may be undefined)
+		PRIVATE ver_map: an abstraction that maps an xcam row (row_id) to a version
+			operates normally even if undefined is passed
+			(returns "other" if lookup fails, other itself may be null)
 	*/
 
-export function newVerMap(ver)
+type VerMap = {
+	"data": { [key: string]: Ver },
+	"other": Ver | null
+};
+
+function newVerMap(ver: Ver | null): VerMap
 {
 	return {
 		"data": {},
@@ -43,7 +59,7 @@ export function newVerMap(ver)
 	};
 }
 
-export function lookupVerMap(verMap, ref)
+function lookupVerMap(verMap: VerMap | undefined, ref: RowId): Ver | null
 {
 	if (verMap === undefined) return null;
 	var ver = verMap.data[ref[0] + "_" + ref[1]]
@@ -51,7 +67,7 @@ export function lookupVerMap(verMap, ref)
 	return verMap.other;
 }
 
-export function addVerMap(verMap, ref, v)
+function addVerMap(verMap: VerMap | undefined, ref: RowId, v: Ver)
 {
 	if (verMap === undefined) throw ("Attempted to add version information for " + ref[0] + "_" + ref[1] + " to uninitialized version map.");
 	verMap.data[ref[0] + "_" + ref[1]] = v;
@@ -68,7 +84,22 @@ export function addVerMap(verMap, ref, v)
 		* ver_map: ver_map 
 	*/
 
-export function newStratDef(name, diff, virtual, virtId, id_list, variant_map)
+type VariantMap = {
+	[key: string]: number[]
+}
+
+export type StratDef = {
+	"name": string,
+	"diff": string,
+	"virtual": boolean,
+	"virtId": string | undefined,
+	"id_list": RowId[],
+	"variant_map": VariantMap,
+	"ver_map": VerMap | undefined
+};
+
+export function newStratDef(name: string, diff: string,
+	virtual: boolean, virtId: string | undefined, id_list: RowId[], variant_map: VariantMap): StratDef
 {
 	return {
 		"name": name,
@@ -76,11 +107,12 @@ export function newStratDef(name, diff, virtual, virtId, id_list, variant_map)
 		"virtual": virtual,
 		"virtId": virtId,
 		"id_list": id_list,
-		"variant_map": variant_map
+		"variant_map": variant_map,
+		"ver_map": undefined
 	}
 }
 
-export function copyStratDef(stratDef)
+export function copyStratDef(stratDef: StratDef): StratDef
 {
 	return {
 		"name": stratDef.name,
@@ -93,13 +125,13 @@ export function copyStratDef(stratDef)
 	}
 }
 
-export function specifyVerStratDef(sDef, ver)
+function specifyVerStratDef(sDef: StratDef, ver: Ver): StratDef
 {
 	sDef.ver_map = newVerMap(ver);
 	return sDef;
 }
 
-function containsRef(l, ref) {
+function containsRef(l: RowId[], ref: RowId): boolean {
 	for (let i = 0; i < l.length; i++) {
 		var rx = l[i];
 		if (ref[0] === rx[0] && ref[1] === rx[1]) return true;
@@ -107,8 +139,8 @@ function containsRef(l, ref) {
 	return false;
 }
 
-function mergeRefListVerMap(l1, l2) {
-	var lx = [];
+function mergeRefListVerMap(l1: RowId[], l2: RowId[]): [RowId[], VerMap] {
+	var lx: RowId[] = [];
 	var ver_map = newVerMap(null);
 	l1.map((ref) => {
 		lx.push(ref)
@@ -125,8 +157,8 @@ function mergeRefListVerMap(l1, l2) {
 	return [lx, ver_map];
 }
 
-function mergeVariantMap(v1, v2) {
-	var variant_map = {};
+function mergeVariantMap(v1: VariantMap, v2: VariantMap): VariantMap {
+	var variant_map: VariantMap = {};
 	Object.entries(v1).map((entry) => {
 		var [ref, l] = entry;
 		variant_map[ref] = l;
@@ -138,7 +170,7 @@ function mergeVariantMap(v1, v2) {
 	return variant_map;
 }
 
-export function mergeVerStratDef(sDef1, sDef2)
+export function mergeVerStratDef(sDef1: StratDef, sDef2: StratDef): StratDef
 {
 	// for simplicity, we assume that this function will only be used to merge
 	// raw strats that are JP/US variants. meaning:
@@ -154,14 +186,14 @@ export function mergeVerStratDef(sDef1, sDef2)
 
 	/* because the original organizational structure is fractured, this lookup must be done in parts */
 
-function verStratDef(sDef, ref)
+function verStratDef(sDef: StratDef, ref: RowId): Ver
 {
 	var ver = lookupVerMap(sDef.ver_map, ref);
 	if (ver === null) return "both";
 	return ver;
 }
 
-function vListStratDef(sDef, ref)
+function vListStratDef(sDef: StratDef, ref: RowId): number[]
 {
 	var key = ref[0] + "_" + ref[1];
 	if (sDef.variant_map[key] === undefined) {
@@ -171,7 +203,7 @@ function vListStratDef(sDef, ref)
 	return sDef.variant_map[key];
 }
 
-export function rowDefStratDef(sDef, ref)
+export function rowDefStratDef(sDef: StratDef, ref: RowId): RowDef
 {
 	return newRowDef(sDef.name, verStratDef(sDef, ref), vListStratDef(sDef, ref));
 }
@@ -190,9 +222,13 @@ export function rowTimeDatStratDef(sDef, ref, time)
 		strat_set: a mapping of strat names into strat defs
 	*/
 
-export function mergeStratSet(vs1, vs2)
+export type StratSet = {
+	[key: string]: StratDef
+}
+
+export function mergeStratSet(vs1: StratSet, vs2: StratSet): StratSet
 {
-	var vsx = {};
+	var vsx: StratSet = {};
 	Object.entries(vs1).map((strat) => {
 		var [stratName, stratDef] = strat;
 		if (vs2[stratName] !== undefined) {
@@ -210,7 +246,7 @@ export function mergeStratSet(vs1, vs2)
 	return vsx;
 }
 
-export function hasExtStratSet(vs) {
+export function hasExtStratSet(vs: [string, StratDef][]): boolean {
 	for (const [name, strat] of vs) {
 		for (const ref of strat.id_list) {
 			if (ref[0] === "ext") return true;
@@ -219,8 +255,8 @@ export function hasExtStratSet(vs) {
 	return false;
 }
 
-export function filterExtStratSet(vs) {
-	var vsx = {};
+export function filterExtStratSet(vs: StratSet): StratSet {
+	var vsx: StratSet = {};
 	Object.entries(vs).map((strat) => {
 		var [stratName, stratDef] = strat;
 		var newDef = copyStratDef(stratDef);
@@ -230,23 +266,16 @@ export function filterExtStratSet(vs) {
 	return vsx;
 }
 
-export function toStratSet(list) {
-	var vs = {};
-	for (let i = 0; i < list.length; i++) {
-		var obj = list[i];
-		vs[obj.name] = obj;
-		// special parameter to remember column id
-		vs[obj.name]["colId"] = i;
-	}
-	return vs;
-}
-
 	/*
 		column_list: a list of [index, strat definition] tuples
 	*/
 
-export function stratSetToColList(vs) {
-	var colList = [];
+export type ColList = [number, StratDef][];
+
+export type IndexSet = { [key: string]: number };
+
+export function stratSetToColList(vs: StratSet): ColList {
+	var colList: ColList = [];
 	Object.entries(vs).map((strat, i) => {
 		var [stratName, stratDef] = strat;
 		if (stratDef.virtual || stratDef.id_list.length !== 0) colList.push([i, stratDef]);
@@ -254,8 +283,20 @@ export function stratSetToColList(vs) {
 	return colList;
 }
 
-export function filterVarColList(colList, variant) {
-	var vList = [];
+export function toStratSet(list: ColList): [StratSet, IndexSet] {
+	var vs: StratSet = {};
+	var is: IndexSet = {};
+	for (let i = 0; i < list.length; i++) {
+		var [ix, obj] = list[i];
+		vs[obj.name] = obj;
+		// special parameter to remember column id
+		is[obj.name] = i;
+	}
+	return [vs, is];
+}
+
+export function filterVarColList(colList: ColList, variant: number | null): ColList {
+	var vList: ColList = [];
 	colList.map((_strat) => {
 		var [i, strat] = _strat;
 		var second = strat.diff.includes("second");

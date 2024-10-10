@@ -5,9 +5,10 @@ import orgData from './json/org_data.json'
 import { newFilterState, copyFilterState,
 	orgStarDef, verOffsetStarDef } from './org_star_def'
 //import { newFilterState, orgColList, filterVarColList } from "./org_star_def"
-import { LiveStarTable } from "./livetable"
-import { VerToggle } from './vertoggle'
-import { AuthButton } from './rx_auth_button'
+import { Ident } from './time_table'
+import { LiveStarTable } from './rx_live_table'
+import { VerToggle } from './rx_ver_toggle'
+import { AuthArea } from './rx_auth_area'
 
 	/*
 		################
@@ -17,7 +18,7 @@ import { AuthButton } from './rx_auth_button'
 		stages/stars/strats. (admin purposes only)
 	*/
 
-export function EditBoard() {
+export function EditBoard(): React.ReactNode {
 	// star state
 	const [stageId, setStageId] = useState(0);
 	const [starIdCache, setStarIdCache] = useState(Array(orgData.length).fill(0));
@@ -25,11 +26,11 @@ export function EditBoard() {
 	var starDef = orgStarDef(stageId, starId);
 
 	// star functions
-	const changeStage = (e) => {
-		setStageId(e.target.value);
+	const changeStage = (e: React.ChangeEvent<HTMLSelectElement>) => {
+		setStageId(parseInt(e.target.value));
 	};
 
-	const changeStar = (i) => {
+	const changeStar = (i: number) => {
 		starIdCache[stageId] = i;
 		setStarIdCache(starIdCache.map((x) => x));
 	};
@@ -38,7 +39,7 @@ export function EditBoard() {
 	const [fs, setFS] = useState(newFilterState());
 	var verOffset = verOffsetStarDef(starDef, fs);
 
-	const toggleVer = (i) => {
+	const toggleVer = (i: number) => {
 		var ns = copyFilterState(fs);
 		ns.verState[i] = !ns.verState[i];
 		if (!ns.verState[i] && !ns.verState[1 - i]) ns.verState[1 - i] = true;
@@ -46,7 +47,7 @@ export function EditBoard() {
 	}
 
 	// user identity	
-	const [userId, setUserId] = useState(null);
+	const [userId, setUserId] = useState(null as Ident | null);
 	const [relFlag, setRelFlag] = useState(0);
 
 	const reload = () => {
@@ -64,7 +65,7 @@ export function EditBoard() {
 	var starList = orgData[stageId].starList;
 	var starBtnNodes = starList.map((star, i) => {
 		var flag = (starIdCache[stageId] === i) ? "true" : "false";
-		return <div key={ star.name } className="star-name" sel={ flag }
+		return <div key={ star.name } className="star-name" data-sel={ flag }
 			onClick={ () => { changeStar(i) } }>{ star.name }</div>;
 	});
 
@@ -128,7 +129,7 @@ export function EditBoard() {
 		</div>
 		<LiveStarTable stageId={ stageId } starId={ starId } fs={ fs } userId={ userId } key={ stageId + "_" + starId }/>
 		<div className="sep"><hr/></div>
-		<AuthButton userId={ userId } setUserId={ setUserId } setNick={ reload }/>
+		<AuthArea userId={ userId } setUserId={ setUserId } setNick={ reload }/>
 		</div>
 	);
 

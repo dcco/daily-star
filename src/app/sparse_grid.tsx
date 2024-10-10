@@ -4,16 +4,20 @@
 	return a.map((old, j) => (i === j) ? v : old);
 }*/
 
-export function lookupGrid(grid, i, j)
+export type SGrid<T> = {
+	[key: string]: T
+};
+
+export function lookupGrid<T>(grid: SGrid<T>, i: number, j: number): T | null
 {
 	var v = grid[i + "_" + j];
 	if (!v) return null;
 	return v;
 }
 
-export function setGrid(grid, i, j, v)
+export function setGrid<T>(grid: SGrid<T>, i: number, j: number, v: T)
 {
-	newGrid[i + "_" + j] = v;
+	grid[i + "_" + j] = v;
 }
 
 /*export function updateGrid(grid, i, j, v)

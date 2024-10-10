@@ -1,4 +1,4 @@
-import { MultiBoard } from './multiboard'
+import { MultiBoard } from './rx_multi_board'
 
 export const metadata = {
 	title: "Daily Star",

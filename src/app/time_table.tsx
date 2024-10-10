@@ -2,7 +2,8 @@
 //import orgData from './json/org_data.json'
 //import playerData from './json/player_data.json'
 
-import { hasSubTimes } from './time_dat'
+import { ColList } from './strat_def'
+import { TimeDat, MultiDat, hasSubTimes } from './time_dat'
 
 	/*
 		ident: an identity used for differentiating submission sources (xcam sheet, google account, etc)
@@ -15,7 +16,15 @@ import { hasSubTimes } from './time_dat'
 				- used locally + in tokens sent to the backend
 	*/
 
-export function newIdent(service, name) {
+export type IdService = "xcam" | "remote" | "google";
+
+export type Ident = {
+	"service": IdService,
+	"name": string,
+	"token": any
+}
+
+export function newIdent(service: IdService, name: string): Ident {
 	return {
 		"service": service,
 		"name": name,
@@ -23,11 +32,11 @@ export function newIdent(service, name) {
 	}
 }
 
-export function keyIdent(id) {
+export function keyIdent(id: Ident): string {
 	return id.service + "@" + id.name;
 }
 
-export function sameIdent(id1, id2) {
+export function sameIdent(id1: Ident, id2: Ident): boolean {
 	return id1.service === id2.service && id1.name === id2.name;
 }
 
@@ -35,14 +44,17 @@ export function sameIdent(id1, id2) {
 		time_row: an array of multi_dats
 	*/
 
-export function freshTimeRow(len, newId) {
+export type TimeEntry = MultiDat | null;
+export type TimeRow = TimeEntry[];
+
+export function freshUserDat(len: number, newId: Ident): UserDat {
 	return {
 		"id": newId,
 		"timeRow": Array(len).fill(null)
 	};
 }
 
-export function hasSubRows(timeRow) {
+export function hasSubRows(timeRow: TimeRow): boolean {
 	var flag = false;
 	timeRow.map((multiDat) => {
 		if (hasSubTimes(multiDat)) flag = true;
@@ -55,11 +67,18 @@ export function hasSubRows(timeRow) {
 			intermediate data structure used to create time tables
 	*/
 
-function sortInsert(list, v, compareFn) {
+export type TimeMap = {
+	[key: string]: {
+		"data": { [key: string]: MultiDat },
+		"id": Ident
+	}
+};
+
+function sortInsert<T>(list: T[], v: T, compareFn: (a: T, b: T) => number) {
 	// invariant:
 	// -- FORALL i >= r. v < list[i]
 	// -- FORALL i < l. list[i] <= v
-	function sih(l, r) {
+	function sih(l: number, r: number) {
 		if (r === 0) { list.unshift(v); return; }
 		if (r <= l) { list.splice(l, 0, v); return; }
 		var m = Math.floor((l + r) / 2);
@@ -69,12 +88,11 @@ function sortInsert(list, v, compareFn) {
 	sih(0, list.length);
 } 
 
-export function addTimeMap(timeMap, id, colId, timeDat) {
+export function addTimeMap(timeMap: TimeMap, id: Ident, colId: number, timeDat: TimeDat) {
 	var key = keyIdent(id);
-	if (timeMap[key] === undefined) timeMap[key] = {};
-	timeMap[key]["_id"] = id;
-	if (timeMap[key][colId] === undefined) timeMap[key][colId] = [];
-	var curDat = timeMap[key][colId];
+	if (timeMap[key] === undefined) timeMap[key] = { "data": {}, "id": id };
+	if (timeMap[key].data["" + colId] === undefined) timeMap[key].data["" + colId] = [];
+	var curDat = timeMap[key].data["" + colId];
 	sortInsert(curDat, timeDat, function(a, b) { return a.time - b.time; });
 }
 
@@ -83,19 +101,25 @@ export function addTimeMap(timeMap, id, colId, timeDat) {
 		* timeRow: array[multi_dat] - player times
 	*/
 
+export type UserDat = {
+	"id": Ident,
+	"timeRow": TimeRow
+}
+
+export type TimeTable = UserDat[];
+
 	// creates a time table from a time pool
 
-export function buildTimeTable(timeMap, colTotal) {
+export function buildTimeTable(timeMap: TimeMap, colTotal: number): TimeTable {
 	// transform player map >> player table
-	var timeTable = Object.entries(timeMap).map((user) => {
+	var timeTable: TimeTable = Object.entries(timeMap).map((user) => {
 		// transform column map >> column list
 		var [key, userDat] = user;
-		var id = userDat._id;
-		var timeRow = [];
-		var metaList = [];
+		var id = userDat.id;
+		var timeRow: TimeRow = [];
 		for (let i = 0; i < colTotal; i++) {
-			if (userDat[i]) {
-				timeRow.push(userDat[i]);
+			if (userDat.data[i]) {
+				timeRow.push(userDat.data[i]);
 			} else {
 				timeRow.push(null);
 			}
@@ -111,8 +135,8 @@ export function buildTimeTable(timeMap, colTotal) {
 
 	/* -- filter: filter table based on columns */
 
-export function filterTimeTable(timeTable, colList) {
-	var filterTable = [];
+export function filterTimeTable(timeTable: TimeTable, colList: ColList): TimeTable {
+	var filterTable: TimeTable = [];
 	for (let i = 0; i < timeTable.length; i++) {
 		var userDat = timeTable[i];
 		var empty = true;
@@ -132,15 +156,19 @@ export function filterTimeTable(timeTable, colList) {
 
 	/* -- sort: sort table based on best times (can prioritize one column) */
 
-function sortTimeRow(timeRow)
+type CompRow = MultiDat[];
+type ExUserDat = UserDat & { "_sort": CompRow };
+type ExTimeTable = ExUserDat[];
+
+function sortTimeRow(timeRow: TimeRow): CompRow
 {
-	var sortRow = timeRow.filter((v) => v !== null);
+	var sortRow: CompRow = (timeRow.filter((v) => v !== null) as any);
 	return sortRow.sort(function (a, b) {
 		return a[0].time - b[0].time;
 	});
 }
 
-function compTimeRow(l1, l2)
+function compTimeRow(l1: CompRow, l2: CompRow): number
 {
 	// start with the "best" times
 	var diff = l1[0][0].time - l2[0][0].time;
@@ -155,28 +183,30 @@ function compTimeRow(l1, l2)
 	return l2.length - l1.length;
 }
 
-function sortCopy(table, fun) {
+function sortCopy(table: ExTimeTable, fun: (a: ExUserDat, b: ExUserDat) => number): ExTimeTable {
 	return table.map((x) => x).sort(fun);
 }
 
-export function sortTimeTable(timeTable, sortId) {
+export function sortTimeTable(timeTable: TimeTable, sortId: number): TimeTable {
 	// do an initial sort of all times
-	timeTable.map(function (v) {
-		v["_sort"] = sortTimeRow(v.timeRow);
+	var exTable: ExTimeTable = timeTable.map(function (v) {
+		return { "id": v.id, "timeRow": v.timeRow, "_sort": sortTimeRow(v.timeRow) };
 	});
 	// use these time arrays to sort
 	if (sortId === 0) {
-		return sortCopy(timeTable, function (a, b) {
+		return sortCopy(exTable, function (a, b) {
 			return compTimeRow(a._sort, b._sort);
 		});
 	} else {
-		return sortCopy(timeTable, function (a, b) {
+		return sortCopy(exTable, function (a, b) {
 			var si = sortId - 1;
-			if (a.timeRow[si] === null) {
-				if (b.timeRow[si] === null) return compTimeRow(a._sort, b._sort);
+			var ai = a.timeRow[si];
+			var bi = b.timeRow[si];
+			if (ai === null) {
+				if (bi === null) return compTimeRow(a._sort, b._sort);
 				else return 1;
-			} else if (b.timeRow[si] === null) return -1;
-			var diff = a.timeRow[si][0].time - b.timeRow[si][0].time;
+			} else if (bi === null) return -1;
+			var diff = ai[0].time - bi[0].time;
 			if (diff !== 0) return diff;
 			return compTimeRow(a._sort, b._sort);
 		});
