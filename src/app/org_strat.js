@@ -1,8 +1,8 @@
 
-import ultData from './json/ult_struct.json'
+//import ultData from './json/ult_struct.json'
 
 	/* data structure for an individual strat */
-
+/*
 function newStratDef(name, diff) {
 	return {
 		"name": name,
@@ -16,9 +16,9 @@ function addVariantStratDef(strat, v, i) {
 	strat.variant_list.push([v, i]);
 	strat.id_list.push(i);
 }
-
+*/
 	/* data structure for storing strat data per star */
-
+/*
 function newStarDef(name) {
 	return {
 		"name": name,
@@ -82,9 +82,9 @@ function addRowStarDef(star, tagList, rowId) {
 		_addStratStarSet(star.us_set, stratName, diff, vList, rowId);
 	}
 }
-
+*/
 	/* organizes stars/strats/times FROM strat json */
-
+/*
 function organizeStar(star, rowId) {
 	var starDat = newStarDef(star.name);
 	star.rows.map((stratRow, i) => {
@@ -123,4 +123,4 @@ function organizeData() {
 	return stageList;
 }
 
-export const orgData = organizeData();
+export const orgData = organizeData();*/

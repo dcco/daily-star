@@ -56,7 +56,7 @@ export function orgStarDef(stageId, starId)
 	return orgData[stageId].starList[starId];
 }
 
-function mainVerStarDef(starDef)
+export function mainVerStarDef(starDef)
 {
 	// if no version specified, no version diff
 	if (starDef.def === undefined) return null;

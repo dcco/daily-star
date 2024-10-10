@@ -6,6 +6,7 @@ import { fullFilterState,
 	orgStarDef, verOffsetStarDef, colListStarDef } from './org_star_def'
 import { xcamRecordMap, sortColList } from './xcam_record_map'
 import { openListMergeView } from './merge_view'
+import { userEditPerm } from './edit_perm'
 import { addTimeMap, buildTimeTable } from './time_table'
 import { StarTable } from './rx_star_table'
 
@@ -32,7 +33,7 @@ async function loadTimeTable(stageId, starId, colList, fs, verOffset) {
 	// build time table
 	const timeMap = {};
 	for (const data of res.res) {
-		var playerName = "Unknown";
+		var playerId = { "service": "google", "name": "Unknown" };
 		var stratDef = stratSet[data.stratname];
 		if (stratDef === undefined) continue;
 		var stratId = stratDef.colId;
@@ -47,7 +48,7 @@ async function loadTimeTable(stageId, starId, colList, fs, verOffset) {
 		// add time data
 		var timeDat = newTimeDat(data.time, data.link, data.note, rowDef);
 		applyVerOffset(timeDat, verOffset);
-		addTimeMap(timeMap, playerName, stratId, timeDat);
+		addTimeMap(timeMap, playerId, stratId, timeDat);
 	}
 	console.log("Successfully loaded live table data.");
 	return buildTimeTable(timeMap, colList.length);
@@ -114,6 +115,7 @@ export function LiveStarTable(props)
 	const stageId = props.stageId;
 	const starId = props.starId;
 	const fs = props.fs;
+	const userId = props.userId;
 
 	var starDef = orgStarDef(stageId, starId);
 	var verOffset = verOffsetStarDef(starDef, fs);
@@ -167,5 +169,5 @@ export function LiveStarTable(props)
 	var filterMV = openListMergeView(filterColList, starDef.open);
 	
 	return(<StarTable colList={ filterColList } timeTable={ timeTable } verOffset={ verOffset }
-		recordMap={ relRM } mv={ filterMV } canWrite="true" editTT={ editTT }></StarTable>);
+		recordMap={ relRM } mv={ filterMV } editPerm={ userEditPerm(userId) } editTT={ editTT }></StarTable>);
 }

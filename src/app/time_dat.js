@@ -94,9 +94,6 @@ export function formatFrames(frames) {
 		* link: string
 		* note: string
 		* rowDef: row_def - xcam row represented by the time cell
-
-		 multi_dat (time cell): an array of time_dats used to represent
-			multiple rows in the same column
 	*/
 
 export function newTimeDat(time, link, note, rowDef)
@@ -121,10 +118,20 @@ export function formatTimeDat(timeDat) {
 	return formatTime(timeDat.time);
 }
 
-export function formatMultiDat(mDat) {
+	/* 
+		multi_dat (time cell): an array of time_dats used to represent
+			multiple times in the same column
+	*/
+
+export function hasSubTimes(multiDat) {
+	return multiDat !== null && multiDat.length > 1;
+}
+
+
+/*export function formatMultiDat(mDat) {
 	if (mDat === null) return "";
 	return formatTime(mDat[0].time);
-}
+}*/
 
 	/*
 		ver_offset: version offset information

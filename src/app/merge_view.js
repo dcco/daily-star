@@ -196,7 +196,7 @@ export function filterTableMergeView(timeTable, mv, colList)
 			return mergeCell;
 		});
 		if (!empty) filterTable.push({
-			"name": userDat.name,
+			"id": userDat.id,
 			"timeRow": mergeRow
 		});
 	}

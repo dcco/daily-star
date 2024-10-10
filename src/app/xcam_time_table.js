@@ -5,7 +5,7 @@ import { G_SHEET } from './xcam_wrap'
 
 import { rawMS, newTimeDat, applyVerOffset } from "./time_dat"
 import { rowDefStratDef } from "./strat_def"
-import { addTimeMap, buildTimeTable } from "./time_table"
+import { newIdent, addTimeMap, buildTimeTable } from "./time_table"
 
 	/* derived "sort_data" (determines a canonical order for column sorting) */
 
@@ -28,7 +28,8 @@ export function xcamTimeTable(colList, fs, verOffset) {
 				applyVerOffset(timeDat, verOffset);
 				// do not include times better than posted record
 				if (record === undefined || data.ms >= rawMS(record)) {
-					addTimeMap(timeMap, data.player, colId, timeDat);
+					var playerId = newIdent("xcam", data.player);
+					addTimeMap(timeMap, playerId, colId, timeDat);
 				}
 			}
 		}

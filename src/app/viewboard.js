@@ -105,14 +105,14 @@ export function ViewBoard(props) {
 	var mainColList = filterVarColList(colList, null);
 	var mainMV = openListMergeView(mainColList, starDef.open);
 	tableList.push(<StarTable colList={ mainColList } timeTable={ timeTable } verOffset={ verOffset }
-		recordMap={ relRM } mv={ mainMV } canWrite="false" key={ stageId + "_" + starId + "_0" }></StarTable>);
+		recordMap={ relRM } mv={ mainMV } key={ stageId + "_" + starId + "_0" }></StarTable>);
 
 	var varColList = filterVarColList(colList, 1);
 	var varMV = null;
 	if (varColList.length > 0) {
 		varMV = openListMergeView(varColList, starDef.open);
 		tableList.push(<StarTable colList={ varColList } timeTable={ timeTable } verOffset={ verOffset }
-			recordMap={ relRM }	mv={ varMV } canWrite="false" key={ stageId + "_" + starId + "_1" }></StarTable>);
+			recordMap={ relRM }	mv={ varMV } key={ stageId + "_" + starId + "_1" }></StarTable>);
 	}	
 
 	return (<div>
@@ -132,7 +132,6 @@ export function ViewBoard(props) {
 			{ starBtnNodes }
 		</div>
 		{ varCont }
-		<AuthButton/>
 		{ tableList }
 	</div>);
 

@@ -14,6 +14,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_4": []
@@ -28,6 +29,7 @@
           "Left Side": {
             "name": "Left Side",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_7": []
@@ -44,6 +46,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_5": []
@@ -58,6 +61,7 @@
           "Left Side": {
             "name": "Left Side",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_8": []
@@ -84,6 +88,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_12": []
@@ -98,6 +103,7 @@
           "No Cutscene": {
             "name": "No Cutscene",
             "diff": "second",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "ext_2": []
@@ -114,6 +120,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_13": []
@@ -128,6 +135,7 @@
           "No Cutscene": {
             "name": "No Cutscene",
             "diff": "second",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "ext_3": []
@@ -151,6 +159,7 @@
           "Skyjump": {
             "name": "Skyjump",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_14": [
@@ -172,6 +181,7 @@
           "Slope Start": {
             "name": "Slope Start",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_17": [
@@ -193,6 +203,7 @@
           "Island Hop": {
             "name": "Island Hop",
             "diff": "second",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_20": []
@@ -207,6 +218,7 @@
           "TJ Ihop": {
             "name": "TJ Ihop",
             "diff": "second",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_4": []
@@ -223,6 +235,7 @@
           "Skyjump": {
             "name": "Skyjump",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_16": []
@@ -237,6 +250,7 @@
           "Slope Start": {
             "name": "Slope Start",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_19": []
@@ -251,6 +265,7 @@
           "Island Hop": {
             "name": "Island Hop",
             "diff": "second",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_20": []
@@ -265,6 +280,7 @@
           "TJ Ihop": {
             "name": "TJ Ihop",
             "diff": "second",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_4": []
@@ -294,6 +310,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_21": []
@@ -308,6 +325,7 @@
           "DSS": {
             "name": "DSS",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "ext_5": []
@@ -324,6 +342,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_22": []
@@ -338,6 +357,7 @@
           "DSS": {
             "name": "DSS",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "ext_6": []
@@ -363,6 +383,7 @@
           "Skyjump": {
             "name": "Skyjump",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_23": [
@@ -384,6 +405,7 @@
           "Slope Start": {
             "name": "Slope Start",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_26": [
@@ -407,6 +429,7 @@
           "Skyjump": {
             "name": "Skyjump",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_25": []
@@ -421,6 +444,7 @@
           "Slope Start": {
             "name": "Slope Start",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_28": []
@@ -449,6 +473,7 @@
           "Bomb Clip": {
             "name": "Bomb Clip",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_29": [],
@@ -539,6 +564,7 @@
           "Backflip Clip": {
             "name": "Backflip Clip",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_30": [],
@@ -600,6 +626,7 @@
           "Bomb Clip": {
             "name": "Bomb Clip",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_29": [],
@@ -690,6 +717,7 @@
           "Backflip Clip": {
             "name": "Backflip Clip",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_30": [],
@@ -773,6 +801,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_37": [],
@@ -803,6 +832,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_39": [],
@@ -844,6 +874,7 @@
           "Triple Jump": {
             "name": "Triple Jump",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_41": [],
@@ -879,6 +910,7 @@
           "Double Jump": {
             "name": "Double Jump",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_42": [],
@@ -907,6 +939,7 @@
           "Sideflip WK": {
             "name": "Sideflip WK",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -917,6 +950,7 @@
           "Triple Jump": {
             "name": "Triple Jump",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_41": [],
@@ -952,6 +986,7 @@
           "Double Jump": {
             "name": "Double Jump",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_42": [],
@@ -980,6 +1015,7 @@
           "Sideflip WK": {
             "name": "Sideflip WK",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -1004,6 +1040,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_43": []
@@ -1018,6 +1055,7 @@
           "Single Jump": {
             "name": "Single Jump",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_44": [],
@@ -1041,6 +1079,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_43": []
@@ -1055,6 +1094,7 @@
           "Single Jump": {
             "name": "Single Jump",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_44": [],
@@ -1088,6 +1128,7 @@
           "Pro Cycle": {
             "name": "Pro Cycle",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_46": [],
@@ -1109,6 +1150,7 @@
           "Half Cycle Skip": {
             "name": "Half Cycle Skip",
             "diff": "easy",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_49": []
@@ -1123,6 +1165,7 @@
           "Kanno Cycle": {
             "name": "Kanno Cycle",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "ext_41": []
@@ -1139,6 +1182,7 @@
           "Pro Cycle": {
             "name": "Pro Cycle",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_47": []
@@ -1153,6 +1197,7 @@
           "Half Cycle Skip": {
             "name": "Half Cycle Skip",
             "diff": "easy",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_50": []
@@ -1167,6 +1212,7 @@
           "Kanno Cycle": {
             "name": "Kanno Cycle",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "ext_42": []
@@ -1195,6 +1241,7 @@
           "TJ Owlless": {
             "name": "TJ Owlless",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_52": []
@@ -1209,6 +1256,7 @@
           "DJ Owlless": {
             "name": "DJ Owlless",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_53": [],
@@ -1260,6 +1308,7 @@
           "Owl": {
             "name": "Owl",
             "diff": "easy",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_54": []
@@ -1274,6 +1323,7 @@
           "Sideflip": {
             "name": "Sideflip",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_51": [],
@@ -1302,6 +1352,7 @@
           "Mad Owl": {
             "name": "Mad Owl",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "ext_54": []
@@ -1318,6 +1369,7 @@
           "TJ Owlless": {
             "name": "TJ Owlless",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_52": []
@@ -1332,6 +1384,7 @@
           "DJ Owlless": {
             "name": "DJ Owlless",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_53": [],
@@ -1383,6 +1436,7 @@
           "Owl": {
             "name": "Owl",
             "diff": "easy",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_55": []
@@ -1397,6 +1451,7 @@
           "Sideflip": {
             "name": "Sideflip",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_51": [],
@@ -1425,6 +1480,7 @@
           "Mad Owl": {
             "name": "Mad Owl",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "ext_55": []
@@ -1455,6 +1511,7 @@
           "Sockfolder": {
             "name": "Sockfolder",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_56": []
@@ -1469,6 +1526,7 @@
           "Texture": {
             "name": "Texture",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_57": []
@@ -1483,6 +1541,7 @@
           "Salt": {
             "name": "Salt",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_58": [],
@@ -1504,6 +1563,7 @@
           "OG": {
             "name": "OG",
             "diff": "hard",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_59": [],
@@ -1525,6 +1585,7 @@
           "LJ": {
             "name": "LJ",
             "diff": "hard",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_60": [],
@@ -1546,6 +1607,7 @@
           "Open": {
             "name": "Open",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_56": [
@@ -1564,6 +1626,7 @@
           "Sockfolder": {
             "name": "Sockfolder",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_56": []
@@ -1578,6 +1641,7 @@
           "Texture": {
             "name": "Texture",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_57": []
@@ -1592,6 +1656,7 @@
           "Salt": {
             "name": "Salt",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_58": [],
@@ -1613,6 +1678,7 @@
           "OG": {
             "name": "OG",
             "diff": "hard",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_59": [],
@@ -1634,6 +1700,7 @@
           "LJ": {
             "name": "LJ",
             "diff": "hard",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_60": [],
@@ -1655,6 +1722,7 @@
           "Open": {
             "name": "Open",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_56": [
@@ -1695,6 +1763,7 @@
           "Ship Clip": {
             "name": "Ship Clip",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_67": [],
@@ -1718,6 +1787,7 @@
           "Ship Clip": {
             "name": "Ship Clip",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_67": [],
@@ -1751,6 +1821,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_72": []
@@ -1765,6 +1836,7 @@
           "BLJ": {
             "name": "BLJ",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_63": []
@@ -1781,6 +1853,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_72": []
@@ -1795,6 +1868,7 @@
           "BLJ": {
             "name": "BLJ",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_63": []
@@ -1820,6 +1894,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_73": []
@@ -1834,6 +1909,7 @@
           "BLJ": {
             "name": "BLJ",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_64": []
@@ -1850,6 +1926,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_73": []
@@ -1864,6 +1941,7 @@
           "BLJ": {
             "name": "BLJ",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_64": []
@@ -1889,6 +1967,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_74": []
@@ -1903,6 +1982,7 @@
           "No Cutscene": {
             "name": "No Cutscene",
             "diff": "second",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_76": []
@@ -1919,6 +1999,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_75": []
@@ -1933,6 +2014,7 @@
           "No Cutscene": {
             "name": "No Cutscene",
             "diff": "second",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_77": []
@@ -1956,6 +2038,7 @@
           "Cannon (Direct)": {
             "name": "Cannon (Direct)",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_79": [],
@@ -1977,6 +2060,7 @@
           "Ship LJ": {
             "name": "Ship LJ",
             "diff": "second",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_85": []
@@ -1991,6 +2075,7 @@
           "Framewalk": {
             "name": "Framewalk",
             "diff": "second",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_86": [
@@ -2012,6 +2097,7 @@
           "Cannon (Pole)": {
             "name": "Cannon (Pole)",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -2022,6 +2108,7 @@
           "Cannon (Direct)": {
             "name": "Cannon (Direct)",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_80": [],
@@ -2043,6 +2130,7 @@
           "Cannon (Pole)": {
             "name": "Cannon (Pole)",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -2051,6 +2139,7 @@
           "Ship LJ": {
             "name": "Ship LJ",
             "diff": "second",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "ext_65": []
@@ -2065,6 +2154,7 @@
           "Framewalk": {
             "name": "Framewalk",
             "diff": "second",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "ext_66": [
@@ -2099,6 +2189,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_88": []
@@ -2115,6 +2206,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_88": []
@@ -2147,6 +2239,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_96": []
@@ -2161,6 +2254,7 @@
           "No Clip": {
             "name": "No Clip",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_97": []
@@ -2177,6 +2271,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_96": []
@@ -2191,6 +2286,7 @@
           "No Clip": {
             "name": "No Clip",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_97": []
@@ -2214,6 +2310,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_98": []
@@ -2228,6 +2325,7 @@
           "Special": {
             "name": "Special",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "ext_71": [
@@ -2253,6 +2351,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_99": []
@@ -2267,6 +2366,7 @@
           "Special": {
             "name": "Special",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "ext_72": [
@@ -2305,6 +2405,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_102": []
@@ -2319,6 +2420,7 @@
           "Pingu Trick": {
             "name": "Pingu Trick",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "ext_79": []
@@ -2335,6 +2437,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_103": []
@@ -2349,6 +2452,7 @@
           "Pingu Trick": {
             "name": "Pingu Trick",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_104": []
@@ -2372,6 +2476,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_105": []
@@ -2386,6 +2491,7 @@
           "Atmpas Route": {
             "name": "Atmpas Route",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_110": []
@@ -2400,6 +2506,7 @@
           "Special": {
             "name": "Special",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "ext_80": [
@@ -2425,6 +2532,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_107": []
@@ -2439,6 +2547,7 @@
           "Atmpas Route": {
             "name": "Atmpas Route",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_112": []
@@ -2453,6 +2562,7 @@
           "Special": {
             "name": "Special",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "ext_81": [
@@ -2491,6 +2601,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_115": [],
@@ -2514,6 +2625,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_115": [],
@@ -2547,6 +2659,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_116": [],
@@ -2568,6 +2681,7 @@
           "Head Manip": {
             "name": "Head Manip",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_119": []
@@ -2584,6 +2698,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_117": [],
@@ -2605,6 +2720,7 @@
           "Head Manip": {
             "name": "Head Manip",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_120": []
@@ -2631,6 +2747,7 @@
           "Backflip WK": {
             "name": "Backflip WK",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_122": []
@@ -2645,6 +2762,7 @@
           "Beginner": {
             "name": "Beginner",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -2653,6 +2771,7 @@
           "SJ WK": {
             "name": "SJ WK",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_90": []
@@ -2669,6 +2788,7 @@
           "Backflip WK": {
             "name": "Backflip WK",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_122": []
@@ -2683,6 +2803,7 @@
           "Beginner": {
             "name": "Beginner",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -2691,6 +2812,7 @@
           "SJ WK": {
             "name": "SJ WK",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_90": []
@@ -2725,6 +2847,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_128": []
@@ -2739,6 +2862,7 @@
           "Door Skips": {
             "name": "Door Skips",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_129": [
@@ -2770,6 +2894,7 @@
           "Open": {
             "name": "Open",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "ext_94": [
@@ -2813,6 +2938,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_134": []
@@ -2827,6 +2953,7 @@
           "Text Skip": {
             "name": "Text Skip",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_135": []
@@ -2855,6 +2982,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_137": []
@@ -2869,6 +2997,7 @@
           "DJ Dive": {
             "name": "DJ Dive",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_139": []
@@ -2885,6 +3014,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_137": []
@@ -2899,6 +3029,7 @@
           "DJ Dive": {
             "name": "DJ Dive",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_139": []
@@ -2922,6 +3053,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_141": []
@@ -2936,6 +3068,7 @@
           "Right WK": {
             "name": "Right WK",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_142": []
@@ -2950,6 +3083,7 @@
           "Open": {
             "name": "Open",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_98": [
@@ -2975,6 +3109,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_141": []
@@ -2989,6 +3124,7 @@
           "Right WK": {
             "name": "Right WK",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_142": []
@@ -3003,6 +3139,7 @@
           "Open": {
             "name": "Open",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_98": [
@@ -3039,6 +3176,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_143": []
@@ -3053,6 +3191,7 @@
           "DSS": {
             "name": "DSS",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "ext_100": []
@@ -3069,6 +3208,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_144": []
@@ -3083,6 +3223,7 @@
           "DSS": {
             "name": "DSS",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "ext_101": []
@@ -3108,6 +3249,7 @@
           "Pro Kill": {
             "name": "Pro Kill",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_147": []
@@ -3122,6 +3264,7 @@
           "Other Kill": {
             "name": "Other Kill",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_148": []
@@ -3138,6 +3281,7 @@
           "Pro Kill": {
             "name": "Pro Kill",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_147": []
@@ -3152,6 +3296,7 @@
           "Other Kill": {
             "name": "Other Kill",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_148": []
@@ -3175,6 +3320,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_150": []
@@ -3191,6 +3337,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_150": []
@@ -3223,6 +3370,7 @@
           "Box Triple": {
             "name": "Box Triple",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_159": []
@@ -3237,6 +3385,7 @@
           "Elevator Clip": {
             "name": "Elevator Clip",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -3247,6 +3396,7 @@
           "Box Triple": {
             "name": "Box Triple",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_159": []
@@ -3261,6 +3411,7 @@
           "Elevator Clip": {
             "name": "Elevator Clip",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -3278,6 +3429,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_160": [
@@ -3315,6 +3467,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_161": [
@@ -3364,6 +3517,7 @@
           "Xmas Miracle": {
             "name": "Xmas Miracle",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_163": [
@@ -3385,6 +3539,7 @@
           "BLJ": {
             "name": "BLJ",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_114": []
@@ -3401,6 +3556,7 @@
           "Xmas Miracle": {
             "name": "Xmas Miracle",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_163": [
@@ -3422,6 +3578,7 @@
           "BLJ": {
             "name": "BLJ",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_114": []
@@ -3450,6 +3607,7 @@
           "BLJ": {
             "name": "BLJ",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_166": [],
@@ -3471,6 +3629,7 @@
           "Wall Clip": {
             "name": "Wall Clip",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_167": []
@@ -3485,6 +3644,7 @@
           "No Clip": {
             "name": "No Clip",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -3495,6 +3655,7 @@
           "BLJ": {
             "name": "BLJ",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_166": [],
@@ -3516,6 +3677,7 @@
           "Wall Clip": {
             "name": "Wall Clip",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_167": []
@@ -3530,6 +3692,7 @@
           "No Clip": {
             "name": "No Clip",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -3550,6 +3713,7 @@
           "Rightside": {
             "name": "Rightside",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_169": []
@@ -3564,6 +3728,7 @@
           "Leftside": {
             "name": "Leftside",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_170": [],
@@ -3585,6 +3750,7 @@
           "SS": {
             "name": "SS",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_117": []
@@ -3601,6 +3767,7 @@
           "Rightside": {
             "name": "Rightside",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_169": []
@@ -3615,6 +3782,7 @@
           "Leftside": {
             "name": "Leftside",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_170": [],
@@ -3636,6 +3804,7 @@
           "SS": {
             "name": "SS",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_117": []
@@ -3662,6 +3831,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_171": []
@@ -3676,6 +3846,7 @@
           "GTM Slide": {
             "name": "GTM Slide",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_172": [],
@@ -3699,6 +3870,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_171": []
@@ -3713,6 +3885,7 @@
           "GTM Slide": {
             "name": "GTM Slide",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_172": [],
@@ -3755,6 +3928,7 @@
           "No Ledgegrab": {
             "name": "No Ledgegrab",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_180": []
@@ -3769,6 +3943,7 @@
           "Right GP Kill": {
             "name": "Right GP Kill",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_181": []
@@ -3783,6 +3958,7 @@
           "Double Burn": {
             "name": "Double Burn",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_182": [],
@@ -3804,6 +3980,7 @@
           "Ledgegrab": {
             "name": "Ledgegrab",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -3814,6 +3991,7 @@
           "No Ledgegrab": {
             "name": "No Ledgegrab",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_180": []
@@ -3828,6 +4006,7 @@
           "Right GP Kill": {
             "name": "Right GP Kill",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_181": []
@@ -3842,6 +4021,7 @@
           "Double Burn": {
             "name": "Double Burn",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_182": [],
@@ -3863,6 +4043,7 @@
           "Ledgegrab": {
             "name": "Ledgegrab",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -3883,6 +4064,7 @@
           "Ledgegrab": {
             "name": "Ledgegrab",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_183": []
@@ -3897,6 +4079,7 @@
           "No Ledgegrab": {
             "name": "No Ledgegrab",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_184": []
@@ -3911,6 +4094,7 @@
           "Rightside": {
             "name": "Rightside",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_185": [],
@@ -3941,6 +4125,7 @@
           "Ledgegrab": {
             "name": "Ledgegrab",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_183": []
@@ -3955,6 +4140,7 @@
           "No Ledgegrab": {
             "name": "No Ledgegrab",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_184": []
@@ -3969,6 +4155,7 @@
           "Rightside": {
             "name": "Rightside",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_185": [],
@@ -4010,6 +4197,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_187": []
@@ -4024,6 +4212,7 @@
           "Beginner": {
             "name": "Beginner",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_188": []
@@ -4038,6 +4227,7 @@
           "3x LJ": {
             "name": "3x LJ",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_189": []
@@ -4054,6 +4244,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_187": []
@@ -4068,6 +4259,7 @@
           "Beginner": {
             "name": "Beginner",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_188": []
@@ -4082,6 +4274,7 @@
           "3x LJ": {
             "name": "3x LJ",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_189": []
@@ -4105,6 +4298,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_190": []
@@ -4119,6 +4313,7 @@
           "TJ Strat": {
             "name": "TJ Strat",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_191": []
@@ -4133,6 +4328,7 @@
           "2x LJ Sidehop": {
             "name": "2x LJ Sidehop",
             "diff": "second",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_192": []
@@ -4147,6 +4343,7 @@
           "LJ JD Sidehop": {
             "name": "LJ JD Sidehop",
             "diff": "second",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_193": []
@@ -4161,6 +4358,7 @@
           "Open": {
             "name": "Open",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_123": [
@@ -4177,6 +4375,7 @@
           "DJ Sidehop": {
             "name": "DJ Sidehop",
             "diff": "second",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_124": []
@@ -4193,6 +4392,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_190": []
@@ -4207,6 +4407,7 @@
           "TJ Strat": {
             "name": "TJ Strat",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_191": []
@@ -4221,6 +4422,7 @@
           "2x LJ Sidehop": {
             "name": "2x LJ Sidehop",
             "diff": "second",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_192": []
@@ -4235,6 +4437,7 @@
           "LJ JD Sidehop": {
             "name": "LJ JD Sidehop",
             "diff": "second",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_193": []
@@ -4249,6 +4452,7 @@
           "Open": {
             "name": "Open",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_123": [
@@ -4265,6 +4469,7 @@
           "DJ Sidehop": {
             "name": "DJ Sidehop",
             "diff": "second",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_124": []
@@ -4293,6 +4498,7 @@
           "Pro Boost": {
             "name": "Pro Boost",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_194": []
@@ -4307,6 +4513,7 @@
           "Akira Boost": {
             "name": "Akira Boost",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_196": []
@@ -4321,6 +4528,7 @@
           "Double Pole Skip": {
             "name": "Double Pole Skip",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_198": []
@@ -4335,6 +4543,7 @@
           "Beginner": {
             "name": "Beginner",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -4343,6 +4552,7 @@
           "TJ Boost": {
             "name": "TJ Boost",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -4353,6 +4563,7 @@
           "Pro Boost": {
             "name": "Pro Boost",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_194": []
@@ -4367,6 +4578,7 @@
           "Akira Boost": {
             "name": "Akira Boost",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_196": []
@@ -4381,6 +4593,7 @@
           "Double Pole Skip": {
             "name": "Double Pole Skip",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_198": []
@@ -4395,6 +4608,7 @@
           "Beginner": {
             "name": "Beginner",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -4403,6 +4617,7 @@
           "TJ Boost": {
             "name": "TJ Boost",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -4420,6 +4635,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_201": []
@@ -4434,6 +4650,7 @@
           "Lavaboost": {
             "name": "Lavaboost",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "ext_125": []
@@ -4450,6 +4667,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_203": []
@@ -4464,6 +4682,7 @@
           "Lavaboost": {
             "name": "Lavaboost",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "ext_126": []
@@ -4489,6 +4708,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_207": []
@@ -4505,6 +4725,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_207": []
@@ -4537,6 +4758,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_215": []
@@ -4551,6 +4773,7 @@
           "Speed Pres": {
             "name": "Speed Pres",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_216": [
@@ -4588,6 +4811,7 @@
           "Flyguyless": {
             "name": "Flyguyless",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_219": []
@@ -4604,6 +4828,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_215": []
@@ -4618,6 +4843,7 @@
           "Speed Pres": {
             "name": "Speed Pres",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_216": [
@@ -4655,6 +4881,7 @@
           "Flyguyless": {
             "name": "Flyguyless",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_219": []
@@ -4684,6 +4911,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_220": []
@@ -4700,6 +4928,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_220": []
@@ -4723,6 +4952,7 @@
           "Pillarless": {
             "name": "Pillarless",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_221": []
@@ -4737,6 +4967,7 @@
           "SJ Pless": {
             "name": "SJ Pless",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_222": []
@@ -4751,6 +4982,7 @@
           "Tama Pless": {
             "name": "Tama Pless",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_223": []
@@ -4765,6 +4997,7 @@
           "Shell": {
             "name": "Shell",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -4773,6 +5006,7 @@
           "Nuts Pless": {
             "name": "Nuts Pless",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_132": []
@@ -4789,6 +5023,7 @@
           "Pillarless": {
             "name": "Pillarless",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_221": []
@@ -4803,6 +5038,7 @@
           "SJ Pless": {
             "name": "SJ Pless",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_222": []
@@ -4817,6 +5053,7 @@
           "Tama Pless": {
             "name": "Tama Pless",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_223": []
@@ -4831,6 +5068,7 @@
           "Shell": {
             "name": "Shell",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -4839,6 +5077,7 @@
           "Nuts Pless": {
             "name": "Nuts Pless",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_132": []
@@ -4864,6 +5103,7 @@
           "Solo Secrets": {
             "name": "Solo Secrets",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_224": [],
@@ -4892,6 +5132,7 @@
           "Nuts Pless": {
             "name": "Nuts Pless",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_133": []
@@ -4908,6 +5149,7 @@
           "Solo Secrets": {
             "name": "Solo Secrets",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_224": [],
@@ -4936,6 +5178,7 @@
           "Nuts Pless": {
             "name": "Nuts Pless",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_133": []
@@ -4965,6 +5208,7 @@
           "Topless": {
             "name": "Topless",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_228": []
@@ -4979,6 +5223,7 @@
           "Backside": {
             "name": "Backside",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -4987,6 +5232,7 @@
           "TJWK": {
             "name": "TJWK",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -4997,6 +5243,7 @@
           "Topless": {
             "name": "Topless",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_230": []
@@ -5011,6 +5258,7 @@
           "Backside": {
             "name": "Backside",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -5019,6 +5267,7 @@
           "TJWK": {
             "name": "TJWK",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -5036,6 +5285,7 @@
           "Wall Bounce": {
             "name": "Wall Bounce",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_233": []
@@ -5050,6 +5300,7 @@
           "No Wall Bounce": {
             "name": "No Wall Bounce",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_234": []
@@ -5064,6 +5315,7 @@
           "Z-Slide": {
             "name": "Z-Slide",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_235": [],
@@ -5094,6 +5346,7 @@
           "Wall Bounce": {
             "name": "Wall Bounce",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_233": []
@@ -5108,6 +5361,7 @@
           "No Wall Bounce": {
             "name": "No Wall Bounce",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_234": []
@@ -5122,6 +5376,7 @@
           "Z-Slide": {
             "name": "Z-Slide",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_235": [],
@@ -5163,6 +5418,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_237": []
@@ -5177,6 +5433,7 @@
           "Alt Pillar": {
             "name": "Alt Pillar",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "ext_135": []
@@ -5193,6 +5450,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_239": []
@@ -5207,6 +5465,7 @@
           "Alt Pillar": {
             "name": "Alt Pillar",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "ext_136": []
@@ -5239,6 +5498,7 @@
           "Front Sub": {
             "name": "Front Sub",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_249": []
@@ -5253,6 +5513,7 @@
           "Back Sub": {
             "name": "Back Sub",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_250": [],
@@ -5281,6 +5542,7 @@
           "Open": {
             "name": "Open",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_142": [
@@ -5307,6 +5569,7 @@
           "Front Sub": {
             "name": "Front Sub",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_249": []
@@ -5321,6 +5584,7 @@
           "Back Sub": {
             "name": "Back Sub",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_250": [],
@@ -5349,6 +5613,7 @@
           "Open": {
             "name": "Open",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_142": [
@@ -5388,6 +5653,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_252": []
@@ -5402,6 +5668,7 @@
           "Downwarp": {
             "name": "Downwarp",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_145": []
@@ -5418,6 +5685,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_252": []
@@ -5432,6 +5700,7 @@
           "Downwarp": {
             "name": "Downwarp",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_145": []
@@ -5455,6 +5724,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_253": []
@@ -5471,6 +5741,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_254": []
@@ -5494,6 +5765,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_258": []
@@ -5508,6 +5780,7 @@
           "Chip Clip": {
             "name": "Chip Clip",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_259": [],
@@ -5529,6 +5802,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_258": []
@@ -5543,6 +5817,7 @@
           "Chip Clip": {
             "name": "Chip Clip",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_259": [],
@@ -5571,6 +5846,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_261": []
@@ -5587,6 +5863,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_261": []
@@ -5610,6 +5887,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_262": []
@@ -5624,6 +5902,7 @@
           "Chip Clip": {
             "name": "Chip Clip",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_263": [],
@@ -5645,6 +5924,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_262": []
@@ -5659,6 +5939,7 @@
           "Chip Clip": {
             "name": "Chip Clip",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_263": [],
@@ -5696,6 +5977,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_271": [],
@@ -5717,6 +5999,7 @@
           "Beginner": {
             "name": "Beginner",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -5725,6 +6008,7 @@
           "Pingu Flip": {
             "name": "Pingu Flip",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_149": []
@@ -5741,6 +6025,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_271": [],
@@ -5762,6 +6047,7 @@
           "Beginner": {
             "name": "Beginner",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -5770,6 +6056,7 @@
           "Pingu Flip": {
             "name": "Pingu Flip",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_149": []
@@ -5796,6 +6083,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_273": [],
@@ -5817,6 +6105,7 @@
           "Crouch Kill": {
             "name": "Crouch Kill",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_274": [
@@ -5840,6 +6129,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_273": [],
@@ -5861,6 +6151,7 @@
           "Crouch Kill": {
             "name": "Crouch Kill",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_274": [
@@ -5894,6 +6185,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_275": []
@@ -5908,6 +6200,7 @@
           "TJ Strat": {
             "name": "TJ Strat",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_276": []
@@ -5924,6 +6217,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_275": []
@@ -5938,6 +6232,7 @@
           "TJ Strat": {
             "name": "TJ Strat",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_276": []
@@ -5961,6 +6256,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_277": [],
@@ -5989,6 +6285,7 @@
           "Open": {
             "name": "Open",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_154": [
@@ -6007,6 +6304,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_277": [],
@@ -6035,6 +6333,7 @@
           "Open": {
             "name": "Open",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_154": [
@@ -6065,6 +6364,7 @@
           "Solo Reds": {
             "name": "Solo Reds",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_278": [],
@@ -6088,6 +6388,7 @@
           "Solo Reds": {
             "name": "Solo Reds",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_278": [],
@@ -6121,6 +6422,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_279": []
@@ -6135,6 +6437,7 @@
           "Alt Route": {
             "name": "Alt Route",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "ext_156": []
@@ -6151,6 +6454,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_280": []
@@ -6165,6 +6469,7 @@
           "Alt Route": {
             "name": "Alt Route",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "ext_157": []
@@ -6188,6 +6493,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_283": [],
@@ -6224,6 +6530,7 @@
           "Igloo Clip": {
             "name": "Igloo Clip",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_164": [],
@@ -6247,6 +6554,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_283": [],
@@ -6283,6 +6591,7 @@
           "Igloo Clip": {
             "name": "Igloo Clip",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_164": [],
@@ -6326,6 +6635,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_292": [],
@@ -6347,6 +6657,7 @@
           "Mid Water": {
             "name": "Mid Water",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_171": []
@@ -6363,6 +6674,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_292": [],
@@ -6384,6 +6696,7 @@
           "Mid Water": {
             "name": "Mid Water",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_171": []
@@ -6412,6 +6725,7 @@
           "Cage TJWK": {
             "name": "Cage TJWK",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_293": [],
@@ -6433,6 +6747,7 @@
           "Purple Switch": {
             "name": "Purple Switch",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_294": [],
@@ -6454,6 +6769,7 @@
           "Direct TJ": {
             "name": "Direct TJ",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_174": []
@@ -6470,6 +6786,7 @@
           "Cage TJWK": {
             "name": "Cage TJWK",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_293": [],
@@ -6491,6 +6808,7 @@
           "Purple Switch": {
             "name": "Purple Switch",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_294": [],
@@ -6512,6 +6830,7 @@
           "Direct TJ": {
             "name": "Direct TJ",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_174": []
@@ -6541,6 +6860,7 @@
           "Solo Secrets": {
             "name": "Solo Secrets",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_295": []
@@ -6557,6 +6877,7 @@
           "Solo Secrets": {
             "name": "Solo Secrets",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_296": []
@@ -6580,6 +6901,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_298": []
@@ -6596,6 +6918,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_299": []
@@ -6619,6 +6942,7 @@
           "Cage TJWK": {
             "name": "Cage TJWK",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_301": []
@@ -6633,6 +6957,7 @@
           "Early Box Break": {
             "name": "Early Box Break",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_302": [],
@@ -6654,6 +6979,7 @@
           "Purple Switch": {
             "name": "Purple Switch",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_303": []
@@ -6670,6 +6996,7 @@
           "Cage TJWK": {
             "name": "Cage TJWK",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_301": []
@@ -6684,6 +7011,7 @@
           "Early Box Break": {
             "name": "Early Box Break",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_302": [],
@@ -6705,6 +7033,7 @@
           "Purple Switch": {
             "name": "Purple Switch",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_303": []
@@ -6731,6 +7060,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_304": []
@@ -6747,6 +7077,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_305": []
@@ -6770,6 +7101,7 @@
           "CCW": {
             "name": "CCW",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_308": []
@@ -6784,6 +7116,7 @@
           "CW": {
             "name": "CW",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_310": []
@@ -6800,6 +7133,7 @@
           "CCW": {
             "name": "CCW",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_308": []
@@ -6814,6 +7148,7 @@
           "CW": {
             "name": "CW",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_310": []
@@ -6846,6 +7181,7 @@
           "Log WK": {
             "name": "Log WK",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_318": []
@@ -6860,6 +7196,7 @@
           "Log Firsty": {
             "name": "Log Firsty",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_319": []
@@ -6874,6 +7211,7 @@
           "No Log WK": {
             "name": "No Log WK",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -6884,6 +7222,7 @@
           "Log WK": {
             "name": "Log WK",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_318": []
@@ -6898,6 +7237,7 @@
           "Log Firsty": {
             "name": "Log Firsty",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_319": []
@@ -6912,6 +7252,7 @@
           "No Log WK": {
             "name": "No Log WK",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -6929,6 +7270,7 @@
           "Log WK": {
             "name": "Log WK",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_320": [],
@@ -6950,6 +7292,7 @@
           "Log Firsty": {
             "name": "Log Firsty",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_322": [],
@@ -6971,6 +7314,7 @@
           "No Log WK": {
             "name": "No Log WK",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -6981,6 +7325,7 @@
           "Log WK": {
             "name": "Log WK",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_321": [],
@@ -7002,6 +7347,7 @@
           "Log Firsty": {
             "name": "Log Firsty",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_323": [],
@@ -7023,6 +7369,7 @@
           "No Log WK": {
             "name": "No Log WK",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -7043,6 +7390,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_324": [],
@@ -7066,6 +7414,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_324": [],
@@ -7099,6 +7448,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_326": []
@@ -7113,6 +7463,7 @@
           "Late Red": {
             "name": "Late Red",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_331": []
@@ -7129,6 +7480,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_328": []
@@ -7143,6 +7495,7 @@
           "Late Red": {
             "name": "Late Red",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_333": []
@@ -7166,6 +7519,7 @@
           "Breezeless": {
             "name": "Breezeless",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_337": []
@@ -7180,6 +7534,7 @@
           "Slowturn Bless": {
             "name": "Slowturn Bless",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_338": []
@@ -7194,6 +7549,7 @@
           "Breeze": {
             "name": "Breeze",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_339": []
@@ -7210,6 +7566,7 @@
           "Breezeless": {
             "name": "Breezeless",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_337": []
@@ -7224,6 +7581,7 @@
           "Slowturn Bless": {
             "name": "Slowturn Bless",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_338": []
@@ -7238,6 +7596,7 @@
           "Breeze": {
             "name": "Breeze",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_339": []
@@ -7261,6 +7620,7 @@
           "Log WK": {
             "name": "Log WK",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_340": []
@@ -7275,6 +7635,7 @@
           "Log Firsty": {
             "name": "Log Firsty",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_341": []
@@ -7289,6 +7650,7 @@
           "Slidekick (No LWK)": {
             "name": "Slidekick (No LWK)",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -7297,6 +7659,7 @@
           "No Log WK": {
             "name": "No Log WK",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -7307,6 +7670,7 @@
           "Log WK": {
             "name": "Log WK",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_340": []
@@ -7321,6 +7685,7 @@
           "Log Firsty": {
             "name": "Log Firsty",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_341": []
@@ -7335,6 +7700,7 @@
           "Slidekick (No LWK)": {
             "name": "Slidekick (No LWK)",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -7343,6 +7709,7 @@
           "No Log WK": {
             "name": "No Log WK",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -7360,6 +7727,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_342": []
@@ -7374,6 +7742,7 @@
           "Beginner": {
             "name": "Beginner",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -7382,6 +7751,7 @@
           "No Setup": {
             "name": "No Setup",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_184": []
@@ -7398,6 +7768,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_342": []
@@ -7412,6 +7783,7 @@
           "Beginner": {
             "name": "Beginner",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -7420,6 +7792,7 @@
           "No Setup": {
             "name": "No Setup",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_184": []
@@ -7454,6 +7827,7 @@
           "CCW": {
             "name": "CCW",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_348": []
@@ -7468,6 +7842,7 @@
           "CW": {
             "name": "CW",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_349": []
@@ -7484,6 +7859,7 @@
           "CCW": {
             "name": "CCW",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_348": []
@@ -7498,6 +7874,7 @@
           "CW": {
             "name": "CW",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_349": []
@@ -7521,6 +7898,7 @@
           "Rightside Clip": {
             "name": "Rightside Clip",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_351": []
@@ -7535,6 +7913,7 @@
           "Leftside Clip": {
             "name": "Leftside Clip",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_353": [],
@@ -7556,6 +7935,7 @@
           "No Clip": {
             "name": "No Clip",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_355": []
@@ -7570,6 +7950,7 @@
           "TJ Dive Start": {
             "name": "TJ Dive Start",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_190": []
@@ -7586,6 +7967,7 @@
           "Rightside Clip": {
             "name": "Rightside Clip",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_351": []
@@ -7600,6 +7982,7 @@
           "Leftside Clip": {
             "name": "Leftside Clip",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_353": [],
@@ -7621,6 +8004,7 @@
           "No Clip": {
             "name": "No Clip",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_355": []
@@ -7635,6 +8019,7 @@
           "TJ Dive Start": {
             "name": "TJ Dive Start",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_190": []
@@ -7661,6 +8046,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_358": [],
@@ -7682,6 +8068,7 @@
           "Intended": {
             "name": "Intended",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -7690,6 +8077,7 @@
           "Open": {
             "name": "Open",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "ext_192": [
@@ -7706,6 +8094,7 @@
           "TJ Dive Start": {
             "name": "TJ Dive Start",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "ext_194": []
@@ -7722,6 +8111,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_359": [],
@@ -7743,6 +8133,7 @@
           "Intended": {
             "name": "Intended",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -7751,6 +8142,7 @@
           "Open": {
             "name": "Open",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "ext_193": [
@@ -7767,6 +8159,7 @@
           "TJ Dive Start": {
             "name": "TJ Dive Start",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "ext_195": []
@@ -7794,6 +8187,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "ext_196": []
@@ -7808,6 +8202,7 @@
           "Tiny Route": {
             "name": "Tiny Route",
             "diff": "second",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "ext_198": []
@@ -7824,6 +8219,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "ext_197": []
@@ -7838,6 +8234,7 @@
           "Tiny Route": {
             "name": "Tiny Route",
             "diff": "second",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "ext_199": []
@@ -7861,6 +8258,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_362": []
@@ -7875,6 +8273,7 @@
           "Slide Strat": {
             "name": "Slide Strat",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_363": []
@@ -7889,6 +8288,7 @@
           "Beginner": {
             "name": "Beginner",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -7899,6 +8299,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_362": []
@@ -7913,6 +8314,7 @@
           "Slide Strat": {
             "name": "Slide Strat",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_363": []
@@ -7927,6 +8329,7 @@
           "Beginner": {
             "name": "Beginner",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -7944,6 +8347,7 @@
           "Solo Reds": {
             "name": "Solo Reds",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_364": []
@@ -7960,6 +8364,7 @@
           "Solo Reds": {
             "name": "Solo Reds",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_364": []
@@ -7983,6 +8388,7 @@
           "16c Start": {
             "name": "16c Start",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_367": []
@@ -7997,6 +8403,7 @@
           "13c Start + Pole": {
             "name": "13c Start + Pole",
             "diff": "easy",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_373": []
@@ -8011,6 +8418,7 @@
           "11c Start + Pole": {
             "name": "11c Start + Pole",
             "diff": "easy",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_377": []
@@ -8027,6 +8435,7 @@
           "16c Start": {
             "name": "16c Start",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_369": []
@@ -8041,6 +8450,7 @@
           "13c Start + Pole": {
             "name": "13c Start + Pole",
             "diff": "easy",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_374": []
@@ -8055,6 +8465,7 @@
           "11c Start + Pole": {
             "name": "11c Start + Pole",
             "diff": "easy",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_378": []
@@ -8078,6 +8489,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_381": []
@@ -8092,6 +8504,7 @@
           "TJ Dive Start": {
             "name": "TJ Dive Start",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "ext_201": []
@@ -8108,6 +8521,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_383": []
@@ -8122,6 +8536,7 @@
           "TJ Dive Start": {
             "name": "TJ Dive Start",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "ext_202": []
@@ -8154,6 +8569,7 @@
           "Flippies": {
             "name": "Flippies",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_391": [],
@@ -8182,6 +8598,7 @@
           "Cog Rollout": {
             "name": "Cog Rollout",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_392": [],
@@ -8210,6 +8627,7 @@
           "Time Stop": {
             "name": "Time Stop",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_393": []
@@ -8224,6 +8642,7 @@
           "Side Flippies": {
             "name": "Side Flippies",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_210": []
@@ -8240,6 +8659,7 @@
           "Flippies": {
             "name": "Flippies",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_391": [],
@@ -8268,6 +8688,7 @@
           "Cog Rollout": {
             "name": "Cog Rollout",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_392": [],
@@ -8296,6 +8717,7 @@
           "Time Stop": {
             "name": "Time Stop",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_393": []
@@ -8310,6 +8732,7 @@
           "Side Flippies": {
             "name": "Side Flippies",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_210": []
@@ -8339,6 +8762,7 @@
           "Flippies": {
             "name": "Flippies",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_394": []
@@ -8353,6 +8777,7 @@
           "Cog Rollout": {
             "name": "Cog Rollout",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_395": []
@@ -8367,6 +8792,7 @@
           "Time Stop": {
             "name": "Time Stop",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_396": []
@@ -8383,6 +8809,7 @@
           "Flippies": {
             "name": "Flippies",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_394": []
@@ -8397,6 +8824,7 @@
           "Cog Rollout": {
             "name": "Cog Rollout",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_395": []
@@ -8411,6 +8839,7 @@
           "Time Stop": {
             "name": "Time Stop",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_396": []
@@ -8434,6 +8863,7 @@
           "Flippies": {
             "name": "Flippies",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_397": [],
@@ -8455,6 +8885,7 @@
           "Time Stop": {
             "name": "Time Stop",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_398": []
@@ -8471,6 +8902,7 @@
           "Flippies": {
             "name": "Flippies",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_397": [],
@@ -8492,6 +8924,7 @@
           "Time Stop": {
             "name": "Time Stop",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_398": []
@@ -8518,6 +8951,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_399": []
@@ -8534,6 +8968,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_399": []
@@ -8557,6 +8992,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_400": []
@@ -8571,6 +9007,7 @@
           "Safety Red": {
             "name": "Safety Red",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_404": []
@@ -8587,6 +9024,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_401": []
@@ -8601,6 +9039,7 @@
           "Safety Red": {
             "name": "Safety Red",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_405": []
@@ -8624,6 +9063,7 @@
           "Time Stop": {
             "name": "Time Stop",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_408": []
@@ -8638,6 +9078,7 @@
           "Moving Moving": {
             "name": "Moving Moving",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_409": [
@@ -8659,6 +9100,7 @@
           "Open": {
             "name": "Open",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_212": []
@@ -8675,6 +9117,7 @@
           "Time Stop": {
             "name": "Time Stop",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_408": []
@@ -8689,6 +9132,7 @@
           "Moving Moving": {
             "name": "Moving Moving",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_409": [
@@ -8710,6 +9154,7 @@
           "Open": {
             "name": "Open",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_212": []
@@ -8736,6 +9181,7 @@
           "Time Stop": {
             "name": "Time Stop",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_410": [],
@@ -8787,6 +9233,7 @@
           "Hanoji Reds": {
             "name": "Hanoji Reds",
             "diff": "second",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_414": [],
@@ -8808,6 +9255,7 @@
           "Moving Reds": {
             "name": "Moving Reds",
             "diff": "second",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_415": []
@@ -8824,6 +9272,7 @@
           "Time Stop": {
             "name": "Time Stop",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_410": [],
@@ -8875,6 +9324,7 @@
           "Hanoji Reds": {
             "name": "Hanoji Reds",
             "diff": "second",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_414": [],
@@ -8896,6 +9346,7 @@
           "Moving Reds": {
             "name": "Moving Reds",
             "diff": "second",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_415": []
@@ -8934,6 +9385,7 @@
           "Lakitu Bounce": {
             "name": "Lakitu Bounce",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_423": [],
@@ -8955,6 +9407,7 @@
           "Sideflip Bounce": {
             "name": "Sideflip Bounce",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_427": []
@@ -8969,6 +9422,7 @@
           "Assless": {
             "name": "Assless",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_429": [],
@@ -8990,6 +9444,7 @@
           "No Bounce": {
             "name": "No Bounce",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -9000,6 +9455,7 @@
           "Lakitu Bounce": {
             "name": "Lakitu Bounce",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_423": [],
@@ -9021,6 +9477,7 @@
           "Sideflip Bounce": {
             "name": "Sideflip Bounce",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_427": []
@@ -9035,6 +9492,7 @@
           "Assless": {
             "name": "Assless",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_429": [],
@@ -9056,6 +9514,7 @@
           "No Bounce": {
             "name": "No Bounce",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -9077,6 +9536,7 @@
           "Carpetless": {
             "name": "Carpetless",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_431": []
@@ -9091,6 +9551,7 @@
           "JD Ending": {
             "name": "JD Ending",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_432": []
@@ -9107,6 +9568,7 @@
           "Carpetless": {
             "name": "Carpetless",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_431": []
@@ -9121,6 +9583,7 @@
           "JD Ending": {
             "name": "JD Ending",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_432": []
@@ -9144,6 +9607,7 @@
           "Carpetful": {
             "name": "Carpetful",
             "diff": "easy",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_436": []
@@ -9158,6 +9622,7 @@
           "No Cutscene": {
             "name": "No Cutscene",
             "diff": "second",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_438": []
@@ -9172,6 +9637,7 @@
           "Carpetless": {
             "name": "Carpetless",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "ext_221": []
@@ -9186,6 +9652,7 @@
           "Carpetless (NC)": {
             "name": "Carpetless (NC)",
             "diff": "second",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "ext_223": []
@@ -9202,6 +9669,7 @@
           "Carpetful": {
             "name": "Carpetful",
             "diff": "easy",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_437": []
@@ -9216,6 +9684,7 @@
           "No Cutscene": {
             "name": "No Cutscene",
             "diff": "second",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_439": []
@@ -9230,6 +9699,7 @@
           "Carpetless": {
             "name": "Carpetless",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "ext_222": []
@@ -9244,6 +9714,7 @@
           "Carpetless (NC)": {
             "name": "Carpetless (NC)",
             "diff": "second",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "ext_224": []
@@ -9267,6 +9738,7 @@
           "Kick Back End": {
             "name": "Kick Back End",
             "diff": "hard",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_440": [],
@@ -9288,6 +9760,7 @@
           "Kick Recoil End": {
             "name": "Kick Recoil End",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_441": [],
@@ -9311,6 +9784,7 @@
           "Kick Back End": {
             "name": "Kick Back End",
             "diff": "hard",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_440": [],
@@ -9332,6 +9806,7 @@
           "Kick Recoil End": {
             "name": "Kick Recoil End",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_441": [],
@@ -9365,6 +9840,7 @@
           "Sideflip": {
             "name": "Sideflip",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_442": [],
@@ -9386,6 +9862,7 @@
           "Pro Strat": {
             "name": "Pro Strat",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_443": []
@@ -9400,6 +9877,7 @@
           "Flame TJ": {
             "name": "Flame TJ",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -9410,6 +9888,7 @@
           "Sideflip": {
             "name": "Sideflip",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_442": [],
@@ -9431,6 +9910,7 @@
           "Pro Strat": {
             "name": "Pro Strat",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_443": []
@@ -9445,6 +9925,7 @@
           "Flame TJ": {
             "name": "Flame TJ",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -9465,6 +9946,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_444": []
@@ -9479,6 +9961,7 @@
           "Low Dive": {
             "name": "Low Dive",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_445": []
@@ -9493,6 +9976,7 @@
           "Beginner": {
             "name": "Beginner",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -9503,6 +9987,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_444": []
@@ -9517,6 +10002,7 @@
           "Low Dive": {
             "name": "Low Dive",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_445": []
@@ -9531,6 +10017,7 @@
           "Beginner": {
             "name": "Beginner",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -9548,6 +10035,7 @@
           "Lakitu Bounce": {
             "name": "Lakitu Bounce",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_446": [],
@@ -9584,6 +10072,7 @@
           "Sideflip Bounce": {
             "name": "Sideflip Bounce",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_450": [],
@@ -9605,6 +10094,7 @@
           "Assless": {
             "name": "Assless",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_452": [],
@@ -9633,6 +10123,7 @@
           "No Bounce": {
             "name": "No Bounce",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -9643,6 +10134,7 @@
           "Lakitu Bounce": {
             "name": "Lakitu Bounce",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_446": [],
@@ -9679,6 +10171,7 @@
           "Sideflip Bounce": {
             "name": "Sideflip Bounce",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_450": [],
@@ -9700,6 +10193,7 @@
           "Assless": {
             "name": "Assless",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_452": [],
@@ -9728,6 +10222,7 @@
           "No Bounce": {
             "name": "No Bounce",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -9750,6 +10245,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_454": []
@@ -9764,6 +10260,7 @@
           "No Cutscene": {
             "name": "No Cutscene",
             "diff": "second",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_456": []
@@ -9780,6 +10277,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_455": []
@@ -9794,6 +10292,7 @@
           "No Cutscene": {
             "name": "No Cutscene",
             "diff": "second",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_457": []
@@ -9826,6 +10325,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_461": []
@@ -9840,6 +10340,7 @@
           "Switch Rollout": {
             "name": "Switch Rollout",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_462": []
@@ -9854,6 +10355,7 @@
           "Wall Rollout": {
             "name": "Wall Rollout",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_232": []
@@ -9870,6 +10372,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_461": []
@@ -9884,6 +10387,7 @@
           "Switch Rollout": {
             "name": "Switch Rollout",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_462": []
@@ -9898,6 +10402,7 @@
           "Wall Rollout": {
             "name": "Wall Rollout",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_232": []
@@ -9921,6 +10426,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_463": []
@@ -9935,6 +10441,7 @@
           "Expert": {
             "name": "Expert",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_464": []
@@ -9949,6 +10456,7 @@
           "No Slope Clip": {
             "name": "No Slope Clip",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_465": []
@@ -9965,6 +10473,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_463": []
@@ -9979,6 +10488,7 @@
           "Expert": {
             "name": "Expert",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_464": []
@@ -9993,6 +10503,7 @@
           "No Slope Clip": {
             "name": "No Slope Clip",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_465": []
@@ -10017,6 +10528,7 @@
           "Box Triple": {
             "name": "Box Triple",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_466": []
@@ -10033,6 +10545,7 @@
           "Box Triple": {
             "name": "Box Triple",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_466": []
@@ -10057,6 +10570,7 @@
           "Right Side": {
             "name": "Right Side",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_467": []
@@ -10071,6 +10585,7 @@
           "Left Side": {
             "name": "Left Side",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_468": [],
@@ -10094,6 +10609,7 @@
           "Right Side": {
             "name": "Right Side",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_467": []
@@ -10108,6 +10624,7 @@
           "Left Side": {
             "name": "Left Side",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_468": [],
@@ -10141,6 +10658,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_470": []
@@ -10157,6 +10675,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_470": []
@@ -10181,6 +10700,7 @@
           "No Cutscene": {
             "name": "No Cutscene",
             "diff": "second",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_471": []
@@ -10195,6 +10715,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_472": []
@@ -10209,6 +10730,7 @@
           "Pole Red Early (NC)": {
             "name": "Pole Red Early (NC)",
             "diff": "second",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_473": []
@@ -10223,6 +10745,7 @@
           "Pole Red Early": {
             "name": "Pole Red Early",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_474": []
@@ -10237,6 +10760,7 @@
           "Stored Angle (NC)": {
             "name": "Stored Angle (NC)",
             "diff": "second",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_475": []
@@ -10251,6 +10775,7 @@
           "Stored Angle": {
             "name": "Stored Angle",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_476": []
@@ -10265,6 +10790,7 @@
           "Open (NC)": {
             "name": "Open (NC)",
             "diff": "second",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_233": [
@@ -10281,6 +10807,7 @@
           "Open": {
             "name": "Open",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_234": [
@@ -10299,6 +10826,7 @@
           "No Cutscene": {
             "name": "No Cutscene",
             "diff": "second",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_471": []
@@ -10313,6 +10841,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_472": []
@@ -10327,6 +10856,7 @@
           "Pole Red Early (NC)": {
             "name": "Pole Red Early (NC)",
             "diff": "second",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_473": []
@@ -10341,6 +10871,7 @@
           "Pole Red Early": {
             "name": "Pole Red Early",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_474": []
@@ -10355,6 +10886,7 @@
           "Stored Angle (NC)": {
             "name": "Stored Angle (NC)",
             "diff": "second",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_475": []
@@ -10369,6 +10901,7 @@
           "Stored Angle": {
             "name": "Stored Angle",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_476": []
@@ -10383,6 +10916,7 @@
           "Open (NC)": {
             "name": "Open (NC)",
             "diff": "second",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_233": [
@@ -10399,6 +10933,7 @@
           "Open": {
             "name": "Open",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_234": [
@@ -10427,6 +10962,7 @@
           "Under 21": {
             "name": "Under 21",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_477": [],
@@ -10448,6 +10984,7 @@
           "Box Star": {
             "name": "Box Star",
             "diff": "second",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_478": [],
@@ -10471,6 +11008,7 @@
           "Under 21": {
             "name": "Under 21",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_477": [],
@@ -10492,6 +11030,7 @@
           "Box Star": {
             "name": "Box Star",
             "diff": "second",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_478": [],
@@ -10534,6 +11073,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_480": []
@@ -10548,6 +11088,7 @@
           "Framewalk": {
             "name": "Framewalk",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_481": []
@@ -10564,6 +11105,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_480": []
@@ -10578,6 +11120,7 @@
           "Framewalk": {
             "name": "Framewalk",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_481": []
@@ -10604,6 +11147,7 @@
           "Shig (Pipe)": {
             "name": "Shig (Pipe)",
             "diff": "second",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_482": []
@@ -10618,6 +11162,7 @@
           "Shig (Star)": {
             "name": "Shig (Star)",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_484": []
@@ -10632,6 +11177,7 @@
           "Xiah (Pipe)": {
             "name": "Xiah (Pipe)",
             "diff": "second",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_485": []
@@ -10646,6 +11192,7 @@
           "Xiah (Star)": {
             "name": "Xiah (Star)",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_487": []
@@ -10660,6 +11207,7 @@
           "Tsuki (Pipe)": {
             "name": "Tsuki (Pipe)",
             "diff": "second",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_488": []
@@ -10674,6 +11222,7 @@
           "Tsuki (Star)": {
             "name": "Tsuki (Star)",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_490": []
@@ -10688,6 +11237,7 @@
           "Salt Flip (Pipe)": {
             "name": "Salt Flip (Pipe)",
             "diff": "second",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_491": []
@@ -10702,6 +11252,7 @@
           "Salt Flip (Star)": {
             "name": "Salt Flip (Star)",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_493": []
@@ -10718,6 +11269,7 @@
           "Shig (Pipe)": {
             "name": "Shig (Pipe)",
             "diff": "second",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_483": []
@@ -10732,6 +11284,7 @@
           "Shig (Star)": {
             "name": "Shig (Star)",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_484": []
@@ -10746,6 +11299,7 @@
           "Xiah (Pipe)": {
             "name": "Xiah (Pipe)",
             "diff": "second",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_486": []
@@ -10760,6 +11314,7 @@
           "Xiah (Star)": {
             "name": "Xiah (Star)",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_487": []
@@ -10774,6 +11329,7 @@
           "Tsuki (Pipe)": {
             "name": "Tsuki (Pipe)",
             "diff": "second",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_489": []
@@ -10788,6 +11344,7 @@
           "Tsuki (Star)": {
             "name": "Tsuki (Star)",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_490": []
@@ -10802,6 +11359,7 @@
           "Salt Flip (Pipe)": {
             "name": "Salt Flip (Pipe)",
             "diff": "second",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_492": []
@@ -10816,6 +11374,7 @@
           "Salt Flip (Star)": {
             "name": "Salt Flip (Star)",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_493": []
@@ -10843,6 +11402,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_494": [],
@@ -10873,6 +11433,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_497": [],
@@ -10914,6 +11475,7 @@
           "Pole Glitch": {
             "name": "Pole Glitch",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_500": []
@@ -10928,6 +11490,7 @@
           "Ultimate": {
             "name": "Ultimate",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_501": []
@@ -10942,6 +11505,7 @@
           "Zero Cycle": {
             "name": "Zero Cycle",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_502": []
@@ -10958,6 +11522,7 @@
           "Pole Glitch": {
             "name": "Pole Glitch",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_500": []
@@ -10972,6 +11537,7 @@
           "Ultimate": {
             "name": "Ultimate",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_501": []
@@ -10986,6 +11552,7 @@
           "Zero Cycle": {
             "name": "Zero Cycle",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_502": []
@@ -11010,6 +11577,7 @@
           "Lavaboost (Pipe)": {
             "name": "Lavaboost (Pipe)",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_503": []
@@ -11024,6 +11592,7 @@
           "Lavaboost (Star)": {
             "name": "Lavaboost (Star)",
             "diff": "second",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_505": []
@@ -11040,6 +11609,7 @@
           "Lavaboost (Pipe)": {
             "name": "Lavaboost (Pipe)",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_504": []
@@ -11054,6 +11624,7 @@
           "Lavaboost (Star)": {
             "name": "Lavaboost (Star)",
             "diff": "second",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_505": []
@@ -11078,6 +11649,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_506": [],
@@ -11108,6 +11680,7 @@
           "Standard": {
             "name": "Standard",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_509": [],
@@ -11149,6 +11722,7 @@
           "Right TJWK": {
             "name": "Right TJWK",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_512": [
@@ -11170,6 +11744,7 @@
           "Left TJWK": {
             "name": "Left TJWK",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_513": [
@@ -11191,6 +11766,7 @@
           "TAS LJ + Ult": {
             "name": "TAS LJ + Ult",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_516": [
@@ -11212,6 +11788,7 @@
           "Pole": {
             "name": "Pole",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -11222,6 +11799,7 @@
           "Right TJWK": {
             "name": "Right TJWK",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_512": [
@@ -11243,6 +11821,7 @@
           "Left TJWK": {
             "name": "Left TJWK",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_513": [
@@ -11264,6 +11843,7 @@
           "TAS LJ + Ult": {
             "name": "TAS LJ + Ult",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_516": [
@@ -11285,6 +11865,7 @@
           "Pole": {
             "name": "Pole",
             "diff": "easy",
+            "ver_diff": false,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -11307,6 +11888,7 @@
           "Standard (Pipe)": {
             "name": "Standard (Pipe)",
             "diff": "second",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_518": []
@@ -11321,6 +11903,7 @@
           "Standard (Star)": {
             "name": "Standard (Star)",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_520": []
@@ -11335,6 +11918,7 @@
           "Early Cycle (Pipe)": {
             "name": "Early Cycle (Pipe)",
             "diff": "second",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "ext_238": []
@@ -11349,6 +11933,7 @@
           "Early Cycle (Star)": {
             "name": "Early Cycle (Star)",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_240": []
@@ -11363,6 +11948,7 @@
           "Ultimate Cycle (Pipe)": {
             "name": "Ultimate Cycle (Pipe)",
             "diff": "second",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "ext_241": []
@@ -11377,6 +11963,7 @@
           "Ultimate Cycle (Star)": {
             "name": "Ultimate Cycle (Star)",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_243": []
@@ -11393,6 +11980,7 @@
           "Standard (Pipe)": {
             "name": "Standard (Pipe)",
             "diff": "second",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_519": []
@@ -11407,6 +11995,7 @@
           "Standard (Star)": {
             "name": "Standard (Star)",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_520": []
@@ -11421,6 +12010,7 @@
           "Early Cycle (Pipe)": {
             "name": "Early Cycle (Pipe)",
             "diff": "second",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "ext_239": []
@@ -11435,6 +12025,7 @@
           "Early Cycle (Star)": {
             "name": "Early Cycle (Star)",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_240": []
@@ -11449,6 +12040,7 @@
           "Ultimate Cycle (Pipe)": {
             "name": "Ultimate Cycle (Pipe)",
             "diff": "second",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "ext_242": []
@@ -11463,6 +12055,7 @@
           "Ultimate Cycle (Star)": {
             "name": "Ultimate Cycle (Star)",
             "diff": "normal",
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_243": []
@@ -11490,6 +12083,7 @@
           "120 Star File": {
             "name": "120 Star File",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_521": []
@@ -11504,6 +12098,7 @@
           "Normal File": {
             "name": "Normal File",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_523": []
@@ -11520,6 +12115,7 @@
           "120 Star File": {
             "name": "120 Star File",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_522": []
@@ -11534,6 +12130,7 @@
           "Normal File": {
             "name": "Normal File",
             "diff": "normal",
+            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_524": []

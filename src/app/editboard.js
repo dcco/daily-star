@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import orgData from './json/org_data.json'
 
-import { newFilterState,
+import { newFilterState, copyFilterState,
 	orgStarDef, verOffsetStarDef } from './org_star_def'
 //import { newFilterState, orgColList, filterVarColList } from "./org_star_def"
 import { LiveStarTable } from "./livetable"
@@ -46,7 +46,12 @@ export function EditBoard() {
 	}
 
 	// user identity	
-	const [user, setUser] = useState(null);
+	const [userId, setUserId] = useState(null);
+	const [relFlag, setRelFlag] = useState(0);
+
+	const reload = () => {
+		setRelFlag(1 - relFlag);
+	}
 
 	// unlike viewboard, extensions always on
 
@@ -121,9 +126,9 @@ export function EditBoard() {
 		<div className="star-select">
 			{ starBtnNodes }
 		</div>
-		<LiveStarTable stageId={ stageId } starId={ starId } fs={ fs } key={ stageId + "_" + starId }/>
+		<LiveStarTable stageId={ stageId } starId={ starId } fs={ fs } userId={ userId } key={ stageId + "_" + starId }/>
 		<div className="sep"><hr/></div>
-		<AuthButton user={ user } setUser={ setUser }/>
+		<AuthButton userId={ userId } setUserId={ setUserId } setNick={ reload }/>
 		</div>
 	);
 

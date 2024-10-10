@@ -2,8 +2,56 @@
 //import orgData from './json/org_data.json'
 //import playerData from './json/player_data.json'
 
+import { hasSubTimes } from './time_dat'
+
 	/*
-		time_map: mapping of names to { map[column id, multi_dat] }
+		ident: an identity used for differentiating submission sources (xcam sheet, google account, etc)
+		-- services:
+			* xcam - name from the xcam sheet
+			* remote - anonymous player id registered in the daily star database
+				- used to prevent personal user information from leaking
+				- nickname table is loaded for the display 
+			* google - google account
+				- used locally + in tokens sent to the backend
+	*/
+
+export function newIdent(service, name) {
+	return {
+		"service": service,
+		"name": name,
+		"token": null
+	}
+}
+
+export function keyIdent(id) {
+	return id.service + "@" + id.name;
+}
+
+export function sameIdent(id1, id2) {
+	return id1.service === id2.service && id1.name === id2.name;
+}
+
+	/*
+		time_row: an array of multi_dats
+	*/
+
+export function freshTimeRow(len, newId) {
+	return {
+		"id": newId,
+		"timeRow": Array(len).fill(null)
+	};
+}
+
+export function hasSubRows(timeRow) {
+	var flag = false;
+	timeRow.map((multiDat) => {
+		if (hasSubTimes(multiDat)) flag = true;
+	});
+	return flag;
+}
+
+	/*
+		time_map: mapping of identifiers to { map[column id, multi_dat] }
 			intermediate data structure used to create time tables
 	*/
 
@@ -21,16 +69,18 @@ function sortInsert(list, v, compareFn) {
 	sih(0, list.length);
 } 
 
-export function addTimeMap(timeMap, name, colId, timeDat) {
-	if (timeMap[name] === undefined) timeMap[name] = {};
-	if (timeMap[name][colId] === undefined) timeMap[name][colId] = [];
-	var curDat = timeMap[name][colId];
+export function addTimeMap(timeMap, id, colId, timeDat) {
+	var key = keyIdent(id);
+	if (timeMap[key] === undefined) timeMap[key] = {};
+	timeMap[key]["_id"] = id;
+	if (timeMap[key][colId] === undefined) timeMap[key][colId] = [];
+	var curDat = timeMap[key][colId];
 	sortInsert(curDat, timeDat, function(a, b) { return a.time - b.time; });
 }
 
 	/* time table: array of
-		* name: string - player names
-		* tmList: array[multi_dat] - player times
+		* id: ident - player identities
+		* timeRow: array[multi_dat] - player times
 	*/
 
 	// creates a time table from a time pool
@@ -39,7 +89,8 @@ export function buildTimeTable(timeMap, colTotal) {
 	// transform player map >> player table
 	var timeTable = Object.entries(timeMap).map((user) => {
 		// transform column map >> column list
-		var [name, userDat] = user;
+		var [key, userDat] = user;
+		var id = userDat._id;
 		var timeRow = [];
 		var metaList = [];
 		for (let i = 0; i < colTotal; i++) {
@@ -51,14 +102,14 @@ export function buildTimeTable(timeMap, colTotal) {
 		}
 		// row object
 		return {
-			"name": name,
+			"id": id,
 			"timeRow": timeRow,
 		};
 	});
 	return timeTable;
 }
 
-	// filter table based on columns
+	/* -- filter: filter table based on columns */
 
 export function filterTimeTable(timeTable, colList) {
 	var filterTable = [];
@@ -72,14 +123,14 @@ export function filterTimeTable(timeTable, colList) {
 			return timeCell;
 		});
 		if (!empty) filterTable.push({
-			"name": userDat.name,
+			"id": userDat.id,
 			"timeRow": timeRow
 		});
 	}
 	return filterTable;
 }
 
-	// sorts a time table
+	/* -- sort: sort table based on best times (can prioritize one column) */
 
 function sortTimeRow(timeRow)
 {
@@ -129,216 +180,5 @@ export function sortTimeTable(timeTable, sortId) {
 			if (diff !== 0) return diff;
 			return compTimeRow(a._sort, b._sort);
 		});
-	}
-}
-
-/*
-
-export function hasTimeTable(timeTable, name) {
-	for (let i = 0; i < timeTable.length; i++) {
-		if (timeTable[i].name === name) return i;
-	}
-	return -1;
-}
-
-export function updateTimeTable(timeTable, name, newList) {
-	var tt = timeTable.map((x) => x);
-	if (hasTimeTable(tt, name) === -1) {
-		tt.push({
-			"name": name,
-			"timeList": Array(newList.length).fill(null),
-			"metaList": Array(newList.length).fill(null),
-			//"bestTime": 999900,
-			"playStd": "Unranked"
-		})
-	}
-	// new time list calc
-	var rowId = hasTimeTable(tt, name);
-	var timeList = tt[rowId].timeList.map((x) => x);
-	//var bestTime = tt[rowId].bestTime;
-	for (let i = 0; i < timeList.length; i++) {
-		var time = newList[i];
-		if (time !== null) {
-			if (timeList[i] === null || time < timeList[i]) {
-				timeList[i] = {
-					"time": time,
-					// need to actually include version info
-					"ver": "both"
-				}
-			}
-			//if (bestTime < time) bestTime = time;
-		}
-	}
-	tt[rowId].tmList = timeList;
-	//tt[rowId].bestTime = bestTime; 
-	// DEPRECATED
-	var standard = "Unranked";
-	if (playerData[name] !== undefined && playerData[name].standard) {
-		standard = playerData[name].standard;
-	}
-	return tt;
-}
-
-
-*/
-	// converts a list of structs to a map
-
-export function asPool(list, k, ix) {
-	var pool = {};
-	for (let i = 0; i < list.length; i++) {
-		var obj = list[i];
-		pool[obj[k]] = obj;
-		if (ix) pool[obj[k]][ix] = i;
-	}
-	return pool;
-}
-
-	// column generation algorithm
-/*
-function containsRef(l, ref) {
-	for (let i = 0; i < l.length; i++) {
-		var rx = l[i];
-		if (ref[0] === rx[0] && ref[1] === rx[1]) return true;
-	}
-	return false;
-}
-
-function mergeVarList(v1, v2) {
-	var vx = [];
-	var ver_map = {};
-	v1.map((ref) => {
-		vx.push(ref)
-		ver_map[ref[0] + "_" + ref[1]] = "jp";
-	});
-	v2.map((ref) => {
-		if (!containsRef(vx, ref)) {
-			vx.push(ref);
-			ver_map[ref[0] + "_" + ref[1]] = "us";
-		} else {
-			ver_map[ref[0] + "_" + ref[1]] = "both";
-		}
-	});
-	return [vx, ver_map];
-}
-
-function mergeVerSet(vs1, vs2) {
-	var vsx = {};
-	Object.entries(vs1).map((strat) => {
-		var [stratName, stratDef] = strat;
-		if (vs2[stratName] !== undefined) {
-			var [id_list, ver_map] = mergeVarList(stratDef.id_list, vs2[stratName].id_list);
-			var newDef = {
-				"name": stratName,
-				"diff": stratDef.diff,
-				"virtual": stratDef.virtual,
-				"virtId": stratDef.virtId,
-				"variant_map": stratDef.variant_map,
-				"id_list": id_list,
-				"ver_map": ver_map
-			};
-			vsx[stratName] = newDef;
-		} else {
-			vsx[stratName] = stratDef;
-			vsx[stratName].ver_all = "jp";
-		}
-	});
-	Object.entries(vs2).map((strat) => {
-		var [stratName, stratDef] = strat;
-		if (vs1[stratName] === undefined) {
-			vsx[stratName] = stratDef;
-			vsx[stratName].ver_all = "us";
-		}
-	});
-	return vsx;
-}
-
-function filterExtVerSet(vs) {
-	var vsx = {};
-	Object.entries(vs).map((strat) => {
-		var [stratName, stratDef] = strat;
-		var newDef = {
-			"name": stratName,
-			"diff": stratDef.diff,
-			"virtual": stratDef.virtual,
-			"virtId": stratDef.virtId,
-			"variant_map": stratDef.variant_map,
-			"id_list": stratDef.id_list.filter((ref) => ref[0] === 'main'),
-			"ver_map": stratDef.ver_map
-		};
-		vsx[stratName] = newDef;
-	});
-	return vsx;
-}*/
-
-/*
-export function orgVariantList(colList, variant) {
-	var vList = [];
-	colList.map((strat, i) => {
-		var second = strat.diff.includes("second");
-		if ((variant === null) === !second) {
-			vList.push(i);
-		}
-	})
-	return vList;
-}
-*/
-
-
-
-function firstColName(colList, nameList) {
-	// for loops because the exact ordering matters + early return
-	for (let i = 0; i < nameList.length; i++) {
-		var name = nameList[i];
-		for (let j = 0; j < colList.length; j++) {
-			var [colId, strat] = colList[j];
-			if (strat.name === name) return [name, j];
-		}
-	}
-	return null;
-}
-
-	// merges a list of columns in the time table
-export function mergeColTimeTable(timeTable, colList, nameList) {
-	// find the column to merge into
-	var fnDat = firstColName(colList, nameList);
-	if (fnDat === null) return timeTable;
-	var [firstName, mergeId] = fnDat;
-	
-	// make a mapping of names to column ids
-	var nameMap = {};
-	for (const name of nameList) {
-		colList.map((_strat, i) => {
-			var [colId, strat] = _strat;
-			if (strat.name === name) nameMap[name] = i;
-		});
-	}
-
-	// merge the times into the required column
-	for (let i = 0; i < timeTable.length; i++) {
-		var userDat = timeTable[i];
-		var bestDat = null;
-		for (const name of nameList) {
-			var nameId = nameMap[name];
-			if (nameId !== undefined) {
-				var nameDat = userDat.tmList[nameId];
-				if (nameDat !== null) {
-					if (bestDat === null || nameDat.time < bestDat.time) bestDat = nameDat;
-				}
-			}
-		}
-		userDat.tmList[mergeDat] = bestDat; 
-	}
-
-	// remove the remaining columns
-	for (let i = 0; i < timeTable.length; i++) {
-		var userDat = timeTable[i];
-		var newList = [];
-		userDat.tmList.map((timeDat, i) => {
-			var colName = colList[i][1].name;
-			if (colName === firstName || nameMap[colName] === undefined) {
-				newList.push(timeDat);
-			}
-		});
-		userDat.tmList = newList;
 	}
 }

@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { initializeApp } from 'firebase/app';
+import { initializeApp } from 'firebase/app'
 import { GoogleAuthProvider, getAuth, onAuthStateChanged, signInWithPopup } from 'firebase/auth'
+
+import { DropDownImgMenu } from './rx_dropdown_menu'
+import { newIdent } from './time_table'
+import { lookupNick, strIdNick, updateNick } from './play_wrap'
 
 	// firebase initialization
 
@@ -32,28 +36,104 @@ function _signOut()
 	auth.signOut();
 }
 
+	/* nickname input */
+
+export function NickInput(props)
+{
+	var userId = props.userId;
+	var setNick = props.setNick;
+	
+	// edit state + functions
+	const [eState, setEState] = useState({
+		"active": false,
+		"nick": ""
+	});
+
+	const startEdit = () => {
+		var _nick = lookupNick(userId);
+		if (_nick === null) _nick = "";
+		setEState({ "active": true, "nick": _nick });
+	};
+
+	const nickEdit = (e) => {
+		setEState({ "active": true, "nick": e.target.value });
+	};
+
+	const stopEdit = (v) => {
+		// cancel signal
+		if (v === null) {
+			setEState({ "active": false, "nick": "" });
+			return;
+		}
+		// otherwise
+		if (v !== "") {
+			updateNick(userId, v);
+			setNick(v);
+		}
+		setEState({ "active": false, "nick": v });
+	}
+
+	// display node
+	var dispNode = null;
+	if (!eState.active) {
+		var nick = strIdNick(userId);
+		var nState = "display";
+		if (nick === '@me') {
+			nick = '---';
+			nState = "none";
+		}
+		dispNode = <div className="nick-disp" state={ nState }>{ nick }</div>;
+	} else {
+		dispNode = <input className="nick-disp" state="edit" value={ eState.nick } onChange={ nickEdit }/>;
+	}
+
+	// action node
+	var actNode = <img src="/icons/edit-icon.png" className="edit-icon" onClick={ startEdit }></img>;
+	if (eState.active) {
+		actNode = [
+			<div className="nick-button" onClick={ () => stopEdit(eState.nick) } key="1">Set</div>,
+			<div className="cancel-button" onClick={ () => stopEdit(null) } key="2">X</div>
+		];
+	}
+
+	return (<div className="nick-cont">
+		{ dispNode } { actNode }
+	</div>);
+}
+
+	/* authorization button */
+
 export function AuthButton(props)
 {
-	var user = props.user;
-	var setUser = props.setUser;
+	var userId = props.userId;
+	var setUserId = props.setUserId;
+	var setNick = props.setNick;
 
 	// when authorization state changes, save token
 	useEffect(() => {
 		onAuthStateChanged(auth, (_user) => {
 			if (_user) {
 				console.log(_user);
-				setUser(_user);
-			} else setUser(null);
+				var userId = newIdent("google", _user.email.split('@')[0]);
+				userId.token = _user;
+				setUserId(userId);
+			} else setUserId(null);
 		});
 	}, []);
 
 	// display authorization state
-	var loginNode = (
+	var authNode = (<div className="login-cont">
 		<div className="login-button" onClick={ _signIn }>Log in</div>
-	);
+	</div>);
 
-	if (user !== null) {
-		loginNode = (<img className="login-pic" height="25px" src={ user.photoURL }></img>);
+	if (userId !== null) {
+		var nonFun = () => {};
+		var actList = [null, _signIn, _signOut];
+		authNode = (<div className="login-cont">
+			<DropDownImgMenu src={ userId.token.photoURL } backupSrc="/icons/def-propic.png"
+				textList={ [ "@" + userId.name , "Switch User", "Logout"] } actList={ actList }/>
+			<NickInput userId={ userId } setNick={ setNick }/>
+		</div>);
 	}
 	/*var logoutNode = "";
 	if (user !== null) {
@@ -73,17 +153,6 @@ export function AuthButton(props)
 		</div>
 	</div>);*/
 	return (<div className="ident-cont">
-		<div className="login-cont">
-			{ loginNode }
-			<div>
-				<div className="nick-cont">
-					<div className="nick-disp">Twig</div>
-					<img src="/icons/edit-icon.png" className="edit-icon"></img>
-					<div className="log-ctrl-box">
-						<div className="log-ctrl">Logout</div>
-					</div>
-				</div>
-			</div>
-		</div>
+		{ authNode }
 	</div>);
 }
