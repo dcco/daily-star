@@ -5,7 +5,7 @@ import { VerOffset, newTimeDat, applyVerOffset } from "./time_dat"
 import { FilterState, fullFilterState,
 	orgStarDef, verOffsetStarDef, colListStarDef } from './org_star_def'
 import { Ident, TimeMap, TimeTable, newIdent, addTimeMap, buildTimeTable } from './time_table'
-import { openListMergeView } from './merge_view'
+import { openListColConfig } from './col_config'
 import { userEditPerm } from './edit_perm'
 import { xcamRecordMap, sortColList } from './xcam_record_map'
 import { StarTable } from './rx_star_table'
@@ -173,8 +173,8 @@ export function LiveStarTable(props: LiveStarTableProps): React.ReactNode
 
 	// create star table
 	var filterColList = filterVarColList(colList, null);
-	var filterMV = openListMergeView(filterColList, starDef.open);
+	var filterCFG = openListColConfig(filterColList, starDef.open);
 	
-	return(<StarTable colList={ filterColList } timeTable={ timeTable } verOffset={ verOffset }
-		recordMap={ relRM } mv={ filterMV } editPerm={ userEditPerm(userId) } editTT={ editTT }></StarTable>);
+	return(<StarTable cfg={ filterCFG } timeTable={ timeTable } verOffset={ verOffset }
+		recordMap={ relRM } editPerm={ userEditPerm(userId) } editTT={ editTT }></StarTable>);
 }

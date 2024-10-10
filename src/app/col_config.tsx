@@ -26,12 +26,13 @@ import { RecordMap } from './xcam_record_map'
 
 type ColRef = [number, StratDef]
 
-export type MergeView = {
+type MergeView = {
 	"list": ColRef[][],
 	"openName": string | null
 };
 
-export function newMergeView(colList: ColList): MergeView
+	// would export
+function newMergeView(colList: ColList): MergeView
 {
 	return {
 		"list": colList.map((strat) => [strat]),
@@ -88,7 +89,8 @@ function filterOpenList(colList: ColList, openList: string[]): string[]
 	return openList.filter((name) => nameList.includes(name));
 }
 
-export function openListMergeView(colList: ColList, openList: string[] | null): MergeView | null
+	// would export
+function openListMergeView(colList: ColList, openList: string[] | null): MergeView | null
 {
 	// if open list is null, dont merge view
 	if (openList === null) return null;
@@ -114,7 +116,8 @@ export function openListMergeView(colList: ColList, openList: string[] | null): 
 	return mv;
 }
 
-export function formatMergeView(mv: MergeView): string
+	// would export
+function formatMergeView(mv: MergeView): string
 {
 	if (mv === null) return "mv { null }";
 	var str = "mv {";
@@ -134,7 +137,27 @@ export function formatMergeView(mv: MergeView): string
 	return str;
 }
 
-	/* merge view utilization functions */
+	/* 
+		col_config: bundles a merge-view together with a column list
+			into a single object to be used for the star table construction
+	*/
+
+export type ColConfig = {
+	"colList": ColList,
+	"mv": MergeView | null,
+	"stratTotal": number
+};
+
+export function openListColConfig(colList: ColList, openList: string[] | null): ColConfig {
+	var mv = openListMergeView(colList, openList);
+	var stratTotal = colList.length;
+	if (mv !== null) stratTotal = mv.list.length;
+	return {
+		"colList": colList,
+		"mv": mv,
+		"stratTotal": stratTotal
+	};
+}
 
 function hasNameStratList(sl: ColRef[], name: string): boolean
 {
@@ -157,15 +180,18 @@ function nameListStratList(sl: ColRef[], openName: string | null): string
 	return str;
 }
 
-export function nameListMergeView(mv: MergeView | null, colList: ColList): string[]
+export function nameListColConfig(config: ColConfig): string[]
 {
-	if (mv === null) return colList.map((_strat) => _strat[1].name);
-	return mv.list.map((sl) => nameListStratList(sl, mv.openName))
+	var mv = config.mv;
+	if (mv === null) return config.colList.map((_strat) => _strat[1].name);
+	var mvFinal = mv;
+	return mv.list.map((sl) => nameListStratList(sl, mvFinal.openName));
 }
 
-export function recordListMergeView(mv: MergeView | null, colList: ColList, recordMap: RecordMap): TimeDat[]
+export function recordListColConfig(config: ColConfig, recordMap: RecordMap): TimeDat[]
 {
-	if (mv === null) return colList.map((_strat) => recordMap[_strat[1].name]);
+	var mv = config.mv;
+	if (mv === null) return config.colList.map((_strat) => recordMap[_strat[1].name]);
 	return mv.list.map((sl, i) => {
 		var recordDat = recordMap[sl[0][1].name];
 		for (let j = 1; j < sl.length; j++) {
@@ -176,9 +202,10 @@ export function recordListMergeView(mv: MergeView | null, colList: ColList, reco
 	});
 }
 
-export function filterTableMergeView(timeTable: TimeTable, mv: MergeView | null, colList: ColList): TimeTable
+export function filterTableColConfig(timeTable: TimeTable, config: ColConfig): TimeTable
 {
-	if (mv === null) return filterTimeTable(timeTable, colList);
+	var mv = config.mv;
+	if (mv === null) return filterTimeTable(timeTable, config.colList);
 	var filterTable: TimeTable = [];
 	for (let i = 0; i < timeTable.length; i++) {
 		var userDat = timeTable[i];

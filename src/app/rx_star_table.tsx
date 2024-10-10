@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 
-import { ColList } from './strat_def'
 import { VerOffset, formatTime, zeroVerOffset } from './time_dat'
 import { TimeTable, keyIdent, freshUserDat, hasSubRows, sortTimeTable } from './time_table'
 import { strIdNick } from './play_wrap'
-import { MergeView, nameListMergeView, recordListMergeView, filterTableMergeView } from './merge_view'
+import { ColConfig, nameListColConfig, recordListColConfig, filterTableColConfig } from './merge_view'
 import { EditPerm, noEditPerm, hasWritePerm, checkNewPerm } from './edit_perm'
 import { RecordMap } from './xcam_record_map'
 import { verAdjustTime, TimeCell, RecordCell, NameCell } from './rx_star_cell'
@@ -104,7 +103,7 @@ function diffText(oldText, editText) {
 
 	/*
 		star table: displays times from a time table
-		* colList/mv - column display configuration
+		* cfg - column display configuration
 		* recordMap - record data for the time table
 		* timeTable - time table
 		* verOffset - version offset for time display
@@ -112,8 +111,7 @@ function diffText(oldText, editText) {
 	*/
 
 type StarTableProps = {
-	"colList": ColList,
-	"mv": MergeView | null,
+	"cfg": ColConfig,
 	"verOffset"?: VerOffset,
 	"recordMap": RecordMap,
 	"timeTable": TimeTable,
@@ -122,8 +120,8 @@ type StarTableProps = {
 }
 
 export function StarTable(props: StarTableProps): React.ReactNode {
-	var colList = props.colList;
-	var mv = props.mv;
+	var cfg = props.cfg;
+	var stratTotal = cfg.stratTotal;
 	var recordMap = props.recordMap;
 	var timeTable = props.timeTable;
 
@@ -131,9 +129,6 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 	var editTT = () => {};
 	if (props.editPerm !== undefined) editPerm = props.editPerm;
 	if (props.editTT !== undefined) editTT = props.editTT;
-
-	var stratTotal = colList.length;
-	if (mv !== null) stratTotal = mv.list.length;
 
 	var verOffset = zeroVerOffset();
 	if (props.verOffset !== undefined) verOffset = props.verOffset;
@@ -191,7 +186,7 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 	var sortActive = !editPos.active;
 	// -- was 77% with "extra"
 	var tdWidth = "" + Math.floor(85 / stratTotal) + "%";
-	var nameList = nameListMergeView(mv, colList);
+	var nameList = nameListColConfig(cfg);
 
 	var imgNodeFun = (active: boolean): React.ReactNode => (<div className="float-frame">
 		<img src="/icons/sort-icon.png" data-active={ active.toString() } className="float-icon" alt=""></img></div>);
@@ -204,7 +199,7 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 
 	/* ----- RECORD ROW ----- */
 
-	var recordList = recordListMergeView(mv, colList, recordMap);
+	var recordList = recordListColConfig(cfg, recordMap);
 	var recordNodes = recordList.map((record) => {
 		return <RecordCell timeDat={ record } verOffset={ verOffset } key={ record.rowDef.name }/>;
 	});
@@ -213,7 +208,7 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 	/* ----- TIME TABLE ROWS ----- */
 
 	// filter table by colums + sort table data
-	var filterTable = filterTableMergeView(timeTable, mv, colList);
+	var filterTable = filterTableColConfig(timeTable, cfg);
 	if (sortId > stratTotal) setSortId(0);
 	filterTable = sortTimeTable(filterTable, sortId);
 

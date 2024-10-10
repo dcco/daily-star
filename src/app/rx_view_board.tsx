@@ -7,7 +7,7 @@ import { newFilterState, copyFilterState, fullFilterState,
 	orgStarDef, verOffsetStarDef, hasExtStarDef, colListStarDef } from './org_star_def'
 import { xcamTimeTable } from './xcam_time_table'
 import { xcamRecordMap, sortColList } from './xcam_record_map'
-import { openListMergeView, formatMergeView } from './merge_view'
+import { openListColConfig } from './col_config'
 //import { hasExt, addTimePool, buildTimeTable } from './timetable'
 //import { rawMS, formatFrames, addFrames, readVerOffset, applyVerOffset,
 //	stratRowVer, starVerData, orgRecordMap, applyRecordMap } from './vercalc'
@@ -103,16 +103,15 @@ export function ViewBoard(props: {}): React.ReactNode {
 	var tableList: React.ReactNode[] = [];
 
 	var mainColList = filterVarColList(colList, null);
-	var mainMV = openListMergeView(mainColList, starDef.open);
-	tableList.push(<StarTable colList={ mainColList } timeTable={ timeTable } verOffset={ verOffset }
-		recordMap={ relRM } mv={ mainMV } key={ stageId + "_" + starId + "_0" }></StarTable>);
+	var mainCFG = openListColConfig(mainColList, starDef.open);
+	tableList.push(<StarTable cfg={ mainCFG } timeTable={ timeTable } verOffset={ verOffset }
+		recordMap={ relRM } key={ stageId + "_" + starId + "_0" }></StarTable>);
 
 	var varColList = filterVarColList(colList, 1);
-	var varMV = null;
 	if (varColList.length > 0) {
-		varMV = openListMergeView(varColList, starDef.open);
-		tableList.push(<StarTable colList={ varColList } timeTable={ timeTable } verOffset={ verOffset }
-			recordMap={ relRM }	mv={ varMV } key={ stageId + "_" + starId + "_1" }></StarTable>);
+		var varCFG = openListColConfig(varColList, starDef.open);
+		tableList.push(<StarTable cfg={ varCFG } timeTable={ timeTable } verOffset={ verOffset }
+			recordMap={ relRM }	key={ stageId + "_" + starId + "_1" }></StarTable>);
 	}	
 
 	return (<div>
