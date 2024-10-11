@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import orgData from './json/org_data.json'
 
-import { newFilterState, copyFilterState,
+import { newExtFilterState, copyFilterState,
 	orgStarDef, verOffsetStarDef } from './org_star_def'
 //import { newFilterState, orgColList, filterVarColList } from "./org_star_def"
 import { Ident } from './time_table'
@@ -36,7 +36,7 @@ export function EditBoard(): React.ReactNode {
 	};
 
 	// filter state
-	const [fs, setFS] = useState(newFilterState());
+	const [fs, setFS] = useState(newExtFilterState());
 	var verOffset = verOffsetStarDef(starDef, fs);
 
 	const toggleVer = (i: number) => {
@@ -73,6 +73,20 @@ export function EditBoard(): React.ReactNode {
 	var verToggle = <div></div>;
 	if (starDef.def !== "na") {
 		verToggle = <VerToggle state={ fs.verState } verOffset={ verOffset } toggle={ toggleVer }/>;
+	}
+
+	// variant information
+	var varCont: React.ReactNode = <div></div>;
+	if (starDef.variants && starDef.variants.length > 0) {
+		var vstr: React.ReactNode[] = ["Variants: "];
+		starDef.variants.map((vName, i) => {
+			if (i !== 0) vstr.push(", ");
+			vstr.push("[" + (i + 1) + "] - ")
+			vstr.push(<i key={ i }>{ vName }</i>); 
+		})
+		varCont = (<div className="variant-cont">
+			<div className="variant-box">{ vstr }</div>
+		</div>);
 	}
 
 	// load time table from xcam data
@@ -127,6 +141,7 @@ export function EditBoard(): React.ReactNode {
 		<div className="star-select">
 			{ starBtnNodes }
 		</div>
+		{ varCont }
 		<LiveStarTable stageId={ stageId } starId={ starId } fs={ fs } userId={ userId } key={ stageId + "_" + starId }/>
 		<div className="sep"><hr/></div>
 		<AuthArea userId={ userId } setUserId={ setUserId } setNick={ reload }/>

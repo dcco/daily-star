@@ -6,7 +6,7 @@ import { FilterState, fullFilterState,
 	orgStarDef, verOffsetStarDef, colListStarDef } from './org_star_def'
 import { Ident, TimeMap, TimeTable, newIdent, addTimeMap, buildTimeTable } from './time_table'
 import { openListColConfig } from './col_config'
-import { userEditPerm } from './edit_perm'
+import { newEditObj, userEditPerm } from './edit_perm'
 import { xcamRecordMap, sortColList } from './xcam_record_map'
 import { StarTable } from './rx_star_table'
 
@@ -175,6 +175,8 @@ export function LiveStarTable(props: LiveStarTableProps): React.ReactNode
 	var filterColList = filterVarColList(colList, null);
 	var filterCFG = openListColConfig(filterColList, starDef.open);
 	
+	var editObj = newEditObj(userEditPerm(userId), starDef, editTT);
+
 	return(<StarTable cfg={ filterCFG } timeTable={ timeTable } verOffset={ verOffset }
-		recordMap={ relRM } editPerm={ userEditPerm(userId) } editTT={ editTT }></StarTable>);
+		recordMap={ relRM } editObj={ editObj }></StarTable>);
 }

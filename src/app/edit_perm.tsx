@@ -1,8 +1,12 @@
 
 import { Ident, sameIdent } from './time_table'
+import { StarDef } from './org_star_def'
+
+	/*
+		edit_perm: token denoting which parts of the table are editable
+	*/
 
 export type EditPerm = {
-	"canEdit": boolean,
 	"writeIdList": Ident[],
 	"newId": Ident | null
 }
@@ -10,7 +14,6 @@ export type EditPerm = {
 export function noEditPerm(): EditPerm
 {
 	return {
-		"canEdit": false,
 		"writeIdList": [],
 		"newId": null
 	};
@@ -19,7 +22,6 @@ export function noEditPerm(): EditPerm
 export function newEditPerm(writeIdList: Ident[], newId: Ident | null): EditPerm
 {
 	return {
-		"canEdit": true,
 		"writeIdList": writeIdList,
 		"newId": newId
 	};
@@ -29,7 +31,6 @@ export function userEditPerm(userId: Ident | null): EditPerm
 {
 	if (userId === null) return noEditPerm();
 	return {
-		"canEdit": true,
 		"writeIdList": [userId],
 		"newId": userId
 	}
@@ -37,7 +38,6 @@ export function userEditPerm(userId: Ident | null): EditPerm
 
 export function hasWritePerm(ep: EditPerm, id: Ident): boolean
 {
-	if (!ep.canEdit) return false;
 	for (const writeId of ep.writeIdList) {
 		if (sameIdent(writeId, id)) return true;
 	}
@@ -46,6 +46,24 @@ export function hasWritePerm(ep: EditPerm, id: Ident): boolean
 
 export function checkNewPerm(ep: EditPerm): Ident | null
 {
-	if (!ep.canEdit) return null;
 	return ep.newId;
+}
+
+	/*
+		edit_obj: an object which when present, gives editing abilities to a timetable
+	*/
+
+export type EditObj = {
+	"perm": EditPerm,
+	"starDef": StarDef,
+	"updateTT": () => void
+}
+
+export function newEditObj(ep: EditPerm, starDef: StarDef, updateTT: () => void): EditObj
+{
+	return {
+		"perm": ep,
+		"starDef": starDef,
+		"updateTT": updateTT
+	};
 }

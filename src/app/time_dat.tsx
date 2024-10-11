@@ -17,6 +17,7 @@ export function formatTime(time: number): string {
 function _secMS(secText: string): number {
 	if (!secText.includes('.')) return parseInt(secText) * 100;
 	var ft = secText.split('.');
+	if (ft[1].length === 1) ft[1] = ft[1] + '0';
 	return (parseInt(ft[0]) * 100) + parseInt(ft[1]);
 }
 

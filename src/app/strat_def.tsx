@@ -7,7 +7,7 @@
 		row_def: definition of an xcam row
 		* name: string - parent strat name
 		* ver: ver - version
-		* variant_list: array[int] - list of variants used by row
+		* variant_list: array[string] - list of variants used by row
 	*/
 
 export type VerF = "jp" | "us";
@@ -17,10 +17,10 @@ export type RowId = [string, number];
 export type RowDef = {
 	"name": string,
 	"ver": Ver,
-	"variant_list": number[]
+	"variant_list": string[]
 };
 
-export function newRowDef(name: string, ver: Ver, v_list: number[]): RowDef
+export function newRowDef(name: string, ver: Ver, v_list: string[]): RowDef
 {
 	if (v_list === undefined) throw("Attempted to create row definition for " + name + " with undefined variant list.");
 	return {
@@ -77,20 +77,22 @@ function addVerMap(verMap: VerMap | undefined, ref: RowId, v: Ver)
 		strat_def: defines a strat, encompassing its xcam rows + information about them
 		* name: string - name of the strat
 		* diff: string - difficulty identifier (purely visual)
+		* ver_diff: bool - flag stating whether JP/US have a difference
 		* virtual: bool - indicates whether the strat comes from an xcam sheet or not
 		* virtId: string? - if the strat is virtual, gives a key for the virtual sheet
 		* id_list: array[row_id] - a list of xcam row references
-		* variant_map: strat_id => array[int] - maps an xcam row to a list of its variants 
+		* variant_map: strat_id => array[string] - maps an xcam row to a list of its variants 
 		* ver_map: ver_map 
 	*/
 
 type VariantMap = {
-	[key: string]: number[]
+	[key: string]: string[]
 }
 
 export type StratDef = {
 	"name": string,
 	"diff": string,
+	"ver_diff": boolean,
 	"virtual": boolean,
 	"virtId": string | undefined,
 	"id_list": RowId[],
@@ -98,12 +100,13 @@ export type StratDef = {
 	"ver_map": VerMap | undefined
 };
 
-export function newStratDef(name: string, diff: string,
+export function newStratDef(name: string, diff: string, ver_diff: boolean,
 	virtual: boolean, virtId: string | undefined, id_list: RowId[], variant_map: VariantMap): StratDef
 {
 	return {
 		"name": name,
 		"diff": diff,
+		"ver_diff": ver_diff,
 		"virtual": virtual,
 		"virtId": virtId,
 		"id_list": id_list,
@@ -117,6 +120,7 @@ export function copyStratDef(stratDef: StratDef): StratDef
 	return {
 		"name": stratDef.name,
 		"diff": stratDef.diff,
+		"ver_diff": stratDef.ver_diff,
 		"virtual": stratDef.virtual,
 		"virtId": stratDef.virtId,
 		"id_list": stratDef.id_list,
@@ -193,7 +197,7 @@ function verStratDef(sDef: StratDef, ref: RowId): Ver
 	return ver;
 }
 
-function vListStratDef(sDef: StratDef, ref: RowId): number[]
+function vListStratDef(sDef: StratDef, ref: RowId): string[]
 {
 	var key = ref[0] + "_" + ref[1];
 	if (sDef.variant_map[key] === undefined) {

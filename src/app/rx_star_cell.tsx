@@ -8,7 +8,7 @@ import { strIdNick } from './play_wrap'
 
 	/* time display auxiliary functions */
 
-export function verAdjustTime(ver: Ver, rawTime: number, time: number): string {
+function verAdjustTime(ver: Ver, rawTime: number, time: number): string {
 	var verName = "JP";
 	if (ver === "us") verName = "US";
 	if (rawTime === time) return "(" + verName + ")";
@@ -30,7 +30,7 @@ export function verAdjustTime(ver: Ver, rawTime: number, time: number): string {
 			also includes variant information
 	*/
 
-function timeDetail(timeDat: TimeDat | null, verOffset: VerOffset): [string, string | null] {
+export function timeDetail(timeDat: TimeDat | null, verOffset: VerOffset): [string, string | null] {
 	if (timeDat === null) return ["", null];
 	var timeText = formatTime(timeDat.time);
 	// variant text
@@ -38,7 +38,7 @@ function timeDetail(timeDat: TimeDat | null, verOffset: VerOffset): [string, str
 		timeText = timeText + " [";
 		timeDat.rowDef.variant_list.map((v, i) => {
 			if (i !== 0) timeText = timeText + ",";
-			var vpp = v + 1;
+			var vpp = parseInt(v) + 1;
 			timeText = timeText + vpp;
 		});
 		timeText = timeText + "]";

@@ -1,21 +1,31 @@
 
-import { formatTime } from './time_dat'
+import { StratDef } from './strat_def'
+import { VerOffset } from './time_dat'
+import { DraftDat, toTimeDat } from './draft_dat'
+import { timeDetail } from './rx_star_cell'
 
 	/*
-		variant_map: 
+		validation functions
 	*/
 
-	/*
-		draft_dat: similar to a time_dat, but modified for editing purposes.
-			(unfolds the row definition to know more about the variant information)
-		  * text: the raw text held in the cell (may not be a valid time)
-		  * link: current link URL input (if any)
-		  * note: current note (if any)
-		  * stratName: current strat name
-		  * ver: version ("both" if version is not relevant)
-		  * variantMap: stores currently selected variants
-		  * delFlag: cell scheduled for deletion
-	*/
+export function validTime(s: string): boolean {
+	return s.match(/^([0-9]?[0-9]:)?[0-5]?[0-9](\.[0-9][036]?)?$/) !== null;
+}
+
+/*
+export function dynDraftDat(vs: VarSpace, timeDat: TimeDat): DraftDat {
+	var link = (timeDat.link === null ? "" : timeDat.link);
+	var note = (timeDat.note === null ? "" : timeDat.note);
+	var rowDef = timeDat.rowDef;
+	return {
+		"text": formatTime(timeDat.time),
+		"link": link,
+		"note": note,
+		"rowInfo": dynRow(rowDef.name, rowDef.ver, varSelVarSpace(vs, rowDef.variant_list)),
+		"delFlag": null
+	};
+}*/
+
 /*
 export function freshDraftDat(timeDat)
 {
@@ -31,13 +41,6 @@ export function freshDraftDat(timeDat)
 }
 */
 
-	/*
-		validation functions
-	*/
-
-export function validTime(s: string): boolean {
-	return s.match(/^([0-9]?[0-9]:)?[0-5]?[0-9](\.[0-9][036]?)?$/) !== null;
-}
 
 //function validDraftDat(draftDat) {
 	/*if (validTime(draftDat.text)) {
@@ -51,26 +54,55 @@ export function validTime(s: string): boolean {
 		edit cell: displays times for editing purposes
 	*/
 
-export function EditCell(props: {}): React.ReactNode {
-	/*var draftDat = props.draftDat;
+type EditCellProps = {
+	"draftDat": DraftDat | null,
+	"verOffset": VerOffset,
+	"dirty": boolean,
+	"onClick": () => void
+}
+
+export function EditCell(props: EditCellProps): React.ReactNode {
+	var draftDat = props.draftDat;
 	var verOffset = props.verOffset;
 
-	var [cellText, rawText] = timeDetail(timeDat, verOffset);
-	var isValid = props.cellText === "" || props.valid;
+	var cellText = "";
+	var rawText: string | null = null;
+	var isValid = true;
+
+	// fill out information if draft cell exists
+	if (draftDat !== null) {
+		cellText = draftDat.text;
+		var timeDat = toTimeDat(draftDat, verOffset);
+		if (timeDat !== null) {
+			var [_fText, _rawText] = timeDetail(timeDat, verOffset);
+			cellText = _fText;
+			rawText = _rawText;
+		}
+		if (cellText !== "") isValid = (timeDat !== null);
+	}
+
 	return (<td className="edit-cell" onClick={ props.onClick }>
-		<div className="cell-wrap" valid={ isValid.toString() } dirty={ props.dirty.toString() }>
-			{ cellText } { rawText }</div></td>);*/
-	return <td className="edit-cell">EDIT</td>;
+		<div className="cell-wrap" data-valid={ isValid.toString() } data-dirty={ props.dirty.toString() }>
+			{ cellText } { rawText }</div></td>);
 }
 
 	/* input cell: a special editing cell for when player input is active */
-/*
-export function InputCell(props) {
+
+type InputCellProps = {
+	"draftDat": DraftDat,
+	"onWrite": (a: string) => void
+};
+
+export function InputCell(props: InputCellProps): React.ReactNode {
+	var draftDat = props.draftDat;
+	var cellText = draftDat.text;
+	var isValid = (cellText === "" || validTime(cellText));
+
 	return (<td className="edit-cell" onClick={ () => {} }>
-		<div className="cell-wrap" valid={ isValid.toString() }>
-			<input className="cell-input" value={ props.text } valid={ isValid.toString() }
+		<div className="cell-wrap" data-valid={ isValid.toString() }>
+			<input className="cell-input" value={ cellText } data-valid={ isValid.toString() } autoFocus
 				onChange={ (e) => props.onWrite(e.target.value) }></input></div></td>);
-}*/
+}
 
 	/* input cell: */
 /*

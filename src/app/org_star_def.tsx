@@ -24,6 +24,14 @@ export function newFilterState(): FilterState
 	};
 }
 
+export function newExtFilterState(): FilterState
+{
+	return {
+		"verState": [true, false],
+		"extFlag": true
+	};
+}
+
 export function fullFilterState(): FilterState
 {
 	return {

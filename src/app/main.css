@@ -173,6 +173,7 @@ select {
 }
 
 .star-name {
+	display: inline-block;
 	font-size: 14px;
 	margin: 4px;
 	border: 1px solid;
@@ -306,12 +307,12 @@ a:visited {
 	height: 21px;
 }
 
-.cell-wrap[valid="false"] {
+.cell-wrap[data-valid="false"] {
 	text-decoration: 2px underline;
 	text-decoration-color: #D06060;
 }
 
-.cell-wrap[dirty="true"] {
+.cell-wrap[data-dirty="true"] {
 	font-style: italic;
 }
 
@@ -334,13 +335,13 @@ a:visited {
 	outline-color: #5050B0;
 }
 
-.cell-input[valid="false"] {
+.cell-input[data-valid="false"] {
 	text-decoration: 2px underline;
 	text-decoration-color: #D06060;
 	outline-color: #B02020;
 }
 
-.cell-input[dirty="true"] {
+.cell-input[data-dirty="true"] {
 	font-style: italic;
 }
 /*
@@ -394,6 +395,187 @@ td:hover .float-icon[data-active="false"] {
 	background-color: #282840;
 	color: #9090B0;
 }*/
+
+	/* common buttons */
+
+
+.submit-button {
+	display: inline-block;
+	cursor: pointer;
+	background-color: #285040;
+	border: 1px solid;
+	border-color: #404060;
+	border-radius: 4px;
+	color: #FFFFFF;
+	text-align: center;
+	padding: 1px;
+	padding-left: 12px;
+	padding-right: 12px;
+}
+
+.submit-button:hover {
+	cursor: pointer;
+	background-color: #305848;
+}
+
+.plain-button {
+	display: inline-block;
+	background-color: #202040;
+	border: 1px solid;
+	border-color: #404060;
+	border-radius: 4px;
+	cursor: pointer;
+	margin-top: -0.5px;
+	margin-left: 2px;
+	height: 20px;
+	padding: 1px;
+	padding-left: 12px;
+	padding-right: 12px;
+	font-weight: normal;
+}
+
+.plain-button:hover {
+	background-color: #1A1A30;
+}
+
+.cancel-button {
+	background-color: #482020;
+	border: 1px solid;
+	border-color: #404060;
+	border-radius: 4px;
+	cursor: pointer;
+	margin-top: -0.5px;
+	margin-left: 1px;
+	height: 20px;
+	padding: 1px;
+	padding-left: 8px;
+	padding-right: 8px;
+	font-weight: normal;
+}
+
+.cancel-button:hover {
+	background-color: #381A1A;
+}
+
+.submit-small {
+	border-radius: 0px;
+	margin: 0px;
+	font-size: 12px;
+	height: 19px;
+}
+
+	/* edit submit area */
+
+.submit-area {
+	background-color: #282840;
+	color: #FFFFFF;
+}
+
+.submit-cont {
+	/*margin: 8px;
+	margin-top: 8px;
+	margin-bottom: 8px;*/
+}
+
+.submit-ex {
+	display: block;
+	background-color: #E0E0E0;
+	color: #000000;
+}
+
+.submit-ex-inner {
+	display: flex;
+	width: 100%;
+}
+
+.submit-info {
+	background-color: #181830;
+	padding-left: 6px;
+	padding-right: 6px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	width: 100%;
+	/*font-size: 11px;
+	height: 21px;*/
+	height: 23px;
+	font-weight: bold;
+	text-align: left;
+	box-sizing: border-box;
+}
+
+.submit-info[data-style='init'] {
+	color: #9090B0;
+	font-weight: normal;
+	font-style: italic;
+}
+
+.submit-info[data-style='error'] {
+	background-color: #281820;
+	color: #D05050;
+	font-style: italic;
+}
+
+.submit-info[data-style='warning'] {
+	background-color: #26242A;
+	color: #C0B050;
+	font-style: italic;
+}
+
+.submit-info[data-style='valid'] {
+	color: #90C898;
+	font-weight: normal;
+}
+
+.button-area {
+	display: flex;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+	/* -- option select areas */
+
+.opt-cont {
+	display: block;
+	text-align: left;
+	margin-left: 6px;
+	margin-rightt: 6px;
+}
+
+.opt-title {
+	display: inline-block;
+	font-weight: bold;
+	font-size: 12px;
+}
+
+	/* -- strat name toggles */
+
+.strat-name {
+	display: inline-block;
+	font-size: 12px;
+	margin: 4px;
+	min-width: 32px;
+	border: 1px solid;
+	border-radius: 8px;
+	border-color: #202030;
+	padding: 1px;
+	padding-left: 6px;
+	padding-right: 6px;
+	text-align: center;
+}
+
+.strat-name:hover {
+	cursor: pointer;
+	background-color: #C8C8D0;
+}
+
+.strat-name[data-sel="true"] {
+	background-color: #A0A0E0;
+}
+
+.strat-name[data-sel="true"]:hover {
+	cursor: pointer;
+	background-color: #B0B0F0;
+}
 
 	/* menu bar */
 
@@ -593,44 +775,6 @@ td:hover .float-icon[data-active="false"] {
 	padding-right: 12px;
 	padding-bottom: 1px;
 	font-weight: bold;
-}
-
-.nick-button {
-	background-color: #202040;
-	border: 1px solid;
-	border-color: #404060;
-	border-radius: 4px;
-	cursor: pointer;
-	margin-top: -0.5px;
-	margin-left: 2px;
-	height: 20px;
-	padding: 1px;
-	padding-left: 12px;
-	padding-right: 12px;
-	font-weight: normal;
-}
-
-.nick-button:hover {
-	background-color: #1A1A30;
-}
-
-.cancel-button {
-	background-color: #482020;
-	border: 1px solid;
-	border-color: #404060;
-	border-radius: 4px;
-	cursor: pointer;
-	margin-top: -0.5px;
-	margin-left: 1px;
-	height: 20px;
-	padding: 1px;
-	padding-left: 8px;
-	padding-right: 8px;
-	font-weight: normal;
-}
-
-.cancel-button:hover {
-	background-color: #381A1A;
 }
 
 .nick-disp {

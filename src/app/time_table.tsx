@@ -42,17 +42,11 @@ export function sameIdent(id1: Ident, id2: Ident): boolean {
 
 	/*
 		time_row: an array of multi_dats
+		user_dat: time_row with user attached
 	*/
 
 export type TimeEntry = MultiDat | null;
 export type TimeRow = TimeEntry[];
-
-export function freshUserDat(len: number, newId: Ident): UserDat {
-	return {
-		"id": newId,
-		"timeRow": Array(len).fill(null)
-	};
-}
 
 export function hasSubRows(timeRow: TimeRow): boolean {
 	var flag = false;
@@ -60,6 +54,18 @@ export function hasSubRows(timeRow: TimeRow): boolean {
 		if (hasSubTimes(multiDat)) flag = true;
 	});
 	return flag;
+}
+
+export type UserDat = {
+	"id": Ident,
+	"timeRow": TimeRow
+}
+
+export function freshUserDat(len: number, newId: Ident): UserDat {
+	return {
+		"id": newId,
+		"timeRow": Array(len).fill(null)
+	};
 }
 
 	/*
@@ -100,11 +106,6 @@ export function addTimeMap(timeMap: TimeMap, id: Ident, colId: number, timeDat: 
 		* id: ident - player identities
 		* timeRow: array[multi_dat] - player times
 	*/
-
-export type UserDat = {
-	"id": Ident,
-	"timeRow": TimeRow
-}
 
 export type TimeTable = UserDat[];
 

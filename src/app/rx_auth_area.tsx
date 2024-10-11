@@ -96,7 +96,7 @@ export function NickInput(props: NickInputProps): React.ReactNode
 	var actNode: React.ReactNode = <img src="/icons/edit-icon.png" className="edit-icon" onClick={ startEdit }></img>;
 	if (eState.active) {
 		actNode = [
-			<div className="nick-button" onClick={ () => stopEdit(eState.nick) } key="1">Set</div>,
+			<div className="plain-button" onClick={ () => stopEdit(eState.nick) } key="1">Set</div>,
 			<div className="cancel-button" onClick={ () => stopEdit(null) } key="2">X</div>
 		];
 	}

@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 
 import { VerOffset, formatTime, zeroVerOffset } from './time_dat'
-import { TimeTable, keyIdent, freshUserDat, hasSubRows, sortTimeTable } from './time_table'
+import { Ident, TimeTable, keyIdent, freshUserDat, hasSubRows, sortTimeTable } from './time_table'
 import { strIdNick } from './play_wrap'
-import { ColConfig, nameListColConfig, recordListColConfig, filterTableColConfig } from './col_config'
-import { EditPerm, noEditPerm, hasWritePerm, checkNewPerm } from './edit_perm'
+import { ColConfig, headerListColConfig, recordListColConfig, filterTableColConfig } from './col_config'
+import { EditObj, hasWritePerm, checkNewPerm } from './edit_perm'
 import { RecordMap } from './xcam_record_map'
-import { verAdjustTime, TimeCell, RecordCell, NameCell } from './rx_star_cell'
+import { TimeCell, RecordCell, NameCell } from './rx_star_cell'
 import { CellAct, DataRow } from './rx_star_row'
-import { nullEditPos } from './rx_edit_row'
+import { EditRow, nullEditPos } from './rx_edit_row'
 
 	/*
 		##########
@@ -107,7 +107,7 @@ function diffText(oldText, editText) {
 		* recordMap - record data for the time table
 		* timeTable - time table
 		* verOffset - version offset for time display
-		* editPerm / editTT - params for editable tables
+		* editObj - params for editable tables
 	*/
 
 type StarTableProps = {
@@ -115,8 +115,7 @@ type StarTableProps = {
 	"verOffset"?: VerOffset,
 	"recordMap": RecordMap,
 	"timeTable": TimeTable,
-	"editPerm"?: EditPerm,
-	"editTT"?: () => void
+	"editObj"?: EditObj
 }
 
 export function StarTable(props: StarTableProps): React.ReactNode {
@@ -125,10 +124,8 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 	var recordMap = props.recordMap;
 	var timeTable = props.timeTable;
 
-	var editPerm = noEditPerm();
-	var editTT = () => {};
-	if (props.editPerm !== undefined) editPerm = props.editPerm;
-	if (props.editTT !== undefined) editTT = props.editTT;
+	var editObj: EditObj | null = null;
+	if (props.editObj !== undefined) editObj = props.editObj;
 
 	var verOffset = zeroVerOffset();
 	if (props.verOffset !== undefined) verOffset = props.verOffset;
@@ -173,7 +170,7 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 	const editSubmit = () => {
 		setEditPos(nullEditPos());
 		//editTT(editText[0], diffText(eState.oldText, editText), colList);
-		editTT();
+		if (editObj !== null) editObj.updateTT();
 	};
 /*
 	eState.eData = editText;
@@ -186,7 +183,7 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 	var sortActive = !editPos.active;
 	// -- was 77% with "extra"
 	var tdWidth = "" + Math.floor(85 / stratTotal) + "%";
-	var nameList = nameListColConfig(cfg);
+	var nameList = headerListColConfig(cfg);
 
 	var imgNodeFun = (active: boolean): React.ReactNode => (<div className="float-frame">
 		<img src="/icons/sort-icon.png" data-active={ active.toString() } className="float-icon" alt=""></img></div>);
@@ -223,7 +220,7 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 		// -- normal row case
 		// click action
 		var action: CellAct = "none"
-		if (editPerm.canEdit && hasWritePerm(editPerm, userDat.id)) action = "edit";
+		if (editObj !== null && hasWritePerm(editObj.perm, userDat.id)) action = "edit";
 		else if (hasSubRows(userDat.timeRow)) action = "view-toggle";
 		// special CSS for last row
 		var endRow = i !== timeTable.length - 1;
@@ -264,7 +261,8 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 	
 	// build initial submit row
 	// -- normal case (must not have any editable rows)
-	var newPerm = checkNewPerm(editPerm);
+	var newPerm: Ident | null = null;
+	if (editObj !== null) newPerm = editObj.perm.newId;
 	if (newPerm !== null && (!editPos.active || editPos.rowId !== null)) {
 		var exRowNodes: React.ReactNode[] = [];
 		for (let i = 0; i < stratTotal; i++) {
@@ -274,14 +272,16 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 		var nText = strIdNick(newPerm);
 		if (nText === "@me") nText = "New";
 		exRowNodes.unshift(<td className="init-cell" key="name"
-			onClick={ () => editClick(null, -1, /*Array(stratTotal + 1).fill(""),*/ 0) }><i>{ nText }</i></td>);
+			onClick={ () => editClick(null, 0, /*Array(stratTotal + 1).fill(""),*/ 0) }><i>{ nText }</i></td>);
 		//exRowNodes.push(<td className="misc-cell" key="act"></td>);
 		timeTableNodes.push(<tr className="time-row" key="init-submit">{ exRowNodes }</tr>);
 	// -- edit case
-	} else if (editPerm.canEdit) {
-		//var newDat = freshTimeRow(stratTotal, editPerm.newId);
-		//timeTableNodes.push(<EditRow userDat={ newDat } rowId={ null } editPos={ editPos }
-		//	cellClick={ cellClick } key="edit"></EditRow>)
+	} else if (editPos.active && editPos.rowId === null) {
+		if (editObj === null) throw ("Entered edit state without edit mode object.");
+		if (newPerm === null) throw ("Entered edit state with null user.");
+		var newDat = freshUserDat(stratTotal, newPerm);
+		timeTableNodes.push(<EditRow userDat={ newDat } cfg={ cfg } verOffset={ verOffset }
+			rowId={ null } editObj={ editObj } editPos={ editPos } cellClick={ cellClick } key="edit"></EditRow>);
 	}
 
 	return (

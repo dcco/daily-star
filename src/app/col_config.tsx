@@ -159,6 +159,13 @@ export function openListColConfig(colList: ColList, openList: string[] | null): 
 	};
 }
 
+export function firstStratColConfig(config: ColConfig, colId: number): StratDef
+{
+	var mv = config.mv
+	if (mv === null) return config.colList[colId][1];
+	return mv.list[colId][0][1];
+}
+
 function hasNameStratList(sl: ColRef[], name: string): boolean
 {
 	for (const _strat of sl)
@@ -168,6 +175,15 @@ function hasNameStratList(sl: ColRef[], name: string): boolean
 	return false;
 }
 
+export function nameListColConfig(config: ColConfig, colId: number): string[]
+{
+	var mv = config.mv;
+	if (mv === null) return [config.colList[colId][1].name];
+	var mainList = mv.list[colId].map((_strat) => _strat[1].name);
+	if (mv.openName !== null && hasNameStratList(mv.list[colId], mv.openName)) mainList.unshift("Open");
+	return mainList;
+}
+/*
 function nameListStratList(sl: ColRef[], openName: string | null): string
 {
 	var str = sl[0][1].name;
@@ -178,14 +194,19 @@ function nameListStratList(sl: ColRef[], openName: string | null): string
 		str = "Open/" + str;
 	}
 	return str;
-}
+}*/
 
-export function nameListColConfig(config: ColConfig): string[]
+export function headerListColConfig(config: ColConfig): string[]
 {
-	var mv = config.mv;
+	var list: string[] = [];
+	for (let i = 0; i < config.stratTotal; i++) {
+		list.push(nameListColConfig(config, i).join('/'));
+	}
+	return list;
+	/*var mv = config.mv;
 	if (mv === null) return config.colList.map((_strat) => _strat[1].name);
 	var mvFinal = mv;
-	return mv.list.map((sl) => nameListStratList(sl, mvFinal.openName));
+	return mv.list.map((sl) => nameListStratList(sl, mvFinal.openName));*/
 }
 
 export function recordListColConfig(config: ColConfig, recordMap: RecordMap): TimeDat[]
