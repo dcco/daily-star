@@ -73,16 +73,17 @@ export function EditCell(props: EditCellProps): React.ReactNode {
 	if (draftDat !== null) {
 		cellText = draftDat.text;
 		var timeDat = toTimeDat(draftDat, verOffset);
-		if (timeDat !== null) {
+		if (cellText !== "") isValid = (validTime(cellText) && timeDat !== null);
+		if (validTime(cellText) && timeDat !== null) {
 			var [_fText, _rawText] = timeDetail(timeDat, verOffset);
 			cellText = _fText;
 			rawText = _rawText;
 		}
-		if (cellText !== "") isValid = (timeDat !== null);
 	}
 
 	return (<td className="edit-cell" onClick={ props.onClick }>
-		<div className="cell-wrap" data-valid={ isValid.toString() } data-dirty={ props.dirty.toString() }>
+		<div className="cell-wrap" data-use={ cellText !== "" }
+			data-valid={ isValid.toString() } data-dirty={ props.dirty.toString() }>
 			{ cellText } { rawText }</div></td>);
 }
 

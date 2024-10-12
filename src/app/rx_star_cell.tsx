@@ -34,15 +34,18 @@ export function timeDetail(timeDat: TimeDat | null, verOffset: VerOffset): [stri
 	if (timeDat === null) return ["", null];
 	var timeText = formatTime(timeDat.time);
 	// variant text
-	if (timeDat.rowDef.variant_list.length > 0) {
-		timeText = timeText + " [";
-		timeDat.rowDef.variant_list.map((v, i) => {
-			if (i !== 0) timeText = timeText + ",";
-			var vpp = parseInt(v) + 1;
-			timeText = timeText + vpp;
-		});
-		timeText = timeText + "]";
-	}
+	var varText = " ["
+	var commaFlag = false;
+	timeDat.rowDef.variant_list.map((v) => {
+		var vpp = parseInt(v) + 1;
+		if (vpp > 0) {
+			if (commaFlag) varText = varText + ",";
+			varText = varText + vpp;
+			commaFlag = true;
+		}
+	});
+	varText = varText + "]";
+	if (varText !== " []") timeText = timeText + varText;
 	// original text (when applicable)
 	var rawText = null;
 	if ((verOffset.focusVer === "jp" && timeDat.rowDef.ver === "us") ||

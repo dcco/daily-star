@@ -81,7 +81,7 @@ function addVerMap(verMap: VerMap | undefined, ref: RowId, v: Ver)
 		* virtual: bool - indicates whether the strat comes from an xcam sheet or not
 		* virtId: string? - if the strat is virtual, gives a key for the virtual sheet
 		* id_list: array[row_id] - a list of xcam row references
-		* variant_map: strat_id => array[string] - maps an xcam row to a list of its variants 
+		* variant_map: strat_id => array[string] - maps an xcam row to a list of its variants (as ids)
 		* ver_map: ver_map 
 	*/
 

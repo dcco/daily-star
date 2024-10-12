@@ -8,7 +8,7 @@ import { strIdNick } from './play_wrap'
 import { ColConfig, firstStratColConfig } from './col_config'
 import { StarDef } from './org_star_def'
 import { VarSpace, varSpaceStarDef } from './org_variant'
-import { DraftDat, staticDraftDat, emptyDraftDat, stratNameDraftDat } from './draft_dat'
+import { DraftDat, staticDraftDat, emptyDraftDat, changeStratDraftDat, stratNameDraftDat } from './draft_dat'
 import { EditObj } from './edit_perm' 
 import { CellAct } from './rx_star_row'
 import { EditCell, InputCell, validTime } from './rx_edit_cell'
@@ -85,11 +85,40 @@ function updateDS(ds: DraftState, colId: number, subRowId: number, v: DraftDat):
 	return { "grid": ds.grid };
 }
 
-function updateTextDS(ds: DraftState, colId: number, subRowId: number, v: string): DraftState
+function updateLocDS(ds: DraftState, colId: number, subRowId: number, f: (a: DraftDat) => DraftDat): DraftState
 {
 	var draftDat = lookupGrid(ds.grid, colId, subRowId);
-	if (draftDat !== null) draftDat.text = v;
+	if (draftDat !== null) {
+		var newDat = f(draftDat);
+		setGrid(ds.grid, colId, subRowId, newDat);
+	}
 	return { "grid": ds.grid };
+}
+
+function heightColDS(timeRow: TimeRow, ds: DraftState, colId: number): number
+{
+	var multiDat = timeRow[colId];
+	var height = 0;
+	if (multiDat !== null) height = multiDat.length;
+	var draftHeight = height;
+	while (true) {
+		var curDat = lookupGrid(ds.grid, colId, draftHeight);
+		if (curDat === null || curDat.text === "") return draftHeight;
+		draftHeight = draftHeight + 1;
+	}
+	throw("rx_edit_row - Unreachable.");
+}
+
+function heightDS(timeRow: TimeRow, ds: DraftState): [number, number[]]
+{
+	var height = 0;
+	var heightList: number[] = [];
+	for (let i = 0; i < timeRow.length; i++) {
+		var h = heightColDS(timeRow, ds, i);
+		height = Math.max(height, h);
+		heightList.push(h);
+	}
+	return [height, heightList];
 }
 
 /*
@@ -197,46 +226,65 @@ export function EditRow(props: EditRowProps): React.ReactNode {
 	const [ds, setDS] = useState(newDraftState());
 
 	// edit functions
-	const editWrite = (colId: number, subRowId: number, v: string) => {
-		setDS(updateTextDS(ds, colId, subRowId, v));
+	const editLoc = (colId: number, subRowId: number, f: (a: DraftDat) => DraftDat) => {
+		setDS(updateLocDS(ds, colId, subRowId, f));
 	};
+
+	const changeStrat = (stratName: string) => {
+		editLoc(editPos.colId, editPos.subRowId, (curDat) => {
+			var vs = varSpaceStarDef(starDef, stratName);
+			return changeStratDraftDat(vs, curDat);
+		});
+	}
 
 	// cleanup on cell change
 	useEffect(() => { setDS(cleanupDS(ds)); }, [editPos]);
 
 	// get the current draft cell being edited
-	var [draftDat, newDS] = lookupEditDraftDS(cfg, starDef, timeRow, ds, editPos.colId, 0);
+	var [draftDat, newDS] = lookupEditDraftDS(cfg, starDef, timeRow, ds, editPos.colId, editPos.subRowId);
 	if (newDS !== null) setDS(newDS);
 	var vs = varSpaceStarDef(starDef, stratNameDraftDat(draftDat));
 
 	// generate edit cells
 	var editNodes: React.ReactNode[] = [];
-	for (let i = 0; i < timeRow.length; i++) {
-		// input cell case
-		if (editPos.colId === i) {
-			editNodes.push(<InputCell draftDat={ draftDat }
-				onWrite={ (v) => editWrite(editPos.colId, 0, v) } key={ i }/>);
-		// other cell
-		} else {
-			var draftDatN = lookupViewDraftDS(cfg, timeRow, ds, i, 0);
-			editNodes.push(<EditCell draftDat={ draftDatN } verOffset={ verOffset } dirty={ false }
-				onClick={ () => cellClick("edit", rowId, i, 0) } key={ i }/>);
+	var [height, hList] = heightDS(timeRow, ds);
+	var dispHeight = height + 1;
+	for (let j = 0; j < height + 1; j++) {
+		var rowNodes: React.ReactNode[] = [];
+		for (let i = 0; i < timeRow.length; i++) {
+			// input cell case
+			if (editPos.colId === i && editPos.subRowId === j) {
+				rowNodes.push(<InputCell draftDat={ draftDat }
+					onWrite={ (v) => editLoc(editPos.colId, j, (dat) => { dat.text = v; return dat; }) } key={ i }/>);
+				continue;
+			}
+			// display case
+			var draftDatN = lookupViewDraftDS(cfg, timeRow, ds, i, j);
+			if (draftDatN !== null || j === hList[i]) {
+				rowNodes.push(<EditCell draftDat={ draftDatN } verOffset={ verOffset } dirty={ false }
+					onClick={ () => cellClick("edit", rowId, i, j) } key={ i }/>);
+			} else {
+				rowNodes.push(<td className="dark-cell"></td>);
+			}
 		}
+		// player name cell
+		if (j === 0) rowNodes.unshift(<td key="name">{ strIdNick(userDat.id) }</td>);
+		else rowNodes.unshift(<td className="dark-cell" key="name"></td>);
+		editNodes.push(<tr className="time-row" key={ j }>{ rowNodes }</tr>);
 	}
-	// player name cell
-	editNodes.unshift(<td key="name">{ strIdNick(userDat.id) }</td>);
-
+	
 	// validation
 	var [style, infoText] = validateDS(ds);
 
 	// return final row
 	return <React.Fragment>
-		<tr className="time-row" key="edit-row">{ editNodes }</tr>
+		{ editNodes }
 		<tr className="time-row" key="edit-info-row">
 			<td></td>
 			<td className="submit-area" colSpan={ timeRow.length }>
 				<EditSubmitArea cfg={ cfg } colId={ editPos.colId } vs={ vs }
-					curDat={ draftDat } style={ style } infoText={ infoText }/>
+					curDat={ draftDat } editDat={ (f) => editLoc(editPos.colId, editPos.subRowId, f) }
+					changeStrat={ changeStrat } style={ style } infoText={ infoText }/>
 			</td>
 		</tr>
 	</React.Fragment>;

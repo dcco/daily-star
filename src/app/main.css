@@ -287,7 +287,8 @@ a:visited {
 }
 
 .dark-cell {
-	background-color: #C8B0B0;
+	/*background-color: #C8B0B0;*/
+	background-image: url('/icons/pattern-small.png');
 }
 
 	/* -- edit cells: display */
@@ -314,6 +315,16 @@ a:visited {
 
 .cell-wrap[data-dirty="true"] {
 	font-style: italic;
+}
+
+.cell-wrap[data-use="false"] {
+	cursor: pointer;
+	background-color: #F8E8E8;
+}
+
+.cell-wrap[data-use="false"]:hover {
+	cursor: pointer;
+	background-color: #E8D8D8;
 }
 
 	/* -- edit cells: input*/
@@ -488,6 +499,43 @@ td:hover .float-icon[data-active="false"] {
 	width: 100%;
 }
 
+.submit-ex-form {
+	display: flex;
+	border-top: 1px solid;
+	padding: 1px;
+	padding-left: 6px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	font-weight: bold;
+	font-size: 12px;
+}
+
+.form-title {
+	width: 40px;
+	padding-top: 1px;
+}
+
+.form-break {
+	flex-basis: 100%;
+	height: 0px;
+}
+
+.form-input {
+	background-color: #D0D0D0;
+	display: inline-block;
+	text-align: left;
+	width: 100%;
+	margin-left: 6px;
+	/*margin-right: 6px;
+	margin-top: 4px;
+	margin-bottom: 3px;*/
+	border: 0px;
+	border-left: 1px solid;
+	outline: solid;
+	outline-width: 0px;
+	box-sizing: border-box;
+}
+
 .submit-info {
 	background-color: #181830;
 	padding-left: 6px;
@@ -547,34 +595,66 @@ td:hover .float-icon[data-active="false"] {
 	font-size: 12px;
 }
 
-	/* -- strat name toggles */
-
-.strat-name {
-	display: inline-block;
-	font-size: 12px;
+.opt-box {
+	display: flex;
+	overflow: hidden;
+	background-color: #E0E0E0;
 	margin: 4px;
-	min-width: 32px;
 	border: 1px solid;
 	border-radius: 8px;
 	border-color: #202030;
+}
+
+.opt-button {
+	font-size: 12px;
+	min-width: 32px;
 	padding: 1px;
 	padding-left: 6px;
 	padding-right: 6px;
 	text-align: center;
 }
 
-.strat-name:hover {
+.opt-button:hover {
 	cursor: pointer;
 	background-color: #C8C8D0;
 }
 
-.strat-name[data-sel="true"] {
-	background-color: #A0A0E0;
+	/* -- setting name toggles  */
+
+.for-setting {
+	border-right: 1px solid;
+	border-color: #202030;
 }
 
-.strat-name[data-sel="true"]:hover {
+.for-setting:last-child {
+	border-right: 0px;
+}
+
+.for-setting[data-sel="true"] {
+	background-color: #A8A8E8;
+}
+
+.for-setting[data-sel="true"]:hover {
 	cursor: pointer;
-	background-color: #B0B0F0;
+	background-color: #B8B8F8;
+}
+
+	/* -- strat name toggles */
+
+.for-strat {
+	display: inline-block;
+	margin: 4px;
+	border: 1px solid;
+	border-radius: 8px;
+	border-color: #202030;
+}
+
+.for-strat[data-sel="true"] {
+	background-color: #E0B0C0;
+}
+
+.for-strat[data-sel="true"]:hover {
+	background-color: #F0C0D0;
 }
 
 	/* menu bar */

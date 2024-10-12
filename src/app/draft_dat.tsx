@@ -1,5 +1,5 @@
 
-import { Ver, RowDef, newRowDef } from './strat_def'
+import { VerF, Ver, RowDef, newRowDef } from './strat_def'
 import { TimeDat, VerOffset, rawMS, formatTime, newTimeDat, applyVerOffset } from './time_dat'
 import { VariantSel, VarSpace, toVarList, defVerVarSpace, toVarSel } from './org_variant'
 
@@ -91,6 +91,14 @@ export function emptyDraftDat(vs: VarSpace): DraftDat {
 	};
 }
 
+export function changeStratDraftDat(vs: VarSpace, ds: DraftDat): DraftDat {
+	var newDat = emptyDraftDat(vs);
+	newDat.text = ds.text;
+	newDat.link = ds.link;
+	newDat.note = ds.note;
+	return newDat;
+}
+
 export function stratNameDraftDat(dat: DraftDat): string {
 	if (dat.rowInfo.dyn) return dat.rowInfo.name;
 	else return dat.rowInfo.def.name;
@@ -114,4 +122,14 @@ export function varSelDraftDat(dat: DraftDat, vId: number, vList: string[]): str
 	var rowVarSel = dat.rowInfo.variantSel;
 	if (rowVarSel["var:" + vId]) return rowVarSel["var:" + vId];
 	return null;
+}
+
+export function setVerDraftDat(dat: DraftDat, ver: VerF) {
+	if (!dat.rowInfo.dyn) throw("Attempted to set version on static draft datum.");
+	dat.rowInfo.ver = ver;
+}
+
+export function setVarDraftDat(dat: DraftDat, group: number, v: string) {
+	if (!dat.rowInfo.dyn) throw("Attempted to set variant on static draft datum.");
+	dat.rowInfo.variantSel["var:" + group] = v;
 }

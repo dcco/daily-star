@@ -313,24 +313,16 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_21": []
+              "main_21": [],
+              "ext_5": [
+                "0"
+              ]
             },
             "id_list": [
               [
                 "main",
                 21
-              ]
-            ]
-          },
-          "DSS": {
-            "name": "DSS",
-            "diff": "normal",
-            "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
-              "ext_5": []
-            },
-            "id_list": [
+              ],
               [
                 "ext",
                 5
@@ -345,24 +337,16 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_22": []
+              "main_22": [],
+              "ext_6": [
+                "0"
+              ]
             },
             "id_list": [
               [
                 "main",
                 22
-              ]
-            ]
-          },
-          "DSS": {
-            "name": "DSS",
-            "diff": "normal",
-            "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
-              "ext_6": []
-            },
-            "id_list": [
+              ],
               [
                 "ext",
                 6
@@ -370,9 +354,10 @@
             ]
           }
         },
-        "open": [
+        "variants": [
           "DSS"
-        ]
+        ],
+        "open": []
       },
       {
         "name": "Mario Wings to the Sky",
@@ -483,21 +468,27 @@
               "ext_8": [
                 "2"
               ],
+              "ext_10": [
+                "1",
+                "2"
+              ],
               "ext_11": [
                 "0"
               ],
               "ext_13": [
+                "0",
                 "1"
               ],
               "ext_14": [
+                "0",
                 "2"
               ],
               "ext_16": [
+                "0",
                 "2",
                 "1"
               ],
               "ext_18": [
-                "0",
                 "3"
               ],
               "ext_20": [
@@ -526,6 +517,10 @@
               [
                 "ext",
                 8
+              ],
+              [
+                "ext",
+                10
               ],
               [
                 "ext",
@@ -571,18 +566,14 @@
               "ext_9": [
                 "2"
               ],
-              "ext_10": [
-                "1",
-                "2"
-              ],
               "ext_12": [
                 "0"
               ],
               "ext_15": [
+                "0",
                 "2"
               ],
               "ext_19": [
-                "0",
                 "3"
               ],
               "ext_22": [
@@ -598,10 +589,6 @@
               [
                 "ext",
                 9
-              ],
-              [
-                "ext",
-                10
               ],
               [
                 "ext",
@@ -636,21 +623,27 @@
               "ext_8": [
                 "2"
               ],
+              "ext_10": [
+                "1",
+                "2"
+              ],
               "ext_11": [
                 "0"
               ],
               "ext_13": [
+                "0",
                 "1"
               ],
               "ext_14": [
+                "0",
                 "2"
               ],
               "ext_16": [
+                "0",
                 "2",
                 "1"
               ],
               "ext_18": [
-                "0",
                 "3"
               ],
               "ext_20": [
@@ -679,6 +672,10 @@
               [
                 "ext",
                 8
+              ],
+              [
+                "ext",
+                10
               ],
               [
                 "ext",
@@ -724,18 +721,14 @@
               "ext_9": [
                 "2"
               ],
-              "ext_10": [
-                "1",
-                "2"
-              ],
               "ext_12": [
                 "0"
               ],
               "ext_15": [
+                "0",
                 "2"
               ],
               "ext_19": [
-                "0",
                 "3"
               ],
               "ext_22": [
@@ -751,10 +744,6 @@
               [
                 "ext",
                 9
-              ],
-              [
-                "ext",
-                10
               ],
               [
                 "ext",
@@ -780,6 +769,12 @@
           "Backflip End",
           "SJ Throw",
           "Goomba Bounce"
+        ],
+        "var_groups": [
+          [
+            3,
+            0
+          ]
         ],
         "open": []
       }
@@ -1058,10 +1053,10 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_44": [],
-              "main_45": [
+              "main_44": [
                 "0"
-              ]
+              ],
+              "main_45": []
             },
             "id_list": [
               [
@@ -1097,10 +1092,10 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_44": [],
-              "main_45": [
+              "main_44": [
                 "0"
-              ]
+              ],
+              "main_45": []
             },
             "id_list": [
               [
@@ -1115,7 +1110,7 @@
           }
         },
         "variants": [
-          "No Speedkick"
+          "Speedkick"
         ],
         "open": null
       },
@@ -2176,7 +2171,7 @@
         },
         "variants": [
           "TJ Start",
-          "no WK"
+          "No WK"
         ],
         "open": []
       },
@@ -2322,8 +2317,8 @@
               ]
             ]
           },
-          "Special": {
-            "name": "Special",
+          "Open": {
+            "name": "Open",
             "diff": "normal",
             "ver_diff": true,
             "virtual": false,
@@ -2363,8 +2358,8 @@
               ]
             ]
           },
-          "Special": {
-            "name": "Special",
+          "Open": {
+            "name": "Open",
             "diff": "normal",
             "ver_diff": true,
             "virtual": false,
@@ -2392,9 +2387,7 @@
           "Blue Coin Switch",
           "No Teleport"
         ],
-        "open": [
-          "Special"
-        ]
+        "open": []
       },
       {
         "name": "Li'l Penguin Lost",
@@ -2503,8 +2496,8 @@
               ]
             ]
           },
-          "Special": {
-            "name": "Special",
+          "Open": {
+            "name": "Open",
             "diff": "normal",
             "ver_diff": true,
             "virtual": false,
@@ -2559,8 +2552,8 @@
               ]
             ]
           },
-          "Special": {
-            "name": "Special",
+          "Open": {
+            "name": "Open",
             "diff": "normal",
             "ver_diff": true,
             "virtual": false,
@@ -2589,7 +2582,7 @@
           "No Teleport"
         ],
         "open": [
-          "Special"
+          "Atmpas Route"
         ]
       },
       {
@@ -3179,24 +3172,16 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_143": []
+              "main_143": [],
+              "ext_100": [
+                "0"
+              ]
             },
             "id_list": [
               [
                 "main",
                 143
-              ]
-            ]
-          },
-          "DSS": {
-            "name": "DSS",
-            "diff": "normal",
-            "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
-              "ext_100": []
-            },
-            "id_list": [
+              ],
               [
                 "ext",
                 100
@@ -3211,24 +3196,16 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_144": []
+              "main_144": [],
+              "ext_101": [
+                "0"
+              ]
             },
             "id_list": [
               [
                 "main",
                 144
-              ]
-            ]
-          },
-          "DSS": {
-            "name": "DSS",
-            "diff": "normal",
-            "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
-              "ext_101": []
-            },
-            "id_list": [
+              ],
               [
                 "ext",
                 101
@@ -3236,9 +3213,10 @@
             ]
           }
         },
-        "open": [
+        "variants": [
           "DSS"
-        ]
+        ],
+        "open": []
       },
       {
         "name": "Big Boo's Balcony",
@@ -3436,11 +3414,8 @@
                 "0"
               ],
               "ext_106": [],
-              "ext_108": [
-                "1"
-              ],
               "ext_110": [
-                "2"
+                "1"
               ]
             },
             "id_list": [
@@ -3454,11 +3429,22 @@
               ],
               [
                 "ext",
-                108
-              ],
+                110
+              ]
+            ]
+          },
+          "No BLJ": {
+            "name": "No BLJ",
+            "diff": "easy",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "ext_108": []
+            },
+            "id_list": [
               [
                 "ext",
-                110
+                108
               ]
             ]
           }
@@ -3474,11 +3460,8 @@
                 "0"
               ],
               "ext_107": [],
-              "ext_109": [
-                "1"
-              ],
               "ext_111": [
-                "2"
+                "1"
               ]
             },
             "id_list": [
@@ -3492,18 +3475,28 @@
               ],
               [
                 "ext",
-                109
-              ],
+                111
+              ]
+            ]
+          },
+          "No BLJ": {
+            "name": "No BLJ",
+            "diff": "easy",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "ext_109": []
+            },
+            "id_list": [
               [
                 "ext",
-                111
+                109
               ]
             ]
           }
         },
         "variants": [
           "Salt Clip",
-          "No BLJ",
           "Eye Early"
         ],
         "open": []
@@ -3820,7 +3813,9 @@
         "variants": [
           "LJ + TJ"
         ],
-        "open": []
+        "open": [
+          "SS"
+        ]
       },
       {
         "name": "Watch for Rolling Rocks",
@@ -4185,6 +4180,12 @@
         "variants": [
           "Speedkick DJ Dive",
           "LJx2 DJ Dive"
+        ],
+        "var_groups": [
+          [
+            0,
+            1
+          ]
         ],
         "open": []
       },
@@ -4900,6 +4901,14 @@
           "Side LJ",
           "Speed Punch x2"
         ],
+        "var_groups": [
+          [
+            0,
+            1,
+            2,
+            3
+          ]
+        ],
         "open": null
       },
       {
@@ -5195,6 +5204,12 @@
           "SJ",
           "Tama"
         ],
+        "var_groups": [
+          [
+            0,
+            1
+          ]
+        ],
         "open": [
           "Nuts Pless"
         ]
@@ -5288,12 +5303,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_233": []
+              "main_233": [],
+              "ext_134": [
+                "1"
+              ]
             },
             "id_list": [
               [
                 "main",
                 233
+              ],
+              [
+                "ext",
+                134
               ]
             ]
           },
@@ -5318,13 +5340,10 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_235": [],
-              "main_236": [
+              "main_235": [
                 "0"
               ],
-              "ext_134": [
-                "1"
-              ]
+              "main_236": []
             },
             "id_list": [
               [
@@ -5334,10 +5353,6 @@
               [
                 "main",
                 236
-              ],
-              [
-                "ext",
-                134
               ]
             ]
           }
@@ -5349,12 +5364,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_233": []
+              "main_233": [],
+              "ext_134": [
+                "1"
+              ]
             },
             "id_list": [
               [
                 "main",
                 233
+              ],
+              [
+                "ext",
+                134
               ]
             ]
           },
@@ -5379,13 +5401,10 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_235": [],
-              "main_236": [
+              "main_235": [
                 "0"
               ],
-              "ext_134": [
-                "1"
-              ]
+              "main_236": []
             },
             "id_list": [
               [
@@ -5395,16 +5414,12 @@
               [
                 "main",
                 236
-              ],
-              [
-                "ext",
-                134
               ]
             ]
           }
         },
         "variants": [
-          "No Speed Jump",
+          "Speed Jump to Cap Box",
           "Speed Wing"
         ],
         "open": []
@@ -6260,11 +6275,8 @@
             "virtual": false,
             "variant_map": {
               "main_277": [],
-              "ext_152": [
-                "0"
-              ],
               "ext_153": [
-                "1"
+                "0"
               ]
             },
             "id_list": [
@@ -6274,11 +6286,22 @@
               ],
               [
                 "ext",
-                152
-              ],
+                153
+              ]
+            ]
+          },
+          "Leftside": {
+            "name": "Leftside",
+            "diff": "easy",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "ext_152": []
+            },
+            "id_list": [
               [
                 "ext",
-                153
+                152
               ]
             ]
           },
@@ -6289,7 +6312,7 @@
             "virtual": false,
             "variant_map": {
               "ext_154": [
-                "2"
+                "1"
               ]
             },
             "id_list": [
@@ -6308,11 +6331,8 @@
             "virtual": false,
             "variant_map": {
               "main_277": [],
-              "ext_152": [
-                "0"
-              ],
               "ext_153": [
-                "1"
+                "0"
               ]
             },
             "id_list": [
@@ -6322,11 +6342,22 @@
               ],
               [
                 "ext",
-                152
-              ],
+                153
+              ]
+            ]
+          },
+          "Leftside": {
+            "name": "Leftside",
+            "diff": "easy",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "ext_152": []
+            },
+            "id_list": [
               [
                 "ext",
-                153
+                152
               ]
             ]
           },
@@ -6337,7 +6368,7 @@
             "virtual": false,
             "variant_map": {
               "ext_154": [
-                "2"
+                "1"
               ]
             },
             "id_list": [
@@ -6349,11 +6380,10 @@
           }
         },
         "variants": [
-          "Intermediate",
-          "Below Box Break",
+          "Box Break Below",
           "Double Slide"
         ],
-        "open": null
+        "open": []
       },
       {
         "name": "Shell Shreddin' for Red Coins",
@@ -6409,7 +6439,7 @@
           }
         },
         "variants": [
-          "Intermediate"
+          "Leftside Start"
         ],
         "open": []
       },
@@ -6434,13 +6464,15 @@
               ]
             ]
           },
-          "Alt Route": {
-            "name": "Alt Route",
+          "Open": {
+            "name": "Open",
             "diff": "normal",
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "ext_156": []
+              "ext_156": [
+                "0"
+              ]
             },
             "id_list": [
               [
@@ -6466,13 +6498,15 @@
               ]
             ]
           },
-          "Alt Route": {
-            "name": "Alt Route",
+          "Open": {
+            "name": "Open",
             "diff": "normal",
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "ext_157": []
+              "ext_157": [
+                "0"
+              ]
             },
             "id_list": [
               [
@@ -6482,6 +6516,9 @@
             ]
           }
         },
+        "variants": [
+          "Early Spindrifts"
+        ],
         "open": []
       },
       {
@@ -6613,7 +6650,7 @@
         },
         "variants": [
           "Phantaxx Ending",
-          "Side Igloo"
+          "Side Entry"
         ],
         "open": null
       }
@@ -6710,7 +6747,7 @@
           }
         },
         "variants": [
-          "Extra Frame"
+          "Jump + Dive Start"
         ],
         "open": [
           "Mid Water"
@@ -6962,7 +6999,7 @@
             "variant_map": {
               "main_302": [],
               "ext_176": [
-                "0"
+                "1"
               ]
             },
             "id_list": [
@@ -7016,7 +7053,7 @@
             "variant_map": {
               "main_302": [],
               "ext_176": [
-                "0"
+                "1"
               ]
             },
             "id_list": [
@@ -8173,7 +8210,7 @@
           }
         },
         "variants": [
-          "14.7-14.9 race",
+          "14.7-14.9 Race",
           "Mountain Clip"
         ],
         "open": []
@@ -8748,6 +8785,12 @@
         "variants": [
           "Low Dive",
           "GP Ending"
+        ],
+        "var_groups": [
+          [
+            0,
+            1
+          ]
         ],
         "open": [
           "Side Flippies"
@@ -9364,6 +9407,12 @@
           "Sideflip + WK Strat",
           "Rollout Ending",
           "LJ Ending"
+        ],
+        "var_groups": [
+          [
+            0,
+            2
+          ]
         ],
         "open": []
       }
@@ -10645,7 +10694,7 @@
           }
         },
         "variants": [
-          "Intermediate"
+          "Rollout to 3rd Red"
         ],
         "open": []
       },

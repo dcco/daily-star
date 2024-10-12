@@ -1,5 +1,5 @@
 
-import { VerF, Ver, RowDef, newRowDef } from './strat_def'
+import { VerF, Ver, RowDef, newRowDef, newStratDef } from './strat_def'
 import { StarDef, mainVerStarDef } from './org_star_def'
 
 	/*
@@ -27,6 +27,17 @@ export type VerInfo = {
 }
 
 	/*
+		variant_group: a list of variants to select from (N/A exists as an implicit option)
+		  * id: unique identifier (relative to a specific star)
+		  * list: string list of variant ids
+	*/
+
+export type VarGroup = {
+	"id": number,
+	"list": string[]
+}
+
+	/*
 		variant_space: abstract definition of all possible
 			variant combinations for a strat.
 		  * verInfo: version information about the strat (null if it doesn't matter)
@@ -39,13 +50,32 @@ export type VarSpace = {
 	"stratName": string,
 	"verInfo": VerInfo | null,
 	"nameList": string[],
-	"varTable": string[][]
+	"varTable": VarGroup[]
 }
 
-function makeVarTable(variants: string[]): string[][]
+function makeVarTable(variants: string[], varGroups: number[][]): VarGroup[]
 {
 	if (variants === undefined) return [];
-	return variants.map((s, i) => ["" + i]);
+	// start with pre-existing groups
+	var usedVars: number[] = [];
+	var gId = 0;
+	var allGroups = varGroups.map((l) => {
+		gId = gId + 1;
+		usedVars = usedVars.concat(l);
+		return { "id": gId - 1, "list": l.map((i) => "" + i) };
+	}); 
+	// add remaining variables as individual groups
+	variants.map((x, i) => {
+		if (!usedVars.includes(i)) {
+			allGroups.push({ "id": gId, "list": ["" + i] });
+			gId = gId + 1;
+		}
+	})
+	return allGroups;
+}
+
+type VarSet = {
+	[key: string]: boolean
 }
 
 export function varSpaceStarDef(starDef: StarDef, stratName: string): VarSpace
@@ -53,6 +83,14 @@ export function varSpaceStarDef(starDef: StarDef, stratName: string): VarSpace
 	// find the strat from either set
 	var stratDef = starDef.jp_set[stratName];
 	if (stratDef === undefined) stratDef = starDef.us_set[stratName];
+	// strat doesn't actually exist (usually open column or virtual column)
+	if (stratDef === undefined) {
+		var ver_diff = mainVerStarDef(starDef) !== null;
+		var var_all: string[] = [];
+		if (starDef.variants) var_all = starDef.variants.map((v, i) => "" + i);
+		stratDef = newStratDef(stratName, "hard", ver_diff,
+			false, undefined, [], { "open": var_all });
+	}
 	// get version info if relevant
 	var verInfo = null;
 	if (stratDef.ver_diff) {
@@ -64,13 +102,25 @@ export function varSpaceStarDef(starDef: StarDef, stratName: string): VarSpace
 			"usFlag": starDef.us_set[stratName] !== undefined
 		};
 	}
-	// filter variants relevant to a strat
+	// collect all the variant groups
 	var nameList: string[] = [];
-	var varTable: string[][] = [];
+	var varTable: VarGroup[] = [];
 	if (starDef.variants) {
 		nameList = starDef.variants;
-		varTable = makeVarTable(starDef.variants);
+		var varGroups: number[][] = [];
+		if (starDef.var_groups) varGroups = starDef.var_groups;
+		varTable = makeVarTable(starDef.variants, varGroups);
 	}
+	// filter variants relevant to the strat
+	var varSet: VarSet = {};
+	for (const [k, vl] of Object.entries(stratDef.variant_map)) {
+		vl.map((x) => varSet[x] = true);
+	}
+	varTable = varTable.filter((group) => {
+		var varFlag = false;
+		group.list.map((x) => { if (varSet[x]) varFlag = true });
+		return varFlag;
+	})
 	return {
 		"stratName": stratName,
 		"verInfo": verInfo,

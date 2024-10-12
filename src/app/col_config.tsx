@@ -163,7 +163,10 @@ export function firstStratColConfig(config: ColConfig, colId: number): StratDef
 {
 	var mv = config.mv
 	if (mv === null) return config.colList[colId][1];
-	return mv.list[colId][0][1];
+	var strat = mv.list[colId][0][1];
+	// use non-open column when available
+	if (strat.name === "Open" && mv.list[colId].length > 1) strat = mv.list[colId][1][1];
+	return strat;
 }
 
 function hasNameStratList(sl: ColRef[], name: string): boolean
