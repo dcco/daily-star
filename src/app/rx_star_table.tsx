@@ -225,7 +225,7 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 		// special CSS for last row
 		var endRow = i !== timeTable.length - 1;
 		// add row
-		timeTableNodes.push(<DataRow userDat={ userDat } verOffset={ verOffset } rowId={ i }
+		timeTableNodes.push(<DataRow userDat={ userDat } verOffset={ verOffset } rowId={ i } expand={ vState.rowId === i }
 			action={ action } onClick={ cellClick } endRow={ endRow } key={ keyIdent(userDat.id) }/>);
 	});
 	/*filterTable.map((userDat, i) => {

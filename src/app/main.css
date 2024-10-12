@@ -274,6 +274,11 @@ select {
 	cursor: pointer;
 }
 
+tr[data-row-active="true"]:hover > .time-cell {
+	background-color: #B0B0D6;
+	cursor: pointer;
+}
+
 em {
 	color: #5050A0;
 }
