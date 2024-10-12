@@ -71,7 +71,7 @@ export type StarDef = {
 	"jp_set": StratSet,
 	"us_set": StratSet,
 	"variants": string[] | undefined,
-	"var_groups": number[][] | undefined,
+	"var_groups": string[][] | undefined,
 	"open": string[] | null
 }
 

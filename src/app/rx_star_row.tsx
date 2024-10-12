@@ -68,7 +68,7 @@ export function DataRow(props: DataRowProps): React.ReactNode {
 		})
 		if (i === 0) timeRowNodes.unshift(<NameCell id={ userDat.id } key="user"/>);
 		else timeRowNodes.unshift(<td className="dark-cell"></td>);
-		rowNodeList.push(<tr className="time-row" data-row-active={ active.toString() } data-endRow={ endRow } key={ i }>
+		rowNodeList.push(<tr className="time-row" data-row-active={ active.toString() } data-end-row={ endRow } key={ i }>
 			{ timeRowNodes }
 		</tr>);
 	}

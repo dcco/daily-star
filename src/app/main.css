@@ -237,7 +237,7 @@ select {
 	height: 21px;
 }
 
-.time-row[data-endRow="true"] td {
+.time-row[data-end-row="true"] td {
 	border-bottom-color: #A0A0C0;
 }
 
@@ -294,6 +294,7 @@ a:visited {
 .dark-cell {
 	/*background-color: #C8B0B0;*/
 	background-image: url('/icons/pattern-small.png');
+	background-attachment: fixed;
 }
 
 	/* -- edit cells: display */

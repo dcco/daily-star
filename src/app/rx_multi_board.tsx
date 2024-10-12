@@ -22,7 +22,7 @@ function MenuOpt(props: MenuOptProps): React.ReactNode
 }
 
 export function MultiBoard(props: {}): React.ReactNode {
-	const [menuId, setMenuId] = useState(1);
+	const [menuId, setMenuId] = useState(0);
 	const [reloadFlag, setReloadFlag] = useState(false);
 
 	// initialize xcam sheet once

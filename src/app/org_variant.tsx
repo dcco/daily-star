@@ -29,11 +29,13 @@ export type VerInfo = {
 	/*
 		variant_group: a list of variants to select from (N/A exists as an implicit option)
 		  * id: unique identifier (relative to a specific star)
+		  * name: group name, used for submission to the database 
 		  * list: string list of variant ids
 	*/
 
 export type VarGroup = {
 	"id": number,
+	"name": string,
 	"list": string[]
 }
 
@@ -53,21 +55,28 @@ export type VarSpace = {
 	"varTable": VarGroup[]
 }
 
-function makeVarTable(variants: string[], varGroups: number[][]): VarGroup[]
+function makeVarTable(variants: string[], varGroups: string[][]): VarGroup[]
 {
-	if (variants === undefined) return [];
 	// start with pre-existing groups
-	var usedVars: number[] = [];
+	var usedVars: string[] = [];
 	var gId = 0;
 	var allGroups = varGroups.map((l) => {
+		// split the group name from the var ids
+		var numList = l.map((v) => v);
+		var groupName = numList.shift();
+		if (groupName === undefined) {
+			console.log(varGroups);
+			throw('Undefined group name while generating variants.');
+		}
+		// add group to the list
 		gId = gId + 1;
-		usedVars = usedVars.concat(l);
-		return { "id": gId - 1, "list": l.map((i) => "" + i) };
+		usedVars = usedVars.concat(numList);
+		return { "id": gId - 1, "name": groupName, "list": numList.map((i) => i) };
 	}); 
 	// add remaining variables as individual groups
 	variants.map((x, i) => {
-		if (!usedVars.includes(i)) {
-			allGroups.push({ "id": gId, "list": ["" + i] });
+		if (!usedVars.includes("" + i)) {
+			allGroups.push({ "id": gId, "name": variants[i], "list": ["" + i] });
 			gId = gId + 1;
 		}
 	})
@@ -107,7 +116,7 @@ export function varSpaceStarDef(starDef: StarDef, stratName: string): VarSpace
 	var varTable: VarGroup[] = [];
 	if (starDef.variants) {
 		nameList = starDef.variants;
-		var varGroups: number[][] = [];
+		var varGroups: string[][] = [];
 		if (starDef.var_groups) varGroups = starDef.var_groups;
 		varTable = makeVarTable(starDef.variants, varGroups);
 	}

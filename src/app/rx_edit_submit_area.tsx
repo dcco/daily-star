@@ -48,7 +48,7 @@ export function EditSubmitArea(props: ESAProps): React.ReactNode
 			altList.push(<div className='opt-button for-strat' data-sel={ curStrat === name }
 				onClick={ () => changeStrat(name) } key={ name }>{ name }</div>);
 		}
-		altNode = <OptionGroup title="Strat:" childList={ altList }/>;
+		altNode = <OptionGroup title="Strat:" childList={ altList } key="opt-strat"/>;
 	}
 
 	// ver diff node
@@ -60,7 +60,7 @@ export function EditSubmitArea(props: ESAProps): React.ReactNode
 				<div className='opt-button for-setting' data-sel={ verDraftDat(curDat) === 'us' }
 					onClick={ () => editDat((dat) => { setVerDraftDat(dat, "us"); return dat; }) } key="us">US</div>
 			];
-		verNode = (<div className='opt-cont'><div className='opt-title'>Version:</div>
+		verNode = (<div className='opt-cont' key="opt-ver"><div className='opt-title'>Version:</div>
 			<div className='opt-box'>{ verList }</div></div>);
 	}
 
@@ -76,7 +76,7 @@ export function EditSubmitArea(props: ESAProps): React.ReactNode
 			onClick={ () => editDat((dat) => { setVarDraftDat(dat, varGroup.id, "-1"); return dat; }) } key="_na">N/A</div>)
 		var title = "";
 		if (i === 0) title = "Variants:"
-		return (<div className='opt-cont'><div className='opt-title'>{ title }</div>
+		return (<div className='opt-cont' key={ i }><div className='opt-title'>{ title }</div>
 			<div className='opt-box'>{ optNodes }</div></div>);
 	});
 
