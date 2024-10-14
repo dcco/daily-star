@@ -160,6 +160,7 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 
 	const cellClick = (action: CellAct, row: number | null, col: number, subRow: number) => {
 		if (action === "edit") editClick(row, col, subRow);
+		else if (action === "stop-edit") setEditPos(nullEditPos());
 		else if (action === "view-toggle" && row !== null) viewClick(row);
 	}
 
@@ -197,8 +198,8 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 	/* ----- RECORD ROW ----- */
 
 	var recordList = recordListColConfig(cfg, recordMap);
-	var recordNodes = recordList.map((record) => {
-		return <RecordCell timeDat={ record } verOffset={ verOffset } key={ record.rowDef.name }/>;
+	var recordNodes = recordList.map((record, i) => {
+		return <RecordCell timeDat={ record } verOffset={ verOffset } key={ record.rowDef.name + "_" + i }/>;
 	});
 	recordNodes.unshift(<td className="record-cell" key="wr">WR</td>);
 
@@ -281,7 +282,8 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 		if (newPerm === null) throw ("Entered edit state with null user.");
 		var newDat = freshUserDat(stratTotal, newPerm);
 		timeTableNodes.push(<EditRow userDat={ newDat } cfg={ cfg } verOffset={ verOffset }
-			rowId={ null } editObj={ editObj } editPos={ editPos } cellClick={ cellClick } key="edit"></EditRow>);
+			rowId={ null } editObj={ editObj } editPos={ editPos } cellClick={ cellClick }
+			submit={ editSubmit } key="edit"></EditRow>);
 	}
 
 	return (

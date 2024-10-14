@@ -3,8 +3,8 @@
 //import rowData from './json/row_data.json'
 import { G_SHEET } from './xcam_wrap' 
 
-import { ColList, rowDefStratDef } from "./strat_def"
 import { VerOffset, rawMS, newTimeDat, applyVerOffset } from "./time_dat"
+import { ColList, readRefMap } from "./org_strat_def"
 import { FilterState } from "./org_star_def"
 import { TimeTable, newIdent, addTimeMap, buildTimeTable } from "./time_table"
 
@@ -25,7 +25,8 @@ export function xcamTimeTable(colList: ColList, fs: FilterState, verOffset: VerO
 			var timeList = xcamData[xs][xcamId].times;
 			// iterate through every time for the xcam row
 			for (const data of timeList) {
-				var timeDat = newTimeDat(data.ms, data.link, data.note, rowDefStratDef(stratDef, xcamRef));
+				var timeDat = newTimeDat(data.ms, data.link, data.note,
+					readRefMap(stratDef.row_map, xcamRef, "tt:" + stratDef.name));
 				applyVerOffset(timeDat, verOffset);
 				// do not include times better than posted record
 				var recordMS = rawMS(record);
@@ -40,5 +41,6 @@ export function xcamTimeTable(colList: ColList, fs: FilterState, verOffset: VerO
 			}
 		}
 	}
-	return buildTimeTable(timeMap, colList.length);
+	var tt = buildTimeTable(timeMap, colList.length);
+	return tt;
 }

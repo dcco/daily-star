@@ -1,7 +1,7 @@
 
 import playData from './json/player_data.json'
 
-import { Ver } from './strat_def'
+import { Ver } from './variant_def'
 import { TimeDat, VerOffset, formatTime } from './time_dat'
 import { Ident } from './time_table'
 import { strIdNick } from './play_wrap'
@@ -37,7 +37,7 @@ export function timeDetail(timeDat: TimeDat | null, verOffset: VerOffset): [stri
 	var varText = " ["
 	var commaFlag = false;
 	timeDat.rowDef.variant_list.map((v) => {
-		var vpp = parseInt(v) + 1;
+		var vpp = v[0] + 1;
 		if (vpp > 0) {
 			if (commaFlag) varText = varText + ",";
 			varText = varText + vpp;
@@ -79,9 +79,9 @@ export function TimeCell(props: TimeCellProps): React.ReactNode {
 		timeNode = (<a href={ timeDat.link }>{ timeNode }</a>);
 	}
 	// remaining annotations
-	var spanNodes = [];
-	if (rawText !== null) spanNodes.push(<em>{ rawText }</em>);
-	if (hiddenFlag) spanNodes.push("*");
+	var spanNodes: React.ReactNode[] = [];
+	if (rawText !== null) spanNodes.push(<em key="e">{ rawText }</em>);
+	if (hiddenFlag) spanNodes.push(<div className="na" key="a">*</div>);
 	return (<td className="time-cell" data-active={ active.toString() } onClick={ onClick }>{ timeNode } { spanNodes }</td>);
 }
 

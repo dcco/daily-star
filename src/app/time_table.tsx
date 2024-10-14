@@ -2,7 +2,7 @@
 //import orgData from './json/org_data.json'
 //import playerData from './json/player_data.json'
 
-import { ColList } from './strat_def'
+import { ColList } from './org_strat_def'
 import { TimeDat, MultiDat, hasSubTimes } from './time_dat'
 
 	/*

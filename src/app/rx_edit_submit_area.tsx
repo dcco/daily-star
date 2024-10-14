@@ -1,6 +1,7 @@
 
-import { VarSpace } from './org_variant'
-import { DraftDat, stratNameDraftDat, verDraftDat, varSelDraftDat, setVerDraftDat, setVarDraftDat } from './draft_dat'
+import { VarSpace } from './variant_def'
+import { TimeDat } from './time_dat'
+import { DraftDat, stratNameDraftDat, verDraftDat, getVarDraftDat, setVerDraftDat, setVarDraftDat } from './draft_dat'
 import { ColConfig, nameListColConfig } from './col_config'
 
 export type ValidStyle = "init" | "warning" | "error" | "valid";
@@ -23,6 +24,8 @@ type ESAProps = {
 	"curDat": DraftDat,
 	"editDat": (f: (a: DraftDat) => DraftDat) => void,
 	"changeStrat": (a: string) => void,
+	"submit": (timeList: TimeDat[]) => void,
+	"cancel": () => void,
 	"style": ValidStyle,
 	"infoText": string | null
 };
@@ -35,6 +38,8 @@ export function EditSubmitArea(props: ESAProps): React.ReactNode
 	var curDat = props.curDat;
 	var editDat = props.editDat;
 	var changeStrat = props.changeStrat;
+	var submit = props.submit;
+	var cancel = props.cancel;
 
 	/* REMEMBER: to do the static/dynamic difference */
 
@@ -66,14 +71,18 @@ export function EditSubmitArea(props: ESAProps): React.ReactNode
 
 	// variant space nodes
 	var varNodeList = vs.varTable.map((varGroup, i) => {
-		var selVar = varSelDraftDat(curDat, varGroup.id, varGroup.list);
+		// read selection id from the data
+		var selId: number | null = null;
+		var selVar = getVarDraftDat(curDat, varGroup.name);
+		if (selVar !== null) selId = selVar[0];
+		// create the option nodes, using selVar to highlight
 		var optNodes = varGroup.list.map((v) => {
-			var name = vs.nameList[parseInt(v)];
-			return <div className='opt-button for-setting' data-sel={ selVar === v }
-				onClick={ () => editDat((dat) => { setVarDraftDat(dat, varGroup.id, v); return dat; }) } key={ v }>{ name }</div>;
+			var name = vs.variants[v];
+			return <div className='opt-button for-setting' data-sel={ selId === v }
+				onClick={ () => editDat((dat) => { setVarDraftDat(dat, varGroup.name, v); return dat; }) } key={ v }>{ name }</div>;
 		})
-		optNodes.unshift(<div className='opt-button for-setting' data-sel={ selVar === "-1" }
-			onClick={ () => editDat((dat) => { setVarDraftDat(dat, varGroup.id, "-1"); return dat; }) } key="_na">N/A</div>)
+		optNodes.unshift(<div className='opt-button for-setting' data-sel={ selId === -1 }
+			onClick={ () => editDat((dat) => { setVarDraftDat(dat, varGroup.name, -1); return dat; }) } key="_na">N/A</div>)
 		var title = "";
 		if (i === 0) title = "Variants:"
 		return (<div className='opt-cont' key={ i }><div className='opt-title'>{ title }</div>
@@ -98,8 +107,8 @@ export function EditSubmitArea(props: ESAProps): React.ReactNode
 		</div>
 		<div className="submit-info" data-style={ props.style }>{ props.infoText }</div>
 		<div className="button-area">
-			<div className="submit-button">Submit Times</div>
-			<div className="cancel-button">Cancel</div>
+			<div className="submit-button" onClick={ () => submit([]) }>Submit Times</div>
+			<div className="cancel-button" onClick={ cancel }>Cancel</div>
 		</div>
 	</div>;
 }

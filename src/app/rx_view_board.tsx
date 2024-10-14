@@ -1,8 +1,8 @@
 
 import React, { useState, useEffect } from 'react'
-import orgData from './json/org_data.json'
+import orgData from './json/org_data_x.json'
 
-import { filterVarColList } from './strat_def'
+import { filterVarColList } from './org_strat_def'
 import { newFilterState, copyFilterState, fullFilterState,
 	orgStarDef, verOffsetStarDef, hasExtStarDef, colListStarDef } from './org_star_def'
 import { xcamTimeTable } from './xcam_time_table'
@@ -34,7 +34,7 @@ export function ViewBoard(props: {}): React.ReactNode {
 	};
 
 	// filter state
-	const [fs, setFS] = useState(newFilterState());
+	const [fs, setFS] = useState(newFilterState(false));
 	var verOffset = verOffsetStarDef(starDef, fs);
 
 	const toggleVer = (i: number) => {
@@ -93,11 +93,11 @@ export function ViewBoard(props: {}): React.ReactNode {
 	// load time table from xcam data
 	var colList = colListStarDef(starDef, fs);
 	var timeTable = xcamTimeTable(colList, fs, verOffset);
-
+	
 	// add sort record + relevant records
 	var sortRM = xcamRecordMap(colList, fullFilterState(), verOffset);
 	var relRM = xcamRecordMap(colList, fs, verOffset);
-	sortColList(colList, sortRM, starDef.open);
+	sortColList(colList, sortRM);
 
 	// create tables
 	var tableList: React.ReactNode[] = [];

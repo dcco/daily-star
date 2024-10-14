@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react'
-import orgData from './json/org_data.json'
+import orgData from './json/org_data_x.json'
 
 import { newExtFilterState, copyFilterState,
 	orgStarDef, verOffsetStarDef } from './org_star_def'
@@ -36,7 +36,7 @@ export function EditBoard(): React.ReactNode {
 	};
 
 	// filter state
-	const [fs, setFS] = useState(newExtFilterState());
+	const [fs, setFS] = useState(newExtFilterState(true));
 	var verOffset = verOffsetStarDef(starDef, fs);
 
 	const toggleVer = (i: number) => {

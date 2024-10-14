@@ -1,11 +1,11 @@
 
-import { VerF, Ver, RowDef, newRowDef, newStratDef } from './strat_def'
-import { StarDef, mainVerStarDef } from './org_star_def'
+//import { VerF, Ver, RowDef, newRowDef, newStratDef } from './strat_def'
+//import { StarDef, mainVerStarDef } from './org_star_def'
 
 	/*
 		variant_sel: stores currently selected variants 
 	*/
-
+/*
 export type VariantSel = { [key: string]: string };
 
 export function toVarList(sel: VariantSel): string[]
@@ -13,47 +13,7 @@ export function toVarList(sel: VariantSel): string[]
 	return Object.entries(sel).map((entry) => entry[1]);
 }
 
-	/*
-		ver_info: explicitly states version info about a strat.
-		  * def: default version (must have either "jp" or "us")
-		  * jpFlag: relevant to JP
-		  * usFlag: relevant to US
-	*/
 
-export type VerInfo = {
-	"def": VerF,
-	"jpFlag": boolean,
-	"usFlag": boolean
-}
-
-	/*
-		variant_group: a list of variants to select from (N/A exists as an implicit option)
-		  * id: unique identifier (relative to a specific star)
-		  * name: group name, used for submission to the database 
-		  * list: string list of variant ids
-	*/
-
-export type VarGroup = {
-	"id": number,
-	"name": string,
-	"list": string[]
-}
-
-	/*
-		variant_space: abstract definition of all possible
-			variant combinations for a strat.
-		  * verInfo: version information about the strat (null if it doesn't matter)
-		  * nameList: raw list of variant names taken from the star def
-		  * varTable: table of lists representing options for a variant
-		  		TODO: currently every list is just Y/N
-	*/
-
-export type VarSpace = {
-	"stratName": string,
-	"verInfo": VerInfo | null,
-	"nameList": string[],
-	"varTable": VarGroup[]
-}
 
 function makeVarTable(variants: string[], varGroups: string[][]): VarGroup[]
 {
@@ -155,6 +115,10 @@ export function toVarSel(vList: string[]): VariantSel
 	vList.map((v, i) => { sel["ix:" + i] = v; });
 	return sel;
 }
+*/
+
+
+
 /*
 export function varSelVarSpace(vs: VarSpace, vList: number[]): VariantSel
 {

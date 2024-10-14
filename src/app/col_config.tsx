@@ -1,5 +1,5 @@
 
-import { StratDef, ColList } from './strat_def'
+import { StratDef, ColList } from './org_strat_def'
 import { TimeDat, MultiDat } from './time_dat'
 import { TimeTable, filterTimeTable } from './time_table'
 import { RecordMap } from './xcam_record_map'
@@ -11,6 +11,11 @@ import { RecordMap } from './xcam_record_map'
 		-- open list is empty, open xcam row does not exist - open column is not acknowledged
 		-- open list is non-empty, open xcam row does not exist - open strats merged into leftmost column
 		-- open xcam row exists - other open strats merged into the open column
+
+		edit: now that star definition has been refactored, we dont need to be as mindful
+			during the merge view configuration. it should suffice to create the columns
+			normally and merge whatever is in the list of open columns. notably, we no longer
+			need to virtually track the open column
 	*/
 
 	/*
@@ -19,7 +24,6 @@ import { RecordMap } from './xcam_record_map'
 		 to merge strats without having to actually make "merged strat defs"
 		 (which would be more complicated overall).
 		* list: an array of lists of [column id, strat def] pairs, each representing a "merged" column.
-		* openName: non-null if the open column is something other than a column named "open".
 	*/
 
 	/* merge view creation functions */
@@ -27,16 +31,14 @@ import { RecordMap } from './xcam_record_map'
 type ColRef = [number, StratDef]
 
 type MergeView = {
-	"list": ColRef[][],
-	"openName": string | null
+	"list": ColRef[][]
 };
 
 	// would export
 function newMergeView(colList: ColList): MergeView
 {
 	return {
-		"list": colList.map((strat) => [strat]),
-		"openName": null
+		"list": colList.map((strat) => [strat])
 	};
 }
 
@@ -90,6 +92,7 @@ function filterOpenList(colList: ColList, openList: string[]): string[]
 }
 
 	// would export
+/*
 function openListMergeView(colList: ColList, openList: string[] | null): MergeView | null
 {
 	// if open list is null, dont merge view
@@ -114,6 +117,18 @@ function openListMergeView(colList: ColList, openList: string[] | null): MergeVi
 	mv.openName = openList[0];
 	mergeColListMergeView(mv, mv.openName, openList);
 	return mv;
+}*/
+
+function openListMergeView(colList: ColList, openList: string[]): MergeView | null
+{
+	// exclude columns that dont matter
+	openList = filterOpenList(colList, openList);
+	// if open list is empty, or the open column has been filtered out, dont merge view
+	if (openList.length === 0 || !openList.includes("Open")) return null;
+	// otherwise, merge everything from open list into the open column (we assume Open exists by construction)
+	var mv = newMergeView(colList);
+	mergeColListMergeView(mv, "Open", openList);
+	return mv;
 }
 
 	// would export
@@ -133,7 +148,7 @@ function formatMergeView(mv: MergeView): string
 		str = str + cx + "]";
 	}
 	str = str + "}";
-	if (mv.openName !== null) str = str + ": " + mv.openName;
+	//if (mv.openName !== null) str = str + ": " + mv.openName;
 	return str;
 }
 
@@ -148,7 +163,7 @@ export type ColConfig = {
 	"stratTotal": number
 };
 
-export function openListColConfig(colList: ColList, openList: string[] | null): ColConfig {
+export function openListColConfig(colList: ColList, openList: string[]): ColConfig {
 	var mv = openListMergeView(colList, openList);
 	var stratTotal = colList.length;
 	if (mv !== null) stratTotal = mv.list.length;
@@ -183,7 +198,7 @@ export function nameListColConfig(config: ColConfig, colId: number): string[]
 	var mv = config.mv;
 	if (mv === null) return [config.colList[colId][1].name];
 	var mainList = mv.list[colId].map((_strat) => _strat[1].name);
-	if (mv.openName !== null && hasNameStratList(mv.list[colId], mv.openName)) mainList.unshift("Open");
+	//if (mv.openName !== null && hasNameStratList(mv.list[colId], mv.openName)) mainList.unshift("Open");
 	return mainList;
 }
 /*

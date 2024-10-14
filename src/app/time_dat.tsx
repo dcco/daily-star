@@ -1,5 +1,6 @@
 
-import { VerF, RowDef } from './strat_def'
+import { VerF } from './variant_def'
+import { RowDef } from './row_def'
 
 	/*
 		functions for reading time in MS

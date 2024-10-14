@@ -8,7 +8,7 @@ import { TimeCell, NameCell } from "./rx_star_cell"
 
 	/* data row: name cell + set of time cells */
 
-export type CellAct = "none" | "edit" | "view-toggle";
+export type CellAct = "none" | "edit" | "stop-edit" | "view-toggle";
 
 type DataRowProps = {
 	"userDat": UserDat,
@@ -62,12 +62,12 @@ export function DataRow(props: DataRowProps): React.ReactNode {
 		var timeRowNodes = userDat.timeRow.map((multiDat, j) => {
 			var timeDat = null;
 			if (multiDat !== null && i < multiDat.length) timeDat = multiDat[i];
-			if (timeDat === null && i !== 0) return <td className="dark-cell"></td>;
+			if (timeDat === null && i !== 0) return <td className="dark-cell" key={ j }></td>;
 			return <TimeCell timeDat={ timeDat } verOffset={ verOffset } active={ false }
 				onClick={ () => onClick(action, rowId, j, i) } hiddenFlag={ !expand && hasSubTimes(multiDat) } key={ j }/>; 
 		})
 		if (i === 0) timeRowNodes.unshift(<NameCell id={ userDat.id } key="user"/>);
-		else timeRowNodes.unshift(<td className="dark-cell"></td>);
+		else timeRowNodes.unshift(<td className="dark-cell" key="user"></td>);
 		rowNodeList.push(<tr className="time-row" data-row-active={ active.toString() } data-end-row={ endRow } key={ i }>
 			{ timeRowNodes }
 		</tr>);

@@ -1,7 +1,7 @@
 
-import { VerF, Ver, RowDef, newRowDef } from './strat_def'
+import { VerF, Ver, Variant, VariantMap, VarSpace, toListVarMap, defVerVarSpace } from './variant_def'
+import { RowDef, newRowDef } from './row_def'
 import { TimeDat, VerOffset, rawMS, formatTime, newTimeDat, applyVerOffset } from './time_dat'
-import { VariantSel, VarSpace, toVarList, defVerVarSpace, toVarSel } from './org_variant'
 
 	/*
 		draft_row: two choices, either static (for viewing/editing already existing times),
@@ -19,8 +19,9 @@ type StaticRow = {
 type DynRow = {
 	"dyn": true,
 	"name": string,
+	"sheet": string,
 	"ver": Ver,
-	"variantSel": VariantSel
+	"variantSel": VariantMap
 }
 
 export type RowInfo = StaticRow | DynRow;
@@ -29,13 +30,13 @@ function staticRow(def: RowDef): RowInfo {
 	return { "dyn": false, "def": def };
 }
 
-function dynRow(name: string, ver: Ver, sel: VariantSel): RowInfo {
-	return { "dyn": true, "name": name, "ver": ver, "variantSel": sel };
+function dynRow(name: string, sheet: string, ver: Ver, sel: VariantMap): RowInfo {
+	return { "dyn": true, "name": name, "sheet": sheet, "ver": ver, "variantSel": sel };
 }
 
 function toRowDef(rowInfo: RowInfo) {
 	if (rowInfo.dyn) {
-		return newRowDef(rowInfo.name, rowInfo.ver, toVarList(rowInfo.variantSel));
+		return newRowDef(rowInfo.name, rowInfo.sheet, rowInfo.ver, toListVarMap(rowInfo.variantSel));
 	}
 	return rowInfo.def;
 }
@@ -86,7 +87,7 @@ export function emptyDraftDat(vs: VarSpace): DraftDat {
 		"text": "",
 		"link": "",
 		"note": "",
-		"rowInfo": dynRow(vs.stratName, defVerVarSpace(vs), {}),
+		"rowInfo": dynRow(vs.stratName, "none", defVerVarSpace(vs), {}),
 		"delFlag": null
 	};
 }
@@ -104,23 +105,23 @@ export function stratNameDraftDat(dat: DraftDat): string {
 	else return dat.rowInfo.def.name;
 }
 
-export function verDraftDat(dat: DraftDat): string {
+export function verDraftDat(dat: DraftDat): Ver {
 	if (dat.rowInfo.dyn) return dat.rowInfo.ver;
 	else return dat.rowInfo.def.ver;
 }
 
-export function varSelDraftDat(dat: DraftDat, vId: number, vList: string[]): string | null {
+export function getVarDraftDat(dat: DraftDat, groupName: string): Variant | null {
 	// static row / variant list case
 	if (!dat.rowInfo.dyn) {
 		var rowVarList = dat.rowInfo.def.variant_list;
-		for (let i = 0; i < vList.length; i++) {
-			if (rowVarList.includes(vList[i])) return vList[i];
+		for (const [vId, group] of rowVarList) {
+			if (group === groupName) return [vId, group];
 		}
 		return null;
 	}
 	// dynamic row / variant selector case
 	var rowVarSel = dat.rowInfo.variantSel;
-	if (rowVarSel["var:" + vId]) return rowVarSel["var:" + vId];
+	if (rowVarSel[groupName]) return rowVarSel[groupName];
 	return null;
 }
 
@@ -129,7 +130,7 @@ export function setVerDraftDat(dat: DraftDat, ver: VerF) {
 	dat.rowInfo.ver = ver;
 }
 
-export function setVarDraftDat(dat: DraftDat, group: number, v: string) {
+export function setVarDraftDat(dat: DraftDat, group: string, i: number) {
 	if (!dat.rowInfo.dyn) throw("Attempted to set variant on static draft datum.");
-	dat.rowInfo.variantSel["var:" + group] = v;
+	dat.rowInfo.variantSel[group] = [i, group];
 }

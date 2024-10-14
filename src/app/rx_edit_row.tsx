@@ -1,13 +1,13 @@
 
 import React, { useState, useEffect } from 'react'
 
+import { VarSpace } from './variant_def'
 import { TimeDat, VerOffset, rawMS, formatTime } from './time_dat'
 import { SGrid, lookupGrid, setGrid } from './sparse_grid'
 import { TimeRow, UserDat } from './time_table'
 import { strIdNick } from './play_wrap'
 import { ColConfig, firstStratColConfig } from './col_config'
-import { StarDef } from './org_star_def'
-import { VarSpace, varSpaceStarDef } from './org_variant'
+import { StarDef, varSpaceStarDef } from './org_star_def'
 import { DraftDat, staticDraftDat, emptyDraftDat, changeStratDraftDat, stratNameDraftDat } from './draft_dat'
 import { EditObj } from './edit_perm' 
 import { CellAct } from './rx_star_row'
@@ -173,8 +173,7 @@ function lookupEditDraftDS(cfg: ColConfig, starDef: StarDef, timeRow: TimeRow,
 	}
 	// otherwise, initialize row definition from [default strat + variant space]
 	var stratDef = firstStratColConfig(cfg, colId);
-	var vs = varSpaceStarDef(starDef, stratDef.name);
-	var newDat = emptyDraftDat(vs);
+	var newDat = emptyDraftDat(stratDef.vs);
 	return [newDat, updateDS(ds, colId, subRowId, newDat)];
 }
 
@@ -194,6 +193,15 @@ export function validateDS(ds: DraftState): [ValidStyle, string | null] {
 	}
 	return ["valid", "Ready to submit."];
 }
+/*
+export function convertDS(ds: DraftState): TimeDat[] {
+	var ds = cleanupDS(ds);
+	var timeList: TimeDat[] = [];
+	for (const [k, draftDat] of Object.entries(ds.grid)) {
+		timeList.push();
+	}
+
+}*/
 
 	/* edit row: displays
 		- all submitted times w/ version + variant information
@@ -209,7 +217,8 @@ type EditRowProps = {
 	"rowId": number | null,
 	"editObj": EditObj,
 	"editPos": EditPos,
-	"cellClick": (a: CellAct, i: number | null, j: number, k: number) => void
+	"cellClick": (a: CellAct, i: number | null, j: number, k: number) => void,
+	"submit": (timeList: TimeDat[]) => void
 }
 
 export function EditRow(props: EditRowProps): React.ReactNode {
@@ -233,6 +242,7 @@ export function EditRow(props: EditRowProps): React.ReactNode {
 	const changeStrat = (stratName: string) => {
 		editLoc(editPos.colId, editPos.subRowId, (curDat) => {
 			var vs = varSpaceStarDef(starDef, stratName);
+			if (vs === null) throw('Attempted to switch to non-existent strat ' + stratName + '.');
 			return changeStratDraftDat(vs, curDat);
 		});
 	}
@@ -243,8 +253,11 @@ export function EditRow(props: EditRowProps): React.ReactNode {
 	// get the current draft cell being edited
 	var [draftDat, newDS] = lookupEditDraftDS(cfg, starDef, timeRow, ds, editPos.colId, editPos.subRowId);
 	if (newDS !== null) setDS(newDS);
-	var vs = varSpaceStarDef(starDef, stratNameDraftDat(draftDat));
 
+	// get current variant space
+	var vs = varSpaceStarDef(starDef, stratNameDraftDat(draftDat));
+	if (vs === null) throw('Attempting to work on non-existent strat ' + stratNameDraftDat(draftDat) + '.');
+	
 	// generate edit cells
 	var editNodes: React.ReactNode[] = [];
 	var [height, hList] = heightDS(timeRow, ds);
@@ -264,7 +277,7 @@ export function EditRow(props: EditRowProps): React.ReactNode {
 				rowNodes.push(<EditCell draftDat={ draftDatN } verOffset={ verOffset } dirty={ false }
 					onClick={ () => cellClick("edit", rowId, i, j) } key={ i }/>);
 			} else {
-				rowNodes.push(<td className="dark-cell"></td>);
+				rowNodes.push(<td className="dark-cell" key={ i }></td>);
 			}
 		}
 		// player name cell
@@ -284,7 +297,9 @@ export function EditRow(props: EditRowProps): React.ReactNode {
 			<td className="submit-area" colSpan={ timeRow.length }>
 				<EditSubmitArea cfg={ cfg } colId={ editPos.colId } vs={ vs }
 					curDat={ draftDat } editDat={ (f) => editLoc(editPos.colId, editPos.subRowId, f) }
-					changeStrat={ changeStrat } style={ style } infoText={ infoText }/>
+					changeStrat={ changeStrat } submit={ props.submit }
+					cancel={ () => cellClick("stop-edit", null, 0, 0) }
+					style={ style } infoText={ infoText }/>
 			</td>
 		</tr>
 	</React.Fragment>;

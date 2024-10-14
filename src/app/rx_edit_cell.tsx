@@ -1,5 +1,5 @@
 
-import { StratDef } from './strat_def'
+import { StratDef } from './org_strat_def'
 import { VerOffset } from './time_dat'
 import { DraftDat, toTimeDat } from './draft_dat'
 import { timeDetail } from './rx_star_cell'

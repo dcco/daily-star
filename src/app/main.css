@@ -12,6 +12,10 @@ main {
 	color: #FFFFFF;
 }
 
+.na {
+	display: inline-block;
+}
+
 .sep {
 	padding-top: 6px;
 	padding-bottom: 6px;

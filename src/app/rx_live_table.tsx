@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
-import { RowDef, StratDef, ColList, begRowDef, rowDefStratDef, filterVarColList, toStratSet } from './strat_def'
+import { RowDef, begRowDef } from './row_def'
+import { StratDef, ColList, readRefMap, filterVarColList, toSetColList } from './org_strat_def'
 import { VerOffset, newTimeDat, applyVerOffset } from "./time_dat"
 import { FilterState, fullFilterState,
 	orgStarDef, verOffsetStarDef, colListStarDef } from './org_star_def'
@@ -30,7 +31,7 @@ async function loadTimeTable(stageId: number, starId: number,
 	}
 	// enumerate strats
 	//var colList = orgColList(stageId, starId, verState);
-	var [stratSet, indexSet] = toStratSet(colList);
+	var [stratSet, indexSet] = toSetColList(colList);
 	// build time table
 	const timeMap: TimeMap = {};
 	for (const data of res.res) {
@@ -40,9 +41,9 @@ async function loadTimeTable(stageId: number, starId: number,
 		var stratId = indexSet[data.stratname as string];
 		// get row definition (if not in xcam sheet, use beginner template)
 		var rowDef = begRowDef(stratDef.name);
-		if (!stratDef.virtual) {
+		if (stratDef.virtId === null) {
 			var xcamRef = stratDef.id_list[0];
-			rowDef = rowDefStratDef(stratDef, xcamRef);	
+			rowDef = readRefMap(stratDef.row_map, xcamRef, stratDef.name);	
 		}
 		// add time data
 		var timeDat = newTimeDat(data.time, data.link, data.note, rowDef);
@@ -169,7 +170,7 @@ export function LiveStarTable(props: LiveStarTableProps): React.ReactNode
 	// add sort record + relevant records
 	var sortRM = xcamRecordMap(colList, fullFilterState(), verOffset);
 	var relRM = xcamRecordMap(colList, fs, verOffset);
-	sortColList(colList, sortRM, starDef.open);
+	sortColList(colList, sortRM);
 
 	// create star table
 	var filterColList = filterVarColList(colList, null);
