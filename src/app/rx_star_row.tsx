@@ -3,7 +3,7 @@ import React from "react"
 
 import { VerOffset, hasSubTimes } from "./time_dat"
 import { TimeRow, UserDat } from "./time_table"
-import { strIdNick } from "./play_wrap"
+import { PlayData } from "./play_data"
 import { TimeCell, NameCell } from "./rx_star_cell"
 
 	/* data row: name cell + set of time cells */
@@ -12,6 +12,7 @@ export type CellAct = "none" | "edit" | "stop-edit" | "view-toggle";
 
 type DataRowProps = {
 	"userDat": UserDat,
+	"pd": PlayData,
 	"verOffset": VerOffset,
 	"expand": boolean,
 	"action": CellAct,
@@ -42,6 +43,7 @@ function heightRow(timeRow: TimeRow): [number, number[]]
 
 export function DataRow(props: DataRowProps): React.ReactNode {
 	var userDat = props.userDat;
+	var pd = props.pd;
 	var verOffset = props.verOffset;
 	var expand = props.expand;
 	var action = props.action;
@@ -66,7 +68,7 @@ export function DataRow(props: DataRowProps): React.ReactNode {
 			return <TimeCell timeDat={ timeDat } verOffset={ verOffset } active={ false }
 				onClick={ () => onClick(action, rowId, j, i) } hiddenFlag={ !expand && hasSubTimes(multiDat) } key={ j }/>; 
 		})
-		if (i === 0) timeRowNodes.unshift(<NameCell id={ userDat.id } key="user"/>);
+		if (i === 0) timeRowNodes.unshift(<NameCell id={ userDat.id } pd={ pd } key="user"/>);
 		else timeRowNodes.unshift(<td className="dark-cell" key="user"></td>);
 		rowNodeList.push(<tr className="time-row" data-row-active={ active.toString() } data-end-row={ endRow } key={ i }>
 			{ timeRowNodes }

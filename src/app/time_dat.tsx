@@ -110,6 +110,8 @@ export type TimeDat = {
 
 export function newTimeDat(time: number, link: string | null, note: string | null, rowDef: RowDef): TimeDat
 {
+	if (link === undefined || link === "") link = null;
+	if (note === undefined || note === "") note = null;
 	if (rowDef === undefined) throw("New time datum created with incomplete arguments.")
 	return {
 		"rawTime": time,
@@ -128,6 +130,17 @@ export function maxTimeDat(rowDef: RowDef): TimeDat
 export function formatTimeDat(timeDat: TimeDat): string {
 	if (timeDat === null) return "";
 	return formatTime(timeDat.time);
+}
+
+export function vtagTimeDat(timeDat: TimeDat): string {
+	var rowDef = timeDat.rowDef;
+	var vx = "";
+	if (rowDef.variant_list.length !== 0) {
+		var vList = rowDef.variant_list.filter((v) => v[0] !== -1).map((v) => v[0]);
+		vList.sort();
+		vx = "#" + vList.map((i) => "" + i).join('_');
+	}
+	return rowDef.name + "_" + rowDef.ver + vx;
 }
 
 	/* 

@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 
-import { VerOffset, formatTime, zeroVerOffset } from './time_dat'
-import { Ident, TimeTable, keyIdent, freshUserDat, hasSubRows, sortTimeTable } from './time_table'
-import { strIdNick } from './play_wrap'
+import { TimeDat, VerOffset, formatTime, zeroVerOffset } from './time_dat'
+import { Ident, AuthIdent, TimeTable, keyIdent, dropIdent,
+	freshUserDat, hasSubRows, sortTimeTable } from './time_table'
+import { PlayData, strIdNickPD } from './play_data'
 import { ColConfig, headerListColConfig, recordListColConfig, filterTableColConfig } from './col_config'
 import { EditObj, hasWritePerm, checkNewPerm } from './edit_perm'
 import { RecordMap } from './xcam_record_map'
@@ -115,6 +116,7 @@ type StarTableProps = {
 	"verOffset"?: VerOffset,
 	"recordMap": RecordMap,
 	"timeTable": TimeTable,
+	"playData": PlayData,
 	"editObj"?: EditObj
 }
 
@@ -123,6 +125,7 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 	var stratTotal = cfg.stratTotal;
 	var recordMap = props.recordMap;
 	var timeTable = props.timeTable;
+	var playData = props.playData;
 
 	var editObj: EditObj | null = null;
 	if (props.editObj !== undefined) editObj = props.editObj;
@@ -168,10 +171,10 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 		setEditText(updateArray(editText, col, v));
 	};*/
 
-	const editSubmit = () => {
+	const editSubmit = (timeList: TimeDat[]) => {
 		setEditPos(nullEditPos());
 		//editTT(editText[0], diffText(eState.oldText, editText), colList);
-		if (editObj !== null) editObj.updateTT();
+		if (editObj !== null) editObj.updateTT(timeList);
 	};
 /*
 	eState.eData = editText;
@@ -204,7 +207,6 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 	recordNodes.unshift(<td className="record-cell" key="wr">WR</td>);
 
 	/* ----- TIME TABLE ROWS ----- */
-
 	// filter table by colums + sort table data
 	var filterTable = filterTableColConfig(timeTable, cfg);
 	if (sortId > stratTotal) setSortId(0);
@@ -214,8 +216,11 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 	var timeTableNodes = [];
 	filterTable.map((userDat, i) => {
 		// -- edit row case
-		if (editPos.active && editPos.rowId === i) {
+		if (editObj !== null && editPos.active && editPos.rowId === i) {
 			//addEditRows(userDat, i, editPos, editClick);
+			timeTableNodes.push(<EditRow cfg={ cfg } userDat={ userDat } pd={ playData } verOffset={ verOffset }
+				rowId={ i } editObj={ editObj } editPos={ editPos } cellClick={ cellClick }
+				submit={ editSubmit } key="edit"></EditRow>);
 			return;
 		}
 		// -- normal row case
@@ -226,7 +231,7 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 		// special CSS for last row
 		var endRow = i !== timeTable.length - 1;
 		// add row
-		timeTableNodes.push(<DataRow userDat={ userDat } verOffset={ verOffset } rowId={ i } expand={ vState.rowId === i }
+		timeTableNodes.push(<DataRow userDat={ userDat } pd={ playData } verOffset={ verOffset } rowId={ i } expand={ vState.rowId === i }
 			action={ action } onClick={ cellClick } endRow={ endRow } key={ keyIdent(userDat.id) }/>);
 	});
 	/*filterTable.map((userDat, i) => {
@@ -260,18 +265,29 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 
 	/* ----- INITIAL SUBMIT ROW ----- */
 	
+	// determine whether user can submit a new time
+	var canSubmitNew = true;
+	var newPerm: AuthIdent | null = null;
+	if (editObj !== null) {
+		if (editObj.perm.newId !== null) newPerm = editObj.perm.newId;
+		for (const userDat of filterTable) {
+			if (hasWritePerm(editObj.perm, userDat.id)) {
+				canSubmitNew = false;
+				break;
+			}
+		}
+	}
+
 	// build initial submit row
-	// -- normal case (must not have any editable rows)
-	var newPerm: Ident | null = null;
-	if (editObj !== null) newPerm = editObj.perm.newId;
-	if (newPerm !== null && (!editPos.active || editPos.rowId !== null)) {
+	// -- normal case
+	if (canSubmitNew && newPerm !== null && (!editPos.active || editPos.rowId !== null)) {
 		var exRowNodes: React.ReactNode[] = [];
 		for (let i = 0; i < stratTotal; i++) {
 			exRowNodes.push(<td className="init-cell" key={ i }
 				onClick={ () => editClick(null, i, /*Array(stratTotal + 1).fill(""),*/ 0) }></td>);
 		}
-		var nText = strIdNick(newPerm);
-		if (nText === "@me") nText = "New";
+		var nText = strIdNickPD(playData, dropIdent(newPerm));
+		//if (nText === "@me") nText = "New";
 		exRowNodes.unshift(<td className="init-cell" key="name"
 			onClick={ () => editClick(null, 0, /*Array(stratTotal + 1).fill(""),*/ 0) }><i>{ nText }</i></td>);
 		//exRowNodes.push(<td className="misc-cell" key="act"></td>);
@@ -280,8 +296,8 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 	} else if (editPos.active && editPos.rowId === null) {
 		if (editObj === null) throw ("Entered edit state without edit mode object.");
 		if (newPerm === null) throw ("Entered edit state with null user.");
-		var newDat = freshUserDat(stratTotal, newPerm);
-		timeTableNodes.push(<EditRow userDat={ newDat } cfg={ cfg } verOffset={ verOffset }
+		var newDat = freshUserDat(stratTotal, dropIdent(newPerm));
+		timeTableNodes.push(<EditRow cfg={ cfg } userDat={ newDat } pd={ playData } verOffset={ verOffset }
 			rowId={ null } editObj={ editObj } editPos={ editPos } cellClick={ cellClick }
 			submit={ editSubmit } key="edit"></EditRow>);
 	}

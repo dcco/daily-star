@@ -406,7 +406,7 @@ export function toSetColList(list: ColList): [StratSet, IndexSet] {
 		var [ix, obj] = list[i];
 		vs[obj.name] = obj;
 		// special parameter to remember column id
-		is[obj.name] = i;
+		is[obj.name] = ix;
 	}
 	return [vs, is];
 }

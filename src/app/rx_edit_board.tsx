@@ -1,11 +1,13 @@
 
 import React, { useState, useEffect } from 'react'
-import orgData from './json/org_data_x.json'
+import orgData from './json/org_data.json'
 
 import { newExtFilterState, copyFilterState,
 	orgStarDef, verOffsetStarDef } from './org_star_def'
 //import { newFilterState, orgColList, filterVarColList } from "./org_star_def"
 import { Ident } from './time_table'
+import { PlayData } from './play_data'
+import { postNick } from './live_wrap'
 import { LiveStarTable } from './rx_live_table'
 import { VerToggle } from './rx_ver_toggle'
 import { AuthArea } from './rx_auth_area'
@@ -18,7 +20,15 @@ import { AuthArea } from './rx_auth_area'
 		stages/stars/strats. (admin purposes only)
 	*/
 
-export function EditBoard(): React.ReactNode {
+type EditBoardProps = {
+	"playData": PlayData,
+	"setPlayData": (a: PlayData) => void
+}
+
+export function EditBoard(props: EditBoardProps): React.ReactNode {
+	const playData = props.playData;
+	const setPlayData = props.setPlayData;
+
 	// star state
 	const [stageId, setStageId] = useState(0);
 	const [starIdCache, setStarIdCache] = useState(Array(orgData.length).fill(0));
@@ -46,13 +56,14 @@ export function EditBoard(): React.ReactNode {
 		setFS(ns);
 	}
 
-	// user identity	
-	const [userId, setUserId] = useState(null as Ident | null);
-	const [relFlag, setRelFlag] = useState(0);
-
-	const reload = () => {
-		setRelFlag(1 - relFlag);
-	}
+	// user identity
+	/*const setNick = (a: string) => {
+		if (userId !== null) {
+			updateNick(playData.nickMap, userId, a);
+			setPlayData(copyPlayData(playData));
+			postNick(userId, a);
+		}
+	};*/
 
 	// unlike viewboard, extensions always on
 
@@ -142,9 +153,10 @@ export function EditBoard(): React.ReactNode {
 			{ starBtnNodes }
 		</div>
 		{ varCont }
-		<LiveStarTable stageId={ stageId } starId={ starId } fs={ fs } userId={ userId } key={ stageId + "_" + starId }/>
+		<LiveStarTable stageId={ stageId } starId={ starId } fs={ fs }
+			playData={ playData } key={ stageId + "_" + starId }/>
 		<div className="sep"><hr/></div>
-		<AuthArea userId={ userId } setUserId={ setUserId } setNick={ reload }/>
+		<AuthArea playData={ playData } setPlayData={ setPlayData }/>
 		</div>
 	);
 

@@ -1,5 +1,6 @@
 
-import { Ident, sameIdent } from './time_table'
+import { TimeDat } from './time_dat'
+import { Ident, AuthIdent, matchIdent } from './time_table'
 import { StarDef } from './org_star_def'
 
 	/*
@@ -7,44 +8,46 @@ import { StarDef } from './org_star_def'
 	*/
 
 export type EditPerm = {
-	"writeIdList": Ident[],
-	"newId": Ident | null
+	//"writeIdList": AuthIdent[],
+	"writeId": AuthIdent | null,
+	"newId": AuthIdent | null
 }
 
 export function noEditPerm(): EditPerm
 {
 	return {
-		"writeIdList": [],
+		"writeId": null,
 		"newId": null
 	};
 }
 
-export function newEditPerm(writeIdList: Ident[], newId: Ident | null): EditPerm
+export function newEditPerm(writeId: AuthIdent | null, newId: AuthIdent | null): EditPerm
 {
 	return {
-		"writeIdList": writeIdList,
+		"writeId": writeId,
 		"newId": newId
 	};
 }
 
-export function userEditPerm(userId: Ident | null): EditPerm
+export function userEditPerm(userId: AuthIdent | null): EditPerm
 {
-	if (userId === null) return noEditPerm();
 	return {
-		"writeIdList": [userId],
+		"writeId": userId,
 		"newId": userId
 	}
 }
 
 export function hasWritePerm(ep: EditPerm, id: Ident): boolean
 {
-	for (const writeId of ep.writeIdList) {
-		if (sameIdent(writeId, id)) return true;
+	if (ep.writeId === null) return false;
+	return matchIdent(ep.writeId, id);
+	/*for (const writeId of ep.writeIdList) {
+		if (matchIdent(writeId, id)) return true;
 	}
-	return false;
+	return false;*/
 }
 
-export function checkNewPerm(ep: EditPerm): Ident | null
+export function checkNewPerm(ep: EditPerm): AuthIdent | null
 {
 	return ep.newId;
 }
@@ -56,10 +59,10 @@ export function checkNewPerm(ep: EditPerm): Ident | null
 export type EditObj = {
 	"perm": EditPerm,
 	"starDef": StarDef,
-	"updateTT": () => void
+	"updateTT": (timeList: TimeDat[]) => void
 }
 
-export function newEditObj(ep: EditPerm, starDef: StarDef, updateTT: () => void): EditObj
+export function newEditObj(ep: EditPerm, starDef: StarDef, updateTT: (timeList: TimeDat[]) => void): EditObj
 {
 	return {
 		"perm": ep,

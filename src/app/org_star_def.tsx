@@ -1,5 +1,5 @@
 
-import orgData from './json/org_data_x.json'
+import orgData from './json/org_data.json'
 
 import { VerF, Ver, VerInfo, VarSet, VarSpace,
 	buildVarGroups, filterVarGroups } from './variant_def'

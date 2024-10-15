@@ -5,10 +5,11 @@ import { VarSpace } from './variant_def'
 import { TimeDat, VerOffset, rawMS, formatTime } from './time_dat'
 import { SGrid, lookupGrid, setGrid } from './sparse_grid'
 import { TimeRow, UserDat } from './time_table'
-import { strIdNick } from './play_wrap'
+import { PlayData, strIdNickPD } from './play_data'
 import { ColConfig, firstStratColConfig } from './col_config'
 import { StarDef, varSpaceStarDef } from './org_star_def'
-import { DraftDat, staticDraftDat, emptyDraftDat, changeStratDraftDat, stratNameDraftDat } from './draft_dat'
+import { DraftDat, staticDraftDat, emptyDraftDat,
+	toTimeDat, changeStratDraftDat, stratNameDraftDat } from './draft_dat'
 import { EditObj } from './edit_perm' 
 import { CellAct } from './rx_star_row'
 import { EditCell, InputCell, validTime } from './rx_edit_cell'
@@ -169,6 +170,7 @@ function lookupEditDraftDS(cfg: ColConfig, starDef: StarDef, timeRow: TimeRow,
 	if (timeDat !== null) {
 		// if it has, create a static var space based on the time dat			
 		var newDat = staticDraftDat(timeDat);
+		//newDat.text = "";
 		return [newDat, updateDS(ds, colId, subRowId, newDat)];
 	}
 	// otherwise, initialize row definition from [default strat + variant space]
@@ -189,19 +191,22 @@ export function validateDS(ds: DraftState): [ValidStyle, string | null] {
 	for (const [k, draftDat] of Object.entries(ds.grid)) {
 		if (!validTime(draftDat.text)) {
 			return ["error", "Must fix invalid times."];
-		} 
+		}
 	}
+	// all times are improvements / better
+	
 	return ["valid", "Ready to submit."];
 }
-/*
-export function convertDS(ds: DraftState): TimeDat[] {
+
+export function convertDS(ds: DraftState, verOffset: VerOffset): TimeDat[] {
 	var ds = cleanupDS(ds);
 	var timeList: TimeDat[] = [];
 	for (const [k, draftDat] of Object.entries(ds.grid)) {
-		timeList.push();
+		var timeDat = toTimeDat(draftDat, verOffset);
+		if (timeDat !== null) timeList.push(timeDat);
 	}
-
-}*/
+	return timeList;
+}
 
 	/* edit row: displays
 		- all submitted times w/ version + variant information
@@ -213,6 +218,7 @@ export function convertDS(ds: DraftState): TimeDat[] {
 type EditRowProps = {
 	"cfg": ColConfig,
 	"userDat": UserDat,
+	"pd": PlayData,
 	"verOffset": VerOffset,
 	"rowId": number | null,
 	"editObj": EditObj,
@@ -224,6 +230,7 @@ type EditRowProps = {
 export function EditRow(props: EditRowProps): React.ReactNode {
 	const cfg = props.cfg;
 	const userDat = props.userDat;
+	const pd = props.pd;
 	const verOffset = props.verOffset;
 	const timeRow = userDat.timeRow;
 	const rowId = props.rowId;
@@ -281,7 +288,7 @@ export function EditRow(props: EditRowProps): React.ReactNode {
 			}
 		}
 		// player name cell
-		if (j === 0) rowNodes.unshift(<td key="name">{ strIdNick(userDat.id) }</td>);
+		if (j === 0) rowNodes.unshift(<td key="name">{ strIdNickPD(pd, userDat.id) }</td>);
 		else rowNodes.unshift(<td className="dark-cell" key="name"></td>);
 		editNodes.push(<tr className="time-row" key={ j }>{ rowNodes }</tr>);
 	}
@@ -297,7 +304,7 @@ export function EditRow(props: EditRowProps): React.ReactNode {
 			<td className="submit-area" colSpan={ timeRow.length }>
 				<EditSubmitArea cfg={ cfg } colId={ editPos.colId } vs={ vs }
 					curDat={ draftDat } editDat={ (f) => editLoc(editPos.colId, editPos.subRowId, f) }
-					changeStrat={ changeStrat } submit={ props.submit }
+					changeStrat={ changeStrat } submit={ () => props.submit(convertDS(ds, verOffset)) }
 					cancel={ () => cellClick("stop-edit", null, 0, 0) }
 					style={ style } infoText={ infoText }/>
 			</td>

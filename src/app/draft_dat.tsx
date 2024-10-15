@@ -34,7 +34,7 @@ function dynRow(name: string, sheet: string, ver: Ver, sel: VariantMap): RowInfo
 	return { "dyn": true, "name": name, "sheet": sheet, "ver": ver, "variantSel": sel };
 }
 
-function toRowDef(rowInfo: RowInfo) {
+function toRowDef(rowInfo: RowInfo): RowDef {
 	if (rowInfo.dyn) {
 		return newRowDef(rowInfo.name, rowInfo.sheet, rowInfo.ver, toListVarMap(rowInfo.variantSel));
 	}

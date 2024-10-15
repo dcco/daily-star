@@ -9623,16 +9623,16 @@
       },
       "times": [
         {
+          "player": "Suigi",
+          "ms": 943
+        },
+        {
           "player": "Raisn",
           "ms": 943
         },
         {
           "player": "Shake",
           "ms": 943
-        },
-        {
-          "player": "Suigi",
-          "ms": 946
         },
         {
           "player": "Manama",
@@ -9704,6 +9704,10 @@
         },
         {
           "player": "Taylor",
+          "ms": 973
+        },
+        {
+          "player": "caires",
           "ms": 973
         },
         {
@@ -15695,7 +15699,7 @@
         },
         {
           "player": "Nils",
-          "ms": 4333
+          "ms": 4323
         }
       ],
       "sheet": "main",
@@ -16701,6 +16705,10 @@
           "ms": 12050
         },
         {
+          "player": "Nils",
+          "ms": 12066
+        },
+        {
           "player": "Badroenis",
           "ms": 12100
         },
@@ -16710,10 +16718,6 @@
         },
         {
           "player": "BroMario28",
-          "ms": 12110
-        },
-        {
-          "player": "Nils",
           "ms": 12110
         },
         {
@@ -32093,6 +32097,10 @@
           "ms": 1136
         },
         {
+          "player": "caires",
+          "ms": 1136
+        },
+        {
           "player": "ikori",
           "ms": 1140
         },
@@ -32178,10 +32186,6 @@
         },
         {
           "player": "oatslice",
-          "ms": 1140
-        },
-        {
-          "player": "caires",
           "ms": 1140
         },
         {
@@ -44111,6 +44115,10 @@
           "ms": 1626
         },
         {
+          "player": "caires",
+          "ms": 1626
+        },
+        {
           "player": "vbhnkl",
           "ms": 1630
         },
@@ -44140,10 +44148,6 @@
         },
         {
           "player": "carrickdan",
-          "ms": 1640
-        },
-        {
-          "player": "caires",
           "ms": 1640
         },
         {
@@ -44817,6 +44821,10 @@
           "ms": 1333
         },
         {
+          "player": "Inkstar",
+          "ms": 1336
+        },
+        {
           "player": "Seba54",
           "ms": 1340
         },
@@ -44855,10 +44863,6 @@
         {
           "player": "Shawn Frost",
           "ms": 1353
-        },
-        {
-          "player": "Inkstar",
-          "ms": 1356
         },
         {
           "player": "cookincat",
@@ -45157,6 +45161,10 @@
           "ms": 1326
         },
         {
+          "player": "caires",
+          "ms": 1326
+        },
+        {
           "player": "rawvrt",
           "ms": 1326
         },
@@ -45182,10 +45190,6 @@
         },
         {
           "player": "happydude124",
-          "ms": 1330
-        },
-        {
-          "player": "caires",
           "ms": 1330
         },
         {
@@ -47719,7 +47723,7 @@
       "strat": {
         "stage": "Dire, Dire Docks",
         "star": "Board Bowser's Sub",
-        "strat": "Front Sub",
+        "strat": "Back Sub",
         "idList": [
           [
             "main",
@@ -48024,7 +48028,7 @@
       "strat": {
         "stage": "Dire, Dire Docks",
         "star": "Board Bowser's Sub",
-        "strat": "Back Sub",
+        "strat": "Front Sub",
         "idList": [
           [
             "main",
@@ -48457,7 +48461,7 @@
       "strat": {
         "stage": "Dire, Dire Docks",
         "star": "Board Bowser's Sub",
-        "strat": "Back Sub",
+        "strat": "Front Sub",
         "idList": [
           [
             "main",
@@ -48511,6 +48515,10 @@
           "ms": 3196
         },
         {
+          "player": "kusabi",
+          "ms": 3196
+        },
+        {
           "player": "Drac",
           "ms": 3200
         },
@@ -48544,10 +48552,6 @@
         },
         {
           "player": "carrickdan",
-          "ms": 3233
-        },
-        {
-          "player": "kusabi",
           "ms": 3233
         },
         {
@@ -48704,7 +48708,7 @@
         },
         {
           "player": "Inkstar",
-          "ms": 3563
+          "ms": 3553
         },
         {
           "player": "TheDazer",
@@ -51570,6 +51574,10 @@
           "ms": 1006
         },
         {
+          "player": "SubmarineCpt",
+          "ms": 1006
+        },
+        {
           "player": "heisenburger",
           "ms": 1010
         },
@@ -51660,10 +51668,6 @@
         {
           "player": "RONC3NA",
           "ms": 1040
-        },
-        {
-          "player": "SubmarineCpt",
-          "ms": 1043
         },
         {
           "player": "vgm22",
@@ -56028,15 +56032,15 @@
           "ms": 1730
         },
         {
+          "player": "heisenburger",
+          "ms": 1730
+        },
+        {
           "player": "taciturn",
           "ms": 1730
         },
         {
           "player": "Kally",
-          "ms": 1733
-        },
-        {
-          "player": "heisenburger",
           "ms": 1733
         },
         {
@@ -59071,6 +59075,10 @@
           "ms": 7860
         },
         {
+          "player": "hotdwgboy",
+          "ms": 7860
+        },
+        {
           "player": "SubmarineCpt",
           "ms": 7870
         },
@@ -59081,10 +59089,6 @@
         {
           "player": "zach",
           "ms": 7886
-        },
-        {
-          "player": "hotdwgboy",
-          "ms": 7920
         },
         {
           "player": "PsioNick",
@@ -60360,7 +60364,7 @@
         },
         {
           "player": "BeastAssassin",
-          "ms": 9106
+          "ms": 9100
         },
         {
           "player": "Alko",
@@ -63743,12 +63747,12 @@
           "ms": 9773
         },
         {
-          "player": "GothicLogic",
-          "ms": 9780
+          "player": "dista",
+          "ms": 9773
         },
         {
-          "player": "dista",
-          "ms": 9803
+          "player": "GothicLogic",
+          "ms": 9780
         },
         {
           "player": "itsbeeve",
@@ -69782,6 +69786,10 @@
           "ms": 1920
         },
         {
+          "player": "txsomb",
+          "ms": 1920
+        },
+        {
           "player": "THags15",
           "ms": 1923
         },
@@ -69947,10 +69955,6 @@
         },
         {
           "player": "Redmoss",
-          "ms": 1943
-        },
-        {
-          "player": "txsomb",
           "ms": 1943
         },
         {
@@ -76612,7 +76616,7 @@
         },
         {
           "player": "Smau",
-          "ms": 1820
+          "ms": 1816
         },
         {
           "player": "MrFroggy",
@@ -84387,6 +84391,10 @@
           "ms": 1976
         },
         {
+          "player": "Smau",
+          "ms": 1980
+        },
+        {
           "player": "DrogieSR",
           "ms": 1986
         },
@@ -84417,10 +84425,6 @@
         {
           "player": "aloof",
           "ms": 1996
-        },
-        {
-          "player": "Smau",
-          "ms": 2000
         },
         {
           "player": "Geenix",
@@ -88740,10 +88744,6 @@
       },
       "times": [
         {
-          "player": "druz",
-          "ms": 4636
-        },
-        {
           "player": "ZeusVA",
           "ms": 4656
         },
@@ -89911,6 +89911,10 @@
           "ms": 4636
         },
         {
+          "player": "druz",
+          "ms": 4636
+        },
+        {
           "player": "oatslice",
           "ms": 4636
         },
@@ -90094,6 +90098,10 @@
         {
           "player": "Leproxy_",
           "ms": 4886
+        },
+        {
+          "player": "Smau",
+          "ms": 4890
         },
         {
           "player": "Nagol64m",
@@ -90330,6 +90338,10 @@
           "ms": 4376
         },
         {
+          "player": "Smau",
+          "ms": 4380
+        },
+        {
           "player": "Drac",
           "ms": 4380
         },
@@ -90344,10 +90356,6 @@
         {
           "player": "2porridge",
           "ms": 4386
-        },
-        {
-          "player": "Smau",
-          "ms": 4390
         },
         {
           "player": "TheMrDoggo",
@@ -96013,12 +96021,12 @@
           "ms": 3593
         },
         {
-          "player": "aloof",
-          "ms": 3626
+          "player": "Raisn",
+          "ms": 3623
         },
         {
-          "player": "Raisn",
-          "ms": 3630
+          "player": "aloof",
+          "ms": 3626
         },
         {
           "player": "Prismatic_Fast",
@@ -96825,12 +96833,12 @@
           "ms": 3860
         },
         {
-          "player": "KajuN69",
-          "ms": 3910
+          "player": "Taylor",
+          "ms": 3893
         },
         {
-          "player": "Taylor",
-          "ms": 3916
+          "player": "KajuN69",
+          "ms": 3910
         },
         {
           "player": "seven",
@@ -102493,7 +102501,7 @@
       "strat": {
         "stage": "Dire, Dire Docks",
         "star": "Board Bowser's Sub",
-        "strat": "Back Sub",
+        "strat": "Front Sub",
         "idList": [
           [
             "main",

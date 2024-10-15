@@ -1,6 +1,5 @@
 
 import { VarSpace } from './variant_def'
-import { TimeDat } from './time_dat'
 import { DraftDat, stratNameDraftDat, verDraftDat, getVarDraftDat, setVerDraftDat, setVarDraftDat } from './draft_dat'
 import { ColConfig, nameListColConfig } from './col_config'
 
@@ -24,7 +23,7 @@ type ESAProps = {
 	"curDat": DraftDat,
 	"editDat": (f: (a: DraftDat) => DraftDat) => void,
 	"changeStrat": (a: string) => void,
-	"submit": (timeList: TimeDat[]) => void,
+	"submit": () => void,
 	"cancel": () => void,
 	"style": ValidStyle,
 	"infoText": string | null
@@ -107,7 +106,7 @@ export function EditSubmitArea(props: ESAProps): React.ReactNode
 		</div>
 		<div className="submit-info" data-style={ props.style }>{ props.infoText }</div>
 		<div className="button-area">
-			<div className="submit-button" onClick={ () => submit([]) }>Submit Times</div>
+			<div className="submit-button" onClick={ submit }>Submit Times</div>
 			<div className="cancel-button" onClick={ cancel }>Cancel</div>
 		</div>
 	</div>;

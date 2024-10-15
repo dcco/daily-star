@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { initializeApp } from 'firebase/app'
-import { GoogleAuthProvider, getAuth, onAuthStateChanged, signInWithPopup } from 'firebase/auth'
+import { GoogleAuthProvider, getAuth, onIdTokenChanged, signInWithPopup } from 'firebase/auth'
 
 import { DropDownImgMenu } from './rx_dropdown_menu'
-import { Ident, newIdent } from './time_table'
-import { lookupNick, strIdNick, updateNick } from './play_wrap'
+import { AuthIdent, newAuthIdent, dropIdent } from './time_table'
+import { PlayData, setUserPD, setUserNickPD, lookupNickPD, strIdNickPD } from './play_data'
 
 	// firebase initialization
 
@@ -28,7 +28,7 @@ function _signIn()
 	signInWithPopup(auth, provider)
 	.catch((error) => {
 		console.log(error);
-		});
+	});
 }
 
 function _signOut()
@@ -39,14 +39,18 @@ function _signOut()
 	/* nickname input */
 
 type NickInputProps = {
-	"userId": Ident,
-	"setNick": (a: string) => void
+	"userId": AuthIdent,
+	/*"setNick": (a: string) => void,
+	"nickMap": NickMap*/
+	"playData": PlayData,
+	"setPlayData": (a: PlayData) => void
 };
 
 export function NickInput(props: NickInputProps): React.ReactNode
 {
 	var userId = props.userId;
-	var setNick = props.setNick;
+	var playData = props.playData;
+	var setPlayData = props.setPlayData;
 	
 	// edit state + functions
 	const [eState, setEState] = useState({
@@ -55,7 +59,7 @@ export function NickInput(props: NickInputProps): React.ReactNode
 	});
 
 	const startEdit = () => {
-		var _nick = lookupNick(userId);
+		var _nick = lookupNickPD(playData, dropIdent(userId));
 		if (_nick === null) _nick = "";
 		setEState({ "active": true, "nick": _nick });
 	};
@@ -71,21 +75,25 @@ export function NickInput(props: NickInputProps): React.ReactNode
 			return;
 		}
 		// otherwise
-		if (v !== "") {
-			updateNick(userId, v);
-			setNick(v);
-		}
+		if (v !== "" && userId !== null) { setPlayData(setUserNickPD(playData, v));	}
 		setEState({ "active": false, "nick": v });
 	}
 
 	// display node
 	var dispNode: React.ReactNode = "";
 	if (!eState.active) {
-		var nick = strIdNick(userId);
+		/*var nick = strIdNickPD(playData, dropIdent(userId));
 		var nState = "display";
-		if (nick === '@me') {
+		if (nick === "") {
 			nick = '---';
 			nState = "none";
+		}*/
+		var nick = "---";
+		var nState = "none";
+		var nDat = lookupNickPD(playData, dropIdent(userId));
+		if (nDat !== null && nDat !== "") {
+			nick = nDat;
+			nState = "display";
 		}
 		dispNode = <div className="nick-disp" data-state={ nState }>{ nick }</div>;
 	} else {
@@ -109,28 +117,35 @@ export function NickInput(props: NickInputProps): React.ReactNode
 	/* authorization area */
 
 type AuthAreaProps = {
-	"userId": Ident | null,
+	/*"userId": Ident | null,
+	"nickMap": NickMap,
 	"setUserId": (a: any) => void,
-	"setNick": (a: string | null) => void
+	"setNick": (a: string) => void*/
+	"playData": PlayData,
+	"setPlayData": (a: PlayData) => void
 };
 
 export function AuthArea(props: AuthAreaProps): React.ReactNode
 {
-	var userId = props.userId;
-	var setUserId = props.setUserId;
-	var setNick = props.setNick;
+	var playData = props.playData;
+	var userId = playData.userId;
+	var nickMap = playData.nickMap;
+	var setPlayData = props.setPlayData;
+/*	var setUserId = props.setUserId;
+	var setNick = props.setNick;*/
 
 	// when authorization state changes, save token
 	useEffect(() => {
-		onAuthStateChanged(auth, (_user) => {
+		onIdTokenChanged(auth, (_user) => {
 			if (_user && _user.email !== null) {
-				var userId = newIdent("google", _user.email.split('@')[0]);
-				userId.token = _user;
-				setUserId(userId);
+				var _userId = newAuthIdent(_user.email.split('@')[0]);
+				_userId.token = _user;
+				setPlayData(setUserPD(playData, _userId));
 			} else {
 				if (_user) console.log(
 					"WARNING: Must use Google account with associated e-mail (e-mail will not be used, it just serves as username in backend).");
-				setUserId(null);
+				setPlayData(setUserPD(playData, null));
+				//setUserId(null);
 			}
 		});
 	}, []);
@@ -146,7 +161,7 @@ export function AuthArea(props: AuthAreaProps): React.ReactNode
 		authNode = (<div className="login-cont">
 			<DropDownImgMenu src={ userId.token.photoURL } backupSrc="/icons/def-propic.png"
 				textList={ [ "@" + userId.name , "Switch User", "Logout"] } actList={ actList }/>
-			<NickInput userId={ userId } setNick={ setNick }/>
+			<NickInput userId={ userId } playData={ playData } setPlayData={ setPlayData }/>
 		</div>);
 	}
 	/*var logoutNode = "";

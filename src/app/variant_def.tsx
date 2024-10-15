@@ -122,6 +122,31 @@ export function buildVarList(vs: VarSpace, rawList: string[]): Variant[]
 	});
 }
 
+export function serialVarList(variants: string[], vList: Variant[]): string {
+	var sList = vList.map(([i, groupName]) => {
+		if (variants[i] === undefined) {
+			console.log(variants);
+			throw('BUG: Attempted to serialize undefined variant ' + i + '.');
+		}
+		if (i === -1) return "_NA:" + groupName;
+		return variants[i] + ":" + groupName
+	});
+	return sList.join(';');
+}
+
+export function unserialVarList(variants: string[], vStr: string): Variant[] {
+	// create map of variants to indices
+	var indexMap: { [key: string]: number } = {};
+	variants.map((v, i) => { indexMap[v] = i; });
+	// parse the text
+	var pairList = vStr.split(';');
+	var varList = pairList.filter((p) => p !== "").map((p) => p.split(':'));
+	return varList.map((v) => {
+		if (v[0] === "_NA") return [-1, v[1]];
+		return [indexMap[v[0]], v[1]];
+	})
+}
+
 	/*
 		variant_map: stores currently selected variants,
 			maps groups to variants

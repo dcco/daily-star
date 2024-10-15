@@ -352,7 +352,7 @@
     },
     "115": {
       "name": "Standard",
-      "record": "37.36",
+      "record": "37.23",
       "ver": "us"
     },
     "116": {
@@ -716,17 +716,17 @@
       "ver": "us"
     },
     "249": {
-      "name": "Front Sub",
+      "name": "Back Sub",
       "record": "32.26",
       "ver": "us"
     },
     "250": {
-      "name": "Back Sub",
+      "name": "Front Sub",
       "record": "34.20",
       "ver": "us"
     },
     "251": {
-      "name": "Back Sub",
+      "name": "Front Sub",
       "record": "31.36",
       "ver": "us"
     },
@@ -737,7 +737,7 @@
     },
     "253": {
       "name": "Standard",
-      "record": "1:49.73",
+      "record": "1:48.83",
       "ver": "jp"
     },
     "254": {
@@ -1442,27 +1442,27 @@
     },
     "482": {
       "name": "Shig (Pipe)",
-      "record": "51.36",
+      "record": "51.73",
       "ver": "jp"
     },
     "483": {
       "name": "Shig (Pipe)",
-      "record": "51.43",
+      "record": "51.60",
       "ver": "us"
     },
     "484": {
       "name": "Shig (Star)",
-      "record": "46.36",
+      "record": "46.56",
       "ver": "us"
     },
     "485": {
       "name": "Xiah (Pipe)",
-      "record": "50.10",
+      "record": "50.23",
       "ver": "jp"
     },
     "486": {
       "name": "Xiah (Pipe)",
-      "record": "50.13",
+      "record": "50.23",
       "ver": "us"
     },
     "487": {
@@ -1547,7 +1547,7 @@
     },
     "503": {
       "name": "Lavaboost (Pipe)",
-      "record": "1:00.46",
+      "record": "1:00.40",
       "ver": "jp"
     },
     "504": {
@@ -1673,12 +1673,12 @@
       "ver": "us"
     },
     "5": {
-      "name": "DSS",
+      "name": "Standard",
       "record": "1:39.33",
       "ver": "jp"
     },
     "6": {
-      "name": "DSS",
+      "name": "Standard",
       "record": "",
       "ver": "us"
     },
@@ -1698,7 +1698,7 @@
       "ver": "us"
     },
     "10": {
-      "name": "Backflip Clip",
+      "name": "Bomb Clip",
       "record": "12.60",
       "ver": "us"
     },
@@ -1918,22 +1918,22 @@
       "ver": "us"
     },
     "71": {
-      "name": "Special",
+      "name": "Open",
       "record": "",
       "ver": "jp"
     },
     "72": {
-      "name": "Special",
+      "name": "Open",
       "record": "1:08.06",
       "ver": "us"
     },
     "75": {
-      "name": "Special",
+      "name": "Open",
       "record": "1:08.96",
       "ver": "jp"
     },
     "76": {
-      "name": "Special",
+      "name": "Open",
       "record": "1:07.33",
       "ver": "us"
     },
@@ -1943,22 +1943,22 @@
       "ver": "jp"
     },
     "80": {
-      "name": "Special",
+      "name": "Open",
       "record": "1:18.26",
       "ver": "jp"
     },
     "81": {
-      "name": "Special",
+      "name": "Open",
       "record": "1:15.90",
       "ver": "us"
     },
     "83": {
-      "name": "Special",
+      "name": "Open",
       "record": "1:17.96",
       "ver": "jp"
     },
     "84": {
-      "name": "Special",
+      "name": "Open",
       "record": "1:17.83",
       "ver": "us"
     },
@@ -2013,12 +2013,12 @@
       "ver": "us"
     },
     "100": {
-      "name": "DSS",
+      "name": "Standard",
       "record": "1:40.90",
       "ver": "jp"
     },
     "101": {
-      "name": "DSS",
+      "name": "Standard",
       "record": "1:43.53",
       "ver": "us"
     },
@@ -2033,12 +2033,12 @@
       "ver": "us"
     },
     "108": {
-      "name": "Standard",
+      "name": "No BLJ",
       "record": "",
       "ver": "jp"
     },
     "109": {
-      "name": "Standard",
+      "name": "No BLJ",
       "record": "",
       "ver": "us"
     },
@@ -2118,7 +2118,7 @@
       "ver": "us"
     },
     "134": {
-      "name": "Z-Slide",
+      "name": "Wall Bounce",
       "record": "45.23",
       "ver": "us"
     },
@@ -2138,7 +2138,7 @@
       "ver": "us"
     },
     "143": {
-      "name": "Back Sub",
+      "name": "Front Sub",
       "record": "33.70",
       "ver": "us"
     },
@@ -2168,7 +2168,7 @@
       "ver": "us"
     },
     "152": {
-      "name": "Standard",
+      "name": "Leftside",
       "record": "13.96",
       "ver": "us"
     },
@@ -2188,12 +2188,12 @@
       "ver": "us"
     },
     "156": {
-      "name": "Alt Route",
+      "name": "Open",
       "record": "1:35.30",
       "ver": "jp"
     },
     "157": {
-      "name": "Alt Route",
+      "name": "Open",
       "record": "1:41.63",
       "ver": "us"
     },

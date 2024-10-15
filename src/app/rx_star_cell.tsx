@@ -4,7 +4,7 @@ import playData from './json/player_data.json'
 import { Ver } from './variant_def'
 import { TimeDat, VerOffset, formatTime } from './time_dat'
 import { Ident } from './time_table'
-import { strIdNick } from './play_wrap'
+import { PlayData, strIdNickPD } from './play_data'
 
 	/* time display auxiliary functions */
 
@@ -75,7 +75,7 @@ export function TimeCell(props: TimeCellProps): React.ReactNode {
 	var [cellText, rawText] = timeDetail(timeDat, verOffset);
 	// link if link is relevant
 	var timeNode: React.ReactNode = cellText;
-	if (timeDat !== null && timeDat.link !== null) {
+	if (timeDat !== null && timeDat.link !== null && timeDat.link !== "") {
 		timeNode = (<a href={ timeDat.link }>{ timeNode }</a>);
 	}
 	// remaining annotations
@@ -102,13 +102,14 @@ export function RecordCell(props: RecordCellProps): React.ReactNode {
 	/* name cell: displays a player name */
 
 type NameCellProps = {
-	"id": Ident
+	"id": Ident,
+	"pd": PlayData
 };
 
 export function NameCell(props: NameCellProps): React.ReactNode {
 	// get play standard when applicable
 	var playStd = "Unranked";
-	var name = strIdNick(props.id);
+	var name = strIdNickPD(props.pd, props.id);
 	var UNSAFE_playDat = (playData as any)[name];
 	if (UNSAFE_playDat !== undefined && UNSAFE_playDat.standard) {
 		playStd = UNSAFE_playDat.standard;

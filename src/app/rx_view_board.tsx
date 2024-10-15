@@ -1,10 +1,11 @@
 
 import React, { useState, useEffect } from 'react'
-import orgData from './json/org_data_x.json'
+import orgData from './json/org_data.json'
 
 import { filterVarColList } from './org_strat_def'
 import { newFilterState, copyFilterState, fullFilterState,
 	orgStarDef, verOffsetStarDef, hasExtStarDef, colListStarDef } from './org_star_def'
+import { newPlayData } from './play_data'
 import { xcamTimeTable } from './xcam_time_table'
 import { xcamRecordMap, sortColList } from './xcam_record_map'
 import { openListColConfig } from './col_config'
@@ -104,13 +105,13 @@ export function ViewBoard(props: {}): React.ReactNode {
 
 	var mainColList = filterVarColList(colList, null);
 	var mainCFG = openListColConfig(mainColList, starDef.open);
-	tableList.push(<StarTable cfg={ mainCFG } timeTable={ timeTable } verOffset={ verOffset }
+	tableList.push(<StarTable cfg={ mainCFG } playData={ newPlayData() } timeTable={ timeTable } verOffset={ verOffset }
 		recordMap={ relRM } key={ stageId + "_" + starId + "_0" }></StarTable>);
 
 	var varColList = filterVarColList(colList, 1);
 	if (varColList.length > 0) {
 		var varCFG = openListColConfig(varColList, starDef.open);
-		tableList.push(<StarTable cfg={ varCFG } timeTable={ timeTable } verOffset={ verOffset }
+		tableList.push(<StarTable cfg={ varCFG } playData={ newPlayData() } timeTable={ timeTable } verOffset={ verOffset }
 			recordMap={ relRM }	key={ stageId + "_" + starId + "_1" }></StarTable>);
 	}	
 

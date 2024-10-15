@@ -5514,8 +5514,8 @@
         "def": "na",
         "offset": null,
         "jp_set": {
-          "Front Sub": {
-            "name": "Front Sub",
+          "Back Sub": {
+            "name": "Back Sub",
             "diff": "normal",
             "ver_diff": false,
             "virtual": false,
@@ -5529,8 +5529,8 @@
               ]
             ]
           },
-          "Back Sub": {
-            "name": "Back Sub",
+          "Front Sub": {
+            "name": "Front Sub",
             "diff": "easy",
             "ver_diff": false,
             "virtual": false,
@@ -5585,8 +5585,8 @@
           }
         },
         "us_set": {
-          "Front Sub": {
-            "name": "Front Sub",
+          "Back Sub": {
+            "name": "Back Sub",
             "diff": "normal",
             "ver_diff": false,
             "virtual": false,
@@ -5600,8 +5600,8 @@
               ]
             ]
           },
-          "Back Sub": {
-            "name": "Back Sub",
+          "Front Sub": {
+            "name": "Front Sub",
             "diff": "easy",
             "ver_diff": false,
             "virtual": false,
@@ -7003,7 +7003,7 @@
             "variant_map": {
               "main_302": [],
               "ext_176": [
-                "1"
+                "0"
               ]
             },
             "id_list": [
@@ -7057,7 +7057,7 @@
             "variant_map": {
               "main_302": [],
               "ext_176": [
-                "1"
+                "0"
               ]
             },
             "id_list": [

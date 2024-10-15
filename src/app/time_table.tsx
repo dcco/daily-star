@@ -2,33 +2,31 @@
 //import orgData from './json/org_data.json'
 //import playerData from './json/player_data.json'
 
+import { TimeDat, MultiDat, vtagTimeDat, hasSubTimes } from './time_dat'
 import { ColList } from './org_strat_def'
-import { TimeDat, MultiDat, hasSubTimes } from './time_dat'
 
 	/*
-		ident: an identity used for differentiating submission sources (xcam sheet, google account, etc)
+		ident: an identity used for viewing times
 		-- services:
 			* xcam - name from the xcam sheet
 			* remote - anonymous player id registered in the daily star database
 				- used to prevent personal user information from leaking
 				- nickname table is loaded for the display 
 			* google - google account
-				- used locally + in tokens sent to the backend
+				- used locally + implicit in tokens sent to the backend
 	*/
 
 export type IdService = "xcam" | "remote" | "google";
 
 export type Ident = {
 	"service": IdService,
-	"name": string,
-	"token": any
-}
+	"name": string
+};
 
 export function newIdent(service: IdService, name: string): Ident {
 	return {
 		"service": service,
-		"name": name,
-		"token": null
+		"name": name
 	}
 }
 
@@ -36,8 +34,35 @@ export function keyIdent(id: Ident): string {
 	return id.service + "@" + id.name;
 }
 
-export function sameIdent(id1: Ident, id2: Ident): boolean {
-	return id1.service === id2.service && id1.name === id2.name;
+	/*
+		auth_ident: an identity used for submitting times (includes a token for verification)
+			stronger but compatible with the regular identitiy token
+	*/
+
+export type AuthIdent = {
+	"name": string,
+	"remoteId": string | null,
+	"token": any,
+};
+
+export function newAuthIdent(name: string): AuthIdent {
+	return {
+		"name": name,
+		"remoteId": null,
+		"token": null
+	}
+}
+
+export function dropIdent(id: AuthIdent): Ident {
+	return {
+		"service": "google",
+		"name": id.name
+	};
+}
+
+export function matchIdent(id1: AuthIdent, id2: Ident): boolean {
+	if (id1.remoteId !== null && id2.service === "remote" && id1.remoteId === id2.name) return true;
+	return id2.service === "google" && id1.name === id2.name;
 }
 
 	/*
@@ -69,17 +94,23 @@ export function freshUserDat(len: number, newId: Ident): UserDat {
 }
 
 	/*
-		time_map: mapping of identifiers to { map[column id, multi_dat] }
+		time_map: mapping of identifiers to { map[column id, map["vtag", time_dat]] }
 			intermediate data structure used to create time tables
+			("vtag" is a string made up of the strat + version names + variants, used
+				to ensure that the only times used have unique variant combinations)
 	*/
+
+type MMap = {
+	[key: string]: TimeDat
+};
 
 export type TimeMap = {
 	[key: string]: {
-		"data": { [key: string]: MultiDat },
+		"data": { [key: string]: MMap },
 		"id": Ident
 	}
 };
-
+/*
 function sortInsert<T>(list: T[], v: T, compareFn: (a: T, b: T) => number) {
 	// invariant:
 	// -- FORALL i >= r. v < list[i]
@@ -92,14 +123,24 @@ function sortInsert<T>(list: T[], v: T, compareFn: (a: T, b: T) => number) {
 		else sih(m + 1, r);
 	}
 	sih(0, list.length);
-} 
+}*/
 
 export function addTimeMap(timeMap: TimeMap, id: Ident, colId: number, timeDat: TimeDat) {
 	var key = keyIdent(id);
 	if (timeMap[key] === undefined) timeMap[key] = { "data": {}, "id": id };
-	if (timeMap[key].data["" + colId] === undefined) timeMap[key].data["" + colId] = [];
-	var curDat = timeMap[key].data["" + colId];
-	sortInsert(curDat, timeDat, function(a, b) { return a.time - b.time; });
+	if (timeMap[key].data["" + colId] === undefined) timeMap[key].data["" + colId] = {};
+	var multiMap = timeMap[key].data["" + colId];
+	var vtag = vtagTimeDat(timeDat);
+	if (multiMap[vtag] === undefined || timeDat.time < multiMap[vtag].time) multiMap[vtag] = timeDat;
+	//sortInsert(curDat, timeDat, function(a, b) { return a.time - b.time; });
+}
+
+function buildMMap(multiMap: MMap | undefined): MultiDat | null {
+	if (multiMap === undefined) return null;
+	var multiDat = Object.entries(multiMap).map((entry) => entry[1]);
+	if (multiDat.length === 0) return null;
+	multiDat.sort(function(a, b) { return a.time - b.time; });
+	return multiDat;
 }
 
 	/* time table: array of
@@ -119,11 +160,7 @@ export function buildTimeTable(timeMap: TimeMap, colTotal: number): TimeTable {
 		var id = userDat.id;
 		var timeRow: TimeRow = [];
 		for (let i = 0; i < colTotal; i++) {
-			if (userDat.data[i]) {
-				timeRow.push(userDat.data[i]);
-			} else {
-				timeRow.push(null);
-			}
+			timeRow.push(buildMMap(userDat.data[i]));
 		}
 		// row object
 		return {
@@ -132,6 +169,52 @@ export function buildTimeTable(timeMap: TimeMap, colTotal: number): TimeTable {
 		};
 	});
 	return timeTable;
+}
+
+export function findIdTimeTable(timeTable: TimeTable, id: AuthIdent): number
+{
+	for (let i = 0; i < timeTable.length; i++) {
+		if (matchIdent(id, timeTable[i].id)) return i;
+	}
+	return -1;
+}
+
+export function updateTimeTable(timeTable: TimeTable, colTotal: number,
+	id: AuthIdent, colId: number, timeDat: TimeDat)
+{
+	// find row for the user
+	var uId = findIdTimeTable(timeTable, id);
+	// if the user does not exist, add them
+	if (uId === -1) {
+		var timeRow: TimeRow = Array(colTotal).fill(null);
+		uId = timeTable.length;
+		timeTable.push({ "id": dropIdent(id), "timeRow": timeRow });
+	}
+	// find specified column
+	var userDat = timeTable[uId];
+	var multiDat: MultiDat = [];
+	if (userDat.timeRow[colId] !== null) {
+		multiDat = userDat.timeRow[colId];
+	} else {
+		userDat.timeRow[colId] = multiDat;
+	}
+	// check if the time is better than other relevant entries
+	var addFlag = true;
+	for (let i = 0; i < multiDat.length; i++) {
+		var curDat = multiDat[i];
+		if (vtagTimeDat(curDat) === vtagTimeDat(timeDat)) {
+			addFlag = timeDat.time < curDat.time;
+			if (addFlag) {
+				multiDat.splice(i, 1);
+				break;
+			}
+		}
+	}
+	// add if it is
+	if (addFlag) {
+		multiDat.push(timeDat);
+		multiDat.sort(function(a, b) { return a.time - b.time });
+	}
 }
 
 	/* -- filter: filter table based on columns */

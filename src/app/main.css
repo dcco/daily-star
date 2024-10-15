@@ -270,6 +270,7 @@ select {
 	/* -- time cells */
 
 .time-cell:first-child {
+	color: #000000;
 	font-weight: bold;
 }
 
