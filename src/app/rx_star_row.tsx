@@ -2,7 +2,7 @@
 import React from "react"
 
 import { VerOffset, hasSubTimes } from "./time_dat"
-import { TimeRow, UserDat } from "./time_table"
+import { TimeRow, UserDat, hasSubRows } from "./time_table"
 import { PlayData } from "./play_data"
 import { TimeCell, NameCell } from "./rx_star_cell"
 
@@ -54,6 +54,7 @@ export function DataRow(props: DataRowProps): React.ReactNode {
 	//var timeText = userDat.timeRow.map(formatMultiDat);
 	//timeText.unshift(strIdNick(userDat.id));
 	// active (clickable)
+	var rowActive = (action === "view-toggle");
 	var active = (action !== "none");
 	// build all rows
 	var height = 1;
@@ -65,12 +66,15 @@ export function DataRow(props: DataRowProps): React.ReactNode {
 			var timeDat = null;
 			if (multiDat !== null && i < multiDat.length) timeDat = multiDat[i];
 			if (timeDat === null && i !== 0) return <td className="dark-cell" key={ j }></td>;
-			return <TimeCell timeDat={ timeDat } verOffset={ verOffset } active={ false }
+			return <TimeCell timeDat={ timeDat } verOffset={ verOffset } active={ active }
 				onClick={ () => onClick(action, rowId, j, i) } hiddenFlag={ !expand && hasSubTimes(multiDat) } key={ j }/>; 
 		})
-		if (i === 0) timeRowNodes.unshift(<NameCell id={ userDat.id } pd={ pd } key="user"/>);
+		var nameAct: CellAct = "none";
+		if (hasSubRows(userDat.timeRow)) nameAct="view-toggle";
+		if (i === 0) timeRowNodes.unshift(<NameCell id={ userDat.id } pd={ pd } active={ nameAct !== "none" }
+			onClick={ () => onClick(nameAct, rowId, -1, i) } key="user"/>);
 		else timeRowNodes.unshift(<td className="dark-cell" key="user"></td>);
-		rowNodeList.push(<tr className="time-row" data-row-active={ active.toString() } data-end-row={ endRow } key={ i }>
+		rowNodeList.push(<tr className="time-row" data-row-active={ rowActive.toString() } data-end-row={ endRow } key={ i }>
 			{ timeRowNodes }
 		</tr>);
 	}

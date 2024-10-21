@@ -59,10 +59,11 @@ export function checkNewPerm(ep: EditPerm): AuthIdent | null
 export type EditObj = {
 	"perm": EditPerm,
 	"starDef": StarDef,
-	"updateTT": (timeList: TimeDat[]) => void
+	"updateTT": (timeList: TimeDat[], delList: TimeDat[]) => void
 }
 
-export function newEditObj(ep: EditPerm, starDef: StarDef, updateTT: (timeList: TimeDat[]) => void): EditObj
+export function newEditObj(ep: EditPerm, starDef: StarDef,
+	updateTT: (timeList: TimeDat[], delList: TimeDat[]) => void): EditObj
 {
 	return {
 		"perm": ep,

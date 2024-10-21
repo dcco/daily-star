@@ -1,5 +1,6 @@
 
-import { VerF, Ver, Variant, VariantMap, VarSpace, toListVarMap, defVerVarSpace } from './variant_def'
+import { VerF, Ver, Variant, VariantMap, VarSpace, vtagVarList, vtagVarMap,
+	isCompleteVarMap, toListVarMap, defVerVarSpace } from './variant_def'
 import { RowDef, newRowDef } from './row_def'
 import { TimeDat, VerOffset, rawMS, formatTime, newTimeDat, applyVerOffset } from './time_dat'
 
@@ -74,7 +75,7 @@ export function staticDraftDat(timeDat: TimeDat): DraftDat {
 	var note = (timeDat.note === null ? "" : timeDat.note);
 	var rowDef = timeDat.rowDef;
 	return {
-		"text": formatTime(timeDat.time),
+		"text": formatTime(timeDat.rawTime),
 		"link": link,
 		"note": note,
 		"rowInfo": staticRow(timeDat.rowDef),
@@ -125,6 +126,15 @@ export function getVarDraftDat(dat: DraftDat, groupName: string): Variant | null
 	return null;
 }
 
+export function vtagDraftDat(draftDat: DraftDat): string {
+	var rowInfo = draftDat.rowInfo;
+	if (!rowInfo.dyn) {
+		var rowDef = rowInfo.def;
+		return rowDef.name + "_" + rowDef.ver + vtagVarList(rowDef.variant_list);
+	}
+	return rowInfo.name + "_" + rowInfo.ver + vtagVarMap(rowInfo.variantSel);
+}
+
 export function setVerDraftDat(dat: DraftDat, ver: VerF) {
 	if (!dat.rowInfo.dyn) throw("Attempted to set version on static draft datum.");
 	dat.rowInfo.ver = ver;
@@ -133,4 +143,10 @@ export function setVerDraftDat(dat: DraftDat, ver: VerF) {
 export function setVarDraftDat(dat: DraftDat, group: string, i: number) {
 	if (!dat.rowInfo.dyn) throw("Attempted to set variant on static draft datum.");
 	dat.rowInfo.variantSel[group] = [i, group];
+}
+
+export function isCompleteDraftDat(vs: VarSpace, dat: DraftDat): boolean {
+	var rowInfo = dat.rowInfo;
+	if (!rowInfo.dyn) return true;
+	return isCompleteVarMap(vs, rowInfo.variantSel);
 }

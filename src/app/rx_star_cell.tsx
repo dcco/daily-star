@@ -103,7 +103,9 @@ export function RecordCell(props: RecordCellProps): React.ReactNode {
 
 type NameCellProps = {
 	"id": Ident,
-	"pd": PlayData
+	"pd": PlayData,
+	"active": boolean,
+	"onClick": () => void
 };
 
 export function NameCell(props: NameCellProps): React.ReactNode {
@@ -115,5 +117,6 @@ export function NameCell(props: NameCellProps): React.ReactNode {
 		playStd = UNSAFE_playDat.standard;
 	}
 	// name + ending cell
-	return(<td data-ps={ playStd }>{ name }</td>);
+	return(<td className="name-cell" data-active={ props.active.toString() }
+		onClick={ props.onClick } data-ps={ playStd }>{ name }</td>);
 }

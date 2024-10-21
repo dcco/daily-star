@@ -2,18 +2,32 @@
 
 TOP LEVEL
 * daily star day-generator
+-- make the error codes proper
+
+EDIT STUFF
+* move "valid nick" highlighter to the authentication section
+* remove JP/US toggle from BBH text skip
+* figure out how row stuff works when JP/US is toggled
+* amazing emergency exit doesnt need JP/US toggle either
+* open column for secondary strats
+* disable columns when switching between view/edit + when user auth changes
+-- custom variants (for open strats)
+
+TSC STUFF
+-- properly deal with typescript w/ firebase, json, etc
 
 CRITICAL
 * extension/open strats
--- open/special combo (lj cless, etc)
+-- fix the canonical sorting, probably caused bc merge view (jrb blast / ttc 100c examples)
 -- banned/official columns (bits)
 -- ss IGT record
--- remove extensions from records when toggled
 
 -- variant toggler (?)
 
-- track total number of columns in sheet
+-- display on error
+
 * live xcam update
+
 - JP/US stuff
 -- "display both" option
 
@@ -27,6 +41,11 @@ CRITICAL
 -- moving reds / stopped reds merge
 -- thi painting entry stars
 -- wdw arrow lifts
+
+MONTY BUGS
+-- validation for URLS
+-- validation for URL/note length
+-- get notes to display
 
 
 FRONTEND VALIDATION

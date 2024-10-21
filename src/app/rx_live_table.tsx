@@ -5,8 +5,9 @@ import { TimeDat } from './time_dat'
 import { StratDef, filterVarColList, toSetColList } from './org_strat_def'
 import { FilterState, fullFilterState,
 	orgStarDef, verOffsetStarDef, colListStarDef } from './org_star_def'
-import { Ident, TimeTable, newIdent, dropIdent, updateTimeTable } from './time_table'
-import { PlayData, lookupNickPD } from './play_data'
+import { Ident, TimeTable, newIdent, dropIdent,
+	updateTimeTable, delTimeTable } from './time_table'
+import { PlayData, syncUserPD, lookupNickPD } from './play_data'
 import { loadTimeTable, postNewTimes } from './live_wrap'
 import { openListColConfig } from './col_config'
 import { newEditObj, userEditPerm } from './edit_perm'
@@ -21,31 +22,13 @@ import { StarTable } from './rx_star_table'
 		is synced with our backend database.
 	*/
 
-//function completeEditRow(colTotal:, editText, colOrder) {
-	// get columns / variant indices
-	/*var colList = orgColList(stageId, starId);
-	var variantList = orgVariantList(colList, variant);
-	// fill new row
-	var newRow = Array(colList.length).fill(null);
-	for (let i = 0; i < variantList.length; i++) {
-		var colId = variantList[i];
-		newRow[colId] = rawMS(editText[i]);
-	}
-	return newRow;*/
-	// fill new row
-/*	var newRow = Array(colTotal).fill(null);
-	for (let i = 0; i < editText.length; i++) {
-		var colId = colOrder[i][0];
-		newRow[colId] = rawMS(editText[i]);
-	}
-	return newRow;
-}*/
-
 type LiveStarTableProps = {
 	"stageId": number,
 	"starId": number,
+	"today": boolean,
 	"fs": FilterState,
-	"playData": PlayData
+	"playData": PlayData,
+	"setPlayData": (a: PlayData) => void
 };
 
 export function LiveStarTable(props: LiveStarTableProps): React.ReactNode
@@ -55,6 +38,7 @@ export function LiveStarTable(props: LiveStarTableProps): React.ReactNode
 	const fs = props.fs;
 	const playData = props.playData;
 	const userId = playData.userId;
+	const setPlayData = props.setPlayData;
 
 	var starDef = orgStarDef(stageId, starId);
 	var verOffset = verOffsetStarDef(starDef, fs);
@@ -64,12 +48,16 @@ export function LiveStarTable(props: LiveStarTableProps): React.ReactNode
 	const [timeTable, setTimeTable] = useState([] as TimeTable);
 	const [reload, setReload] = useState(1);
 
+	// having last load time as key forces full edit state reload on table reload
+	const [lastTime, setLastTime] = useState(Date.now());
+
 	// time table loader
 	useEffect(() => {
 		var dirty = (reload !== 0);
 		const f = async () => {
 			if (dirty) {
-				setTimeTable(await loadTimeTable(stageId, starId, colList, fs, verOffset));
+				setTimeTable(await loadTimeTable(stageId, starId, props.today, colList, fs, verOffset));
+				if (!playData.newUserSync) setPlayData(syncUserPD(playData));
 			}
 		}
 		setTimeout(f, reload);
@@ -77,20 +65,10 @@ export function LiveStarTable(props: LiveStarTableProps): React.ReactNode
 	}, [reload]);
 
 	// edit function
-	/*const editTT = (name, dfText, colOrder) => {
-		// complete the row and update time table
-		//var newRow = completeEditRow(stageId, starId, variant, dfText, colOrder);
-		var newRow = completeEditRow(colList, dfText, colOrder);
-		var tt = updateTimeTable(timeTable, name, newRow);
-		setTimeTable(tt);
-		// sync the times to the database
-		postNewTimes(stageId, starId, name, dfText, colOrder);
-		setReload(1000); // slight offset so the database has time to actually update
-	}*/
 	var colTotal = colList.length;
 	var [stratSet, indexSet] = toSetColList(colList);
 
-	const editTT = (timeList: TimeDat[]) => {
+	const editTT = (timeList: TimeDat[], delList: TimeDat[]) => {
 		if (userId === null) throw("Reached time submission with null user.");
 		var authId = userId;
 		// update time table
@@ -99,23 +77,13 @@ export function LiveStarTable(props: LiveStarTableProps): React.ReactNode
 			var colId = indexSet[timeDat.rowDef.name];
 			updateTimeTable(newTable, colTotal, authId, colId, timeDat);
 		})
+		delList.map((delDat) => delTimeTable(newTable, authId, delDat));
 		setTimeTable(newTable);
 		// sync the times to the database
-		postNewTimes(stageId, starId, authId, timeList);
-		setReload(1000); // slight offset so the database has time to actually update
+		postNewTimes(stageId, starId, authId, timeList, delList);
+		setLastTime(Date.now());
+		setReload(2000); // slight offset so the database has time to actually update
 	};
-
-	/*var _colList = orgColList(stageId, starId, fs);
-
-	// add sort record + relevant records
-	var sortRM = orgRecordMap(stageId, starId, [true, true], true);
-	var relRM = orgRecordMap(stageId, starId, fs, true);
-	applyRecordMap(_colList, "sortRecord", sortRM);
-	applyRecordMap(_colList, "record", relRM);
-
-	var colList = filterVarColList(_colList, variant);
-
-	return (<StarTable colList={ colList } timeTable={ timeTable } canWrite="true" editTT={ editTT }></StarTable>);*/
 
 	// add sort record + relevant records
 	var sortRM = xcamRecordMap(colList, fullFilterState(), verOffset);
@@ -129,5 +97,5 @@ export function LiveStarTable(props: LiveStarTableProps): React.ReactNode
 	var editObj = newEditObj(userEditPerm(userId), starDef, editTT);
 
 	return(<StarTable cfg={ filterCFG } playData={ playData } timeTable={ timeTable } verOffset={ verOffset }
-		recordMap={ relRM } editObj={ editObj }></StarTable>);
+		recordMap={ relRM } editObj={ editObj } key={ lastTime }></StarTable>);
 }

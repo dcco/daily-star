@@ -4,15 +4,16 @@ import React, { useState, useEffect } from 'react'
 import { VarSpace } from './variant_def'
 import { TimeDat, VerOffset, rawMS, formatTime } from './time_dat'
 import { SGrid, lookupGrid, setGrid } from './sparse_grid'
-import { TimeRow, UserDat } from './time_table'
+import { TimeRow, UserDat, hasSubRows, lookupTimeRow } from './time_table'
 import { PlayData, strIdNickPD } from './play_data'
 import { ColConfig, firstStratColConfig } from './col_config'
 import { StarDef, varSpaceStarDef } from './org_star_def'
 import { DraftDat, staticDraftDat, emptyDraftDat,
-	toTimeDat, changeStratDraftDat, stratNameDraftDat } from './draft_dat'
+	toTimeDat, changeStratDraftDat, stratNameDraftDat, isCompleteDraftDat } from './draft_dat'
 import { EditObj } from './edit_perm' 
+import { NameCell } from './rx_star_cell'
 import { CellAct } from './rx_star_row'
-import { EditCell, InputCell, validTime } from './rx_edit_cell'
+import { ValidDat, EditCell, InputCell, nullValidDat, newValidDat } from './rx_edit_cell'
 import { ValidStyle, EditSubmitArea } from './rx_edit_submit_area'
 
 	/* auxiliary functions for front-end time submission validity */
@@ -58,7 +59,7 @@ export function indexEditPos(rowId: number | null, colId: number): EditPos {
 	*/
 
 type DraftState = {
-	"grid": SGrid<DraftDat>
+	"grid": SGrid<[DraftDat, number, number]>
 };
 
 function newDraftState(): DraftState
@@ -71,27 +72,32 @@ function isEmptyDS(ds: DraftState): boolean
 	return Object.entries(ds.grid).length === 0;
 }
 
-function cleanupDS(ds: DraftState): DraftState
+function cleanupDS(timeRow: TimeRow, ds: DraftState): DraftState
 {
 	var newDS = newDraftState();
-	for (const [k, dat] of Object.entries(ds.grid)) {
-		if (dat.text !== "") newDS.grid[k] = dat;
+	for (const [k, _dat] of Object.entries(ds.grid)) {
+		var [dat, i, j] = _dat;
+		// cell must be empty, and if previous time exists, must be different
+		var timeDat = lookupTimeRow(timeRow, i, j);
+		var mDiff = (timeDat === null || formatTime(timeDat.rawTime) !== dat.text);
+		if ((dat.text !== "" && mDiff) || dat.delFlag !== null) newDS.grid[k] = _dat;
 	}
 	return newDS;
 }
 
 function updateDS(ds: DraftState, colId: number, subRowId: number, v: DraftDat): DraftState
 {
-	setGrid(ds.grid, colId, subRowId, v);
+	setGrid(ds.grid, colId, subRowId, [v, colId, subRowId]);
 	return { "grid": ds.grid };
 }
 
 function updateLocDS(ds: DraftState, colId: number, subRowId: number, f: (a: DraftDat) => DraftDat): DraftState
 {
-	var draftDat = lookupGrid(ds.grid, colId, subRowId);
-	if (draftDat !== null) {
+	var _draftDat = lookupGrid(ds.grid, colId, subRowId);
+	if (_draftDat !== null) {
+		var [draftDat, i, j] = _draftDat;
 		var newDat = f(draftDat);
-		setGrid(ds.grid, colId, subRowId, newDat);
+		setGrid(ds.grid, colId, subRowId, [newDat, colId, subRowId]);
 	}
 	return { "grid": ds.grid };
 }
@@ -103,8 +109,8 @@ function heightColDS(timeRow: TimeRow, ds: DraftState, colId: number): number
 	if (multiDat !== null) height = multiDat.length;
 	var draftHeight = height;
 	while (true) {
-		var curDat = lookupGrid(ds.grid, colId, draftHeight);
-		if (curDat === null || curDat.text === "") return draftHeight;
+		var curDat= lookupGrid(ds.grid, colId, draftHeight);
+		if (curDat === null || curDat[0].text === "") return draftHeight;
 		draftHeight = draftHeight + 1;
 	}
 	throw("rx_edit_row - Unreachable.");
@@ -146,12 +152,19 @@ function lookupTimeDat(timeRow: TimeRow, colId: number, subRowId: number): TimeD
 	return null;
 }
 
-function lookupViewDraftDS(cfg: ColConfig, timeRow: TimeRow,
+function lookupRawDraftDS(ds: DraftState, colId: number, subRowId: number): DraftDat | null
+{
+	var dat = lookupGrid(ds.grid, colId, subRowId);
+	if (dat === null) return null;
+	return dat[0];
+}
+
+function lookupViewDraftDS(timeRow: TimeRow,
 	ds: DraftState, colId: number, subRowId: number): DraftDat | null
 {
 	// check if draft already exists
 	var draftDat = lookupGrid(ds.grid, colId, subRowId);
-	if (draftDat !== null) return draftDat;
+	if (draftDat !== null) return draftDat[0];
 	// otherwise, see if a time has been stored
 	var timeDat = lookupTimeDat(timeRow, colId, subRowId);
 	if (timeDat !== null) return staticDraftDat(timeDat);
@@ -164,7 +177,7 @@ function lookupEditDraftDS(cfg: ColConfig, starDef: StarDef, timeRow: TimeRow,
 {
 	// check if draft already exists
 	var draftDat = lookupGrid(ds.grid, colId, subRowId);
-	if (draftDat !== null) return [draftDat, null];
+	if (draftDat !== null) return [draftDat[0], null];
 	// otherwise, see if a time has been stored
 	var timeDat = lookupTimeDat(timeRow, colId, subRowId);
 	if (timeDat !== null) {
@@ -183,29 +196,82 @@ function lookupEditDraftDS(cfg: ColConfig, starDef: StarDef, timeRow: TimeRow,
 		validation
 	*/
 
-export function validateDS(ds: DraftState): [ValidStyle, string | null] {
+type ValidMap = SGrid<ValidDat>;
+
+export function validateDS(starDef: StarDef, timeRow: TimeRow, ds: DraftState): [ValidMap, ValidStyle, string | null] {
 	// empty check
-	var ds = cleanupDS(ds);
-	if (isEmptyDS(ds)) return ["init", "No modifications."];
+	var validMap: ValidMap = {};
+	var ds = cleanupDS(timeRow, ds);
+	if (isEmptyDS(ds)) return [validMap, "init", "No modifications."];
+	// build validation map
+	for (const [k, _draftDat] of Object.entries(ds.grid)) {
+		var [draftDat, i, j] = _draftDat;
+		var oldDat = lookupTimeRow(timeRow, i, j);
+		var vDat = newValidDat(starDef, timeRow, oldDat, draftDat);
+		setGrid(validMap, i, j, vDat);
+		/*if (!validTime(_draftDat[0].text)) {
+			return ["error", "Must fix invalid times."];
+		}*/
+	}
+	// error info
+	for (const [k, vDat] of Object.entries(validMap)) {
+		if (!vDat.valid) return [validMap, "error", "Must fix invalid times."];
+	}
+	for (const [k, vDat] of Object.entries(validMap)) {
+		if (!vDat.complete) return [validMap, "error", "Some submissions have incomplete variant information."];
+	}
+	for (const [k, vDat] of Object.entries(validMap)) {
+		if (vDat.proper === "improper") return [validMap, "error", "Time submissions must improve on old ones."];
+	}
+	var warnFlag = false;
+	for (const [k, vDat] of Object.entries(validMap)) {
+		for (const [tDat, prop] of vDat.properAll) {
+			warnFlag = true;
+			if (prop === "improper") return [validMap, "error",
+				"Some submissions have times in other cells w/ the same strat variation w/out time improvement."];
+		}
+	}
+	if (warnFlag) return [validMap, "warning", "Some submissions have times in other cells w/ the same strat variation."];
+	return [validMap, "valid", "Ready to submit."];
 	// valid time check
-	for (const [k, draftDat] of Object.entries(ds.grid)) {
-		if (!validTime(draftDat.text)) {
+	/*for (const [k, _draftDat] of Object.entries(ds.grid)) {
+		if (!validTime(_draftDat[0].text)) {
 			return ["error", "Must fix invalid times."];
 		}
 	}
+	// all variants are filled out
+	for (const [k, _draftDat] of Object.entries(ds.grid)) {
+		var [draftDat, i, j] = _draftDat;
+		var vs = varSpaceStarDef(starDef, stratNameDraftDat(draftDat));
+		if (vs !== null && !isCompleteDraftDat(vs, draftDat)) {
+			return ["error", "Some submissions have incomplete variant information."];
+		}
+	}
 	// all times are improvements / better
-	
-	return ["valid", "Ready to submit."];
+	for (const [k, _draftDat] of Object.entries(ds.grid)) {
+		var [draftDat, i, j] = _draftDat;
+		var timeDat = lookupTimeRow(timeRow, i, j);
+		if (timeDat !== null && !isImproveDraftDat(timeDat, draftDat)) {
+			return ["error", "Time submissions must be better than old ones."];
+		}
+	}*/
+	//return ["valid", "Ready to submit."];
 }
 
-export function convertDS(ds: DraftState, verOffset: VerOffset): TimeDat[] {
-	var ds = cleanupDS(ds);
+export function convertDS(timeRow: TimeRow, ds: DraftState, verOffset: VerOffset): [TimeDat[], TimeDat[]] {
+	var ds = cleanupDS(timeRow, ds);
 	var timeList: TimeDat[] = [];
-	for (const [k, draftDat] of Object.entries(ds.grid)) {
-		var timeDat = toTimeDat(draftDat, verOffset);
-		if (timeDat !== null) timeList.push(timeDat);
+	var delList: TimeDat[] = [];
+	for (const [k, _draftDat] of Object.entries(ds.grid)) {
+		var draftDat = _draftDat[0];
+		if (draftDat.delFlag !== null) {
+			delList.push(draftDat.delFlag)
+		} else {
+			var timeDat = toTimeDat(draftDat, verOffset);
+			if (timeDat !== null) timeList.push(timeDat);
+		}
 	}
-	return timeList;
+	return [timeList, delList];
 }
 
 	/* edit row: displays
@@ -224,7 +290,7 @@ type EditRowProps = {
 	"editObj": EditObj,
 	"editPos": EditPos,
 	"cellClick": (a: CellAct, i: number | null, j: number, k: number) => void,
-	"submit": (timeList: TimeDat[]) => void
+	"submit": (timeList: TimeDat[], delList: TimeDat[]) => void
 }
 
 export function EditRow(props: EditRowProps): React.ReactNode {
@@ -255,7 +321,7 @@ export function EditRow(props: EditRowProps): React.ReactNode {
 	}
 
 	// cleanup on cell change
-	useEffect(() => { setDS(cleanupDS(ds)); }, [editPos]);
+	useEffect(() => { setDS(cleanupDS(timeRow, ds)); }, [editPos]);
 
 	// get the current draft cell being edited
 	var [draftDat, newDS] = lookupEditDraftDS(cfg, starDef, timeRow, ds, editPos.colId, editPos.subRowId);
@@ -265,6 +331,9 @@ export function EditRow(props: EditRowProps): React.ReactNode {
 	var vs = varSpaceStarDef(starDef, stratNameDraftDat(draftDat));
 	if (vs === null) throw('Attempting to work on non-existent strat ' + stratNameDraftDat(draftDat) + '.');
 	
+	// validation
+	var [validMap, style, infoText] = validateDS(starDef, timeRow, ds);
+
 	// generate edit cells
 	var editNodes: React.ReactNode[] = [];
 	var [height, hList] = heightDS(timeRow, ds);
@@ -274,27 +343,41 @@ export function EditRow(props: EditRowProps): React.ReactNode {
 		for (let i = 0; i < timeRow.length; i++) {
 			// input cell case
 			if (editPos.colId === i && editPos.subRowId === j) {
-				rowNodes.push(<InputCell draftDat={ draftDat }
+				var vDat = lookupGrid(validMap, i, j);
+				if (vDat === null) vDat = nullValidDat();
+				rowNodes.push(<InputCell validDat={ vDat } draftDat={ draftDat }
 					onWrite={ (v) => editLoc(editPos.colId, j, (dat) => { dat.text = v; return dat; }) } key={ i }/>);
 				continue;
 			}
 			// display case
-			var draftDatN = lookupViewDraftDS(cfg, timeRow, ds, i, j);
+			var draftDatN = lookupViewDraftDS(timeRow, ds, i, j);
 			if (draftDatN !== null || j === hList[i]) {
-				rowNodes.push(<EditCell draftDat={ draftDatN } verOffset={ verOffset } dirty={ false }
+				// make edit cell
+				var vDat = lookupGrid(validMap, i, j);
+				if (vDat === null) vDat = nullValidDat();
+				rowNodes.push(<EditCell validDat={ vDat } draftDat={ draftDatN } verOffset={ verOffset }
 					onClick={ () => cellClick("edit", rowId, i, j) } key={ i }/>);
 			} else {
 				rowNodes.push(<td className="dark-cell" key={ i }></td>);
 			}
 		}
 		// player name cell
-		if (j === 0) rowNodes.unshift(<td key="name">{ strIdNickPD(pd, userDat.id) }</td>);
+		var nameAct: CellAct = "none";
+		if (hasSubRows(timeRow)) nameAct="view-toggle";
+		if (j === 0) rowNodes.unshift(<NameCell id={ userDat.id } pd={ pd } active={ nameAct !== "none" }
+			onClick={ () => cellClick(nameAct, rowId, -1, j) } key="name"/>);
 		else rowNodes.unshift(<td className="dark-cell" key="name"></td>);
 		editNodes.push(<tr className="time-row" key={ j }>{ rowNodes }</tr>);
 	}
-	
-	// validation
-	var [style, infoText] = validateDS(ds);
+
+	var oldDat = lookupTimeRow(timeRow, editPos.colId, editPos.subRowId);
+	const delToggle = () => {
+		editLoc(editPos.colId, editPos.subRowId, (curDat) => {
+			if (curDat.delFlag === null) curDat.delFlag = oldDat;
+			else curDat.delFlag = null;
+			return curDat;
+		});
+	};
 
 	// return final row
 	return <React.Fragment>
@@ -303,46 +386,18 @@ export function EditRow(props: EditRowProps): React.ReactNode {
 			<td></td>
 			<td className="submit-area" colSpan={ timeRow.length }>
 				<EditSubmitArea cfg={ cfg } colId={ editPos.colId } vs={ vs }
-					curDat={ draftDat } editDat={ (f) => editLoc(editPos.colId, editPos.subRowId, f) }
-					changeStrat={ changeStrat } submit={ () => props.submit(convertDS(ds, verOffset)) }
-					cancel={ () => cellClick("stop-edit", null, 0, 0) }
+					curDat={ draftDat } oldDat={ oldDat }
+					editDat={ (f) => editLoc(editPos.colId, editPos.subRowId, f) }
+					changeStrat={ changeStrat } submit={ () => {
+						var [timeList, delList] = convertDS(timeRow, ds, verOffset);
+						props.submit(timeList, delList);
+					} }
+					cancel={ () => cellClick("stop-edit", null, 0, 0) } delToggle={ delToggle }
 					style={ style } infoText={ infoText }/>
 			</td>
 		</tr>
 	</React.Fragment>;
 }
-
-/*
-function EditRow(props) {
-	var stratTotal = props.stratTotal;
-	var rowId = props.rowId;
-	var eState = props.eState;
-
-	// main cells
-	var editNodes = [];
-	for (let i = 0; i < stratTotal; i++) {
-		editNodes.push(<EditCell text={ eState.eData[i + 1] } valid={ validTime(eState.eData[i + 1]) }
-			dirty={ eState.eData[i + 1] !== eState.oldText[i + 1] }
-			editText={ (v) => eState.write(eState.colId + 1, v) } isInput={ eState.colId === i }
-			onClick={ () => eState.click("edit", rowId, i, eState.eData) } key={ i }></EditCell>);
-	}
-	// player name cell
-	// -- name editing disabled after initial submission
-	if (rowId === null) {
-	} else {
-		editNodes.unshift(<td key="name">{ eState.eData[0] }</td>);
-	}
-	// submit button
-	var isValid = validEdit(eState.eData);
-	if (isValid) {
-		editNodes.push(<td className="edit-cell" key="act">
-			<div className="inner-button" onClick={ eState.submit }>Add</div>
-		</td>);
-	}
-	return <tr className="time-row" key="init-submit">{ editNodes }</tr>;
-}*/
-
-
 	/*	
 		-- OLD CODE FOR NAME w/ VALIDITY CHECKING
 	editNodes.unshift(<EditCell text={ eState.eData[0] } valid={ validName(eState.eData[0]) }

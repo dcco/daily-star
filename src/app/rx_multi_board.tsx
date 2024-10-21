@@ -5,7 +5,8 @@ import { newIdent, dropIdent } from './time_table'
 import { PlayData, newPlayData, userKeyPD, setNickMapPD, linkUserRemotePD, lookupNickPD } from './play_data'
 import { updateGSheet } from './xcam_wrap'
 import { loadNickMap, loadUserId, postNick } from './live_wrap'
-import { EditBoard } from './rx_edit_board'
+//import { EditBoard } from './rx_edit_board'
+import { DailyBoard } from './rx_daily_board'
 import { ViewBoard } from './rx_view_board'
 
 type MenuOptProps = {
@@ -65,7 +66,7 @@ export function MultiBoard(props: {}): React.ReactNode
 	// select board
 	var board = null;
 	if (menuId === 0) {
-		board = <EditBoard playData={ playData } setPlayData={ (pd) => updatePlayData(pd) }/>;
+		board = <DailyBoard playData={ playData } setPlayData={ (pd) => updatePlayData(pd) }/>;
 	} else if (menuId === 1) {
 		board = <ViewBoard/>;
 	}

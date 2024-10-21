@@ -146,6 +146,7 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 		} else {
 			setVState({ rowId: null });
 		}
+		if (editPos.active) setEditPos(nullEditPos());
 	};
 
 	// edit state
@@ -159,6 +160,7 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 			colId: col,
 			subRowId: subRow
 		});
+		if (vState.rowId !== null) setVState({ rowId: null });
 	};
 
 	const cellClick = (action: CellAct, row: number | null, col: number, subRow: number) => {
@@ -171,10 +173,10 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 		setEditText(updateArray(editText, col, v));
 	};*/
 
-	const editSubmit = (timeList: TimeDat[]) => {
+	const editSubmit = (timeList: TimeDat[], delList: TimeDat[]) => {
 		setEditPos(nullEditPos());
 		//editTT(editText[0], diffText(eState.oldText, editText), colList);
-		if (editObj !== null) editObj.updateTT(timeList);
+		if (editObj !== null) editObj.updateTT(timeList, delList);
 	};
 /*
 	eState.eData = editText;

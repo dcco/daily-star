@@ -342,3 +342,12 @@ export function orgStarDef(stageId: number, starId: number): StarDef
 	}
 	return ORG_CACHE[k];
 }
+
+export function orgStarId(stageId: number, starCode: string): number
+{
+	var UNSAFE_stage = orgData[stageId];
+	for (let i = 0; i < UNSAFE_stage.starList.length; i++) {
+		if (UNSAFE_stage.starList[i].id === starCode) return i;
+	}
+	throw('Lookup of non-existent star code: ' + starCode + ' for stage id: ' + stageId + '.');	
+}

@@ -8,11 +8,16 @@ import { AuthIdent, TimeTable, TimeMap, newIdent,
 	addTimeMap, buildTimeTable } from './time_table'
 import { NickMap } from './play_data'
 
+// const API_endpoint = "http://ec2-3-129-19-199.us-east-2.compute.amazonaws.com:5500";
+// const API_endpoint = "https://g6u2bjvfoh.execute-api.us-east-2.amazonaws.com";
+const API_endpoint = "https://0lcnm5wjck.execute-api.us-east-2.amazonaws.com/Main";
+
 	/*
 		xcam time API functions
 	*/
 
 type ReadObj = {
+	"submit_id": number,
 	"p_id": number,
 	"time": number,
 	"stratname": string,
@@ -22,13 +27,14 @@ type ReadObj = {
 	"note": string
 };
 
-export async function loadTimeTable(stageId: number, _starId: number,
+export async function loadTimeTable(stageId: number, _starId: number, today: boolean,
 	colList: ColList, fs: FilterState, verOffset: VerOffset): Promise<TimeTable> {
 	// load rows
 	var starDef = orgStarDef(stageId, _starId);
 	var starId = starDef.id;
-	const getReq = await fetch("http://ec2-3-129-19-199.us-east-2.compute.amazonaws.com:5500/times/read?stage=" +
-		stageId + "&star=" + starId);
+	var lk = "/times/read";
+	if (today) lk = "/times/read/today";
+	const getReq = await fetch(API_endpoint + lk + "?stage=" + stageId + "&star=" + starId);
 	var res = await getReq.json();
 	if (res.response === "Error") {
 		console.log(res.err);
@@ -57,6 +63,7 @@ export async function loadTimeTable(stageId: number, _starId: number,
 		}*/
 		// add time data
 		var timeDat = newTimeDat(data.time, data.link, data.note, rowDef);
+		timeDat.origin = data.submit_id;
 		applyVerOffset(timeDat, verOffset);
 		addTimeMap(timeMap, playerId, stratId, timeDat);
 	}
@@ -76,7 +83,9 @@ type SubmitObj = {
 	"note": string
 }
 
-export function postNewTimes(stageId: number, starId: number, userId: AuthIdent, timeList: TimeDat[]) {
+export function postNewTimes(stageId: number, starId: number,
+	userId: AuthIdent, timeList: TimeDat[], delList: TimeDat[])
+{
 	// initial star info
 	var starDef = orgStarDef(stageId, starId);
 	var variants: string[] = [];
@@ -94,18 +103,21 @@ export function postNewTimes(stageId: number, starId: number, userId: AuthIdent,
 			"stratName": timeDat.rowDef.name,
 			"ver": timeDat.rowDef.ver,
 			"variantStr": serialVarList(variants, timeDat.rowDef.variant_list),
-			"time": timeDat.time,
+			"time": timeDat.rawTime,
 			"submitTime": Date.now(),
 			"link": link,
 			"note": note
 		});
 	}
+	var delIdList: number[] = delList.map((dat) => dat.origin).filter((dat) => dat !== null);
 	// send a post request
-	fetch("http://ec2-3-129-19-199.us-east-2.compute.amazonaws.com:5500/times/submit", {
+	//fetch("http://ec2-3-129-19-199.us-east-2.compute.amazonaws.com:5500/times/submit", {
+	fetch(API_endpoint + "/times/submit", {
 		method: "POST",
 		body: JSON.stringify({
 			"player": userId,
-			"submitList": submitList
+			"submitList": submitList,
+			"delList": delIdList
 		}),
 		headers: {
 			"Content-type": "application/json; charset=UTF-8"
@@ -124,7 +136,8 @@ type NickObj = {
 
 export async function loadNickMap(): Promise<NickMap> {
 	// load nick name table
-	const getReq = await fetch("http://ec2-3-129-19-199.us-east-2.compute.amazonaws.com:5500/players/get_nick_all");
+	//const getReq = await fetch("http://ec2-3-129-19-199.us-east-2.compute.amazonaws.com:5500/players/get_nick_all");
+	const getReq = await fetch(API_endpoint + "/players/get_nick_all");
 	var res = await getReq.json();
 	if (res.response === "Error") {
 		console.log(res.err);
@@ -141,7 +154,9 @@ export async function loadNickMap(): Promise<NickMap> {
 }
 
 export async function loadUserId(userId: AuthIdent): Promise<string | null> {
-	const getReq = await fetch("http://ec2-3-129-19-199.us-east-2.compute.amazonaws.com:5500/players/get_id?player=" +
+	//const getReq = await fetch("http://ec2-3-129-19-199.us-east-2.compute.amazonaws.com:5500/players/get_id?player=" +
+	//	userId.name);
+	const getReq = await fetch(API_endpoint + "/players/get_id?player=" +
 		userId.name);
 	var res = await getReq.json();
 	if (res.response === "Error") {
@@ -153,7 +168,8 @@ export async function loadUserId(userId: AuthIdent): Promise<string | null> {
 
 export function postNick(userId: AuthIdent, nick: string) {
 	// send a post request
-	fetch("http://ec2-3-129-19-199.us-east-2.compute.amazonaws.com:5500/players/set_nick", {
+	//fetch("http://ec2-3-129-19-199.us-east-2.compute.amazonaws.com:5500/players/set_nick", {
+	fetch(API_endpoint + "/players/set_nick", {
 		method: "POST",
 		body: JSON.stringify({
 			"player": userId,

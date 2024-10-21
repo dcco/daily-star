@@ -122,9 +122,20 @@ export function buildVarList(vs: VarSpace, rawList: string[]): Variant[]
 	});
 }
 
+export function vtagVarList(varList: Variant[]): string
+{
+	var vx = "";
+	if (varList.length !== 0) {
+		var vList = varList.filter((v) => v[0] !== -1).map((v) => v[0]);
+		vList.sort();
+		vx = "#" + vList.map((i) => "" + i).join('_');
+	}
+	return vx;
+}
+
 export function serialVarList(variants: string[], vList: Variant[]): string {
 	var sList = vList.map(([i, groupName]) => {
-		if (variants[i] === undefined) {
+		if (i !== -1 && variants[i] === undefined) {
 			console.log(variants);
 			throw('BUG: Attempted to serialize undefined variant ' + i + '.');
 		}
@@ -159,6 +170,13 @@ export function toListVarMap(sel: VariantMap): Variant[]
 	return Object.entries(sel).map((entry) => entry[1]);
 }
 
+export function isCompleteVarMap(vs: VarSpace, sel: VariantMap): boolean {
+	for (const group of vs.varTable) {
+		if (sel[group.name] === undefined) return false;
+	}
+	return true;
+}
+
 	/* -- extra conversions */
 
 export function toMapVarList(vList: Variant[]): VariantMap
@@ -168,4 +186,9 @@ export function toMapVarList(vList: Variant[]): VariantMap
 		sel[groupName] = [i, groupName];
 	}
 	return sel;
+}
+
+export function vtagVarMap(sel: VariantMap): string
+{
+	return vtagVarList(toListVarMap(sel));
 }

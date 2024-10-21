@@ -56,15 +56,6 @@ export function EditBoard(props: EditBoardProps): React.ReactNode {
 		setFS(ns);
 	}
 
-	// user identity
-	/*const setNick = (a: string) => {
-		if (userId !== null) {
-			updateNick(playData.nickMap, userId, a);
-			setPlayData(copyPlayData(playData));
-			postNick(userId, a);
-		}
-	};*/
-
 	// unlike viewboard, extensions always on
 
 	// stage select option nodes
@@ -99,10 +90,6 @@ export function EditBoard(props: EditBoardProps): React.ReactNode {
 			<div className="variant-box">{ vstr }</div>
 		</div>);
 	}
-
-	// load time table from xcam data
-	//var colList = colListStarDef(starDef, fs);
-	//var timeTable = xcamTimeTable(colList, fs, verOffset);
 
 /*
 	// build tables (in case of multiple tables)
@@ -153,8 +140,8 @@ export function EditBoard(props: EditBoardProps): React.ReactNode {
 			{ starBtnNodes }
 		</div>
 		{ varCont }
-		<LiveStarTable stageId={ stageId } starId={ starId } fs={ fs }
-			playData={ playData } key={ stageId + "_" + starId }/>
+		<LiveStarTable stageId={ stageId } starId={ starId } today={ false } fs={ fs }
+			playData={ playData } setPlayData={ setPlayData } key={ stageId + "_" + starId }/>
 		<div className="sep"><hr/></div>
 		<AuthArea playData={ playData } setPlayData={ setPlayData }/>
 		</div>

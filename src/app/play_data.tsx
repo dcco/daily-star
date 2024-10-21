@@ -9,18 +9,23 @@ export type NickMap = {
 		the user's nickname is stored in two places - the DB, and the local mapping
 		both nicks will be stored in nickmap, one under 'remote@p_id' the other
 		under 'google@name', with the latter taking precedence when both exist.
+		  * newUserSync: this flag is used to trigger a nickname data reload when a new user
+			may have potentially been created. (set to false when switching users,
+			set to true on any time submission).
 	*/
 
 export type PlayData = {
 	"userId": AuthIdent | null,
-	"nickMap": NickMap
+	"nickMap": NickMap,
+	"newUserSync": boolean
 };
 
 export function newPlayData(): PlayData
 {
 	return {
 		"userId": null,
-		"nickMap": {}
+		"nickMap": {},
+		"newUserSync": true,
 	};
 }
 
@@ -34,7 +39,8 @@ export function setUserPD(pd: PlayData, userId: AuthIdent | null): PlayData
 {
 	return {
 		"userId": userId,
-		"nickMap": pd.nickMap
+		"nickMap": pd.nickMap,
+		"newUserSync": false,
 	};
 }
 
@@ -46,7 +52,8 @@ export function setUserNickPD(pd: PlayData, nick: string): PlayData
 	}
 	return {
 		"userId": pd.userId,
-		"nickMap": pd.nickMap
+		"nickMap": pd.nickMap,
+		"newUserSync": pd.newUserSync
 	};
 }
 
@@ -54,7 +61,17 @@ export function setNickMapPD(pd: PlayData, nickMap: NickMap): PlayData
 {
 	return {
 		"userId": pd.userId,
-		"nickMap": nickMap
+		"nickMap": nickMap,
+		"newUserSync": pd.newUserSync
+	};
+}
+
+export function syncUserPD(pd: PlayData): PlayData
+{
+	return {
+		"userId": pd.userId,
+		"nickMap": pd.nickMap,
+		"newUserSync": true
 	};
 }
 
@@ -81,7 +98,8 @@ export function linkUserRemotePD(pd: PlayData, remoteId: string): PlayData
 	// return new player data obj
 	return {
 		"userId": pd.userId,
-		"nickMap": pd.nickMap
+		"nickMap": pd.nickMap,
+		"newUserSync": pd.newUserSync
 	};
 }
 
@@ -105,6 +123,7 @@ export function strIdNickPD(pd: PlayData, id: Ident): string
 	var nick = lookupNickPD(pd, id);
 	if (nick !== null) return nick;
 	if (id.service === "remote") return "@player-" + id.name;
+	else if (id.service === "xcam") return id.name;
 	return "@" + id.name;
 }
 /*

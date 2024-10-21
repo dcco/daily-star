@@ -93,6 +93,14 @@ export function freshUserDat(len: number, newId: Ident): UserDat {
 	};
 }
 
+export function lookupTimeRow(timeRow: TimeRow, colId: number, subRowId: number): TimeDat | null
+{
+	if (timeRow[colId] == null) return null;
+	var multiDat = timeRow[colId];
+	if (subRowId < multiDat.length) return multiDat[subRowId];
+	return null;
+}
+
 	/*
 		time_map: mapping of identifiers to { map[column id, map["vtag", time_dat]] }
 			intermediate data structure used to create time tables
@@ -215,6 +223,32 @@ export function updateTimeTable(timeTable: TimeTable, colTotal: number,
 		multiDat.push(timeDat);
 		multiDat.sort(function(a, b) { return a.time - b.time });
 	}
+}
+
+export function delTimeTable(timeTable: TimeTable, id: AuthIdent, delDat: TimeDat)
+{
+	// find row for the user
+	var uId = findIdTimeTable(timeTable, id);
+	if (uId === -1) return;
+	// search all columns + subrows for time dat
+	var userDat = timeTable[uId];
+	var isEmpty = true;
+	for (let i = 0; i < userDat.timeRow.length; i++) {
+		var multiDat = userDat.timeRow[i];
+		if (multiDat === null) continue;
+		var remId = -1;
+		for (let j = 0; j < multiDat.length; j++) {
+			var timeDat = multiDat[j];
+			if (timeDat.origin !== null && timeDat.origin === delDat.origin) {
+				remId = j;
+			}
+		}
+		if (remId !== -1) multiDat.splice(remId, 1);
+		if (multiDat.length === 0) userDat.timeRow[i] = null;
+		else isEmpty = false;
+	}
+	// if all rows empty, destroy row
+	if (isEmpty) timeTable.splice(uId, 1);
 }
 
 	/* -- filter: filter table based on columns */

@@ -1,5 +1,5 @@
 
-import { VerF } from './variant_def'
+import { VerF, vtagVarList } from './variant_def'
 import { RowDef } from './row_def'
 
 	/*
@@ -105,7 +105,8 @@ export type TimeDat = {
 	"time": number,
 	"link": string | null,
 	"note": string | null,
-	"rowDef": RowDef
+	"rowDef": RowDef,
+	"origin": number | null
 }
 
 export function newTimeDat(time: number, link: string | null, note: string | null, rowDef: RowDef): TimeDat
@@ -118,7 +119,8 @@ export function newTimeDat(time: number, link: string | null, note: string | nul
 		"time": time,
 		"link": link,
 		"note": note,
-		"rowDef": rowDef
+		"rowDef": rowDef,
+		"origin": null
 	};
 }
 
@@ -134,13 +136,13 @@ export function formatTimeDat(timeDat: TimeDat): string {
 
 export function vtagTimeDat(timeDat: TimeDat): string {
 	var rowDef = timeDat.rowDef;
-	var vx = "";
+	/*var vx = "";
 	if (rowDef.variant_list.length !== 0) {
 		var vList = rowDef.variant_list.filter((v) => v[0] !== -1).map((v) => v[0]);
 		vList.sort();
 		vx = "#" + vList.map((i) => "" + i).join('_');
-	}
-	return rowDef.name + "_" + rowDef.ver + vx;
+	}*/
+	return rowDef.name + "_" + rowDef.ver + vtagVarList(rowDef.variant_list);
 }
 
 	/* 
