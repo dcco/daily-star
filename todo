@@ -1,37 +1,46 @@
 
+! properly authenticate users on the backend
+* history board
+* weekly stars
 
-TOP LEVEL
-* daily star day-generator
--- make the error codes proper
+---------------
 
-EDIT STUFF
-* move "valid nick" highlighter to the authentication section
-* remove JP/US toggle from BBH text skip
-* figure out how row stuff works when JP/US is toggled
-* amazing emergency exit doesnt need JP/US toggle either
-* open column for secondary strats
-* disable columns when switching between view/edit + when user auth changes
--- custom variants (for open strats)
+DAILY STAR GENERATOR
+* test "multi-glob" stars
+-- time until next star clock
+
+FRONTEND
+-- mobile viewer
+* double board variant switcher
+
+BACKEND
+-- functionality for if i have to shut off the backend
+-- automatic backups
+-- better server-side validation
+
+-- auto-commit to the xcam cache
 
 TSC STUFF
 -- properly deal with typescript w/ firebase, json, etc
 
-CRITICAL
+NICKNAME EDIT
+* more robust nickname loading
+-- better nickname validator
+* crashes when nicknames opened w/ editor
+
+STRAT-VIEW RELATED BUGS
+* remove JP/US toggle from BBH text skip
+* figure out how row stuff works when JP/US is toggled
+* amazing emergency exit doesnt need JP/US toggle either
+* disable columns when switching between view/edit + when user auth changes
+-- custom variants (for open strats)
+
+-- variant toggler (?)
+
 * extension/open strats
 -- fix the canonical sorting, probably caused bc merge view (jrb blast / ttc 100c examples)
 -- banned/official columns (bits)
 -- ss IGT record
-
--- variant toggler (?)
-
--- display on error
-
-* live xcam update
-
-- JP/US stuff
--- "display both" option
-
-- multi-level sort (for players with ties)
 
 * deal with "special stars"
 -- lil penguin
@@ -47,49 +56,30 @@ MONTY BUGS
 -- validation for URL/note length
 -- get notes to display
 
-
-FRONTEND VALIDATION
-* update VS fix
-* guest user rename
-* error: duplicate user
-* warn: slower time input
-* warn: delete time
-
-BACKEND VALIDATION
-* canonical strat/variant keys
-* anti sql injection
-- general server side verification
-* correct "submit time" behavior
-
-INFO STORAGE
-* guest user split
-- video links
-- comments / notes
+OTHER SUBMISSION RELATED
+* allow time updates
+-- handle duplicate user nicknames
+-- canonical nicknames
+-- player colors
 
 STANDARDS/STATS
 - standards calculation/display
 - standards listing
 
-STRAT 
-- jp/us diff
-- strat variant viewing / multi-submission (ex: camera glitch)
-- open column
 
-WEIRD STARS
-- BitS columns
+CANCELLED
+# guest user split
 
-POLISH
-- mobile viewer
-- double board switcher for all-time board
 
+
+
+------------------------------------------------------------------------------
 
 ## VIEWER COLUMNS vs PURE COLUMNS ##
 
 on stars with more than one major strat differential, it's common to have
  strat combinations which while in principle are possible, rarely occur in
  practice. ex: front sub w/ chip clip, bits leftside tjwk w/ manamo.
-
-
 
 
 ## SPECIAL STARS ##

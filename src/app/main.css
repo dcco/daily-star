@@ -110,6 +110,16 @@ select {
 	text-align: center;
 }
 
+.footer {
+	margin-left: 12px;
+	margin-top: 6px;
+	margin-bottom: 6px;
+	text-align: left;
+	font-size: 11px;
+	font-style: italic;
+	color: #D0D0E0;
+}
+
 	/* toggles */
 
 .toggle-sidebar {
@@ -335,6 +345,10 @@ a {
 
 a:visited {
 	color: #603030;
+}
+
+.record-cell a {
+	color: #401020;
 }
 
 .dark-cell {

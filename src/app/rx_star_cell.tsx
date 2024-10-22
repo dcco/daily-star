@@ -96,7 +96,12 @@ export function RecordCell(props: RecordCellProps): React.ReactNode {
 	var timeDat = props.timeDat;
 	var verOffset = props.verOffset;
 	var [cellText, rawText] = timeDetail(timeDat, verOffset);
-	return (<td className="record-cell">{ cellText } { rawText }</td>);
+	// link if link is relevant
+	var timeNode: React.ReactNode = cellText;
+	if (timeDat !== null && timeDat.link !== null && timeDat.link !== "") {
+		timeNode = (<a href={ timeDat.link }>{ timeNode }</a>);
+	}
+	return (<td className="record-cell">{ timeNode } { rawText }</td>);
 }
 
 	/* name cell: displays a player name */

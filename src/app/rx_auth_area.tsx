@@ -152,7 +152,10 @@ export function AuthArea(props: AuthAreaProps): React.ReactNode
 
 	// display authorization state
 	var authNode: React.ReactNode = (<div className="login-cont">
-		<div className="login-button" onClick={ _signIn }>Log in</div>
+		<div className="row-wrap">
+			<div className="login-button" onClick={ _signIn }>Log in</div>
+			<div className="footer">Daily Star uses Gmail accounts to provide authentication. Your e-mail will not be publically displayed.</div>
+		</div>
 	</div>);
 
 	if (userId !== null) {
