@@ -1,7 +1,7 @@
 
 //import xcamData from './json/xcam_dump.json'
 //import rowData from './json/row_data.json'
-import { G_SHEET } from './xcam_wrap' 
+import { G_SHEET } from './api_xcam' 
 
 import { VerOffset, rawMS, newTimeDat, applyVerOffset } from "./time_dat"
 import { ColList, readRefMap } from "./org_strat_def"

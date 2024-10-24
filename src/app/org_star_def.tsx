@@ -174,6 +174,7 @@ function buildVarSpace(starDef: RawStarDef, stratName: string): VarSpace
 
 export type StarDef = StarDesc & {
 	"offset": OffsetDat,
+	"secondFlag": boolean,
 	"jp_set": StratSet,
 	"us_set": StratSet,
 	"open": string[]
@@ -215,10 +216,13 @@ function buildOffsetDat(offset: JSOffset): OffsetDat {
 
 function buildStarDef(stageId: number, starDef: RawStarDef): StarDef
 {
+	var secondFlag = false;
+
 	// process jp/us strat definitions
 	var jp_set: StratSet = {};
 	Object.entries(starDef.jp_set).map((_strat) => {
 		var [stratName, stratDef] = _strat;
+		if (stratDef.diff === 'second') secondFlag = true;
 		var vs = buildVarSpace(starDef, stratName);
 		var ver: Ver = (vs.verInfo === null) ? "both" : "jp";
 		jp_set[stratName] = buildStratDef(stratDef, "beg", ver, vs);
@@ -227,6 +231,7 @@ function buildStarDef(stageId: number, starDef: RawStarDef): StarDef
 	var us_set: StratSet = {};
 	Object.entries(starDef.us_set).map((_strat) => {
 		var [stratName, stratDef] = _strat;
+		if (stratDef.diff === 'second') secondFlag = true;
 		var vs = buildVarSpace(starDef, stratName);
 		var ver: Ver = (vs.verInfo === null) ? "both" : "us";
 		us_set[stratName] = buildStratDef(stratDef, "beg", ver, vs);
@@ -250,6 +255,7 @@ function buildStarDef(stageId: number, starDef: RawStarDef): StarDef
 		"id": starDef.id,
 		"def": starDef.def,
 		"offset": buildOffsetDat(starDef.offset),
+		"secondFlag": secondFlag,
 		"variants": starDef.variants,
 		"jp_set": jp_set,
 		"us_set": us_set,

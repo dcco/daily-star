@@ -1,8 +1,8 @@
 
 import React, { useState, useEffect } from 'react'
 
-import { PlayData } from './play_data'
-import { DailyStarObj, loadToday } from './season_wrap'
+import { PlayData, LocalPD } from './play_data'
+import { G_DAILY } from './api_season'
 import { AuthArea } from './rx_auth_area'
 import { DSEditBoard } from './rx_ds_edit_board'
 
@@ -20,31 +20,33 @@ import { DSEditBoard } from './rx_ds_edit_board'
 
 type DailyBoardProps = {
 	"playData": PlayData,
-	"setPlayData": (a: PlayData) => void
+	"setPlayData": (a: LocalPD) => void,
+	"reloadPlayData": () => void
 }
 
 export function DailyBoard(props: DailyBoardProps): React.ReactNode {
 	const playData = props.playData;
 	const setPlayData = props.setPlayData;
-
-	const [ds, setDSObj] = useState(null as DailyStarObj | null);
-	const [okFlag, setOkFlag] = useState(true);
+	const reloadPlayData = props.reloadPlayData;
+	const ds = G_DAILY;
+	//const [ds, setDSObj] = useState(null as DailyStarObj | null);
+	//const [okFlag, setOkFlag] = useState(true);
 
 	// initialize daily star data once
-	useEffect(() => {
+	/*useEffect(() => {
 		const f = async () => {
 			var newDS = await loadToday();
 			if (newDS === null) setOkFlag(false);
 			else setDSObj(newDS);
 		};
 		f();
-	}, []);
+	}, []);*/
 
 
 	// main display content toggle
 	var failCode = 0;
 	var mainNode: React.ReactNode = <div className="load-cont">Loading the Daily Star...</div>;
-	if (ds !== null) {
+	if (ds.status !== "null") {
 		if (ds.starGlob === undefined) {
 			if (ds.status === "early") mainNode = <div className="load-cont">Waiting for new season to start.</div>;
 			else failCode = 500;
@@ -53,9 +55,9 @@ export function DailyBoard(props: DailyBoardProps): React.ReactNode {
 			var starIdList = ds.starGlob.staridlist.split(',');
 			mainNode = <DSEditBoard day={ ds.dayOffset }
 				stageId={ ds.starGlob.stageid } starIdList={ starIdList }
-				playData={ playData } setPlayData={ setPlayData }/>;
+				playData={ playData } reloadPlayData={ reloadPlayData }/>;
 		}
-	} else if (!okFlag) failCode = 400;
+	}
 
 	// failure
 	if (failCode !== 0) {

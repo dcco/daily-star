@@ -76,7 +76,7 @@ export function TimeCell(props: TimeCellProps): React.ReactNode {
 	// link if link is relevant
 	var timeNode: React.ReactNode = cellText;
 	if (timeDat !== null && timeDat.link !== null && timeDat.link !== "") {
-		timeNode = (<a href={ timeDat.link }>{ timeNode }</a>);
+		timeNode = (<a href={ timeDat.link } target="_blank">{ timeNode }</a>);
 	}
 	// remaining annotations
 	var spanNodes: React.ReactNode[] = [];
@@ -99,7 +99,7 @@ export function RecordCell(props: RecordCellProps): React.ReactNode {
 	// link if link is relevant
 	var timeNode: React.ReactNode = cellText;
 	if (timeDat !== null && timeDat.link !== null && timeDat.link !== "") {
-		timeNode = (<a href={ timeDat.link }>{ timeNode }</a>);
+		timeNode = (<a href={ timeDat.link } target="_blank">{ timeNode }</a>);
 	}
 	return (<td className="record-cell">{ timeNode } { rawText }</td>);
 }

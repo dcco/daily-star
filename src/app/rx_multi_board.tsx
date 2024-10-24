@@ -2,12 +2,15 @@
 
 import React, { useState, useEffect } from 'react'
 import { newIdent, dropIdent } from './time_table'
-import { PlayData, newPlayData, userKeyPD, setNickMapPD, linkUserRemotePD, lookupNickPD } from './play_data'
-import { updateGSheet } from './xcam_wrap'
-import { loadNickMap, loadUserId, postNick } from './live_wrap'
+import { PlayData, LocalPD, newPlayData, userKeyPD, setNickMapPD,
+	linkUserRemotePD, setLocalPD } from './play_data'
+import { initGSheet } from './api_xcam'
+import { initDailyStar } from './api_season'
+import { loadNickMap, loadUserId, postNick } from './api_live'
 //import { EditBoard } from './rx_edit_board'
 import { DailyBoard } from './rx_daily_board'
-import { ViewBoard } from './rx_view_board'
+import { HistoryBoard } from './rx_history_board'
+import { XcamBoard } from './rx_xcam_board'
 
 type MenuOptProps = {
 	"id": number,
@@ -29,34 +32,51 @@ export function MultiBoard(props: {}): React.ReactNode
 {
 	const [menuId, setMenuId] = useState(0);
 	const [playData, setPlayData] = useState(newPlayData());
-	const [reloadFlag, setReloadFlag] = useState(false);
-	
-	/* 
-		whenever the player data is changed, synchronizes nickname information
-	*/
-	const updatePlayData = async (newData: PlayData) => {
-		// if user is the same as before, post nickname
-		if (userKeyPD(playData) === userKeyPD(newData) && newData.userId !== null) {
-			var nick = lookupNickPD(newData, dropIdent(newData.userId));
-			if (nick !== null) await postNick(newData.userId, nick);
-		}
-		// sync player with remote id whenever possible
-		if (newData.userId !== null) {
-			var nId = await loadUserId(newData.userId);
+	const [playReload, setPlayReload] = useState(playData.local as LocalPD | null);
+	const [initReload, setInitReload] = useState(0);
+
+	// triggered by sub-elements to load player data while they load local data
+	const reloadPlayData = async (ld: LocalPD | null) => {
+		// reload all nickname data
+		var newData = setNickMapPD(playData, await loadNickMap());
+		if (ld !== null) newData.local = ld;
+		// sync player with remote id
+		if (newData.local.userId !== null) {
+			var nId = await loadUserId(newData.local.userId);
 			if (nId !== null) newData = linkUserRemotePD(newData, nId);
 		}
-		// finalize new data
 		setPlayData(newData);
 	};
 
-	// initialize xcam sheet + player data once
+	// triggered by sub-elements when the player data itself is modified
+	const updatePlayData = (ld: LocalPD) => {
+		// update player data with whatever local changes
+		setPlayData(setLocalPD(playData, ld));
+		// if dirty flag is set, post local changes (only relevant to new nickname)
+		if (ld.dirtyFlag && ld.userId !== null) {
+			var nick = ld.nick;
+			if (nick !== null) postNick(ld.userId, nick);
+		}
+		// reload with the most recent player data, avoids weird race conditions
+		setPlayReload(ld);
+	};
+
+	// single init data (xcam sheet, daily star season/history state)
 	useEffect(() => {
-		updateGSheet(setReloadFlag);
-		const _load = async () => {
-			updatePlayData(setNickMapPD(playData, await loadNickMap()));
-		};
-		_load();
-	}, [reloadFlag]);
+		initGSheet(() => setInitReload(1));
+		initDailyStar(() => setInitReload(2));
+		reloadPlayData(null);
+			//var newData = setNickMapPD(playData, await loadNickMap());
+			///updatePlayData(newData);
+	}, []);
+
+	// trigger reload on local player data change
+	useEffect(() => {
+		if (playReload !== null) {
+			reloadPlayData(playReload);
+			setPlayReload(null);
+		}
+	}, [playReload]);
 
 	// re-initialize player data on changes
 	/*useEffect(() => {
@@ -66,16 +86,20 @@ export function MultiBoard(props: {}): React.ReactNode
 	// select board
 	var board = null;
 	if (menuId === 0) {
-		board = <DailyBoard playData={ playData } setPlayData={ (pd) => updatePlayData(pd) }/>;
+		board = <DailyBoard playData={ playData }
+			reloadPlayData={ () => reloadPlayData(null) } setPlayData={ updatePlayData }/>;
 	} else if (menuId === 1) {
-		board = <ViewBoard/>;
+		board = <HistoryBoard/>;
+	} else if (menuId === 2) {
+		board = <XcamBoard/>;
 	}
 
 	return (
 		<div className="content">
 			<div className="menu-cont">
 				<MenuOpt id={ 0 } selId={ menuId } setSelId={ setMenuId }>Daily</MenuOpt>
-				<MenuOpt id={ 1 } selId={ menuId } setSelId={ setMenuId }>All-Time</MenuOpt>
+				<MenuOpt id={ 1 } selId={ menuId } setSelId={ setMenuId }>History</MenuOpt>
+				<MenuOpt id={ 2 } selId={ menuId } setSelId={ setMenuId }>Xcam Sheet</MenuOpt>
 			</div>
 			<div className="sep"><hr/></div>
 			{ board }

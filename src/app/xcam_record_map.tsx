@@ -1,6 +1,6 @@
 
 //import rowData from './json/row_data.json'
-import { G_SHEET } from './xcam_wrap'
+import { G_SHEET } from './api_xcam'
 
 import { TimeDat, VerOffset, rawMS, newTimeDat, maxTimeDat, applyVerOffset } from './time_dat'
 import { zeroRowDef, begRowDef } from './row_def'

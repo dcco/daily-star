@@ -108,7 +108,8 @@ export function EditSubmitArea(props: ESAProps): React.ReactNode
 		// create the option nodes, using selVar to highlight
 		return <OptionGroup title={ title } connected={ true } active={ dynFlag }
 			textList={ nameList } selList={ selList.map((i) => i.toString()) } curSel={ selId }
-			actFun={ (i) => editDat((dat) => { setVarDraftDat(dat, varGroup.name, selList[i]); return dat; }) }/>;
+			actFun={ (i) => editDat((dat) => { setVarDraftDat(dat, varGroup.name, selList[i]); return dat; }) }
+			key={ i }/>;
 	});
 
 	// delete button (if relevant)

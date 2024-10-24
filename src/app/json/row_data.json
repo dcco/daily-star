@@ -67,7 +67,7 @@
     },
     "21": {
       "name": "Standard",
-      "record": "1:40.63",
+      "record": "1:40.33",
       "ver": "jp"
     },
     "22": {
@@ -515,859 +515,859 @@
       "record": "14.53",
       "ver": "us"
     },
-    "180": {
+    "174": {
+      "name": "Box Triple",
+      "record": "22.46",
+      "ver": "us"
+    },
+    "181": {
       "name": "No Ledgegrab",
       "record": "18.56",
       "ver": "us"
     },
-    "181": {
+    "182": {
       "name": "Right GP Kill",
       "record": "18.16",
       "ver": "us"
     },
-    "182": {
+    "183": {
       "name": "Double Burn",
       "record": "17.96",
       "ver": "us"
     },
-    "183": {
+    "184": {
       "name": "Ledgegrab",
       "record": "24.66",
       "ver": "us"
     },
-    "184": {
+    "185": {
       "name": "No Ledgegrab",
       "record": "24.03",
       "ver": "us"
     },
-    "185": {
+    "186": {
       "name": "Rightside",
       "record": "22.83",
       "ver": "us"
     },
-    "186": {
+    "187": {
       "name": "Rightside",
       "record": "22.73",
       "ver": "us"
     },
-    "187": {
+    "188": {
       "name": "Standard",
       "record": "13.90",
       "ver": "us"
     },
-    "188": {
+    "189": {
       "name": "Beginner",
       "record": "14.60",
       "ver": "us"
     },
-    "189": {
+    "190": {
       "name": "3x LJ",
       "record": "14.23",
       "ver": "us"
     },
-    "190": {
+    "191": {
       "name": "Standard",
       "record": "11.60",
       "ver": "us"
     },
-    "191": {
+    "192": {
       "name": "TJ Strat",
       "record": "10.80",
       "ver": "us"
     },
-    "192": {
+    "193": {
       "name": "2x LJ Sidehop",
       "record": "12.43",
       "ver": "us"
     },
-    "193": {
+    "194": {
       "name": "LJ JD Sidehop",
       "record": "12.16",
       "ver": "us"
     },
-    "194": {
+    "195": {
       "name": "Pro Boost",
       "record": "17.43",
       "ver": "us"
     },
-    "196": {
+    "197": {
       "name": "Akira Boost",
       "record": "18.46",
       "ver": "us"
     },
-    "198": {
+    "199": {
       "name": "Double Pole Skip",
       "record": "17.00",
       "ver": "us"
     },
-    "201": {
+    "202": {
       "name": "Standard",
       "record": "1:08.40",
       "ver": "jp"
     },
-    "203": {
+    "204": {
       "name": "Standard",
       "record": "1:08.96",
       "ver": "us"
     },
-    "207": {
+    "208": {
       "name": "Standard",
       "record": "18.66",
       "ver": "us"
     },
-    "215": {
+    "216": {
       "name": "Standard",
       "record": "16.33",
       "ver": "us"
     },
-    "216": {
+    "217": {
       "name": "Speed Pres",
       "record": "15.76",
       "ver": "us"
     },
-    "217": {
+    "218": {
       "name": "Speed Pres",
       "record": "16.03",
       "ver": "us"
     },
-    "218": {
+    "219": {
       "name": "Speed Pres",
       "record": "15.83",
       "ver": "us"
     },
-    "219": {
+    "220": {
       "name": "Flyguyless",
       "record": "13.86",
       "ver": "us"
     },
-    "220": {
+    "221": {
       "name": "Standard",
       "record": "6.73",
       "ver": "us"
     },
-    "221": {
+    "222": {
       "name": "Pillarless",
       "record": "15.20",
       "ver": "us"
     },
-    "222": {
+    "223": {
       "name": "SJ Pless",
       "record": "13.96",
       "ver": "us"
     },
-    "223": {
+    "224": {
       "name": "Tama Pless",
       "record": "12.80",
       "ver": "us"
     },
-    "224": {
-      "name": "Solo Secrets",
-      "record": "27.70",
-      "ver": "us"
-    },
     "225": {
       "name": "Solo Secrets",
-      "record": "26.86",
+      "record": "44.80",
       "ver": "us"
     },
     "226": {
       "name": "Solo Secrets",
-      "record": "25.20",
+      "record": "20.36",
       "ver": "us"
     },
-    "228": {
+    "227": {
+      "name": "Solo Secrets",
+      "record": "47.46",
+      "ver": "us"
+    },
+    "229": {
       "name": "Topless",
-      "record": "44.80",
+      "record": "6.23",
       "ver": "jp"
     },
-    "230": {
+    "231": {
       "name": "Topless",
-      "record": "47.50",
-      "ver": "us"
-    },
-    "233": {
-      "name": "Wall Bounce",
-      "record": "48.13",
-      "ver": "us"
-    },
-    "234": {
-      "name": "No Wall Bounce",
       "record": "50.80",
       "ver": "us"
     },
+    "234": {
+      "name": "Wall Bounce",
+      "record": "27.70",
+      "ver": "us"
+    },
     "235": {
-      "name": "Z-Slide",
-      "record": "42.26",
+      "name": "No Wall Bounce",
+      "record": "26.86",
       "ver": "us"
     },
     "236": {
       "name": "Z-Slide",
-      "record": "43.80",
+      "record": "25.20",
       "ver": "us"
     },
     "237": {
+      "name": "Z-Slide",
+      "record": "14.20",
+      "ver": "us"
+    },
+    "238": {
       "name": "Standard",
       "record": "1:45.53",
       "ver": "jp"
     },
-    "239": {
+    "240": {
       "name": "Standard",
       "record": "1:48.06",
       "ver": "us"
     },
-    "249": {
+    "250": {
       "name": "Back Sub",
       "record": "32.26",
       "ver": "us"
     },
-    "250": {
+    "251": {
       "name": "Front Sub",
       "record": "34.20",
       "ver": "us"
     },
-    "251": {
+    "252": {
       "name": "Front Sub",
       "record": "31.36",
       "ver": "us"
     },
-    "252": {
+    "253": {
       "name": "Standard",
       "record": "29.90",
       "ver": "us"
     },
-    "253": {
+    "254": {
       "name": "Standard",
       "record": "1:48.83",
       "ver": "jp"
     },
-    "254": {
+    "255": {
       "name": "Standard",
       "record": "1:55.96",
       "ver": "us"
     },
-    "258": {
+    "259": {
       "name": "Standard",
       "record": "35.30",
       "ver": "us"
     },
-    "259": {
+    "260": {
       "name": "Chip Clip",
       "record": "34.56",
       "ver": "us"
     },
-    "260": {
+    "261": {
       "name": "Chip Clip",
       "record": "35.53",
       "ver": "us"
     },
-    "261": {
+    "262": {
       "name": "Standard",
       "record": "14.16",
       "ver": "us"
     },
-    "262": {
+    "263": {
       "name": "Standard",
       "record": "41.73",
       "ver": "us"
     },
-    "263": {
+    "264": {
       "name": "Chip Clip",
       "record": "40.96",
       "ver": "us"
     },
-    "264": {
+    "265": {
       "name": "Chip Clip",
       "record": "42.52",
       "ver": "us"
     },
-    "271": {
+    "272": {
       "name": "Standard",
       "record": "9.33",
       "ver": "us"
     },
-    "272": {
+    "273": {
       "name": "Standard",
       "record": "9.80",
       "ver": "us"
     },
-    "273": {
+    "274": {
       "name": "Standard",
       "record": "12.50",
       "ver": "us"
     },
-    "274": {
+    "275": {
       "name": "Crouch Kill",
       "record": "12.30",
       "ver": "us"
     },
-    "275": {
+    "276": {
       "name": "Standard",
       "record": "5.40",
       "ver": "us"
     },
-    "276": {
+    "277": {
       "name": "TJ Strat",
       "record": "5.53",
       "ver": "us"
     },
-    "277": {
+    "278": {
       "name": "Standard",
       "record": "13.43",
       "ver": "us"
     },
-    "278": {
+    "279": {
       "name": "Solo Reds",
       "record": "30.80",
       "ver": "us"
     },
-    "279": {
+    "280": {
       "name": "Standard",
       "record": "1:36.16",
       "ver": "jp"
     },
-    "280": {
+    "281": {
       "name": "Standard",
       "record": "1:38.33",
       "ver": "us"
     },
-    "283": {
+    "284": {
       "name": "Standard",
       "record": "16.53",
       "ver": "us"
     },
-    "292": {
+    "293": {
       "name": "Standard",
       "record": "13.60",
       "ver": "us"
     },
-    "293": {
+    "294": {
       "name": "Cage TJWK",
       "record": "14.30",
       "ver": "us"
     },
-    "294": {
+    "295": {
       "name": "Purple Switch",
       "record": "15.60",
       "ver": "us"
     },
-    "295": {
+    "296": {
       "name": "Solo Secrets",
       "record": "32.06",
       "ver": "jp"
     },
-    "296": {
+    "297": {
       "name": "Solo Secrets",
       "record": "32.20",
       "ver": "us"
     },
-    "298": {
+    "299": {
       "name": "Standard",
       "record": "1:10.40",
       "ver": "jp"
     },
-    "299": {
+    "300": {
       "name": "Standard",
       "record": "1:10.73",
       "ver": "us"
     },
-    "301": {
+    "302": {
       "name": "Cage TJWK",
       "record": "17.73",
       "ver": "us"
     },
-    "302": {
+    "303": {
       "name": "Early Box Break",
       "record": "17.06",
       "ver": "us"
     },
-    "303": {
+    "304": {
       "name": "Purple Switch",
       "record": "20.76",
       "ver": "us"
     },
-    "304": {
+    "305": {
       "name": "Standard",
-      "record": "1:28.26",
+      "record": "1:28.20",
       "ver": "jp"
     },
-    "305": {
+    "306": {
       "name": "Standard",
       "record": "1:29.63",
       "ver": "us"
     },
-    "308": {
+    "309": {
       "name": "CCW",
       "record": "40.73",
       "ver": "us"
     },
-    "310": {
+    "311": {
       "name": "CW",
       "record": "39.80",
       "ver": "us"
     },
-    "318": {
+    "319": {
       "name": "Log WK",
       "record": "15.93",
       "ver": "us"
     },
-    "319": {
+    "320": {
       "name": "Log Firsty",
       "record": "15.66",
       "ver": "us"
     },
-    "320": {
+    "321": {
       "name": "Log WK",
       "record": "33.96",
       "ver": "jp"
     },
-    "321": {
+    "322": {
       "name": "Log WK",
       "record": "34.66",
       "ver": "us"
     },
-    "322": {
+    "323": {
       "name": "Log Firsty",
       "record": "33.30",
       "ver": "jp"
     },
-    "323": {
+    "324": {
       "name": "Log Firsty",
       "record": "33.76",
       "ver": "us"
     },
-    "324": {
+    "325": {
       "name": "Standard",
       "record": "22.96",
       "ver": "us"
     },
-    "325": {
+    "326": {
       "name": "Standard",
       "record": "23.63",
       "ver": "us"
     },
-    "326": {
+    "327": {
       "name": "Standard",
       "record": "1:34.03",
       "ver": "jp"
     },
-    "328": {
+    "329": {
       "name": "Standard",
       "record": "1:35.96",
       "ver": "us"
     },
-    "331": {
+    "332": {
       "name": "Late Red",
       "record": "1:34.83",
       "ver": "jp"
     },
-    "333": {
+    "334": {
       "name": "Late Red",
       "record": "1:35.96",
       "ver": "us"
     },
-    "337": {
+    "338": {
       "name": "Breezeless",
       "record": "7.30",
       "ver": "us"
     },
-    "338": {
+    "339": {
       "name": "Slowturn Bless",
       "record": "7.36",
       "ver": "us"
     },
-    "339": {
+    "340": {
       "name": "Breeze",
       "record": "9.40",
       "ver": "us"
     },
-    "340": {
+    "341": {
       "name": "Log WK",
       "record": "14.16",
       "ver": "us"
     },
-    "341": {
+    "342": {
       "name": "Log Firsty",
       "record": "13.86",
       "ver": "us"
     },
-    "342": {
+    "343": {
       "name": "Standard",
       "record": "10.46",
       "ver": "us"
     },
-    "348": {
+    "349": {
       "name": "CCW",
       "record": "23.33",
       "ver": "us"
     },
-    "349": {
+    "350": {
       "name": "CW",
       "record": "23.36",
       "ver": "us"
     },
-    "351": {
+    "352": {
       "name": "Rightside Clip",
       "record": "19.76",
       "ver": "us"
     },
-    "353": {
+    "354": {
       "name": "Leftside Clip",
       "record": "18.46",
       "ver": "us"
     },
-    "355": {
+    "356": {
       "name": "No Clip",
       "record": "20.33",
       "ver": "us"
     },
-    "358": {
+    "359": {
       "name": "Standard",
       "record": "46.96",
       "ver": "jp"
     },
-    "359": {
+    "360": {
       "name": "Standard",
       "record": "47.30",
       "ver": "us"
     },
-    "360": {
+    "361": {
       "name": "Standard",
       "record": "47.30",
       "ver": "jp"
     },
-    "361": {
+    "362": {
       "name": "Standard",
       "record": "47.36",
       "ver": "us"
     },
-    "362": {
+    "363": {
       "name": "Standard",
       "record": "18.63",
       "ver": "us"
     },
-    "363": {
+    "364": {
       "name": "Slide Strat",
       "record": "18.36",
       "ver": "us"
     },
-    "364": {
+    "365": {
       "name": "Solo Reds",
       "record": "26.86",
       "ver": "us"
     },
-    "367": {
+    "368": {
       "name": "16c Start",
       "record": "1:23.26",
       "ver": "jp"
     },
-    "369": {
+    "370": {
       "name": "16c Start",
       "record": "1:27.06",
       "ver": "us"
     },
-    "373": {
+    "374": {
       "name": "13c Start + Pole",
       "record": "1:25.73",
       "ver": "jp"
     },
-    "374": {
+    "375": {
       "name": "13c Start + Pole",
       "record": "1:28.70",
       "ver": "us"
     },
-    "377": {
+    "378": {
       "name": "11c Start + Pole",
       "record": "1:26.66",
       "ver": "jp"
     },
-    "378": {
+    "379": {
       "name": "11c Start + Pole",
       "record": "1:28.70",
       "ver": "us"
     },
-    "381": {
+    "382": {
       "name": "Standard",
       "record": "41.93",
       "ver": "jp"
     },
-    "383": {
+    "384": {
       "name": "Standard",
       "record": "43.43",
       "ver": "us"
     },
-    "391": {
+    "392": {
       "name": "Flippies",
       "record": "10.43",
       "ver": "us"
     },
-    "392": {
+    "393": {
       "name": "Cog Rollout",
       "record": "10.13",
       "ver": "us"
     },
-    "393": {
+    "394": {
       "name": "Time Stop",
       "record": "11.33",
       "ver": "us"
     },
-    "394": {
+    "395": {
       "name": "Flippies",
       "record": "11.70",
       "ver": "us"
     },
-    "395": {
+    "396": {
       "name": "Cog Rollout",
       "record": "11.36",
       "ver": "us"
     },
-    "396": {
+    "397": {
       "name": "Time Stop",
       "record": "11.30",
       "ver": "us"
     },
-    "397": {
+    "398": {
       "name": "Flippies",
       "record": "8.36",
       "ver": "us"
     },
-    "398": {
+    "399": {
       "name": "Time Stop",
       "record": "10.16",
       "ver": "us"
     },
-    "399": {
+    "400": {
       "name": "Standard",
       "record": "22.63",
       "ver": "us"
     },
-    "400": {
+    "401": {
       "name": "Standard",
       "record": "56.90",
       "ver": "jp"
     },
-    "401": {
+    "402": {
       "name": "Standard",
       "record": "56.03",
       "ver": "us"
     },
-    "404": {
+    "405": {
       "name": "Safety Red",
       "record": "55.80",
       "ver": "jp"
     },
-    "405": {
+    "406": {
       "name": "Safety Red",
       "record": "56.96",
       "ver": "us"
     },
-    "408": {
+    "409": {
       "name": "Time Stop",
       "record": "15.10",
       "ver": "us"
     },
-    "409": {
+    "410": {
       "name": "Moving Moving",
       "record": "16.96",
       "ver": "us"
     },
-    "410": {
+    "411": {
       "name": "Time Stop",
       "record": "14.63",
       "ver": "us"
     },
-    "411": {
+    "412": {
       "name": "Time Stop",
       "record": "14.43",
       "ver": "us"
     },
-    "412": {
+    "413": {
       "name": "Time Stop",
       "record": "14.76",
       "ver": "us"
     },
-    "413": {
+    "414": {
       "name": "Time Stop",
       "record": "14.46",
       "ver": "us"
     },
-    "414": {
+    "415": {
       "name": "Hanoji Reds",
       "record": "15.06",
       "ver": "us"
     },
-    "415": {
+    "416": {
       "name": "Moving Reds",
       "record": "14.36",
       "ver": "us"
     },
-    "423": {
+    "424": {
       "name": "Lakitu Bounce",
       "record": "18.10",
       "ver": "us"
     },
-    "425": {
+    "426": {
       "name": "Lakitu Bounce",
       "record": "18.56",
       "ver": "us"
     },
-    "427": {
+    "428": {
       "name": "Sideflip Bounce",
       "record": "18.80",
       "ver": "us"
     },
-    "429": {
+    "430": {
       "name": "Assless",
       "record": "15.73",
       "ver": "us"
     },
-    "431": {
+    "432": {
       "name": "Carpetless",
       "record": "36.80",
       "ver": "us"
     },
-    "432": {
+    "433": {
       "name": "JD Ending",
       "record": "35.83",
       "ver": "us"
     },
-    "436": {
+    "437": {
       "name": "Carpetful",
       "record": "2:44.56",
       "ver": "jp"
     },
-    "437": {
+    "438": {
       "name": "Carpetful",
       "record": "2:46.70",
       "ver": "us"
     },
-    "438": {
+    "439": {
       "name": "No Cutscene",
       "record": "2:36.56",
       "ver": "jp"
     },
-    "439": {
+    "440": {
       "name": "No Cutscene",
       "record": "2:35.40",
       "ver": "us"
     },
-    "440": {
+    "441": {
       "name": "Kick Back End",
       "record": "21.66",
       "ver": "us"
     },
-    "441": {
+    "442": {
       "name": "Kick Recoil End",
       "record": "21.80",
       "ver": "us"
     },
-    "442": {
+    "443": {
       "name": "Sideflip",
       "record": "13.03",
       "ver": "us"
     },
-    "443": {
+    "444": {
       "name": "Pro Strat",
       "record": "12.73",
       "ver": "us"
     },
-    "444": {
+    "445": {
       "name": "Standard",
       "record": "12.80",
       "ver": "us"
     },
-    "445": {
+    "446": {
       "name": "Low Dive",
       "record": "12.60",
       "ver": "us"
     },
-    "446": {
+    "447": {
       "name": "Lakitu Bounce",
       "record": "31.23",
       "ver": "us"
     },
-    "447": {
+    "448": {
       "name": "Lakitu Bounce",
       "record": "31.00",
       "ver": "us"
     },
-    "448": {
+    "449": {
       "name": "Lakitu Bounce",
       "record": "31.76",
       "ver": "us"
     },
-    "449": {
+    "450": {
       "name": "Lakitu Bounce",
       "record": "31.73",
       "ver": "us"
     },
-    "450": {
+    "451": {
       "name": "Sideflip Bounce",
       "record": "32.06",
       "ver": "us"
     },
-    "451": {
+    "452": {
       "name": "Sideflip Bounce",
       "record": "31.66",
       "ver": "us"
     },
-    "452": {
+    "453": {
       "name": "Assless",
       "record": "29.06",
       "ver": "us"
     },
-    "453": {
+    "454": {
       "name": "Assless",
       "record": "28.23",
       "ver": "us"
     },
-    "454": {
+    "455": {
       "name": "Standard",
       "record": "1:33.90",
       "ver": "jp"
     },
-    "455": {
+    "456": {
       "name": "Standard",
       "record": "1:38.83",
       "ver": "us"
     },
-    "456": {
+    "457": {
       "name": "No Cutscene",
       "record": "1:23.33",
       "ver": "jp"
     },
-    "457": {
+    "458": {
       "name": "No Cutscene",
       "record": "1:22.23",
       "ver": "us"
     },
-    "461": {
-      "name": "Standard",
-      "record": "19.73",
-      "ver": "us"
-    },
     "462": {
-      "name": "Switch Rollout",
-      "record": "19.20",
+      "name": "Standard",
+      "record": "19.46",
       "ver": "us"
     },
     "463": {
+      "name": "Switch Rollout",
+      "record": "19.06",
+      "ver": "us"
+    },
+    "464": {
       "name": "Standard",
       "record": "29.50",
       "ver": "us"
     },
-    "464": {
+    "465": {
       "name": "Expert",
       "record": "28.40",
       "ver": "us"
     },
-    "465": {
+    "466": {
       "name": "No Slope Clip",
       "record": "29.63",
-      "ver": "us"
-    },
-    "466": {
-      "name": "Box Triple",
-      "record": "22.46",
       "ver": "us"
     },
     "467": {
@@ -1377,7 +1377,7 @@
     },
     "468": {
       "name": "Left Side",
-      "record": "20.60",
+      "record": "20.50",
       "ver": "us"
     },
     "469": {
@@ -1487,7 +1487,7 @@
     },
     "491": {
       "name": "Salt Flip (Pipe)",
-      "record": "47.46",
+      "record": "47.43",
       "ver": "jp"
     },
     "492": {
@@ -2114,12 +2114,12 @@
     },
     "133": {
       "name": "Nuts Pless",
-      "record": "25.16",
+      "record": "45.23",
       "ver": "us"
     },
     "134": {
       "name": "Wall Bounce",
-      "record": "45.23",
+      "record": "25.16",
       "ver": "us"
     },
     "135": {

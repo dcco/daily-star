@@ -1,25 +1,34 @@
 
-import React, { useState, useEffect } from 'react'
-import orgData from './json/org_data.json'
-
-import { filterVarColList } from './org_strat_def'
-import { newFilterState, copyFilterState, fullFilterState,
-	orgStarDef, verOffsetStarDef, hasExtStarDef, colListStarDef } from './org_star_def'
+import React, { useState } from 'react'
+/*
+import { , ,
+	orgStarDef,  } from './org_star_def'
+*/
+import { VerOffset } from './time_dat'
+import { ColList, filterVarColList } from './org_strat_def'
+import { StarDef, FilterState, newFilterState, copyFilterState, fullFilterState,
+	verOffsetStarDef, hasExtStarDef, colListStarDef } from './org_star_def'
+import { TimeTable } from './time_table'
 import { newPlayData } from './play_data'
-import { xcamTimeTable } from './xcam_time_table'
-import { xcamRecordMap, sortColList } from './xcam_record_map'
 import { openListColConfig } from './col_config'
-//import { hasExt, addTimePool, buildTimeTable } from './timetable'
-//import { rawMS, formatFrames, addFrames, readVerOffset, applyVerOffset,
-//	stratRowVer, starVerData, orgRecordMap, applyRecordMap } from './vercalc'
+import { xcamRecordMap, sortColList } from './xcam_record_map'
 import { StarTable } from './rx_star_table'
-import { AuthArea } from './rx_auth_area'
-import { ExtToggle } from './rx_ext_toggle'
 import { VerToggle } from './rx_ver_toggle'
+import { ExtToggle } from './rx_ext_toggle'
 
-export function ViewBoard(props: {}): React.ReactNode {
+export type TimeTableFun = ((colList: ColList, fs: FilterState, vs: VerOffset) => TimeTable);
+
+type ViewBoardProps = {
+	stageId: number,
+	starDef: StarDef,
+	ttFun: TimeTableFun,
+	cornerNode: React.ReactNode,
+	headerNode: React.ReactNode
+}
+
+export function ViewBoard(props: ViewBoardProps): React.ReactNode {
 	// star state
-	const [stageId, setStageId] = useState(0);
+/*	const [stageId, setStageId] = useState(0);
 	const [starIdCache, setStarIdCache] = useState(Array(orgData.length).fill(0));
 	const starId = starIdCache[stageId];
 	var starDef = orgStarDef(stageId, starId);
@@ -32,7 +41,10 @@ export function ViewBoard(props: {}): React.ReactNode {
 	const changeStar = (i: number) => {
 		starIdCache[stageId] = i;
 		setStarIdCache(starIdCache.map((x) => x));
-	};
+	};*/
+	var stageId = props.stageId;
+	var starDef = props.starDef;
+	var ttFun = props.ttFun;
 
 	// filter state
 	const [fs, setFS] = useState(newFilterState(false));
@@ -53,7 +65,7 @@ export function ViewBoard(props: {}): React.ReactNode {
 	}
 
 	// stage select option nodes
-	var stageOptNodes = orgData.map((stage, i) =>
+	/*var stageOptNodes = orgData.map((stage, i) =>
 		<option key={ stage.name } value={ i }>{ stage.name }</option>
 	);
 
@@ -63,7 +75,7 @@ export function ViewBoard(props: {}): React.ReactNode {
 		var flag = (starIdCache[stageId] === i) ? "true" : "false";
 		return <div key={ star.name } className="star-name" data-sel={ flag }
 			onClick={ () => { changeStar(i) } }>{ star.name }</div>;
-	});
+	});*/
 
 	// version toggle node (enable when relevant)
 	var verToggle: React.ReactNode = <div></div>;
@@ -93,7 +105,8 @@ export function ViewBoard(props: {}): React.ReactNode {
 
 	// load time table from xcam data
 	var colList = colListStarDef(starDef, fs);
-	var timeTable = xcamTimeTable(colList, fs, verOffset);
+	var timeTable = ttFun(colList, fs, verOffset);
+	//var timeTable = xcamTimeTable(colList, fs, verOffset);
 	
 	// add sort record + relevant records
 	var sortRM = xcamRecordMap(colList, fullFilterState(), verOffset);
@@ -106,31 +119,37 @@ export function ViewBoard(props: {}): React.ReactNode {
 	var mainColList = filterVarColList(colList, null);
 	var mainCFG = openListColConfig(mainColList, starDef.open);
 	tableList.push(<StarTable cfg={ mainCFG } playData={ newPlayData() } timeTable={ timeTable } verOffset={ verOffset }
-		recordMap={ relRM } key={ stageId + "_" + starId + "_0" }></StarTable>);
+		recordMap={ relRM } key={ stageId + "_" + starDef.name + "_0" }></StarTable>);
 
 	var varColList = filterVarColList(colList, 1);
 	if (varColList.length > 0) {
 		var varCFG = openListColConfig(varColList, starDef.open);
 		tableList.push(<StarTable cfg={ varCFG } playData={ newPlayData() } timeTable={ timeTable } verOffset={ verOffset }
-			recordMap={ relRM }	key={ stageId + "_" + starId + "_1" }></StarTable>);
+			recordMap={ relRM }	key={ stageId + "_" + starDef.name + "_1" }></StarTable>);
 	}	
-
-	return (<div>
-		<div className="row-wrap">
-			<div className="stage-select">
+/*
+<div className="stage-select">
 				<select value={ stageId }
 					onChange={ changeStage }>
 					{ stageOptNodes }
 				</select>
 			</div>
+
+
+		<div className="star-select">
+			{ starBtnNodes }
+		</div>
+*/
+
+	return (<div>
+		<div className="row-wrap">
+			{ props.cornerNode }
 			<div className="toggle-sidebar">
 				{ extToggle }
 				{ verToggle }
 			</div>
 		</div>
-		<div className="star-select">
-			{ starBtnNodes }
-		</div>
+		{ props.headerNode }
 		{ varCont }
 		{ tableList }
 	</div>);

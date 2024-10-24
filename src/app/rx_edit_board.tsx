@@ -6,8 +6,8 @@ import { newExtFilterState, copyFilterState,
 	orgStarDef, verOffsetStarDef } from './org_star_def'
 //import { newFilterState, orgColList, filterVarColList } from "./org_star_def"
 import { Ident } from './time_table'
-import { PlayData } from './play_data'
-import { postNick } from './live_wrap'
+import { PlayData, LocalPD, } from './play_data'
+import { postNick } from './api_live'
 import { LiveStarTable } from './rx_live_table'
 import { VerToggle } from './rx_ver_toggle'
 import { AuthArea } from './rx_auth_area'
@@ -22,11 +22,13 @@ import { AuthArea } from './rx_auth_area'
 
 type EditBoardProps = {
 	"playData": PlayData,
-	"setPlayData": (a: PlayData) => void
+	"reloadPlayData": () => void,
+	"setPlayData": (a: LocalPD) => void
 }
 
 export function EditBoard(props: EditBoardProps): React.ReactNode {
 	const playData = props.playData;
+	const reloadPlayData = props.reloadPlayData;
 	const setPlayData = props.setPlayData;
 
 	// star state
@@ -140,8 +142,8 @@ export function EditBoard(props: EditBoardProps): React.ReactNode {
 			{ starBtnNodes }
 		</div>
 		{ varCont }
-		<LiveStarTable stageId={ stageId } starId={ starId } today={ false } fs={ fs }
-			playData={ playData } setPlayData={ setPlayData } key={ stageId + "_" + starId }/>
+		<LiveStarTable stageId={ stageId } starId={ starId } today={ false } fs={ fs } varFlag={ null }
+			playData={ playData } reloadPlayData={ reloadPlayData } key={ stageId + "_" + starId }/>
 		<div className="sep"><hr/></div>
 		<AuthArea playData={ playData } setPlayData={ setPlayData }/>
 		</div>

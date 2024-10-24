@@ -4,7 +4,7 @@ import { GoogleAuthProvider, getAuth, onIdTokenChanged, signInWithPopup } from '
 
 import { DropDownImgMenu } from './rx_dropdown_menu'
 import { AuthIdent, newAuthIdent, dropIdent } from './time_table'
-import { PlayData, setUserPD, setUserNickPD, lookupNickPD, strIdNickPD } from './play_data'
+import { PlayData, LocalPD, setUserLD, setUserNickLD, strIdNickPD } from './play_data'
 
 	// firebase initialization
 
@@ -43,7 +43,7 @@ type NickInputProps = {
 	/*"setNick": (a: string) => void,
 	"nickMap": NickMap*/
 	"playData": PlayData,
-	"setPlayData": (a: PlayData) => void
+	"setPlayData": (a: LocalPD) => void
 };
 
 export function NickInput(props: NickInputProps): React.ReactNode
@@ -59,7 +59,7 @@ export function NickInput(props: NickInputProps): React.ReactNode
 	});
 
 	const startEdit = () => {
-		var _nick = lookupNickPD(playData, dropIdent(userId));
+		var _nick = playData.local.nick;
 		if (_nick === null) _nick = "";
 		setEState({ "active": true, "nick": _nick });
 	};
@@ -75,7 +75,7 @@ export function NickInput(props: NickInputProps): React.ReactNode
 			return;
 		}
 		// otherwise
-		if (v !== "" && userId !== null) { setPlayData(setUserNickPD(playData, v));	}
+		if (v !== "" && userId !== null) { setPlayData(setUserNickLD(playData.local, v, true));	}
 		setEState({ "active": false, "nick": v });
 	}
 
@@ -90,7 +90,7 @@ export function NickInput(props: NickInputProps): React.ReactNode
 		}*/
 		var nick = "---";
 		var nState = "none";
-		var nDat = lookupNickPD(playData, dropIdent(userId));
+		var nDat = playData.local.nick;
 		if (nDat !== null && nDat !== "") {
 			nick = nDat;
 			nState = "display";
@@ -122,13 +122,13 @@ type AuthAreaProps = {
 	"setUserId": (a: any) => void,
 	"setNick": (a: string) => void*/
 	"playData": PlayData,
-	"setPlayData": (a: PlayData) => void
+	"setPlayData": (a: LocalPD) => void
 };
 
 export function AuthArea(props: AuthAreaProps): React.ReactNode
 {
 	var playData = props.playData;
-	var userId = playData.userId;
+	var userId = playData.local.userId;
 	var nickMap = playData.nickMap;
 	var setPlayData = props.setPlayData;
 /*	var setUserId = props.setUserId;
@@ -140,11 +140,12 @@ export function AuthArea(props: AuthAreaProps): React.ReactNode
 			if (_user && _user.email !== null) {
 				var _userId = newAuthIdent(_user.email.split('@')[0]);
 				_userId.token = _user;
-				setPlayData(setUserPD(playData, _userId));
+				console.log("Valid user identified.");
+				setPlayData(setUserLD(playData.local, _userId));
 			} else {
 				if (_user) console.log(
 					"WARNING: Must use Google account with associated e-mail (e-mail will not be used, it just serves as username in backend).");
-				setPlayData(setUserPD(playData, null));
+				setPlayData(setUserLD(playData.local, null));
 				//setUserId(null);
 			}
 		});

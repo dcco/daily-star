@@ -21,12 +21,12 @@ type DSEditBoardProps = {
 	"stageId": number,
 	"starIdList": string[],
 	"playData": PlayData,
-	"setPlayData": (a: PlayData) => void
+	"reloadPlayData": () => void
 };
 
 export function DSEditBoard(props: DSEditBoardProps): React.ReactNode {
 	const playData = props.playData;
-	const setPlayData = props.setPlayData;
+	const reloadPlayData = props.reloadPlayData;
 	const stageId = props.stageId;
 	const starCodeList = props.starIdList;
 
@@ -106,9 +106,6 @@ export function DSEditBoard(props: DSEditBoardProps): React.ReactNode {
 			onClick={ () => { changeStar(i) } }>{ star.name }</div>;
 	});
 
-
-
-
 	// main display content toggle
 	var mainNode: React.ReactNode = <div>Loading the Daily Star...</div>;
 	if (stageId !== -1) {
@@ -132,6 +129,19 @@ export function DSEditBoard(props: DSEditBoardProps): React.ReactNode {
 		<AuthArea playData={ playData } setPlayData={ setPlayData }/>
 		</div>
 	);*/
+
+	// create tables
+	var tableList: React.ReactNode[] = [];
+	tableList.push(
+		<LiveStarTable stageId={ stageId } starId={ starId } today={ true } fs={ fs } varFlag={ null }
+			playData={ playData } reloadPlayData={ reloadPlayData } key={ stageId + "_" + starId }/>
+	);
+
+	if (starDef.secondFlag) {
+		tableList.push(<LiveStarTable stageId={ stageId } starId={ starId } today={ true } fs={ fs } varFlag={ 1 }
+			playData={ playData } reloadPlayData={ reloadPlayData } key={ stageId + "_" + starId + "_var" }/>);
+	}
+
 	return (
 		<div className="ds-cont">
 		<div className="row-wrap">
@@ -145,8 +155,11 @@ export function DSEditBoard(props: DSEditBoardProps): React.ReactNode {
 			</div>
 		</div>	
 		{ varCont }
-		<LiveStarTable stageId={ stageId } starId={ starId } today={ true } fs={ fs }
-			playData={ playData } setPlayData={ setPlayData } key={ stageId + "_" + starId }/>
+		{ tableList }
 		</div>
 	);
+	/*
+		<!-- <LiveStarTable stageId={ stageId } starId={ starId } today={ true } fs={ fs }
+			playData={ playData } setPlayData={ setPlayData } key={ stageId + "_" + starId }/> -->
+	*/
 }

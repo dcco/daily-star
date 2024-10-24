@@ -3905,13 +3905,55 @@
           "Rightside End"
         ],
         "open": []
+      },
+      {
+        "name": "CotMC (Metal Cap) Entry",
+        "id": "premc",
+        "def": "na",
+        "offset": null,
+        "jp_set": {
+          "Box Triple": {
+            "name": "Box Triple",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_174": []
+            },
+            "id_list": [
+              [
+                "main",
+                174
+              ]
+            ]
+          }
+        },
+        "us_set": {
+          "Box Triple": {
+            "name": "Box Triple",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_174": []
+            },
+            "id_list": [
+              [
+                "main",
+                174
+              ]
+            ]
+          }
+        },
+        "variants": [],
+        "open": []
       }
     ],
     "extCheckId": 104
   },
   {
     "name": "Lethal Lava Land",
-    "checkId": 175,
+    "checkId": 176,
     "ext": false,
     "color": "lb-red",
     "starList": [
@@ -3927,21 +3969,6 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_180": []
-            },
-            "id_list": [
-              [
-                "main",
-                180
-              ]
-            ]
-          },
-          "Right GP Kill": {
-            "name": "Right GP Kill",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
               "main_181": []
             },
             "id_list": [
@@ -3951,13 +3978,28 @@
               ]
             ]
           },
+          "Right GP Kill": {
+            "name": "Right GP Kill",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_182": []
+            },
+            "id_list": [
+              [
+                "main",
+                182
+              ]
+            ]
+          },
           "Double Burn": {
             "name": "Double Burn",
             "diff": "normal",
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_182": [],
+              "main_183": [],
               "ext_121": [
                 "0"
               ]
@@ -3965,7 +4007,7 @@
             "id_list": [
               [
                 "main",
-                182
+                183
               ],
               [
                 "ext",
@@ -3990,21 +4032,6 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_180": []
-            },
-            "id_list": [
-              [
-                "main",
-                180
-              ]
-            ]
-          },
-          "Right GP Kill": {
-            "name": "Right GP Kill",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
               "main_181": []
             },
             "id_list": [
@@ -4014,13 +4041,28 @@
               ]
             ]
           },
+          "Right GP Kill": {
+            "name": "Right GP Kill",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_182": []
+            },
+            "id_list": [
+              [
+                "main",
+                182
+              ]
+            ]
+          },
           "Double Burn": {
             "name": "Double Burn",
             "diff": "normal",
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_182": [],
+              "main_183": [],
               "ext_121": [
                 "0"
               ]
@@ -4028,7 +4070,7 @@
             "id_list": [
               [
                 "main",
-                182
+                183
               ],
               [
                 "ext",
@@ -4063,21 +4105,6 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_183": []
-            },
-            "id_list": [
-              [
-                "main",
-                183
-              ]
-            ]
-          },
-          "No Ledgegrab": {
-            "name": "No Ledgegrab",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
               "main_184": []
             },
             "id_list": [
@@ -4087,14 +4114,29 @@
               ]
             ]
           },
+          "No Ledgegrab": {
+            "name": "No Ledgegrab",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_185": []
+            },
+            "id_list": [
+              [
+                "main",
+                185
+              ]
+            ]
+          },
           "Rightside": {
             "name": "Rightside",
             "diff": "normal",
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_185": [],
-              "main_186": [
+              "main_186": [],
+              "main_187": [
                 "0"
               ],
               "ext_122": [
@@ -4104,11 +4146,11 @@
             "id_list": [
               [
                 "main",
-                185
+                186
               ],
               [
                 "main",
-                186
+                187
               ],
               [
                 "ext",
@@ -4124,21 +4166,6 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_183": []
-            },
-            "id_list": [
-              [
-                "main",
-                183
-              ]
-            ]
-          },
-          "No Ledgegrab": {
-            "name": "No Ledgegrab",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
               "main_184": []
             },
             "id_list": [
@@ -4148,14 +4175,29 @@
               ]
             ]
           },
+          "No Ledgegrab": {
+            "name": "No Ledgegrab",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_185": []
+            },
+            "id_list": [
+              [
+                "main",
+                185
+              ]
+            ]
+          },
           "Rightside": {
             "name": "Rightside",
             "diff": "normal",
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_185": [],
-              "main_186": [
+              "main_186": [],
+              "main_187": [
                 "0"
               ],
               "ext_122": [
@@ -4165,11 +4207,11 @@
             "id_list": [
               [
                 "main",
-                185
+                186
               ],
               [
                 "main",
-                186
+                187
               ],
               [
                 "ext",
@@ -4203,21 +4245,6 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_187": []
-            },
-            "id_list": [
-              [
-                "main",
-                187
-              ]
-            ]
-          },
-          "Beginner": {
-            "name": "Beginner",
-            "diff": "easy",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
               "main_188": []
             },
             "id_list": [
@@ -4227,9 +4254,9 @@
               ]
             ]
           },
-          "3x LJ": {
-            "name": "3x LJ",
-            "diff": "normal",
+          "Beginner": {
+            "name": "Beginner",
+            "diff": "easy",
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
@@ -4239,6 +4266,21 @@
               [
                 "main",
                 189
+              ]
+            ]
+          },
+          "3x LJ": {
+            "name": "3x LJ",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_190": []
+            },
+            "id_list": [
+              [
+                "main",
+                190
               ]
             ]
           }
@@ -4250,21 +4292,6 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_187": []
-            },
-            "id_list": [
-              [
-                "main",
-                187
-              ]
-            ]
-          },
-          "Beginner": {
-            "name": "Beginner",
-            "diff": "easy",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
               "main_188": []
             },
             "id_list": [
@@ -4274,9 +4301,9 @@
               ]
             ]
           },
-          "3x LJ": {
-            "name": "3x LJ",
-            "diff": "normal",
+          "Beginner": {
+            "name": "Beginner",
+            "diff": "easy",
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
@@ -4286,6 +4313,21 @@
               [
                 "main",
                 189
+              ]
+            ]
+          },
+          "3x LJ": {
+            "name": "3x LJ",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_190": []
+            },
+            "id_list": [
+              [
+                "main",
+                190
               ]
             ]
           }
@@ -4304,21 +4346,6 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_190": []
-            },
-            "id_list": [
-              [
-                "main",
-                190
-              ]
-            ]
-          },
-          "TJ Strat": {
-            "name": "TJ Strat",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
               "main_191": []
             },
             "id_list": [
@@ -4328,9 +4355,9 @@
               ]
             ]
           },
-          "2x LJ Sidehop": {
-            "name": "2x LJ Sidehop",
-            "diff": "second",
+          "TJ Strat": {
+            "name": "TJ Strat",
+            "diff": "normal",
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
@@ -4343,8 +4370,8 @@
               ]
             ]
           },
-          "LJ JD Sidehop": {
-            "name": "LJ JD Sidehop",
+          "2x LJ Sidehop": {
+            "name": "2x LJ Sidehop",
             "diff": "second",
             "ver_diff": false,
             "virtual": false,
@@ -4355,6 +4382,21 @@
               [
                 "main",
                 193
+              ]
+            ]
+          },
+          "LJ JD Sidehop": {
+            "name": "LJ JD Sidehop",
+            "diff": "second",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_194": []
+            },
+            "id_list": [
+              [
+                "main",
+                194
               ]
             ]
           },
@@ -4398,21 +4440,6 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_190": []
-            },
-            "id_list": [
-              [
-                "main",
-                190
-              ]
-            ]
-          },
-          "TJ Strat": {
-            "name": "TJ Strat",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
               "main_191": []
             },
             "id_list": [
@@ -4422,9 +4449,9 @@
               ]
             ]
           },
-          "2x LJ Sidehop": {
-            "name": "2x LJ Sidehop",
-            "diff": "second",
+          "TJ Strat": {
+            "name": "TJ Strat",
+            "diff": "normal",
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
@@ -4437,8 +4464,8 @@
               ]
             ]
           },
-          "LJ JD Sidehop": {
-            "name": "LJ JD Sidehop",
+          "2x LJ Sidehop": {
+            "name": "2x LJ Sidehop",
             "diff": "second",
             "ver_diff": false,
             "virtual": false,
@@ -4449,6 +4476,21 @@
               [
                 "main",
                 193
+              ]
+            ]
+          },
+          "LJ JD Sidehop": {
+            "name": "LJ JD Sidehop",
+            "diff": "second",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_194": []
+            },
+            "id_list": [
+              [
+                "main",
+                194
               ]
             ]
           },
@@ -4504,12 +4546,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_194": []
+              "main_195": []
             },
             "id_list": [
               [
                 "main",
-                194
+                195
               ]
             ]
           },
@@ -4519,12 +4561,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_196": []
+              "main_197": []
             },
             "id_list": [
               [
                 "main",
-                196
+                197
               ]
             ]
           },
@@ -4534,12 +4576,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_198": []
+              "main_199": []
             },
             "id_list": [
               [
                 "main",
-                198
+                199
               ]
             ]
           },
@@ -4569,12 +4611,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_194": []
+              "main_195": []
             },
             "id_list": [
               [
                 "main",
-                194
+                195
               ]
             ]
           },
@@ -4584,12 +4626,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_196": []
+              "main_197": []
             },
             "id_list": [
               [
                 "main",
-                196
+                197
               ]
             ]
           },
@@ -4599,12 +4641,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_198": []
+              "main_199": []
             },
             "id_list": [
               [
                 "main",
-                198
+                199
               ]
             ]
           },
@@ -4641,12 +4683,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_201": []
+              "main_202": []
             },
             "id_list": [
               [
                 "main",
-                201
+                202
               ]
             ]
           },
@@ -4673,12 +4715,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_203": []
+              "main_204": []
             },
             "id_list": [
               [
                 "main",
-                203
+                204
               ]
             ]
           },
@@ -4714,12 +4756,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_207": []
+              "main_208": []
             },
             "id_list": [
               [
                 "main",
-                207
+                208
               ]
             ]
           }
@@ -4731,12 +4773,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_207": []
+              "main_208": []
             },
             "id_list": [
               [
                 "main",
-                207
+                208
               ]
             ]
           }
@@ -4748,7 +4790,7 @@
   },
   {
     "name": "Shifting Sand Land",
-    "checkId": 210,
+    "checkId": 211,
     "ext": false,
     "color": "lb-yellow",
     "starList": [
@@ -4764,12 +4806,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_215": []
+              "main_216": []
             },
             "id_list": [
               [
                 "main",
-                215
+                216
               ]
             ]
           },
@@ -4779,13 +4821,13 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_216": [
+              "main_217": [
                 "0"
               ],
-              "main_217": [
+              "main_218": [
                 "1"
               ],
-              "main_218": [
+              "main_219": [
                 "2"
               ],
               "ext_131": [
@@ -4795,15 +4837,15 @@
             "id_list": [
               [
                 "main",
-                216
-              ],
-              [
-                "main",
                 217
               ],
               [
                 "main",
                 218
+              ],
+              [
+                "main",
+                219
               ],
               [
                 "ext",
@@ -4817,12 +4859,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_219": []
+              "main_220": []
             },
             "id_list": [
               [
                 "main",
-                219
+                220
               ]
             ]
           }
@@ -4834,12 +4876,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_215": []
+              "main_216": []
             },
             "id_list": [
               [
                 "main",
-                215
+                216
               ]
             ]
           },
@@ -4849,13 +4891,13 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_216": [
+              "main_217": [
                 "0"
               ],
-              "main_217": [
+              "main_218": [
                 "1"
               ],
-              "main_218": [
+              "main_219": [
                 "2"
               ],
               "ext_131": [
@@ -4865,15 +4907,15 @@
             "id_list": [
               [
                 "main",
-                216
-              ],
-              [
-                "main",
                 217
               ],
               [
                 "main",
                 218
+              ],
+              [
+                "main",
+                219
               ],
               [
                 "ext",
@@ -4887,12 +4929,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_219": []
+              "main_220": []
             },
             "id_list": [
               [
                 "main",
-                219
+                220
               ]
             ]
           }
@@ -4926,12 +4968,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_220": []
+              "main_221": []
             },
             "id_list": [
               [
                 "main",
-                220
+                221
               ]
             ]
           }
@@ -4943,12 +4985,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_220": []
+              "main_221": []
             },
             "id_list": [
               [
                 "main",
-                220
+                221
               ]
             ]
           }
@@ -4967,21 +5009,6 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_221": []
-            },
-            "id_list": [
-              [
-                "main",
-                221
-              ]
-            ]
-          },
-          "SJ Pless": {
-            "name": "SJ Pless",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
               "main_222": []
             },
             "id_list": [
@@ -4991,8 +5018,8 @@
               ]
             ]
           },
-          "Tama Pless": {
-            "name": "Tama Pless",
+          "SJ Pless": {
+            "name": "SJ Pless",
             "diff": "normal",
             "ver_diff": false,
             "virtual": false,
@@ -5003,6 +5030,21 @@
               [
                 "main",
                 223
+              ]
+            ]
+          },
+          "Tama Pless": {
+            "name": "Tama Pless",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_224": []
+            },
+            "id_list": [
+              [
+                "main",
+                224
               ]
             ]
           },
@@ -5038,21 +5080,6 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_221": []
-            },
-            "id_list": [
-              [
-                "main",
-                221
-              ]
-            ]
-          },
-          "SJ Pless": {
-            "name": "SJ Pless",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
               "main_222": []
             },
             "id_list": [
@@ -5062,8 +5089,8 @@
               ]
             ]
           },
-          "Tama Pless": {
-            "name": "Tama Pless",
+          "SJ Pless": {
+            "name": "SJ Pless",
             "diff": "normal",
             "ver_diff": false,
             "virtual": false,
@@ -5074,6 +5101,21 @@
               [
                 "main",
                 223
+              ]
+            ]
+          },
+          "Tama Pless": {
+            "name": "Tama Pless",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_224": []
+            },
+            "id_list": [
+              [
+                "main",
+                224
               ]
             ]
           },
@@ -5118,19 +5160,15 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_224": [],
-              "main_225": [
+              "main_225": [],
+              "main_226": [
                 "0"
               ],
-              "main_226": [
+              "main_227": [
                 "1"
               ]
             },
             "id_list": [
-              [
-                "main",
-                224
-              ],
               [
                 "main",
                 225
@@ -5138,6 +5176,10 @@
               [
                 "main",
                 226
+              ],
+              [
+                "main",
+                227
               ]
             ]
           },
@@ -5164,19 +5206,15 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_224": [],
-              "main_225": [
+              "main_225": [],
+              "main_226": [
                 "0"
               ],
-              "main_226": [
+              "main_227": [
                 "1"
               ]
             },
             "id_list": [
-              [
-                "main",
-                224
-              ],
               [
                 "main",
                 225
@@ -5184,6 +5222,10 @@
               [
                 "main",
                 226
+              ],
+              [
+                "main",
+                227
               ]
             ]
           },
@@ -5230,12 +5272,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_228": []
+              "main_229": []
             },
             "id_list": [
               [
                 "main",
-                228
+                229
               ]
             ]
           },
@@ -5265,12 +5307,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_230": []
+              "main_231": []
             },
             "id_list": [
               [
                 "main",
-                230
+                231
               ]
             ]
           },
@@ -5307,7 +5349,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_233": [],
+              "main_234": [],
               "ext_134": [
                 "1"
               ]
@@ -5315,7 +5357,7 @@
             "id_list": [
               [
                 "main",
-                233
+                234
               ],
               [
                 "ext",
@@ -5329,12 +5371,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_234": []
+              "main_235": []
             },
             "id_list": [
               [
                 "main",
-                234
+                235
               ]
             ]
           },
@@ -5344,19 +5386,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_235": [
+              "main_236": [
                 "0"
               ],
-              "main_236": []
+              "main_237": []
             },
             "id_list": [
               [
                 "main",
-                235
+                236
               ],
               [
                 "main",
-                236
+                237
               ]
             ]
           }
@@ -5368,7 +5410,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_233": [],
+              "main_234": [],
               "ext_134": [
                 "1"
               ]
@@ -5376,7 +5418,7 @@
             "id_list": [
               [
                 "main",
-                233
+                234
               ],
               [
                 "ext",
@@ -5390,12 +5432,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_234": []
+              "main_235": []
             },
             "id_list": [
               [
                 "main",
-                234
+                235
               ]
             ]
           },
@@ -5405,19 +5447,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_235": [
+              "main_236": [
                 "0"
               ],
-              "main_236": []
+              "main_237": []
             },
             "id_list": [
               [
                 "main",
-                235
+                236
               ],
               [
                 "main",
-                236
+                237
               ]
             ]
           }
@@ -5440,12 +5482,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_237": []
+              "main_238": []
             },
             "id_list": [
               [
                 "main",
-                237
+                238
               ]
             ]
           },
@@ -5472,12 +5514,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_239": []
+              "main_240": []
             },
             "id_list": [
               [
                 "main",
-                239
+                240
               ]
             ]
           },
@@ -5504,7 +5546,7 @@
   },
   {
     "name": "Dire, Dire Docks",
-    "checkId": 244,
+    "checkId": 245,
     "ext": false,
     "color": "lb-blue",
     "starList": [
@@ -5520,12 +5562,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_249": []
+              "main_250": []
             },
             "id_list": [
               [
                 "main",
-                249
+                250
               ]
             ]
           },
@@ -5535,8 +5577,8 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_250": [],
-              "main_251": [
+              "main_251": [],
+              "main_252": [
                 "0"
               ],
               "ext_143": [
@@ -5546,11 +5588,11 @@
             "id_list": [
               [
                 "main",
-                250
+                251
               ],
               [
                 "main",
-                251
+                252
               ],
               [
                 "ext",
@@ -5591,12 +5633,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_249": []
+              "main_250": []
             },
             "id_list": [
               [
                 "main",
-                249
+                250
               ]
             ]
           },
@@ -5606,8 +5648,8 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_250": [],
-              "main_251": [
+              "main_251": [],
+              "main_252": [
                 "0"
               ],
               "ext_143": [
@@ -5617,11 +5659,11 @@
             "id_list": [
               [
                 "main",
-                250
+                251
               ],
               [
                 "main",
-                251
+                252
               ],
               [
                 "ext",
@@ -5675,12 +5717,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_252": []
+              "main_253": []
             },
             "id_list": [
               [
                 "main",
-                252
+                253
               ]
             ]
           },
@@ -5707,12 +5749,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_252": []
+              "main_253": []
             },
             "id_list": [
               [
                 "main",
-                252
+                253
               ]
             ]
           },
@@ -5746,12 +5788,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_253": []
+              "main_254": []
             },
             "id_list": [
               [
                 "main",
-                253
+                254
               ]
             ]
           }
@@ -5763,12 +5805,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_254": []
+              "main_255": []
             },
             "id_list": [
               [
                 "main",
-                254
+                255
               ]
             ]
           }
@@ -5787,12 +5829,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_258": []
+              "main_259": []
             },
             "id_list": [
               [
                 "main",
-                258
+                259
               ]
             ]
           },
@@ -5802,17 +5844,17 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_259": [],
-              "main_260": []
+              "main_260": [],
+              "main_261": []
             },
             "id_list": [
               [
                 "main",
-                259
+                260
               ],
               [
                 "main",
-                260
+                261
               ]
             ]
           }
@@ -5824,12 +5866,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_258": []
+              "main_259": []
             },
             "id_list": [
               [
                 "main",
-                258
+                259
               ]
             ]
           },
@@ -5839,17 +5881,17 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_259": [],
-              "main_260": []
+              "main_260": [],
+              "main_261": []
             },
             "id_list": [
               [
                 "main",
-                259
+                260
               ],
               [
                 "main",
-                260
+                261
               ]
             ]
           }
@@ -5868,12 +5910,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_261": []
+              "main_262": []
             },
             "id_list": [
               [
                 "main",
-                261
+                262
               ]
             ]
           }
@@ -5885,12 +5927,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_261": []
+              "main_262": []
             },
             "id_list": [
               [
                 "main",
-                261
+                262
               ]
             ]
           }
@@ -5909,12 +5951,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_262": []
+              "main_263": []
             },
             "id_list": [
               [
                 "main",
-                262
+                263
               ]
             ]
           },
@@ -5924,17 +5966,17 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_263": [],
-              "main_264": []
+              "main_264": [],
+              "main_265": []
             },
             "id_list": [
               [
                 "main",
-                263
+                264
               ],
               [
                 "main",
-                264
+                265
               ]
             ]
           }
@@ -5946,12 +5988,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_262": []
+              "main_263": []
             },
             "id_list": [
               [
                 "main",
-                262
+                263
               ]
             ]
           },
@@ -5961,17 +6003,17 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_263": [],
-              "main_264": []
+              "main_264": [],
+              "main_265": []
             },
             "id_list": [
               [
                 "main",
-                263
+                264
               ],
               [
                 "main",
-                264
+                265
               ]
             ]
           }
@@ -5983,7 +6025,7 @@
   },
   {
     "name": "Snowman's Land",
-    "checkId": 266,
+    "checkId": 267,
     "ext": false,
     "color": "lb-snow",
     "starList": [
@@ -5999,19 +6041,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_271": [],
-              "main_272": [
+              "main_272": [],
+              "main_273": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                271
+                272
               ],
               [
                 "main",
-                272
+                273
               ]
             ]
           },
@@ -6047,19 +6089,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_271": [],
-              "main_272": [
+              "main_272": [],
+              "main_273": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                271
+                272
               ],
               [
                 "main",
-                272
+                273
               ]
             ]
           },
@@ -6105,7 +6147,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_273": [],
+              "main_274": [],
               "ext_151": [
                 "0"
               ]
@@ -6113,7 +6155,7 @@
             "id_list": [
               [
                 "main",
-                273
+                274
               ],
               [
                 "ext",
@@ -6127,7 +6169,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_274": [
+              "main_275": [
                 "0"
               ],
               "ext_150": []
@@ -6135,7 +6177,7 @@
             "id_list": [
               [
                 "main",
-                274
+                275
               ],
               [
                 "ext",
@@ -6151,7 +6193,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_273": [],
+              "main_274": [],
               "ext_151": [
                 "0"
               ]
@@ -6159,7 +6201,7 @@
             "id_list": [
               [
                 "main",
-                273
+                274
               ],
               [
                 "ext",
@@ -6173,7 +6215,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_274": [
+              "main_275": [
                 "0"
               ],
               "ext_150": []
@@ -6181,7 +6223,7 @@
             "id_list": [
               [
                 "main",
-                274
+                275
               ],
               [
                 "ext",
@@ -6207,12 +6249,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_275": []
+              "main_276": []
             },
             "id_list": [
               [
                 "main",
-                275
+                276
               ]
             ]
           },
@@ -6222,12 +6264,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_276": []
+              "main_277": []
             },
             "id_list": [
               [
                 "main",
-                276
+                277
               ]
             ]
           }
@@ -6239,12 +6281,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_275": []
+              "main_276": []
             },
             "id_list": [
               [
                 "main",
-                275
+                276
               ]
             ]
           },
@@ -6254,12 +6296,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_276": []
+              "main_277": []
             },
             "id_list": [
               [
                 "main",
-                276
+                277
               ]
             ]
           }
@@ -6278,7 +6320,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_277": [],
+              "main_278": [],
               "ext_153": [
                 "0"
               ]
@@ -6286,7 +6328,7 @@
             "id_list": [
               [
                 "main",
-                277
+                278
               ],
               [
                 "ext",
@@ -6334,7 +6376,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_277": [],
+              "main_278": [],
               "ext_153": [
                 "0"
               ]
@@ -6342,7 +6384,7 @@
             "id_list": [
               [
                 "main",
-                277
+                278
               ],
               [
                 "ext",
@@ -6401,7 +6443,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_278": [],
+              "main_279": [],
               "ext_155": [
                 "0"
               ]
@@ -6409,7 +6451,7 @@
             "id_list": [
               [
                 "main",
-                278
+                279
               ],
               [
                 "ext",
@@ -6425,7 +6467,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_278": [],
+              "main_279": [],
               "ext_155": [
                 "0"
               ]
@@ -6433,7 +6475,7 @@
             "id_list": [
               [
                 "main",
-                278
+                279
               ],
               [
                 "ext",
@@ -6459,12 +6501,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_279": []
+              "main_280": []
             },
             "id_list": [
               [
                 "main",
-                279
+                280
               ]
             ]
           },
@@ -6493,12 +6535,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_280": []
+              "main_281": []
             },
             "id_list": [
               [
                 "main",
-                280
+                281
               ]
             ]
           },
@@ -6537,7 +6579,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_283": [],
+              "main_284": [],
               "ext_160": [
                 "0"
               ],
@@ -6552,7 +6594,7 @@
             "id_list": [
               [
                 "main",
-                283
+                284
               ],
               [
                 "ext",
@@ -6598,7 +6640,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_283": [],
+              "main_284": [],
               "ext_160": [
                 "0"
               ],
@@ -6613,7 +6655,7 @@
             "id_list": [
               [
                 "main",
-                283
+                284
               ],
               [
                 "ext",
@@ -6663,7 +6705,7 @@
   },
   {
     "name": "Wet-Dry World",
-    "checkId": 287,
+    "checkId": 288,
     "ext": false,
     "color": "lb-gray",
     "starList": [
@@ -6679,7 +6721,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_292": [],
+              "main_293": [],
               "ext_172": [
                 "0"
               ]
@@ -6687,7 +6729,7 @@
             "id_list": [
               [
                 "main",
-                292
+                293
               ],
               [
                 "ext",
@@ -6718,7 +6760,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_292": [],
+              "main_293": [],
               "ext_172": [
                 "0"
               ]
@@ -6726,7 +6768,7 @@
             "id_list": [
               [
                 "main",
-                292
+                293
               ],
               [
                 "ext",
@@ -6769,7 +6811,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_293": [],
+              "main_294": [],
               "ext_173": [
                 "0"
               ]
@@ -6777,7 +6819,7 @@
             "id_list": [
               [
                 "main",
-                293
+                294
               ],
               [
                 "ext",
@@ -6791,7 +6833,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_294": [],
+              "main_295": [],
               "ext_175": [
                 "1"
               ]
@@ -6799,7 +6841,7 @@
             "id_list": [
               [
                 "main",
-                294
+                295
               ],
               [
                 "ext",
@@ -6830,7 +6872,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_293": [],
+              "main_294": [],
               "ext_173": [
                 "0"
               ]
@@ -6838,7 +6880,7 @@
             "id_list": [
               [
                 "main",
-                293
+                294
               ],
               [
                 "ext",
@@ -6852,7 +6894,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_294": [],
+              "main_295": [],
               "ext_175": [
                 "1"
               ]
@@ -6860,7 +6902,7 @@
             "id_list": [
               [
                 "main",
-                294
+                295
               ],
               [
                 "ext",
@@ -6904,12 +6946,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_295": []
+              "main_296": []
             },
             "id_list": [
               [
                 "main",
-                295
+                296
               ]
             ]
           }
@@ -6921,12 +6963,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_296": []
+              "main_297": []
             },
             "id_list": [
               [
                 "main",
-                296
+                297
               ]
             ]
           }
@@ -6945,12 +6987,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_298": []
+              "main_299": []
             },
             "id_list": [
               [
                 "main",
-                298
+                299
               ]
             ]
           }
@@ -6962,12 +7004,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_299": []
+              "main_300": []
             },
             "id_list": [
               [
                 "main",
-                299
+                300
               ]
             ]
           }
@@ -6986,12 +7028,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_301": []
+              "main_302": []
             },
             "id_list": [
               [
                 "main",
-                301
+                302
               ]
             ]
           },
@@ -7001,7 +7043,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_302": [],
+              "main_303": [],
               "ext_176": [
                 "0"
               ]
@@ -7009,7 +7051,7 @@
             "id_list": [
               [
                 "main",
-                302
+                303
               ],
               [
                 "ext",
@@ -7023,12 +7065,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_303": []
+              "main_304": []
             },
             "id_list": [
               [
                 "main",
-                303
+                304
               ]
             ]
           }
@@ -7040,12 +7082,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_301": []
+              "main_302": []
             },
             "id_list": [
               [
                 "main",
-                301
+                302
               ]
             ]
           },
@@ -7055,7 +7097,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_302": [],
+              "main_303": [],
               "ext_176": [
                 "0"
               ]
@@ -7063,7 +7105,7 @@
             "id_list": [
               [
                 "main",
-                302
+                303
               ],
               [
                 "ext",
@@ -7077,12 +7119,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_303": []
+              "main_304": []
             },
             "id_list": [
               [
                 "main",
-                303
+                304
               ]
             ]
           }
@@ -7104,12 +7146,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_304": []
+              "main_305": []
             },
             "id_list": [
               [
                 "main",
-                304
+                305
               ]
             ]
           }
@@ -7121,12 +7163,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_305": []
+              "main_306": []
             },
             "id_list": [
               [
                 "main",
-                305
+                306
               ]
             ]
           }
@@ -7145,12 +7187,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_308": []
+              "main_309": []
             },
             "id_list": [
               [
                 "main",
-                308
+                309
               ]
             ]
           },
@@ -7160,12 +7202,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_310": []
+              "main_311": []
             },
             "id_list": [
               [
                 "main",
-                310
+                311
               ]
             ]
           }
@@ -7177,12 +7219,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_308": []
+              "main_309": []
             },
             "id_list": [
               [
                 "main",
-                308
+                309
               ]
             ]
           },
@@ -7192,12 +7234,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_310": []
+              "main_311": []
             },
             "id_list": [
               [
                 "main",
-                310
+                311
               ]
             ]
           }
@@ -7209,7 +7251,7 @@
   },
   {
     "name": "Tall, Tall Mountain",
-    "checkId": 313,
+    "checkId": 314,
     "ext": false,
     "color": "lb-red",
     "starList": [
@@ -7225,12 +7267,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_318": []
+              "main_319": []
             },
             "id_list": [
               [
                 "main",
-                318
+                319
               ]
             ]
           },
@@ -7240,12 +7282,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_319": []
+              "main_320": []
             },
             "id_list": [
               [
                 "main",
-                319
+                320
               ]
             ]
           },
@@ -7266,12 +7308,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_318": []
+              "main_319": []
             },
             "id_list": [
               [
                 "main",
-                318
+                319
               ]
             ]
           },
@@ -7281,12 +7323,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_319": []
+              "main_320": []
             },
             "id_list": [
               [
                 "main",
-                319
+                320
               ]
             ]
           },
@@ -7314,7 +7356,7 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_320": [],
+              "main_321": [],
               "ext_180": [
                 "0"
               ]
@@ -7322,7 +7364,7 @@
             "id_list": [
               [
                 "main",
-                320
+                321
               ],
               [
                 "ext",
@@ -7336,7 +7378,7 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_322": [],
+              "main_323": [],
               "ext_182": [
                 "0"
               ]
@@ -7344,7 +7386,7 @@
             "id_list": [
               [
                 "main",
-                322
+                323
               ],
               [
                 "ext",
@@ -7369,7 +7411,7 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_321": [],
+              "main_322": [],
               "ext_181": [
                 "0"
               ]
@@ -7377,7 +7419,7 @@
             "id_list": [
               [
                 "main",
-                321
+                322
               ],
               [
                 "ext",
@@ -7391,7 +7433,7 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_323": [],
+              "main_324": [],
               "ext_183": [
                 "0"
               ]
@@ -7399,7 +7441,7 @@
             "id_list": [
               [
                 "main",
-                323
+                324
               ],
               [
                 "ext",
@@ -7434,19 +7476,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_324": [],
-              "main_325": [
+              "main_325": [],
+              "main_326": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                324
+                325
               ],
               [
                 "main",
-                325
+                326
               ]
             ]
           }
@@ -7458,19 +7500,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_324": [],
-              "main_325": [
+              "main_325": [],
+              "main_326": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                324
+                325
               ],
               [
                 "main",
-                325
+                326
               ]
             ]
           }
@@ -7492,12 +7534,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_326": []
+              "main_327": []
             },
             "id_list": [
               [
                 "main",
-                326
+                327
               ]
             ]
           },
@@ -7507,12 +7549,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_331": []
+              "main_332": []
             },
             "id_list": [
               [
                 "main",
-                331
+                332
               ]
             ]
           }
@@ -7524,12 +7566,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_328": []
+              "main_329": []
             },
             "id_list": [
               [
                 "main",
-                328
+                329
               ]
             ]
           },
@@ -7539,12 +7581,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_333": []
+              "main_334": []
             },
             "id_list": [
               [
                 "main",
-                333
+                334
               ]
             ]
           }
@@ -7563,21 +7605,6 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_337": []
-            },
-            "id_list": [
-              [
-                "main",
-                337
-              ]
-            ]
-          },
-          "Slowturn Bless": {
-            "name": "Slowturn Bless",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
               "main_338": []
             },
             "id_list": [
@@ -7587,9 +7614,9 @@
               ]
             ]
           },
-          "Breeze": {
-            "name": "Breeze",
-            "diff": "easy",
+          "Slowturn Bless": {
+            "name": "Slowturn Bless",
+            "diff": "normal",
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
@@ -7599,6 +7626,21 @@
               [
                 "main",
                 339
+              ]
+            ]
+          },
+          "Breeze": {
+            "name": "Breeze",
+            "diff": "easy",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_340": []
+            },
+            "id_list": [
+              [
+                "main",
+                340
               ]
             ]
           }
@@ -7610,21 +7652,6 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_337": []
-            },
-            "id_list": [
-              [
-                "main",
-                337
-              ]
-            ]
-          },
-          "Slowturn Bless": {
-            "name": "Slowturn Bless",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
               "main_338": []
             },
             "id_list": [
@@ -7634,9 +7661,9 @@
               ]
             ]
           },
-          "Breeze": {
-            "name": "Breeze",
-            "diff": "easy",
+          "Slowturn Bless": {
+            "name": "Slowturn Bless",
+            "diff": "normal",
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
@@ -7646,6 +7673,21 @@
               [
                 "main",
                 339
+              ]
+            ]
+          },
+          "Breeze": {
+            "name": "Breeze",
+            "diff": "easy",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_340": []
+            },
+            "id_list": [
+              [
+                "main",
+                340
               ]
             ]
           }
@@ -7664,12 +7706,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_340": []
+              "main_341": []
             },
             "id_list": [
               [
                 "main",
-                340
+                341
               ]
             ]
           },
@@ -7679,12 +7721,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_341": []
+              "main_342": []
             },
             "id_list": [
               [
                 "main",
-                341
+                342
               ]
             ]
           },
@@ -7714,12 +7756,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_340": []
+              "main_341": []
             },
             "id_list": [
               [
                 "main",
-                340
+                341
               ]
             ]
           },
@@ -7729,12 +7771,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_341": []
+              "main_342": []
             },
             "id_list": [
               [
                 "main",
-                341
+                342
               ]
             ]
           },
@@ -7771,12 +7813,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_342": []
+              "main_343": []
             },
             "id_list": [
               [
                 "main",
-                342
+                343
               ]
             ]
           },
@@ -7812,12 +7854,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_342": []
+              "main_343": []
             },
             "id_list": [
               [
                 "main",
-                342
+                343
               ]
             ]
           },
@@ -7855,7 +7897,7 @@
   },
   {
     "name": "Tiny-Huge Island",
-    "checkId": 344,
+    "checkId": 345,
     "ext": false,
     "color": "lb-green",
     "starList": [
@@ -7871,12 +7913,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_348": []
+              "main_349": []
             },
             "id_list": [
               [
                 "main",
-                348
+                349
               ]
             ]
           },
@@ -7886,12 +7928,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_349": []
+              "main_350": []
             },
             "id_list": [
               [
                 "main",
-                349
+                350
               ]
             ]
           }
@@ -7903,12 +7945,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_348": []
+              "main_349": []
             },
             "id_list": [
               [
                 "main",
-                348
+                349
               ]
             ]
           },
@@ -7918,12 +7960,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_349": []
+              "main_350": []
             },
             "id_list": [
               [
                 "main",
-                349
+                350
               ]
             ]
           }
@@ -7942,12 +7984,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_351": []
+              "main_352": []
             },
             "id_list": [
               [
                 "main",
-                351
+                352
               ]
             ]
           },
@@ -7957,7 +7999,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_353": [],
+              "main_354": [],
               "ext_188": [
                 "0"
               ]
@@ -7965,7 +8007,7 @@
             "id_list": [
               [
                 "main",
-                353
+                354
               ],
               [
                 "ext",
@@ -7979,12 +8021,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_355": []
+              "main_356": []
             },
             "id_list": [
               [
                 "main",
-                355
+                356
               ]
             ]
           },
@@ -8011,12 +8053,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_351": []
+              "main_352": []
             },
             "id_list": [
               [
                 "main",
-                351
+                352
               ]
             ]
           },
@@ -8026,7 +8068,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_353": [],
+              "main_354": [],
               "ext_188": [
                 "0"
               ]
@@ -8034,7 +8076,7 @@
             "id_list": [
               [
                 "main",
-                353
+                354
               ],
               [
                 "ext",
@@ -8048,12 +8090,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_355": []
+              "main_356": []
             },
             "id_list": [
               [
                 "main",
-                355
+                356
               ]
             ]
           },
@@ -8090,19 +8132,19 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_358": [],
-              "main_360": [
+              "main_359": [],
+              "main_361": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                358
+                359
               ],
               [
                 "main",
-                360
+                361
               ]
             ]
           },
@@ -8155,19 +8197,19 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_359": [],
-              "main_361": [
+              "main_360": [],
+              "main_362": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                359
+                360
               ],
               [
                 "main",
-                361
+                362
               ]
             ]
           },
@@ -8302,12 +8344,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_362": []
+              "main_363": []
             },
             "id_list": [
               [
                 "main",
-                362
+                363
               ]
             ]
           },
@@ -8317,12 +8359,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_363": []
+              "main_364": []
             },
             "id_list": [
               [
                 "main",
-                363
+                364
               ]
             ]
           },
@@ -8343,12 +8385,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_362": []
+              "main_363": []
             },
             "id_list": [
               [
                 "main",
-                362
+                363
               ]
             ]
           },
@@ -8358,12 +8400,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_363": []
+              "main_364": []
             },
             "id_list": [
               [
                 "main",
-                363
+                364
               ]
             ]
           },
@@ -8391,12 +8433,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_364": []
+              "main_365": []
             },
             "id_list": [
               [
                 "main",
-                364
+                365
               ]
             ]
           }
@@ -8408,12 +8450,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_364": []
+              "main_365": []
             },
             "id_list": [
               [
                 "main",
-                364
+                365
               ]
             ]
           }
@@ -8432,59 +8474,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_367": []
+              "main_368": []
             },
             "id_list": [
               [
                 "main",
-                367
-              ]
-            ]
-          },
-          "13c Start + Pole": {
-            "name": "13c Start + Pole",
-            "diff": "easy",
-            "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
-              "main_373": []
-            },
-            "id_list": [
-              [
-                "main",
-                373
-              ]
-            ]
-          },
-          "11c Start + Pole": {
-            "name": "11c Start + Pole",
-            "diff": "easy",
-            "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
-              "main_377": []
-            },
-            "id_list": [
-              [
-                "main",
-                377
-              ]
-            ]
-          }
-        },
-        "us_set": {
-          "16c Start": {
-            "name": "16c Start",
-            "diff": "normal",
-            "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
-              "main_369": []
-            },
-            "id_list": [
-              [
-                "main",
-                369
+                368
               ]
             ]
           },
@@ -8519,6 +8514,53 @@
             ]
           }
         },
+        "us_set": {
+          "16c Start": {
+            "name": "16c Start",
+            "diff": "normal",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "main_370": []
+            },
+            "id_list": [
+              [
+                "main",
+                370
+              ]
+            ]
+          },
+          "13c Start + Pole": {
+            "name": "13c Start + Pole",
+            "diff": "easy",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "main_375": []
+            },
+            "id_list": [
+              [
+                "main",
+                375
+              ]
+            ]
+          },
+          "11c Start + Pole": {
+            "name": "11c Start + Pole",
+            "diff": "easy",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "main_379": []
+            },
+            "id_list": [
+              [
+                "main",
+                379
+              ]
+            ]
+          }
+        },
         "open": []
       },
       {
@@ -8533,12 +8575,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_381": []
+              "main_382": []
             },
             "id_list": [
               [
                 "main",
-                381
+                382
               ]
             ]
           },
@@ -8565,12 +8607,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_383": []
+              "main_384": []
             },
             "id_list": [
               [
                 "main",
-                383
+                384
               ]
             ]
           },
@@ -8597,7 +8639,7 @@
   },
   {
     "name": "Tick Tock Clock",
-    "checkId": 387,
+    "checkId": 388,
     "ext": false,
     "color": "lb-yellow",
     "starList": [
@@ -8613,7 +8655,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_391": [],
+              "main_392": [],
               "ext_206": [
                 "0"
               ],
@@ -8624,7 +8666,7 @@
             "id_list": [
               [
                 "main",
-                391
+                392
               ],
               [
                 "ext",
@@ -8642,7 +8684,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_392": [],
+              "main_393": [],
               "ext_208": [
                 "0"
               ],
@@ -8653,7 +8695,7 @@
             "id_list": [
               [
                 "main",
-                392
+                393
               ],
               [
                 "ext",
@@ -8671,12 +8713,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_393": []
+              "main_394": []
             },
             "id_list": [
               [
                 "main",
-                393
+                394
               ]
             ]
           },
@@ -8703,7 +8745,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_391": [],
+              "main_392": [],
               "ext_206": [
                 "0"
               ],
@@ -8714,7 +8756,7 @@
             "id_list": [
               [
                 "main",
-                391
+                392
               ],
               [
                 "ext",
@@ -8732,7 +8774,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_392": [],
+              "main_393": [],
               "ext_208": [
                 "0"
               ],
@@ -8743,7 +8785,7 @@
             "id_list": [
               [
                 "main",
-                392
+                393
               ],
               [
                 "ext",
@@ -8761,12 +8803,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_393": []
+              "main_394": []
             },
             "id_list": [
               [
                 "main",
-                393
+                394
               ]
             ]
           },
@@ -8813,21 +8855,6 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_394": []
-            },
-            "id_list": [
-              [
-                "main",
-                394
-              ]
-            ]
-          },
-          "Cog Rollout": {
-            "name": "Cog Rollout",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
               "main_395": []
             },
             "id_list": [
@@ -8837,9 +8864,9 @@
               ]
             ]
           },
-          "Time Stop": {
-            "name": "Time Stop",
-            "diff": "easy",
+          "Cog Rollout": {
+            "name": "Cog Rollout",
+            "diff": "normal",
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
@@ -8849,6 +8876,21 @@
               [
                 "main",
                 396
+              ]
+            ]
+          },
+          "Time Stop": {
+            "name": "Time Stop",
+            "diff": "easy",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_397": []
+            },
+            "id_list": [
+              [
+                "main",
+                397
               ]
             ]
           }
@@ -8860,21 +8902,6 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_394": []
-            },
-            "id_list": [
-              [
-                "main",
-                394
-              ]
-            ]
-          },
-          "Cog Rollout": {
-            "name": "Cog Rollout",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
               "main_395": []
             },
             "id_list": [
@@ -8884,9 +8911,9 @@
               ]
             ]
           },
-          "Time Stop": {
-            "name": "Time Stop",
-            "diff": "easy",
+          "Cog Rollout": {
+            "name": "Cog Rollout",
+            "diff": "normal",
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
@@ -8896,6 +8923,21 @@
               [
                 "main",
                 396
+              ]
+            ]
+          },
+          "Time Stop": {
+            "name": "Time Stop",
+            "diff": "easy",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_397": []
+            },
+            "id_list": [
+              [
+                "main",
+                397
               ]
             ]
           }
@@ -8914,7 +8956,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_397": [],
+              "main_398": [],
               "ext_211": [
                 "0"
               ]
@@ -8922,7 +8964,7 @@
             "id_list": [
               [
                 "main",
-                397
+                398
               ],
               [
                 "ext",
@@ -8936,12 +8978,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_398": []
+              "main_399": []
             },
             "id_list": [
               [
                 "main",
-                398
+                399
               ]
             ]
           }
@@ -8953,7 +8995,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_397": [],
+              "main_398": [],
               "ext_211": [
                 "0"
               ]
@@ -8961,7 +9003,7 @@
             "id_list": [
               [
                 "main",
-                397
+                398
               ],
               [
                 "ext",
@@ -8975,12 +9017,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_398": []
+              "main_399": []
             },
             "id_list": [
               [
                 "main",
-                398
+                399
               ]
             ]
           }
@@ -9002,12 +9044,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_399": []
+              "main_400": []
             },
             "id_list": [
               [
                 "main",
-                399
+                400
               ]
             ]
           }
@@ -9019,12 +9061,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_399": []
+              "main_400": []
             },
             "id_list": [
               [
                 "main",
-                399
+                400
               ]
             ]
           }
@@ -9037,38 +9079,6 @@
         "def": "offset",
         "offset": 11,
         "jp_set": {
-          "Standard": {
-            "name": "Standard",
-            "diff": "normal",
-            "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
-              "main_400": []
-            },
-            "id_list": [
-              [
-                "main",
-                400
-              ]
-            ]
-          },
-          "Safety Red": {
-            "name": "Safety Red",
-            "diff": "normal",
-            "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
-              "main_404": []
-            },
-            "id_list": [
-              [
-                "main",
-                404
-              ]
-            ]
-          }
-        },
-        "us_set": {
           "Standard": {
             "name": "Standard",
             "diff": "normal",
@@ -9100,6 +9110,38 @@
             ]
           }
         },
+        "us_set": {
+          "Standard": {
+            "name": "Standard",
+            "diff": "normal",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "main_402": []
+            },
+            "id_list": [
+              [
+                "main",
+                402
+              ]
+            ]
+          },
+          "Safety Red": {
+            "name": "Safety Red",
+            "diff": "normal",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "main_406": []
+            },
+            "id_list": [
+              [
+                "main",
+                406
+              ]
+            ]
+          }
+        },
         "open": []
       },
       {
@@ -9114,12 +9156,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_408": []
+              "main_409": []
             },
             "id_list": [
               [
                 "main",
-                408
+                409
               ]
             ]
           },
@@ -9129,7 +9171,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_409": [
+              "main_410": [
                 "0"
               ],
               "ext_213": []
@@ -9137,7 +9179,7 @@
             "id_list": [
               [
                 "main",
-                409
+                410
               ],
               [
                 "ext",
@@ -9168,12 +9210,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_408": []
+              "main_409": []
             },
             "id_list": [
               [
                 "main",
-                408
+                409
               ]
             ]
           },
@@ -9183,7 +9225,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_409": [
+              "main_410": [
                 "0"
               ],
               "ext_213": []
@@ -9191,7 +9233,7 @@
             "id_list": [
               [
                 "main",
-                409
+                410
               ],
               [
                 "ext",
@@ -9232,14 +9274,14 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_410": [],
-              "main_411": [
+              "main_411": [],
+              "main_412": [
                 "0"
               ],
-              "main_412": [
+              "main_413": [
                 "1"
               ],
-              "main_413": [
+              "main_414": [
                 "0",
                 "1"
               ],
@@ -9254,10 +9296,6 @@
             "id_list": [
               [
                 "main",
-                410
-              ],
-              [
-                "main",
                 411
               ],
               [
@@ -9267,6 +9305,10 @@
               [
                 "main",
                 413
+              ],
+              [
+                "main",
+                414
               ],
               [
                 "ext",
@@ -9284,7 +9326,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_414": [],
+              "main_415": [],
               "ext_216": [
                 "3"
               ]
@@ -9292,7 +9334,7 @@
             "id_list": [
               [
                 "main",
-                414
+                415
               ],
               [
                 "ext",
@@ -9306,12 +9348,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_415": []
+              "main_416": []
             },
             "id_list": [
               [
                 "main",
-                415
+                416
               ]
             ]
           }
@@ -9323,14 +9365,14 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_410": [],
-              "main_411": [
+              "main_411": [],
+              "main_412": [
                 "0"
               ],
-              "main_412": [
+              "main_413": [
                 "1"
               ],
-              "main_413": [
+              "main_414": [
                 "0",
                 "1"
               ],
@@ -9345,10 +9387,6 @@
             "id_list": [
               [
                 "main",
-                410
-              ],
-              [
-                "main",
                 411
               ],
               [
@@ -9358,6 +9396,10 @@
               [
                 "main",
                 413
+              ],
+              [
+                "main",
+                414
               ],
               [
                 "ext",
@@ -9375,7 +9417,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_414": [],
+              "main_415": [],
               "ext_216": [
                 "3"
               ]
@@ -9383,7 +9425,7 @@
             "id_list": [
               [
                 "main",
-                414
+                415
               ],
               [
                 "ext",
@@ -9397,12 +9439,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_415": []
+              "main_416": []
             },
             "id_list": [
               [
                 "main",
-                415
+                416
               ]
             ]
           }
@@ -9427,7 +9469,7 @@
   },
   {
     "name": "Rainbow Ride",
-    "checkId": 417,
+    "checkId": 418,
     "ext": false,
     "color": "lb-red",
     "starList": [
@@ -9443,19 +9485,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_423": [],
-              "main_425": [
+              "main_424": [],
+              "main_426": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                423
+                424
               ],
               [
                 "main",
-                425
+                426
               ]
             ]
           },
@@ -9465,12 +9507,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_427": []
+              "main_428": []
             },
             "id_list": [
               [
                 "main",
-                427
+                428
               ]
             ]
           },
@@ -9480,7 +9522,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_429": [],
+              "main_430": [],
               "ext_220": [
                 "1"
               ]
@@ -9488,7 +9530,7 @@
             "id_list": [
               [
                 "main",
-                429
+                430
               ],
               [
                 "ext",
@@ -9513,19 +9555,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_423": [],
-              "main_425": [
+              "main_424": [],
+              "main_426": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                423
+                424
               ],
               [
                 "main",
-                425
+                426
               ]
             ]
           },
@@ -9535,12 +9577,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_427": []
+              "main_428": []
             },
             "id_list": [
               [
                 "main",
-                427
+                428
               ]
             ]
           },
@@ -9550,7 +9592,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_429": [],
+              "main_430": [],
               "ext_220": [
                 "1"
               ]
@@ -9558,7 +9600,7 @@
             "id_list": [
               [
                 "main",
-                429
+                430
               ],
               [
                 "ext",
@@ -9594,12 +9636,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_431": []
+              "main_432": []
             },
             "id_list": [
               [
                 "main",
-                431
+                432
               ]
             ]
           },
@@ -9609,12 +9651,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_432": []
+              "main_433": []
             },
             "id_list": [
               [
                 "main",
-                432
+                433
               ]
             ]
           }
@@ -9626,12 +9668,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_431": []
+              "main_432": []
             },
             "id_list": [
               [
                 "main",
-                431
+                432
               ]
             ]
           },
@@ -9641,12 +9683,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_432": []
+              "main_433": []
             },
             "id_list": [
               [
                 "main",
-                432
+                433
               ]
             ]
           }
@@ -9665,12 +9707,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_436": []
+              "main_437": []
             },
             "id_list": [
               [
                 "main",
-                436
+                437
               ]
             ]
           },
@@ -9680,12 +9722,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_438": []
+              "main_439": []
             },
             "id_list": [
               [
                 "main",
-                438
+                439
               ]
             ]
           },
@@ -9727,12 +9769,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_437": []
+              "main_438": []
             },
             "id_list": [
               [
                 "main",
-                437
+                438
               ]
             ]
           },
@@ -9742,12 +9784,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_439": []
+              "main_440": []
             },
             "id_list": [
               [
                 "main",
-                439
+                440
               ]
             ]
           },
@@ -9796,7 +9838,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_440": [],
+              "main_441": [],
               "ext_225": [
                 "0"
               ]
@@ -9804,7 +9846,7 @@
             "id_list": [
               [
                 "main",
-                440
+                441
               ],
               [
                 "ext",
@@ -9818,7 +9860,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_441": [],
+              "main_442": [],
               "ext_226": [
                 "0"
               ]
@@ -9826,7 +9868,7 @@
             "id_list": [
               [
                 "main",
-                441
+                442
               ],
               [
                 "ext",
@@ -9842,7 +9884,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_440": [],
+              "main_441": [],
               "ext_225": [
                 "0"
               ]
@@ -9850,7 +9892,7 @@
             "id_list": [
               [
                 "main",
-                440
+                441
               ],
               [
                 "ext",
@@ -9864,7 +9906,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_441": [],
+              "main_442": [],
               "ext_226": [
                 "0"
               ]
@@ -9872,7 +9914,7 @@
             "id_list": [
               [
                 "main",
-                441
+                442
               ],
               [
                 "ext",
@@ -9898,7 +9940,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_442": [],
+              "main_443": [],
               "ext_227": [
                 "0"
               ]
@@ -9906,7 +9948,7 @@
             "id_list": [
               [
                 "main",
-                442
+                443
               ],
               [
                 "ext",
@@ -9920,12 +9962,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_443": []
+              "main_444": []
             },
             "id_list": [
               [
                 "main",
-                443
+                444
               ]
             ]
           },
@@ -9946,7 +9988,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_442": [],
+              "main_443": [],
               "ext_227": [
                 "0"
               ]
@@ -9954,7 +9996,7 @@
             "id_list": [
               [
                 "main",
-                442
+                443
               ],
               [
                 "ext",
@@ -9968,12 +10010,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_443": []
+              "main_444": []
             },
             "id_list": [
               [
                 "main",
-                443
+                444
               ]
             ]
           },
@@ -10004,12 +10046,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_444": []
+              "main_445": []
             },
             "id_list": [
               [
                 "main",
-                444
+                445
               ]
             ]
           },
@@ -10019,12 +10061,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_445": []
+              "main_446": []
             },
             "id_list": [
               [
                 "main",
-                445
+                446
               ]
             ]
           },
@@ -10045,12 +10087,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_444": []
+              "main_445": []
             },
             "id_list": [
               [
                 "main",
-                444
+                445
               ]
             ]
           },
@@ -10060,12 +10102,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_445": []
+              "main_446": []
             },
             "id_list": [
               [
                 "main",
-                445
+                446
               ]
             ]
           },
@@ -10093,23 +10135,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_446": [],
-              "main_447": [
+              "main_447": [],
+              "main_448": [
                 "0"
               ],
-              "main_448": [
+              "main_449": [
                 "1"
               ],
-              "main_449": [
+              "main_450": [
                 "1",
                 "0"
               ]
             },
             "id_list": [
-              [
-                "main",
-                446
-              ],
               [
                 "main",
                 447
@@ -10121,6 +10159,10 @@
               [
                 "main",
                 449
+              ],
+              [
+                "main",
+                450
               ]
             ]
           },
@@ -10130,19 +10172,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_450": [],
-              "main_451": [
+              "main_451": [],
+              "main_452": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                450
+                451
               ],
               [
                 "main",
-                451
+                452
               ]
             ]
           },
@@ -10152,8 +10194,8 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_452": [],
-              "main_453": [
+              "main_453": [],
+              "main_454": [
                 "0"
               ],
               "ext_228": [
@@ -10163,11 +10205,11 @@
             "id_list": [
               [
                 "main",
-                452
+                453
               ],
               [
                 "main",
-                453
+                454
               ],
               [
                 "ext",
@@ -10192,23 +10234,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_446": [],
-              "main_447": [
+              "main_447": [],
+              "main_448": [
                 "0"
               ],
-              "main_448": [
+              "main_449": [
                 "1"
               ],
-              "main_449": [
+              "main_450": [
                 "1",
                 "0"
               ]
             },
             "id_list": [
-              [
-                "main",
-                446
-              ],
               [
                 "main",
                 447
@@ -10220,6 +10258,10 @@
               [
                 "main",
                 449
+              ],
+              [
+                "main",
+                450
               ]
             ]
           },
@@ -10229,19 +10271,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_450": [],
-              "main_451": [
+              "main_451": [],
+              "main_452": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                450
+                451
               ],
               [
                 "main",
-                451
+                452
               ]
             ]
           },
@@ -10251,8 +10293,8 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_452": [],
-              "main_453": [
+              "main_453": [],
+              "main_454": [
                 "0"
               ],
               "ext_228": [
@@ -10262,11 +10304,11 @@
             "id_list": [
               [
                 "main",
-                452
+                453
               ],
               [
                 "main",
-                453
+                454
               ],
               [
                 "ext",
@@ -10303,38 +10345,6 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_454": []
-            },
-            "id_list": [
-              [
-                "main",
-                454
-              ]
-            ]
-          },
-          "No Cutscene": {
-            "name": "No Cutscene",
-            "diff": "second",
-            "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
-              "main_456": []
-            },
-            "id_list": [
-              [
-                "main",
-                456
-              ]
-            ]
-          }
-        },
-        "us_set": {
-          "Standard": {
-            "name": "Standard",
-            "diff": "normal",
-            "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
               "main_455": []
             },
             "id_list": [
@@ -10360,6 +10370,38 @@
             ]
           }
         },
+        "us_set": {
+          "Standard": {
+            "name": "Standard",
+            "diff": "normal",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "main_456": []
+            },
+            "id_list": [
+              [
+                "main",
+                456
+              ]
+            ]
+          },
+          "No Cutscene": {
+            "name": "No Cutscene",
+            "diff": "second",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "main_458": []
+            },
+            "id_list": [
+              [
+                "main",
+                458
+              ]
+            ]
+          }
+        },
         "open": []
       }
     ],
@@ -10367,7 +10409,7 @@
   },
   {
     "name": "Castle Secret Stars",
-    "checkId": 459,
+    "checkId": 460,
     "ext": false,
     "color": "lb-red",
     "starList": [
@@ -10383,12 +10425,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_461": []
+              "main_462": []
             },
             "id_list": [
               [
                 "main",
-                461
+                462
               ]
             ]
           },
@@ -10398,12 +10440,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_462": []
+              "main_463": []
             },
             "id_list": [
               [
                 "main",
-                462
+                463
               ]
             ]
           },
@@ -10430,12 +10472,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_461": []
+              "main_462": []
             },
             "id_list": [
               [
                 "main",
-                461
+                462
               ]
             ]
           },
@@ -10445,12 +10487,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_462": []
+              "main_463": []
             },
             "id_list": [
               [
                 "main",
-                462
+                463
               ]
             ]
           },
@@ -10484,21 +10526,6 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_463": []
-            },
-            "id_list": [
-              [
-                "main",
-                463
-              ]
-            ]
-          },
-          "Expert": {
-            "name": "Expert",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
               "main_464": []
             },
             "id_list": [
@@ -10508,8 +10535,8 @@
               ]
             ]
           },
-          "No Slope Clip": {
-            "name": "No Slope Clip",
+          "Expert": {
+            "name": "Expert",
             "diff": "normal",
             "ver_diff": false,
             "virtual": false,
@@ -10522,66 +10549,9 @@
                 465
               ]
             ]
-          }
-        },
-        "us_set": {
-          "Standard": {
-            "name": "Standard",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "main_463": []
-            },
-            "id_list": [
-              [
-                "main",
-                463
-              ]
-            ]
-          },
-          "Expert": {
-            "name": "Expert",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "main_464": []
-            },
-            "id_list": [
-              [
-                "main",
-                464
-              ]
-            ]
           },
           "No Slope Clip": {
             "name": "No Slope Clip",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "main_465": []
-            },
-            "id_list": [
-              [
-                "main",
-                465
-              ]
-            ]
-          }
-        },
-        "variants": [],
-        "open": []
-      },
-      {
-        "name": "CotMC Entry",
-        "id": "premc",
-        "def": "na",
-        "offset": null,
-        "jp_set": {
-          "Box Triple": {
-            "name": "Box Triple",
             "diff": "normal",
             "ver_diff": false,
             "virtual": false,
@@ -10597,8 +10567,38 @@
           }
         },
         "us_set": {
-          "Box Triple": {
-            "name": "Box Triple",
+          "Standard": {
+            "name": "Standard",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_464": []
+            },
+            "id_list": [
+              [
+                "main",
+                464
+              ]
+            ]
+          },
+          "Expert": {
+            "name": "Expert",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_465": []
+            },
+            "id_list": [
+              [
+                "main",
+                465
+              ]
+            ]
+          },
+          "No Slope Clip": {
+            "name": "No Slope Clip",
             "diff": "normal",
             "ver_diff": false,
             "virtual": false,

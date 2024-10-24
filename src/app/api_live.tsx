@@ -11,6 +11,7 @@ import { NickMap } from './play_data'
 // const API_endpoint = "http://ec2-3-129-19-199.us-east-2.compute.amazonaws.com:5500";
 // const API_endpoint = "https://g6u2bjvfoh.execute-api.us-east-2.amazonaws.com";
 const API_endpoint = "https://0lcnm5wjck.execute-api.us-east-2.amazonaws.com/Main";
+//const API_endpoint = "http://ec2-18-217-150-208.us-east-2.compute.amazonaws.com:5500";
 
 	/*
 		xcam time API functions
@@ -116,6 +117,7 @@ export function postNewTimes(stageId: number, starId: number,
 		method: "POST",
 		body: JSON.stringify({
 			"player": userId,
+			"accessToken": userId.token.accessToken,
 			"submitList": submitList,
 			"delList": delIdList
 		}),
@@ -156,8 +158,13 @@ export async function loadNickMap(): Promise<NickMap> {
 export async function loadUserId(userId: AuthIdent): Promise<string | null> {
 	//const getReq = await fetch("http://ec2-3-129-19-199.us-east-2.compute.amazonaws.com:5500/players/get_id?player=" +
 	//	userId.name);
-	const getReq = await fetch(API_endpoint + "/players/get_id?player=" +
-		userId.name);
+	var accessToken = "";
+	if (userId.token) accessToken = userId.token.accessToken;
+	const getReq = await fetch(API_endpoint + "/players/get_id?player=" + userId.name, {
+		"headers": {
+			"authorization": accessToken
+		}
+	});
 	var res = await getReq.json();
 	if (res.response === "Error") {
 		console.log(res.err);
@@ -173,6 +180,7 @@ export function postNick(userId: AuthIdent, nick: string) {
 		method: "POST",
 		body: JSON.stringify({
 			"player": userId,
+			"accessToken": userId.token.accessToken,
 			"nick": nick
 		}),
 		headers: {

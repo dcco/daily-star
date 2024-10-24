@@ -7,8 +7,8 @@ import { FilterState, fullFilterState,
 	orgStarDef, verOffsetStarDef, colListStarDef } from './org_star_def'
 import { Ident, TimeTable, newIdent, dropIdent,
 	updateTimeTable, delTimeTable } from './time_table'
-import { PlayData, syncUserPD, lookupNickPD } from './play_data'
-import { loadTimeTable, postNewTimes } from './live_wrap'
+import { PlayData } from './play_data'
+import { loadTimeTable, postNewTimes } from './api_live'
 import { openListColConfig } from './col_config'
 import { newEditObj, userEditPerm } from './edit_perm'
 import { xcamRecordMap, sortColList } from './xcam_record_map'
@@ -27,8 +27,9 @@ type LiveStarTableProps = {
 	"starId": number,
 	"today": boolean,
 	"fs": FilterState,
+	"varFlag": number | null,
 	"playData": PlayData,
-	"setPlayData": (a: PlayData) => void
+	"reloadPlayData": () => void
 };
 
 export function LiveStarTable(props: LiveStarTableProps): React.ReactNode
@@ -37,8 +38,8 @@ export function LiveStarTable(props: LiveStarTableProps): React.ReactNode
 	const starId = props.starId;
 	const fs = props.fs;
 	const playData = props.playData;
-	const userId = playData.userId;
-	const setPlayData = props.setPlayData;
+	const userId = playData.local.userId;
+	const reloadPlayData = props.reloadPlayData;
 
 	var starDef = orgStarDef(stageId, starId);
 	var verOffset = verOffsetStarDef(starDef, fs);
@@ -57,7 +58,14 @@ export function LiveStarTable(props: LiveStarTableProps): React.ReactNode
 		const f = async () => {
 			if (dirty) {
 				setTimeTable(await loadTimeTable(stageId, starId, props.today, colList, fs, verOffset));
-				if (!playData.newUserSync) setPlayData(syncUserPD(playData));
+				// reloads the player data since submitting a time
+				// may have created a new user
+				reloadPlayData();
+				// if the user has changed, triggers a nickname data reload
+				// since submitting a time may have created a new user
+				/*if (playData.newUserSync === "unsync") {
+					setPlayData(syncUserPD(playData));
+				}*/
 			}
 		}
 		setTimeout(f, reload);
@@ -91,7 +99,7 @@ export function LiveStarTable(props: LiveStarTableProps): React.ReactNode
 	sortColList(colList, sortRM);
 
 	// create star table
-	var filterColList = filterVarColList(colList, null);
+	var filterColList = filterVarColList(colList, props.varFlag);
 	var filterCFG = openListColConfig(filterColList, starDef.open);
 	
 	var editObj = newEditObj(userEditPerm(userId), starDef, editTT);

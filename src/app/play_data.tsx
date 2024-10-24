@@ -6,79 +6,101 @@ export type NickMap = {
 };
 
 	/*
-		the user's nickname is stored in two places - the DB, and the local mapping
-		both nicks will be stored in nickmap, one under 'remote@p_id' the other
-		under 'google@name', with the latter taking precedence when both exist.
-		  * newUserSync: this flag is used to trigger a nickname data reload when a new user
-			may have potentially been created. (set to false when switching users,
-			set to true on any time submission).
+		DEPRECATED CONCEPT	
+		* newUserSync: this flag is used to trigger a nickname data reload when a new user
+			may have potentially been created.
+				- "uninit": nickname data has not done initialize load (do not trigger any reloads)
+				- "sync": user id has been loaded + player id synced
+				- "unsync": user id has been changed, player id not synced yet
 	*/
 
-export type PlayData = {
+	/*
+		player data is split into two parts:
+			- locally modified data (current user, local nickname)
+			- remote data (current user remote id, nickname mapping)
+		react elements can only write/update the local data. updates to the remote data
+		can only be triggered through full reloads, although the local data can still
+		trigger API calls when we want it to be pushed to the backend (local nickname changes)
+		> local
+			* userId: also stores the remote id. in cases where the user is changed, the
+				remote id is simply invalidated
+			* nick: current nickname - null if not set by user (can be replaced by remote result)
+			* dirtyFlag: flag indicating whether nickname is out of date with the remote DB
+		> remote
+			[remoteId]: stored in the userId for convenience sake
+			* nickMap: mapping of other nicknames, nicknames stored under key "remote@p_id"
+				in case other nickname cases are ever required
+	*/
+
+export type LocalPD = {
 	"userId": AuthIdent | null,
-	"nickMap": NickMap,
-	"newUserSync": boolean
+	"nick": string | null,
+	"dirtyFlag": boolean
+}
+
+export type PlayData = {
+	"local": LocalPD,
+	"nickMap": NickMap
 };
 
 export function newPlayData(): PlayData
 {
 	return {
-		"userId": null,
-		"nickMap": {},
-		"newUserSync": true,
+		"local": { 
+			"userId": null,
+			"nick": null,
+			"dirtyFlag": false
+		},
+		"nickMap": {}
 	};
 }
 
 export function userKeyPD(pd: PlayData): string
 {
-	if (pd.userId === null) return "@null";
-	return pd.userId.name;
+	if (pd.local.userId === null) return "@null";
+	return pd.local.userId.name;
 }
 
-export function setUserPD(pd: PlayData, userId: AuthIdent | null): PlayData
+export function setUserLD(ld: LocalPD, userId: AuthIdent | null): LocalPD
 {
 	return {
 		"userId": userId,
-		"nickMap": pd.nickMap,
-		"newUserSync": false,
+		"nick": null,
+		"dirtyFlag": false
 	};
 }
 
-export function setUserNickPD(pd: PlayData, nick: string): PlayData
+export function setUserNickLD(ld: LocalPD, nick: string, dirty: boolean): LocalPD
 {
-	if (pd.userId !== null) {
-		pd.nickMap["google@" + pd.userId.name] = nick;
-		if (pd.userId.remoteId) pd.nickMap["remote@" + pd.userId.remoteId] = nick;
-	}
 	return {
-		"userId": pd.userId,
-		"nickMap": pd.nickMap,
-		"newUserSync": pd.newUserSync
+		"userId": ld.userId,
+		"nick": nick,
+		"dirtyFlag": dirty
 	};
 }
 
 export function setNickMapPD(pd: PlayData, nickMap: NickMap): PlayData
 {
 	return {
-		"userId": pd.userId,
-		"nickMap": nickMap,
-		"newUserSync": pd.newUserSync
+		"local": pd.local,
+		"nickMap": nickMap
 	};
 }
-
-export function syncUserPD(pd: PlayData): PlayData
+/*
+export function setDirtyPD(ld: LocalPD): LocalPD
 {
 	return {
-		"userId": pd.userId,
-		"nickMap": pd.nickMap,
-		"newUserSync": true
+		"userId": ld.userId,
+		"nickMap": ld.nickMap,
+		"dirtyFlag": false
 	};
-}
+}*/
 
 function canonNickPD(pd: PlayData, userId: AuthIdent, remoteId: string): string | null
 {
-	var localNick = pd.nickMap["google@" + userId.name];
-	if (localNick !== undefined) return localNick;
+	if (pd.local.nick !== null) return pd.local.nick;
+/*	var localNick = pd.nickMap["google@" + userId.name];
+	if (localNick !== undefined) return localNick;*/
 	var remoteNick = pd.nickMap["remote@" + remoteId];
 	if (remoteNick !== undefined) return remoteNick;
 	return null;
@@ -87,20 +109,28 @@ function canonNickPD(pd: PlayData, userId: AuthIdent, remoteId: string): string 
 export function linkUserRemotePD(pd: PlayData, remoteId: string): PlayData
 {
 	// synchronize nicknames
-	if (pd.userId !== null) {
-		pd.userId.remoteId = remoteId;
-		var canonNick = canonNickPD(pd, pd.userId, remoteId);
+	if (pd.local.userId !== null) {
+		pd.local.userId.remoteId = remoteId;
+		var canonNick = canonNickPD(pd, pd.local.userId, remoteId);
 		if (canonNick !== null) {
-			pd.nickMap["google@" + pd.userId.name] = canonNick;
+			//pd.nickMap["google@" + pd.userId.name] = canonNick;
+			pd.local.nick = canonNick;
 			pd.nickMap["remote@" + remoteId] = canonNick;
 		}
 	}
 	// return new player data obj
 	return {
-		"userId": pd.userId,
-		"nickMap": pd.nickMap,
-		"newUserSync": pd.newUserSync
+		"local": pd.local,
+		"nickMap": pd.nickMap
 	};
+}
+
+export function setLocalPD(pd: PlayData, local: LocalPD): PlayData
+{
+	return {
+		"local": local,
+		"nickMap": pd.nickMap
+	}
 }
 
 /*export function copyPlayData(pd: PlayData): PlayData
@@ -111,7 +141,7 @@ export function linkUserRemotePD(pd: PlayData, remoteId: string): PlayData
 	};
 }*/
 
-export function lookupNickPD(pd: PlayData, id: Ident): string | null
+function lookupNickPD(pd: PlayData, id: Ident): string | null
 {
 	var key = keyIdent(id);
 	if (pd.nickMap[key]) return pd.nickMap[key];
@@ -124,7 +154,7 @@ export function strIdNickPD(pd: PlayData, id: Ident): string
 	if (nick !== null) return nick;
 	if (id.service === "remote") return "@player-" + id.name;
 	else if (id.service === "xcam") return id.name;
-	return "@" + id.name;
+	return "@me"; // + id.name;
 }
 /*
 export function updateNick(nickMap: NickMap, id: Ident, nick: string)

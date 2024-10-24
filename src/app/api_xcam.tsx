@@ -12,7 +12,7 @@ export const G_SHEET: SheetData = {
 	"xcamData": localXcamData
 }
 
-export async function updateGSheet(callback: (a: boolean) => void)
+export async function initGSheet(callback: () => void)
 {
 	//const getReq = await fetch("http://ec2-52-15-55-53.us-east-2.compute.amazonaws.com:5505/dump_xcams");
 	const getReq = await fetch("https://g6u2bjvfoh.execute-api.us-east-2.amazonaws.com/dump_xcams");
@@ -25,5 +25,5 @@ export async function updateGSheet(callback: (a: boolean) => void)
 	G_SHEET.rowData = newRD;
 	G_SHEET.xcamData = newXD;
 	console.log("Succesfully loaded online xcam data.");
-	callback(true);
+	callback();
 }
