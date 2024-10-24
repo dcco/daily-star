@@ -28,6 +28,26 @@ function MenuOpt(props: MenuOptProps): React.ReactNode
 	);
 }
 
+	/*
+		data loaded from the backend can be split into three main categories
+		- data read once at start, never modified [global]
+		- data read/modified from user actions, local to one type of element [local/single]
+		- data read/modified from user actions, relevant to multiple elements [external/multi]
+
+		roughly, our data can be classified as such:
+		- xcam sheet data [global]
+		- DS seasonal daily data [global]
+		- DS seasonal history data [global]
+		- live time table data [local]
+		- player auth data [external]
+		- player nickname data [external]
+
+		external data is by far the most difficult type of data to handle.
+		we split external data into two parts:
+		- remote data, read from the API
+		- local data, updated by the user/frontend
+	*/
+
 export function MultiBoard(props: {}): React.ReactNode
 {
 	const [menuId, setMenuId] = useState(0);
