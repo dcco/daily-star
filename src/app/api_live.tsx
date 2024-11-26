@@ -3,7 +3,7 @@ import { Ver, serialVarList, unserialVarList } from './variant_def'
 import { newRowDef } from './row_def'
 import { TimeDat, VerOffset, newTimeDat, applyVerOffset } from './time_dat'
 import { ColList, toSetColList } from './org_strat_def'
-import { FilterState, orgStarDef } from './org_star_def'
+import { StarDef, FilterState, orgStarDef } from './org_star_def'
 import { AuthIdent, TimeTable, TimeMap, newIdent,
 	addTimeMap, buildTimeTable } from './time_table'
 import { NickMap } from './play_data'
@@ -11,13 +11,13 @@ import { NickMap } from './play_data'
 // const API_endpoint = "http://ec2-3-129-19-199.us-east-2.compute.amazonaws.com:5500";
 // const API_endpoint = "https://g6u2bjvfoh.execute-api.us-east-2.amazonaws.com";
 const API_endpoint = "https://0lcnm5wjck.execute-api.us-east-2.amazonaws.com/Main";
-//const API_endpoint = "http://ec2-18-217-150-208.us-east-2.compute.amazonaws.com:5500";
+//const API_endpoint = "http://ec2-18-219-11-239.us-east-2.compute.amazonaws.com:5500";
 
 	/*
 		xcam time API functions
 	*/
 
-type ReadObj = {
+export type ReadObj = {
 	"submit_id": number,
 	"p_id": number,
 	"time": number,
@@ -28,26 +28,14 @@ type ReadObj = {
 	"note": string
 };
 
-export async function loadTimeTable(stageId: number, _starId: number, today: boolean,
-	colList: ColList, fs: FilterState, verOffset: VerOffset): Promise<TimeTable> {
-	// load rows
-	var starDef = orgStarDef(stageId, _starId);
-	var starId = starDef.id;
-	var lk = "/times/read";
-	if (today) lk = "/times/read/today";
-	const getReq = await fetch(API_endpoint + lk + "?stage=" + stageId + "&star=" + starId);
-	var res = await getReq.json();
-	if (res.response === "Error") {
-		console.log(res.err);
-		return [];
-	}
+export function loadTTRaw(rawData: ReadObj[], starDef: StarDef,
+	colList: ColList, verOffset: VerOffset): TimeTable
+{
 	// enumerate strats
-	//var colList = orgColList(stageId, starId, verState);
 	var [stratSet, indexSet] = toSetColList(colList);
 	// build time table
 	const timeMap: TimeMap = {};
-	for (const _data of res.res) {
-		var data = _data as ReadObj;
+	for (const data of rawData) {
 		var playerId = newIdent("remote", "" + data.p_id);
 		//var stratDef = stratSet[data.stratname as string];
 		//if (stratDef === undefined) continue;
@@ -68,8 +56,30 @@ export async function loadTimeTable(stageId: number, _starId: number, today: boo
 		applyVerOffset(timeDat, verOffset);
 		addTimeMap(timeMap, playerId, stratId, timeDat);
 	}
-	console.log("Successfully loaded live table data.");
 	return buildTimeTable(timeMap, colList.length);
+}
+
+export type TTLoadType = ["def"] | ["today"] | ["week", string];
+
+export async function loadTimeTable(stageId: number, _starId: number, today: TTLoadType,
+	colList: ColList, fs: FilterState, verOffset: VerOffset): Promise<TimeTable> {
+	// load rows
+	var starDef = orgStarDef(stageId, _starId);
+	var starId = starDef.id;
+	var lk = "/times/read?stage=" + stageId + "&star=" + starId;
+	if (today[0] === "today") lk = "/times/read/today?stage=" + stageId + "&star=" + starId;
+	else if (today[0] === "week") lk = "/times/read/from_day?stage=" + stageId +
+		"&star=" + starId + "&date=" + today[1] + "&range=" + 7;
+	const getReq = await fetch(API_endpoint + lk);
+	var res = await getReq.json();
+	if (res.response === "Error") {
+		console.log(res.err);
+		return [];
+	}
+	// compile into time table
+	var tt = loadTTRaw(res.res as ReadObj[], starDef, colList, verOffset);
+	console.log("Successfully loaded live table data.");
+	return tt;
 }
 
 type SubmitObj = {
@@ -85,7 +95,7 @@ type SubmitObj = {
 }
 
 export function postNewTimes(stageId: number, starId: number,
-	userId: AuthIdent, timeList: TimeDat[], delList: TimeDat[])
+	userId: AuthIdent, nick: string | null, timeList: TimeDat[], delList: TimeDat[])
 {
 	// initial star info
 	var starDef = orgStarDef(stageId, starId);
@@ -117,6 +127,7 @@ export function postNewTimes(stageId: number, starId: number,
 		method: "POST",
 		body: JSON.stringify({
 			"player": userId,
+			"nick": nick,
 			"accessToken": userId.token.accessToken,
 			"submitList": submitList,
 			"delList": delIdList

@@ -142,7 +142,7 @@ export function EditBoard(props: EditBoardProps): React.ReactNode {
 			{ starBtnNodes }
 		</div>
 		{ varCont }
-		<LiveStarTable stageId={ stageId } starId={ starId } today={ false } fs={ fs } varFlag={ null }
+		<LiveStarTable stageId={ stageId } starId={ starId } today={ ["def"] } fs={ fs } varFlag={ null }
 			playData={ playData } reloadPlayData={ reloadPlayData } key={ stageId + "_" + starId }/>
 		<div className="sep"><hr/></div>
 		<AuthArea playData={ playData } setPlayData={ setPlayData }/>

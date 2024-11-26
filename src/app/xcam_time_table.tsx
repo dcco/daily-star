@@ -5,12 +5,11 @@ import { G_SHEET } from './api_xcam'
 
 import { VerOffset, rawMS, newTimeDat, applyVerOffset } from "./time_dat"
 import { ColList, readRefMap } from "./org_strat_def"
-import { FilterState } from "./org_star_def"
 import { TimeTable, newIdent, addTimeMap, buildTimeTable } from "./time_table"
 
 	/* derived "sort_data" (determines a canonical order for column sorting) */
 
-export function xcamTimeTable(colList: ColList, fs: FilterState, verOffset: VerOffset): TimeTable {
+export function xcamTimeTable(colList: ColList, verOffset: VerOffset): TimeTable {
 	var rowData = G_SHEET.rowData;
 	var xcamData = G_SHEET.xcamData;
 	const timeMap = {};

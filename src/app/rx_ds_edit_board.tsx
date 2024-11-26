@@ -5,8 +5,11 @@ import orgData from './json/org_data.json'
 import { PlayData } from './play_data'
 import { newExtFilterState, copyFilterState,
 	orgStarId, orgStarDef, verOffsetStarDef } from './org_star_def'
+import { TTLoadType } from './api_live'
+import { GlobObj, dateRawEST, dateAndOffset, dispDate } from './api_season'
 import { LiveStarTable } from './rx_live_table'
 import { VerToggle } from './rx_ver_toggle'
+import { Countdown } from './rx_countdown'
 
 	/*
 		######################
@@ -17,7 +20,9 @@ import { VerToggle } from './rx_ver_toggle'
 	*/
 
 type DSEditBoardProps = {
+	"startDate": string,
 	"day": number,
+	"weekly": boolean,
 	"stageId": number,
 	"starIdList": string[],
 	"playData": PlayData,
@@ -29,6 +34,8 @@ export function DSEditBoard(props: DSEditBoardProps): React.ReactNode {
 	const reloadPlayData = props.reloadPlayData;
 	const stageId = props.stageId;
 	const starCodeList = props.starIdList;
+
+	const [playCount, setPlayCount] = useState(0);
 
 	// star definitions from star ids
 	var starIdList = starCodeList.map((starCode) => orgStarId(stageId, starCode));
@@ -130,25 +137,49 @@ export function DSEditBoard(props: DSEditBoardProps): React.ReactNode {
 		</div>
 	);*/
 
+	// week data
+	var loadType: TTLoadType = ["today"];
+	var dateNode1: React.ReactNode = <div className='label-cont'>
+		{ dispDate(dateAndOffset(props.startDate, props.day)) }</div>;
+	var dateNode2: React.ReactNode = <Countdown endTime={ dateRawEST(props.startDate, props.day, 1) }/>;
+	if (props.weekly) {
+		var rawDate = dateAndOffset(props.startDate, props.day);
+		loadType = ["week", rawDate.toISOString().split('T')[0]];
+		var dt1 = dispDate(rawDate);
+		var dt2 = dispDate(dateAndOffset(props.startDate, props.day + 6));
+		dateNode1 = <div className="row-wrap ds-cont">
+			<div className='label-cont'>{ dt1 + " - " + dt2 + " "}
+				<em className="label-em">(Weekly 100 Coin)</em></div>
+		</div>;
+		var dateNode2: React.ReactNode = <Countdown endTime={ dateRawEST(props.startDate, props.day, 7) }/>;
+	}
+	/*if (weekly) {
+		dateNode = <div className='label-cont'>Weekly 100 Coin</div>; 
+	}*/
+
 	// create tables
 	var tableList: React.ReactNode[] = [];
 	tableList.push(
-		<LiveStarTable stageId={ stageId } starId={ starId } today={ true } fs={ fs } varFlag={ null }
+		<LiveStarTable stageId={ stageId } starId={ starId } today={ loadType } fs={ fs } varFlag={ null } setPlayCount={ setPlayCount }
 			playData={ playData } reloadPlayData={ reloadPlayData } key={ stageId + "_" + starId }/>
 	);
 
 	if (starDef.secondFlag) {
-		tableList.push(<LiveStarTable stageId={ stageId } starId={ starId } today={ true } fs={ fs } varFlag={ 1 }
+		tableList.push(<LiveStarTable stageId={ stageId } starId={ starId } today={ loadType } fs={ fs } varFlag={ 1 }
 			playData={ playData } reloadPlayData={ reloadPlayData } key={ stageId + "_" + starId + "_var" }/>);
 	}
 
 	return (
 		<div className="ds-cont">
 		<div className="row-wrap">
-			<div className="row-wrap">
-				<div className='label-cont'>Day { props.day + 1 }</div>
-				<div className='label-cont'>{ orgData[stageId].name }</div>
-				<div className='label-cont'>{ starDef.name }</div>
+			<div>
+				<div className="row-wrap no-space">
+					<div className='label-cont'>Day { props.day + 1 }</div>
+					<div className='label-cont'>{ orgData[stageId].name }</div>
+					<div className='label-cont'>{ starDef.name }</div>
+				</div>
+				<div className="row-wrap no-space">{ dateNode1 } { dateNode2 } </div>
+				<div className='label-cont alt-label'>Players: { playCount }</div>
 			</div>
 			<div className="toggle-sidebar">
 				{ verToggle }

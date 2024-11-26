@@ -28,6 +28,7 @@ export function xcamRecordMap(colList: ColList, fs: FilterState, verOffset: VerO
 			for (const xcamRef of stratDef.id_list) {
 				var [xs, xcamId] = xcamRef;
 				var cellDat = rowData[xs][xcamId];
+				if (cellDat === undefined) continue;
 				var rawTime = rawMS(cellDat.record);
 				if (rawTime === null) continue;
 				// apply version offset
@@ -38,6 +39,7 @@ export function xcamRecordMap(colList: ColList, fs: FilterState, verOffset: VerO
 				if (timeDat.time < allRecord.time) allRecord = timeDat;
 			}
 		} else if (stratDef.virtId.kind === 'beg') {
+			console.log(stratDef.virtId.id);
 			var rawTime = rawMS(rowData.beg[stratDef.virtId.id][0]);
 			if (rawTime === null) throw ("Bad beginner time listed for " + stratDef.name);
 			var timeDat = newTimeDat(rawTime, null, null, begRowDef(stratDef.name));

@@ -206,7 +206,7 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 	var recordNodes = recordList.map((record, i) => {
 		return <RecordCell timeDat={ record } verOffset={ verOffset } key={ record.rowDef.name + "_" + i }/>;
 	});
-	recordNodes.unshift(<td className="record-cell" key="wr">WR</td>);
+	recordNodes.unshift(<td className="record-cell" key="wr">Sheet Best</td>);
 
 	/* ----- TIME TABLE ROWS ----- */
 	// filter table by colums + sort table data

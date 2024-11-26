@@ -85,8 +85,9 @@ export function EditSubmitArea(props: ESAProps): React.ReactNode
 	// ver diff node
 	var verNode: React.ReactNode = "";
 	if (vs.verInfo !== null) {
+		var _active = dynFlag && (vs.verInfo.jpFlag && vs.verInfo.usFlag);
 		var ax: VerF[] = ["jp", "us"];
-		verNode = <OptionGroup title="Version:" connected={ true } active={ dynFlag }
+		verNode = <OptionGroup title="Version:" connected={ true } active={ _active }
 			textList={ ["JP", "US"] } selList={ ax } curSel={ verDraftDat(curDat) }
 			actFun={ (i) => editDat((dat) => { setVerDraftDat(dat, ax[i]); return dat; }) } key="opt-ver"/>;
 	}

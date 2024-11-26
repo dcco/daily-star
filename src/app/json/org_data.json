@@ -8,6 +8,9 @@
       {
         "name": "Big Bob-omb on the Summit",
         "id": "1",
+        "short": [
+          "King"
+        ],
         "def": "jp",
         "offset": -37,
         "jp_set": {
@@ -74,11 +77,18 @@
             ]
           }
         },
+        "catInfo": [
+          "only:120"
+        ],
         "open": []
       },
       {
         "name": "Footrace with Koopa the Quick",
         "id": "2",
+        "short": [
+          "KtQ",
+          "KtQ (NC)"
+        ],
         "def": "jp",
         "offset": {
           "Standard": 0,
@@ -148,11 +158,20 @@
             ]
           }
         },
+        "catInfo": [
+          "only:120",
+          "only:120"
+        ],
         "open": []
       },
       {
         "name": "Shoot to the Island in the Sky",
         "id": "3",
+        "short": [
+          "Skyjump",
+          "Ihop",
+          "Island"
+        ],
         "def": null,
         "offset": 0,
         "jp_set": {
@@ -293,6 +312,10 @@
             ]
           }
         },
+        "catInfo": [
+          null,
+          "only:70"
+        ],
         "variants": [
           "Camera Glitch"
         ],
@@ -304,6 +327,9 @@
       {
         "name": "100c + Find the 8 Red Coins",
         "id": "100c4",
+        "short": [
+          "100c + Reds"
+        ],
         "def": "jp",
         "offset": 11,
         "jp_set": {
@@ -354,6 +380,9 @@
             ]
           }
         },
+        "catInfo": [
+          "only:120"
+        ],
         "variants": [
           "DSS"
         ],
@@ -362,6 +391,9 @@
       {
         "name": "Mario Wings to the Sky",
         "id": "5",
+        "short": [
+          "Secrets"
+        ],
         "def": null,
         "offset": 0,
         "jp_set": {
@@ -442,6 +474,9 @@
             ]
           }
         },
+        "catInfo": [
+          "only:120"
+        ],
         "variants": [
           "Camera Glitch"
         ],
@@ -452,6 +487,9 @@
       {
         "name": "Behind Chain Chomp's Gate",
         "id": "6",
+        "short": [
+          "Clip"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -764,6 +802,9 @@
             ]
           }
         },
+        "catInfo": [
+          "in:16no"
+        ],
         "variants": [
           "Slope Start",
           "Backflip End",
@@ -791,6 +832,9 @@
       {
         "name": "Chip off Whomp's Block",
         "id": "1",
+        "short": [
+          "King"
+        ],
         "def": "jp",
         "offset": 28,
         "jp_set": {
@@ -855,6 +899,9 @@
             ]
           }
         },
+        "catInfo": [
+          "in:16no"
+        ],
         "variants": [
           "Double JD",
           "Tree Backflip"
@@ -864,6 +911,9 @@
       {
         "name": "To the Top of the Fortress",
         "id": "2",
+        "short": [
+          "Tower"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -1018,6 +1068,9 @@
             "virtId": "1_2_Sideflip WK"
           }
         },
+        "catInfo": [
+          "in:16no"
+        ],
         "variants": [
           "Double JD",
           "Elevator TJ",
@@ -1030,6 +1083,9 @@
       {
         "name": "Shoot into the Wild Blue",
         "id": "3",
+        "short": [
+          "Wild Blue"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -1110,6 +1166,9 @@
             ]
           }
         },
+        "catInfo": [
+          "in:16"
+        ],
         "variants": [
           "Speedkick"
         ],
@@ -1118,6 +1177,9 @@
       {
         "name": "100c + Red Coins on the Floating Isle",
         "id": "100c4",
+        "short": [
+          "100c + Reds"
+        ],
         "def": "offset",
         "offset": 11,
         "jp_set": {
@@ -1231,6 +1293,9 @@
       {
         "name": "Fall onto the Caged Island",
         "id": "5",
+        "short": [
+          "Owlless"
+        ],
         "def": "offset",
         "offset": 4,
         "jp_set": {
@@ -1489,6 +1554,9 @@
             ]
           }
         },
+        "catInfo": [
+          "in:16"
+        ],
         "variants": [
           "Direct GP",
           "Double JD + Stairs Speedkick",
@@ -1501,6 +1569,9 @@
       {
         "name": "Blast Away the Wall",
         "id": "6",
+        "short": [
+          "Cless"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -1733,6 +1804,9 @@
             ]
           }
         },
+        "catInfo": [
+          "in:16"
+        ],
         "variants": [
           "Tree Backflip",
           "Plank JD Clip"
@@ -1753,6 +1827,9 @@
       {
         "name": "Plunder in the Sunken Ship",
         "id": "1",
+        "short": [
+          "Ship"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -1777,6 +1854,15 @@
                 69
               ]
             ]
+          },
+          "No Ship Clip": {
+            "name": "No Ship Clip",
+            "diff": "easy",
+            "ver_diff": false,
+            "virtual": true,
+            "variant_map": {},
+            "id_list": [],
+            "virtId": "2_1_No Ship Clip"
           }
         },
         "us_set": {
@@ -1801,8 +1887,20 @@
                 69
               ]
             ]
+          },
+          "No Ship Clip": {
+            "name": "No Ship Clip",
+            "diff": "easy",
+            "ver_diff": false,
+            "virtual": true,
+            "variant_map": {},
+            "id_list": [],
+            "virtId": "2_1_No Ship Clip"
           }
         },
+        "catInfo": [
+          "only:120"
+        ],
         "variants": [
           "Punch Ending"
         ],
@@ -1811,6 +1909,9 @@
       {
         "name": "Can the Eel Come Out to Play?",
         "id": "2",
+        "short": [
+          "Eel"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -1877,6 +1978,9 @@
             ]
           }
         },
+        "catInfo": [
+          "only:120"
+        ],
         "open": [
           "BLJ"
         ]
@@ -1884,6 +1988,9 @@
       {
         "name": "Treasure of the Ocean Cave",
         "id": "3",
+        "short": [
+          "Cave"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -1950,6 +2057,9 @@
             ]
           }
         },
+        "catInfo": [
+          "only:120"
+        ],
         "open": [
           "BLJ"
         ]
@@ -1957,6 +2067,10 @@
       {
         "name": "100c + Red Coins on the Ship Afloat",
         "id": "100c4",
+        "short": [
+          "100c + Reds",
+          "100c + Reds (NC)"
+        ],
         "def": "jp",
         "offset": 11,
         "jp_set": {
@@ -2023,11 +2137,20 @@
             ]
           }
         },
+        "catInfo": [
+          "only:120",
+          "only:120"
+        ],
         "open": null
       },
       {
         "name": "Blast to the Stone Pillar",
         "id": "5",
+        "short": [
+          "Cannon",
+          "Cless",
+          "Pillar"
+        ],
         "def": "jp",
         "offset": -110,
         "jp_set": {
@@ -2170,6 +2293,10 @@
             ]
           }
         },
+        "catInfo": [
+          "only:120beg",
+          "only:120"
+        ],
         "variants": [
           "TJ Start",
           "No WK"
@@ -2179,6 +2306,9 @@
       {
         "name": "Through the Jet Stream",
         "id": "6",
+        "short": [
+          "Jet Stream"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -2215,6 +2345,9 @@
             ]
           }
         },
+        "catInfo": [
+          "only:120"
+        ],
         "open": []
       }
     ],
@@ -2229,6 +2362,9 @@
       {
         "name": "Slip Slidin' Away",
         "id": "1",
+        "short": [
+          "Slide"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -2300,6 +2436,9 @@
       {
         "name": "100c + Slip Slidin' Away",
         "id": "100c1",
+        "short": [
+          "100c + Slide"
+        ],
         "def": "us",
         "offset": 11,
         "jp_set": {
@@ -2384,6 +2523,9 @@
             ]
           }
         },
+        "catInfo": [
+          "only:70"
+        ],
         "variants": [
           "Blue Coin Switch",
           "No Teleport"
@@ -2393,8 +2535,14 @@
       {
         "name": "Li'l Penguin Lost",
         "id": "2",
+        "short": [
+          "Penguin"
+        ],
         "def": "spec",
-        "offset": 11,
+        "offset": {
+          "Standard": 1,
+          "Pingu Trick": 11
+        },
         "jp_set": {
           "Standard": {
             "name": "Standard",
@@ -2459,11 +2607,17 @@
             ]
           }
         },
+        "catInfo": [
+          "in:16no"
+        ],
         "open": []
       },
       {
         "name": "100c + Big Penguin Race",
         "id": "100c3",
+        "short": [
+          "100c + Race"
+        ],
         "def": "jp",
         "offset": 9,
         "jp_set": {
@@ -2504,7 +2658,7 @@
             "virtual": false,
             "variant_map": {
               "ext_80": [
-                "0"
+                "1"
               ],
               "ext_83": [
                 "0"
@@ -2563,7 +2717,7 @@
                 "1"
               ],
               "ext_84": [
-                "1"
+                "0"
               ]
             },
             "id_list": [
@@ -2589,6 +2743,9 @@
       {
         "name": "Frosty Slide for 8 Red Coins",
         "id": "4",
+        "short": [
+          "Reds"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -2639,6 +2796,9 @@
             ]
           }
         },
+        "catInfo": [
+          "only:120"
+        ],
         "variants": [
           "Teleporter Red Late"
         ],
@@ -2647,6 +2807,9 @@
       {
         "name": "Snowman's Lost His Head",
         "id": "5",
+        "short": [
+          "Head"
+        ],
         "def": "jp",
         "offset": 33,
         "jp_set": {
@@ -2697,7 +2860,7 @@
             "variant_map": {
               "main_117": [],
               "ext_88": [
-                "1"
+                "0"
               ]
             },
             "id_list": [
@@ -2727,6 +2890,9 @@
             ]
           }
         },
+        "catInfo": [
+          "only:120"
+        ],
         "variants": [
           "SJ Start"
         ],
@@ -2735,6 +2901,9 @@
       {
         "name": "Wall Kicks Will Work",
         "id": "6",
+        "short": [
+          "WKWW"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -2819,6 +2988,9 @@
             ]
           }
         },
+        "catInfo": [
+          "in:16no"
+        ],
         "open": []
       }
     ],
@@ -2833,6 +3005,9 @@
       {
         "name": "Go on a Ghost Hunt",
         "id": "1",
+        "short": [
+          "Ghost Hunt"
+        ],
         "def": "jp",
         "offset": {
           "Standard": -54
@@ -2960,6 +3135,9 @@
             ]
           }
         },
+        "catInfo": [
+          "only:120"
+        ],
         "variants": [
           "First Door",
           "Last Door",
@@ -2970,6 +3148,9 @@
       {
         "name": "Ride Big Boo's Merry-Go-Round",
         "id": "2",
+        "short": [
+          "Merry-Go-Round"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -3036,11 +3217,17 @@
             ]
           }
         },
+        "catInfo": [
+          "only:120"
+        ],
         "open": []
       },
       {
         "name": "Secret of the Haunted Books",
         "id": "3",
+        "short": [
+          "Books"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -3164,6 +3351,9 @@
       {
         "name": "100c + Seek the 8 Red Coins",
         "id": "100c4",
+        "short": [
+          "100c + Reds"
+        ],
         "def": "jp",
         "offset": null,
         "jp_set": {
@@ -3214,6 +3404,9 @@
             ]
           }
         },
+        "catInfo": [
+          "only:120"
+        ],
         "variants": [
           "DSS"
         ],
@@ -3222,6 +3415,9 @@
       {
         "name": "Big Boo's Balcony",
         "id": "5",
+        "short": [
+          "Balcony"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -3293,6 +3489,9 @@
       {
         "name": "Eye to Eye in the Secret Room",
         "id": "6",
+        "short": [
+          "Mr I"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -3329,6 +3528,9 @@
             ]
           }
         },
+        "catInfo": [
+          "only:120"
+        ],
         "open": []
       }
     ],
@@ -3343,6 +3545,9 @@
       {
         "name": "Swimming Beast in the Cavern",
         "id": "1",
+        "short": [
+          "Cavern"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -3397,11 +3602,17 @@
             "virtId": "5_1_Elevator Clip"
           }
         },
+        "catInfo": [
+          "in:16"
+        ],
         "open": []
       },
       {
         "name": "100c + Elevate for 8 Red Coins",
         "id": "100c2",
+        "short": [
+          "100c + Reds"
+        ],
         "def": "jp",
         "offset": 11,
         "jp_set": {
@@ -3496,6 +3707,9 @@
             ]
           }
         },
+        "catInfo": [
+          "only:120"
+        ],
         "variants": [
           "Salt Clip",
           "Eye Early"
@@ -3505,6 +3719,9 @@
       {
         "name": "Metal-Head Mario Can Move!",
         "id": "3",
+        "short": [
+          "Metal-Head"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -3595,6 +3812,9 @@
       {
         "name": "Navigating the Toxic Maze",
         "id": "4",
+        "short": [
+          "Toxic Maze"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -3693,6 +3913,9 @@
             "virtId": "5_4_No Clip"
           }
         },
+        "catInfo": [
+          "only:120"
+        ],
         "variants": [
           "Fast Clip"
         ],
@@ -3701,6 +3924,9 @@
       {
         "name": "A-Maze-ing Emergency Exit",
         "id": "5",
+        "short": [
+          "Exit"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -3725,16 +3951,26 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_170": [],
-              "ext_116": [
-                "0"
-              ]
+              "main_170": []
             },
             "id_list": [
               [
                 "main",
                 170
-              ],
+              ]
+            ]
+          },
+          "Open": {
+            "name": "Open",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "ext_116": [
+                "0"
+              ]
+            },
+            "id_list": [
               [
                 "ext",
                 116
@@ -3779,16 +4015,26 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_170": [],
-              "ext_116": [
-                "0"
-              ]
+              "main_170": []
             },
             "id_list": [
               [
                 "main",
                 170
-              ],
+              ]
+            ]
+          },
+          "Open": {
+            "name": "Open",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "ext_116": [
+                "0"
+              ]
+            },
+            "id_list": [
               [
                 "ext",
                 116
@@ -3811,6 +4057,9 @@
             ]
           }
         },
+        "catInfo": [
+          "in:16"
+        ],
         "variants": [
           "LJ + TJ"
         ],
@@ -3821,6 +4070,9 @@
       {
         "name": "Watch for Rolling Rocks",
         "id": "6",
+        "short": [
+          "Rocks"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -3901,6 +4153,9 @@
             ]
           }
         },
+        "catInfo": [
+          "in:16"
+        ],
         "variants": [
           "Rightside End"
         ],
@@ -3909,6 +4164,9 @@
       {
         "name": "CotMC (Metal Cap) Entry",
         "id": "premc",
+        "short": [
+          "MC Entry"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -3945,6 +4203,9 @@
             ]
           }
         },
+        "catInfo": [
+          "only:120"
+        ],
         "variants": [],
         "open": []
       }
@@ -3960,6 +4221,9 @@
       {
         "name": "Boil the Big Bully",
         "id": "1",
+        "short": [
+          "Bully"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -4088,6 +4352,9 @@
             "virtId": "6_1_Ledgegrab"
           }
         },
+        "catInfo": [
+          "in:16"
+        ],
         "variants": [
           "Platform Rollout"
         ],
@@ -4096,6 +4363,9 @@
       {
         "name": "Bully the Bullies",
         "id": "2",
+        "short": [
+          "Bullies"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -4236,6 +4506,9 @@
       {
         "name": "8-Coin Puzzle with 15 Pieces",
         "id": "3",
+        "short": [
+          "Reds"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -4332,11 +4605,19 @@
             ]
           }
         },
+        "catInfo": [
+          "in:16"
+        ],
         "open": null
       },
       {
         "name": "Red-Hot Log Rolling",
         "id": "4",
+        "short": [
+          "Wing",
+          "Sidehop",
+          "Log"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -4527,6 +4808,10 @@
             ]
           }
         },
+        "catInfo": [
+          null,
+          "only:16"
+        ],
         "variants": [
           "DJ + LJ"
         ],
@@ -4537,6 +4822,9 @@
       {
         "name": "Hot-Foot-it into the Volcano",
         "id": "5",
+        "short": [
+          "Volcano"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -4669,11 +4957,17 @@
             "virtId": "6_5_TJ Boost"
           }
         },
+        "catInfo": [
+          "notin:120"
+        ],
         "open": null
       },
       {
         "name": "100c + Hot-Foot-it into the Volcano",
         "id": "100c5",
+        "short": [
+          "100c + Volcano"
+        ],
         "def": "jp",
         "offset": 11,
         "jp_set": {
@@ -4740,6 +5034,9 @@
             ]
           }
         },
+        "catInfo": [
+          "only:120"
+        ],
         "open": [
           "Lavaboost"
         ]
@@ -4747,6 +5044,9 @@
       {
         "name": "Elevator Tour in the Volcano",
         "id": "6",
+        "short": [
+          "Elevator"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -4783,6 +5083,9 @@
             ]
           }
         },
+        "catInfo": [
+          "in:16"
+        ],
         "open": []
       }
     ],
@@ -4797,6 +5100,9 @@
       {
         "name": "In the Talons of the Big Bird",
         "id": "1",
+        "short": [
+          "Bird"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -4939,6 +5245,9 @@
             ]
           }
         },
+        "catInfo": [
+          "in:16"
+        ],
         "variants": [
           "Speed SJ + Dive",
           "Speed SJ x2",
@@ -4959,6 +5268,9 @@
       {
         "name": "Shining Atop the Pyramid",
         "id": "2",
+        "short": [
+          "Pyramid"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -4995,11 +5307,17 @@
             ]
           }
         },
+        "catInfo": [
+          "in:16"
+        ],
         "open": []
       },
       {
         "name": "Inside the Ancient Pyramid",
         "id": "3",
+        "short": [
+          "Pless"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -5144,13 +5462,241 @@
             ]
           }
         },
+        "catInfo": [
+          "in:16"
+        ],
         "open": [
           "Nuts Pless"
         ]
       },
       {
-        "name": "Pyramid Puzzle",
+        "name": "Stand Tall on the Four Pillars",
         "id": "4",
+        "short": [
+          "Eyerok"
+        ],
+        "def": "jp",
+        "offset": -77,
+        "jp_set": {
+          "Topless": {
+            "name": "Topless",
+            "diff": "normal",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "main_225": []
+            },
+            "id_list": [
+              [
+                "main",
+                225
+              ]
+            ]
+          },
+          "Backside": {
+            "name": "Backside",
+            "diff": "easy",
+            "ver_diff": false,
+            "virtual": true,
+            "variant_map": {},
+            "id_list": [],
+            "virtId": "7_4_Backside"
+          },
+          "TJWK": {
+            "name": "TJWK",
+            "diff": "easy",
+            "ver_diff": false,
+            "virtual": true,
+            "variant_map": {},
+            "id_list": [],
+            "virtId": "7_4_TJWK"
+          }
+        },
+        "us_set": {
+          "Topless": {
+            "name": "Topless",
+            "diff": "normal",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "main_227": []
+            },
+            "id_list": [
+              [
+                "main",
+                227
+              ]
+            ]
+          },
+          "Backside": {
+            "name": "Backside",
+            "diff": "easy",
+            "ver_diff": false,
+            "virtual": true,
+            "variant_map": {},
+            "id_list": [],
+            "virtId": "7_4_Backside"
+          },
+          "TJWK": {
+            "name": "TJWK",
+            "diff": "easy",
+            "ver_diff": false,
+            "virtual": true,
+            "variant_map": {},
+            "id_list": [],
+            "virtId": "7_4_TJWK"
+          }
+        },
+        "catInfo": [
+          "only:120"
+        ],
+        "open": []
+      },
+      {
+        "name": "Free Flying for 8 Red Coins",
+        "id": "5",
+        "short": [
+          "Reds"
+        ],
+        "def": "na",
+        "offset": null,
+        "jp_set": {
+          "Wall Bounce": {
+            "name": "Wall Bounce",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_230": []
+            },
+            "id_list": [
+              [
+                "main",
+                230
+              ]
+            ]
+          },
+          "No Wall Bounce": {
+            "name": "No Wall Bounce",
+            "diff": "easy",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_231": []
+            },
+            "id_list": [
+              [
+                "main",
+                231
+              ]
+            ]
+          },
+          "Z-Slide": {
+            "name": "Z-Slide",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_232": [
+                "0"
+              ],
+              "main_233": [],
+              "ext_133": [
+                "1"
+              ]
+            },
+            "id_list": [
+              [
+                "main",
+                232
+              ],
+              [
+                "main",
+                233
+              ],
+              [
+                "ext",
+                133
+              ]
+            ]
+          }
+        },
+        "us_set": {
+          "Wall Bounce": {
+            "name": "Wall Bounce",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_230": []
+            },
+            "id_list": [
+              [
+                "main",
+                230
+              ]
+            ]
+          },
+          "No Wall Bounce": {
+            "name": "No Wall Bounce",
+            "diff": "easy",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_231": []
+            },
+            "id_list": [
+              [
+                "main",
+                231
+              ]
+            ]
+          },
+          "Z-Slide": {
+            "name": "Z-Slide",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_232": [
+                "0"
+              ],
+              "main_233": [],
+              "ext_133": [
+                "1"
+              ]
+            },
+            "id_list": [
+              [
+                "main",
+                232
+              ],
+              [
+                "main",
+                233
+              ],
+              [
+                "ext",
+                133
+              ]
+            ]
+          }
+        },
+        "catInfo": [
+          "only:120"
+        ],
+        "variants": [
+          "Speed Jump to Cap Box",
+          "Speed Wing"
+        ],
+        "open": []
+      },
+      {
+        "name": "Pyramid Puzzle",
+        "id": "6",
+        "short": [
+          "Secrets"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -5160,26 +5706,26 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_225": [],
-              "main_226": [
+              "main_234": [],
+              "main_235": [
                 "0"
               ],
-              "main_227": [
+              "main_236": [
                 "1"
               ]
             },
             "id_list": [
               [
                 "main",
-                225
+                234
               ],
               [
                 "main",
-                226
+                235
               ],
               [
                 "main",
-                227
+                236
               ]
             ]
           },
@@ -5189,12 +5735,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_133": []
+              "ext_134": []
             },
             "id_list": [
               [
                 "ext",
-                133
+                134
               ]
             ]
           }
@@ -5206,26 +5752,26 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_225": [],
-              "main_226": [
+              "main_234": [],
+              "main_235": [
                 "0"
               ],
-              "main_227": [
+              "main_236": [
                 "1"
               ]
             },
             "id_list": [
               [
                 "main",
-                225
+                234
               ],
               [
                 "main",
-                226
+                235
               ],
               [
                 "main",
-                227
+                236
               ]
             ]
           },
@@ -5235,16 +5781,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_133": []
+              "ext_134": []
             },
             "id_list": [
               [
                 "ext",
-                133
+                134
               ]
             ]
           }
         },
+        "catInfo": [
+          "only:70"
+        ],
         "variants": [
           "SJ",
           "Tama"
@@ -5261,218 +5810,11 @@
         ]
       },
       {
-        "name": "Stand Tall on the Four Pillars",
-        "id": "5",
-        "def": "jp",
-        "offset": -77,
-        "jp_set": {
-          "Topless": {
-            "name": "Topless",
-            "diff": "normal",
-            "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
-              "main_229": []
-            },
-            "id_list": [
-              [
-                "main",
-                229
-              ]
-            ]
-          },
-          "Backside": {
-            "name": "Backside",
-            "diff": "easy",
-            "ver_diff": false,
-            "virtual": true,
-            "variant_map": {},
-            "id_list": [],
-            "virtId": "7_5_Backside"
-          },
-          "TJWK": {
-            "name": "TJWK",
-            "diff": "easy",
-            "ver_diff": false,
-            "virtual": true,
-            "variant_map": {},
-            "id_list": [],
-            "virtId": "7_5_TJWK"
-          }
-        },
-        "us_set": {
-          "Topless": {
-            "name": "Topless",
-            "diff": "normal",
-            "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
-              "main_231": []
-            },
-            "id_list": [
-              [
-                "main",
-                231
-              ]
-            ]
-          },
-          "Backside": {
-            "name": "Backside",
-            "diff": "easy",
-            "ver_diff": false,
-            "virtual": true,
-            "variant_map": {},
-            "id_list": [],
-            "virtId": "7_5_Backside"
-          },
-          "TJWK": {
-            "name": "TJWK",
-            "diff": "easy",
-            "ver_diff": false,
-            "virtual": true,
-            "variant_map": {},
-            "id_list": [],
-            "virtId": "7_5_TJWK"
-          }
-        },
-        "open": []
-      },
-      {
-        "name": "Free Flying for 8 Red Coins",
-        "id": "6",
-        "def": "na",
-        "offset": null,
-        "jp_set": {
-          "Wall Bounce": {
-            "name": "Wall Bounce",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "main_234": [],
-              "ext_134": [
-                "1"
-              ]
-            },
-            "id_list": [
-              [
-                "main",
-                234
-              ],
-              [
-                "ext",
-                134
-              ]
-            ]
-          },
-          "No Wall Bounce": {
-            "name": "No Wall Bounce",
-            "diff": "easy",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "main_235": []
-            },
-            "id_list": [
-              [
-                "main",
-                235
-              ]
-            ]
-          },
-          "Z-Slide": {
-            "name": "Z-Slide",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "main_236": [
-                "0"
-              ],
-              "main_237": []
-            },
-            "id_list": [
-              [
-                "main",
-                236
-              ],
-              [
-                "main",
-                237
-              ]
-            ]
-          }
-        },
-        "us_set": {
-          "Wall Bounce": {
-            "name": "Wall Bounce",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "main_234": [],
-              "ext_134": [
-                "1"
-              ]
-            },
-            "id_list": [
-              [
-                "main",
-                234
-              ],
-              [
-                "ext",
-                134
-              ]
-            ]
-          },
-          "No Wall Bounce": {
-            "name": "No Wall Bounce",
-            "diff": "easy",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "main_235": []
-            },
-            "id_list": [
-              [
-                "main",
-                235
-              ]
-            ]
-          },
-          "Z-Slide": {
-            "name": "Z-Slide",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "main_236": [
-                "0"
-              ],
-              "main_237": []
-            },
-            "id_list": [
-              [
-                "main",
-                236
-              ],
-              [
-                "main",
-                237
-              ]
-            ]
-          }
-        },
-        "variants": [
-          "Speed Jump to Cap Box",
-          "Speed Wing"
-        ],
-        "open": []
-      },
-      {
         "name": "100c + Pyramid Puzzle",
-        "id": "100c4",
+        "id": "100c6",
+        "short": [
+          "100c + Secrets"
+        ],
         "def": "jp",
         "offset": 11,
         "jp_set": {
@@ -5539,6 +5881,9 @@
             ]
           }
         },
+        "catInfo": [
+          "only:120"
+        ],
         "open": []
       }
     ],
@@ -5553,34 +5898,41 @@
       {
         "name": "Board Bowser's Sub",
         "id": "1",
+        "short": [
+          "Sub"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
-          "Back Sub": {
-            "name": "Back Sub",
+          "Front Sub": {
+            "name": "Front Sub",
             "diff": "normal",
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_250": []
+              "main_250": [],
+              "main_252": [
+                "0"
+              ]
             },
             "id_list": [
               [
                 "main",
                 250
+              ],
+              [
+                "main",
+                252
               ]
             ]
           },
-          "Front Sub": {
-            "name": "Front Sub",
+          "Back Sub": {
+            "name": "Back Sub",
             "diff": "easy",
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_251": [],
-              "main_252": [
-                "0"
-              ],
               "ext_143": [
                 "0"
               ]
@@ -5589,10 +5941,6 @@
               [
                 "main",
                 251
-              ],
-              [
-                "main",
-                252
               ],
               [
                 "ext",
@@ -5627,31 +5975,35 @@
           }
         },
         "us_set": {
-          "Back Sub": {
-            "name": "Back Sub",
+          "Front Sub": {
+            "name": "Front Sub",
             "diff": "normal",
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_250": []
+              "main_250": [],
+              "main_252": [
+                "0"
+              ]
             },
             "id_list": [
               [
                 "main",
                 250
+              ],
+              [
+                "main",
+                252
               ]
             ]
           },
-          "Front Sub": {
-            "name": "Front Sub",
+          "Back Sub": {
+            "name": "Back Sub",
             "diff": "easy",
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "main_251": [],
-              "main_252": [
-                "0"
-              ],
               "ext_143": [
                 "0"
               ]
@@ -5660,10 +6012,6 @@
               [
                 "main",
                 251
-              ],
-              [
-                "main",
-                252
               ],
               [
                 "ext",
@@ -5697,6 +6045,9 @@
             ]
           }
         },
+        "catInfo": [
+          "in:16"
+        ],
         "variants": [
           "Chip Clip",
           "Side Sub"
@@ -5708,6 +6059,9 @@
       {
         "name": "Chests in the Current",
         "id": "2",
+        "short": [
+          "Chests"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -5779,6 +6133,9 @@
       {
         "name": "100c + Pole-Jumping for Red Coins",
         "id": "100c3",
+        "short": [
+          "100c + Reds"
+        ],
         "def": "jp",
         "offset": 11,
         "jp_set": {
@@ -5815,11 +6172,17 @@
             ]
           }
         },
+        "catInfo": [
+          "only:120"
+        ],
         "open": []
       },
       {
         "name": "Through the Jet Stream",
         "id": "4",
+        "short": [
+          "Jet Stream"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -5896,11 +6259,17 @@
             ]
           }
         },
+        "catInfo": [
+          "only:120"
+        ],
         "open": []
       },
       {
         "name": "The Manta Ray's Reward",
         "id": "5",
+        "short": [
+          "Manta"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -5942,6 +6311,9 @@
       {
         "name": "Collect the Caps...",
         "id": "6",
+        "short": [
+          "Caps"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -6018,6 +6390,9 @@
             ]
           }
         },
+        "catInfo": [
+          "only:120"
+        ],
         "open": []
       }
     ],
@@ -6032,6 +6407,9 @@
       {
         "name": "Snowman's Big Head",
         "id": "1",
+        "short": [
+          "Head"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -6138,6 +6516,9 @@
       {
         "name": "Chill with the Bully",
         "id": "2",
+        "short": [
+          "Bully"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -6240,6 +6621,9 @@
       {
         "name": "In the Deep Freeze",
         "id": "3",
+        "short": [
+          "Freeze"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -6311,6 +6695,9 @@
       {
         "name": "Whirl from the Freezing Pond",
         "id": "4",
+        "short": [
+          "Whirl"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -6434,6 +6821,9 @@
       {
         "name": "Shell Shreddin' for Red Coins",
         "id": "5",
+        "short": [
+          "Reds"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -6484,6 +6874,9 @@
             ]
           }
         },
+        "catInfo": [
+          "only:70beg"
+        ],
         "variants": [
           "Leftside Start"
         ],
@@ -6492,6 +6885,9 @@
       {
         "name": "100c + Shell Shreddin' for Red Coins",
         "id": "100c5",
+        "short": [
+          "100c + Reds"
+        ],
         "def": "jp",
         "offset": 11,
         "jp_set": {
@@ -6562,6 +6958,9 @@
             ]
           }
         },
+        "catInfo": [
+          "only:120"
+        ],
         "variants": [
           "Early Spindrifts"
         ],
@@ -6570,6 +6969,9 @@
       {
         "name": "Into the Igloo",
         "id": "6",
+        "short": [
+          "Igloo"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -6694,6 +7096,9 @@
             ]
           }
         },
+        "catInfo": [
+          "only:120"
+        ],
         "variants": [
           "Phantaxx Ending",
           "Side Entry"
@@ -6712,6 +7117,9 @@
       {
         "name": "Shocking Arrow Lifts!",
         "id": "1",
+        "short": [
+          "Arrow Lifts"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -6802,6 +7210,9 @@
       {
         "name": "Top o' the Town",
         "id": "2",
+        "short": [
+          "Top"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -6937,6 +7348,9 @@
       {
         "name": "Secrets in the Shallows and Sky",
         "id": "3",
+        "short": [
+          "Secrets"
+        ],
         "def": "jp",
         "offset": 0,
         "jp_set": {
@@ -6973,11 +7387,17 @@
             ]
           }
         },
+        "catInfo": [
+          "only:120"
+        ],
         "open": []
       },
       {
         "name": "100c + Secrets in the Shallows and Sky",
         "id": "100c3",
+        "short": [
+          "100c + Secrets"
+        ],
         "def": "us",
         "offset": 11,
         "jp_set": {
@@ -7014,11 +7434,17 @@
             ]
           }
         },
+        "catInfo": [
+          "only:70"
+        ],
         "open": []
       },
       {
         "name": "Express Elevator--Hurry Up!",
         "id": "4",
+        "short": [
+          "Elevator"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -7137,6 +7563,9 @@
       {
         "name": "100c + Go to Town for Red Coins",
         "id": "100c5",
+        "short": [
+          "100c + Reds"
+        ],
         "def": "jp",
         "offset": 11,
         "jp_set": {
@@ -7173,11 +7602,17 @@
             ]
           }
         },
+        "catInfo": [
+          "only:120"
+        ],
         "open": []
       },
       {
         "name": "Quick Race Through Downtown!",
         "id": "6",
+        "short": [
+          "Downtown"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -7244,6 +7679,9 @@
             ]
           }
         },
+        "catInfo": [
+          "only:120"
+        ],
         "open": []
       }
     ],
@@ -7258,6 +7696,9 @@
       {
         "name": "Scale the Mountain",
         "id": "1",
+        "short": [
+          "Top"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -7347,6 +7788,9 @@
       {
         "name": "Mystery of the Monkey Cage",
         "id": "2",
+        "short": [
+          "Monkey"
+        ],
         "def": "jp",
         "offset": -6,
         "jp_set": {
@@ -7459,6 +7903,9 @@
             "virtId": "11_2_No Log WK"
           }
         },
+        "catInfo": [
+          "only:120"
+        ],
         "variants": [
           "Cage WK"
         ],
@@ -7467,6 +7914,9 @@
       {
         "name": "Scary 'Shrooms, Red Coins",
         "id": "3",
+        "short": [
+          "Reds"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -7517,6 +7967,9 @@
             ]
           }
         },
+        "catInfo": [
+          "only:70"
+        ],
         "variants": [
           "LJ After 4th Red"
         ],
@@ -7525,6 +7978,9 @@
       {
         "name": "100c + Scary 'Shrooms, Red Coins",
         "id": "100c3",
+        "short": [
+          "100c + Reds"
+        ],
         "def": "jp",
         "offset": 11,
         "jp_set": {
@@ -7591,11 +8047,17 @@
             ]
           }
         },
+        "catInfo": [
+          "only:120"
+        ],
         "open": []
       },
       {
         "name": "Mysterious Mountainside",
         "id": "4",
+        "short": [
+          "Breeze"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -7643,6 +8105,15 @@
                 340
               ]
             ]
+          },
+          "Slowturn Breeze": {
+            "name": "Slowturn Breeze",
+            "diff": "easy",
+            "ver_diff": false,
+            "virtual": true,
+            "variant_map": {},
+            "id_list": [],
+            "virtId": "11_4_Slowturn Breeze"
           }
         },
         "us_set": {
@@ -7690,6 +8161,15 @@
                 340
               ]
             ]
+          },
+          "Slowturn Breeze": {
+            "name": "Slowturn Breeze",
+            "diff": "easy",
+            "ver_diff": false,
+            "virtual": true,
+            "variant_map": {},
+            "id_list": [],
+            "virtId": "11_4_Slowturn Breeze"
           }
         },
         "open": []
@@ -7697,6 +8177,9 @@
       {
         "name": "Breathtaking View from Bridge",
         "id": "5",
+        "short": [
+          "Waterfall"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -7804,6 +8287,9 @@
       {
         "name": "Blast to the Lonely Mushroom",
         "id": "6",
+        "short": [
+          "Shroom"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -7904,6 +8390,9 @@
       {
         "name": "Pluck the Piranha Flower",
         "id": "1",
+        "short": [
+          "Plants"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -7975,6 +8464,9 @@
       {
         "name": "The Tip Top of the Huge Island",
         "id": "2",
+        "short": [
+          "Box"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -8123,6 +8615,9 @@
       {
         "name": "Rematch with Koopa the Quick",
         "id": "3",
+        "short": [
+          "KtQ"
+        ],
         "def": "jp",
         "offset": 8,
         "jp_set": {
@@ -8255,6 +8750,9 @@
             ]
           }
         },
+        "catInfo": [
+          "only:120"
+        ],
         "variants": [
           "14.7-14.9 Race",
           "Mountain Clip"
@@ -8264,6 +8762,10 @@
       {
         "name": "100c + Rematch with Koopa the Quick",
         "id": "100c3",
+        "short": [
+          "100c + KtQ",
+          "100c + KtQ (Tiny)"
+        ],
         "def": "jp",
         "offset": 19,
         "jp_set": {
@@ -8330,11 +8832,18 @@
             ]
           }
         },
+        "catInfo": [
+          "only:120beg",
+          "only:120beg"
+        ],
         "open": []
       },
       {
         "name": "Five Itty Bitty Secrets",
         "id": "4",
+        "short": [
+          "Secrets"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -8424,6 +8933,9 @@
       {
         "name": "Wiggler's Red Coins",
         "id": "5",
+        "short": [
+          "Reds"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -8460,11 +8972,17 @@
             ]
           }
         },
+        "catInfo": [
+          "only:120beg"
+        ],
         "open": []
       },
       {
         "name": "100c + Wiggler's Red Coin",
         "id": "100c5",
+        "short": [
+          "100c + Reds"
+        ],
         "def": "jp",
         "offset": 11,
         "jp_set": {
@@ -8480,53 +8998,6 @@
               [
                 "main",
                 368
-              ]
-            ]
-          },
-          "13c Start + Pole": {
-            "name": "13c Start + Pole",
-            "diff": "easy",
-            "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
-              "main_374": []
-            },
-            "id_list": [
-              [
-                "main",
-                374
-              ]
-            ]
-          },
-          "11c Start + Pole": {
-            "name": "11c Start + Pole",
-            "diff": "easy",
-            "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
-              "main_378": []
-            },
-            "id_list": [
-              [
-                "main",
-                378
-              ]
-            ]
-          }
-        },
-        "us_set": {
-          "16c Start": {
-            "name": "16c Start",
-            "diff": "normal",
-            "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
-              "main_370": []
-            },
-            "id_list": [
-              [
-                "main",
-                370
               ]
             ]
           },
@@ -8561,11 +9032,64 @@
             ]
           }
         },
+        "us_set": {
+          "16c Start": {
+            "name": "16c Start",
+            "diff": "normal",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "main_370": []
+            },
+            "id_list": [
+              [
+                "main",
+                370
+              ]
+            ]
+          },
+          "13c Start + Pole": {
+            "name": "13c Start + Pole",
+            "diff": "easy",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "main_376": []
+            },
+            "id_list": [
+              [
+                "main",
+                376
+              ]
+            ]
+          },
+          "11c Start + Pole": {
+            "name": "11c Start + Pole",
+            "diff": "easy",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "main_380": []
+            },
+            "id_list": [
+              [
+                "main",
+                380
+              ]
+            ]
+          }
+        },
+        "catInfo": [
+          "only:120"
+        ],
         "open": []
       },
       {
         "name": "Make Wiggler Squirm",
         "id": "6",
+        "short": [
+          "Wiggler"
+        ],
         "def": "jp",
         "offset": -40,
         "jp_set": {
@@ -8575,12 +9099,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_382": []
+              "main_383": []
             },
             "id_list": [
               [
                 "main",
-                382
+                383
               ]
             ]
           },
@@ -8607,12 +9131,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_384": []
+              "main_385": []
             },
             "id_list": [
               [
                 "main",
-                384
+                385
               ]
             ]
           },
@@ -8632,6 +9156,9 @@
             ]
           }
         },
+        "catInfo": [
+          "only:120"
+        ],
         "open": []
       }
     ],
@@ -8639,13 +9166,16 @@
   },
   {
     "name": "Tick Tock Clock",
-    "checkId": 388,
+    "checkId": 389,
     "ext": false,
     "color": "lb-yellow",
     "starList": [
       {
         "name": "Roll into the Cage",
         "id": "1",
+        "short": [
+          "Cage"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -8655,7 +9185,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_392": [],
+              "main_393": [],
               "ext_206": [
                 "0"
               ],
@@ -8666,7 +9196,7 @@
             "id_list": [
               [
                 "main",
-                392
+                393
               ],
               [
                 "ext",
@@ -8684,7 +9214,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_393": [],
+              "main_394": [],
               "ext_208": [
                 "0"
               ],
@@ -8695,7 +9225,7 @@
             "id_list": [
               [
                 "main",
-                393
+                394
               ],
               [
                 "ext",
@@ -8713,12 +9243,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_394": []
+              "main_395": []
             },
             "id_list": [
               [
                 "main",
-                394
+                395
               ]
             ]
           },
@@ -8745,7 +9275,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_392": [],
+              "main_393": [],
               "ext_206": [
                 "0"
               ],
@@ -8756,7 +9286,7 @@
             "id_list": [
               [
                 "main",
-                392
+                393
               ],
               [
                 "ext",
@@ -8774,7 +9304,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_393": [],
+              "main_394": [],
               "ext_208": [
                 "0"
               ],
@@ -8785,7 +9315,7 @@
             "id_list": [
               [
                 "main",
-                393
+                394
               ],
               [
                 "ext",
@@ -8803,12 +9333,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_394": []
+              "main_395": []
             },
             "id_list": [
               [
                 "main",
-                394
+                395
               ]
             ]
           },
@@ -8846,26 +9376,14 @@
       {
         "name": "The Pit and the Pendulums",
         "id": "2",
+        "short": [
+          "Pendulum"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
           "Flippies": {
             "name": "Flippies",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "main_395": []
-            },
-            "id_list": [
-              [
-                "main",
-                395
-              ]
-            ]
-          },
-          "Cog Rollout": {
-            "name": "Cog Rollout",
             "diff": "normal",
             "ver_diff": false,
             "virtual": false,
@@ -8879,9 +9397,9 @@
               ]
             ]
           },
-          "Time Stop": {
-            "name": "Time Stop",
-            "diff": "easy",
+          "Cog Rollout": {
+            "name": "Cog Rollout",
+            "diff": "normal",
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
@@ -8891,6 +9409,21 @@
               [
                 "main",
                 397
+              ]
+            ]
+          },
+          "Time Stop": {
+            "name": "Time Stop",
+            "diff": "easy",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_398": []
+            },
+            "id_list": [
+              [
+                "main",
+                398
               ]
             ]
           }
@@ -8902,21 +9435,6 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_395": []
-            },
-            "id_list": [
-              [
-                "main",
-                395
-              ]
-            ]
-          },
-          "Cog Rollout": {
-            "name": "Cog Rollout",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
               "main_396": []
             },
             "id_list": [
@@ -8926,9 +9444,9 @@
               ]
             ]
           },
-          "Time Stop": {
-            "name": "Time Stop",
-            "diff": "easy",
+          "Cog Rollout": {
+            "name": "Cog Rollout",
+            "diff": "normal",
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
@@ -8938,6 +9456,21 @@
               [
                 "main",
                 397
+              ]
+            ]
+          },
+          "Time Stop": {
+            "name": "Time Stop",
+            "diff": "easy",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_398": []
+            },
+            "id_list": [
+              [
+                "main",
+                398
               ]
             ]
           }
@@ -8947,6 +9480,9 @@
       {
         "name": "Get a Hand",
         "id": "3",
+        "short": [
+          "Get a Hand"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -8956,7 +9492,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_398": [],
+              "main_399": [],
               "ext_211": [
                 "0"
               ]
@@ -8964,7 +9500,7 @@
             "id_list": [
               [
                 "main",
-                398
+                399
               ],
               [
                 "ext",
@@ -8978,12 +9514,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_399": []
+              "main_400": []
             },
             "id_list": [
               [
                 "main",
-                399
+                400
               ]
             ]
           }
@@ -8995,7 +9531,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_398": [],
+              "main_399": [],
               "ext_211": [
                 "0"
               ]
@@ -9003,7 +9539,7 @@
             "id_list": [
               [
                 "main",
-                398
+                399
               ],
               [
                 "ext",
@@ -9017,12 +9553,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_399": []
+              "main_400": []
             },
             "id_list": [
               [
                 "main",
-                399
+                400
               ]
             ]
           }
@@ -9035,6 +9571,9 @@
       {
         "name": "Stomp on the Thwomp",
         "id": "4",
+        "short": [
+          "Thwomp"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -9042,47 +9581,6 @@
             "name": "Standard",
             "diff": "normal",
             "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "main_400": []
-            },
-            "id_list": [
-              [
-                "main",
-                400
-              ]
-            ]
-          }
-        },
-        "us_set": {
-          "Standard": {
-            "name": "Standard",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "main_400": []
-            },
-            "id_list": [
-              [
-                "main",
-                400
-              ]
-            ]
-          }
-        },
-        "open": []
-      },
-      {
-        "name": "100c + Stomp on the Thwomp",
-        "id": "100c4",
-        "def": "offset",
-        "offset": 11,
-        "jp_set": {
-          "Standard": {
-            "name": "Standard",
-            "diff": "normal",
-            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_401": []
@@ -9093,24 +9591,39 @@
                 401
               ]
             ]
-          },
-          "Safety Red": {
-            "name": "Safety Red",
+          }
+        },
+        "us_set": {
+          "Standard": {
+            "name": "Standard",
             "diff": "normal",
-            "ver_diff": true,
+            "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_405": []
+              "main_401": []
             },
             "id_list": [
               [
                 "main",
-                405
+                401
               ]
             ]
           }
         },
-        "us_set": {
+        "catInfo": [
+          "only:70beg"
+        ],
+        "open": []
+      },
+      {
+        "name": "100c + Stomp on the Thwomp",
+        "id": "100c4",
+        "short": [
+          "100c + Thwomp"
+        ],
+        "def": "offset",
+        "offset": 11,
+        "jp_set": {
           "Standard": {
             "name": "Standard",
             "diff": "normal",
@@ -9142,11 +9655,46 @@
             ]
           }
         },
+        "us_set": {
+          "Standard": {
+            "name": "Standard",
+            "diff": "normal",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "main_403": []
+            },
+            "id_list": [
+              [
+                "main",
+                403
+              ]
+            ]
+          },
+          "Safety Red": {
+            "name": "Safety Red",
+            "diff": "normal",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "main_407": []
+            },
+            "id_list": [
+              [
+                "main",
+                407
+              ]
+            ]
+          }
+        },
         "open": []
       },
       {
         "name": "Timed Jumps on Moving Bars",
         "id": "5",
+        "short": [
+          "Bars"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -9156,12 +9704,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_409": []
+              "main_410": []
             },
             "id_list": [
               [
                 "main",
-                409
+                410
               ]
             ]
           },
@@ -9171,7 +9719,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_410": [
+              "main_411": [
                 "0"
               ],
               "ext_213": []
@@ -9179,7 +9727,7 @@
             "id_list": [
               [
                 "main",
-                410
+                411
               ],
               [
                 "ext",
@@ -9210,12 +9758,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_409": []
+              "main_410": []
             },
             "id_list": [
               [
                 "main",
-                409
+                410
               ]
             ]
           },
@@ -9225,7 +9773,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_410": [
+              "main_411": [
                 "0"
               ],
               "ext_213": []
@@ -9233,7 +9781,7 @@
             "id_list": [
               [
                 "main",
-                410
+                411
               ],
               [
                 "ext",
@@ -9265,6 +9813,11 @@
       {
         "name": "Stop Time for Red Coins",
         "id": "6",
+        "short": [
+          "Still Reds",
+          "Moving Reds",
+          "Reds"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -9274,14 +9827,14 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_411": [],
-              "main_412": [
+              "main_412": [],
+              "main_413": [
                 "0"
               ],
-              "main_413": [
+              "main_414": [
                 "1"
               ],
-              "main_414": [
+              "main_415": [
                 "0",
                 "1"
               ],
@@ -9296,10 +9849,6 @@
             "id_list": [
               [
                 "main",
-                411
-              ],
-              [
-                "main",
                 412
               ],
               [
@@ -9309,6 +9858,10 @@
               [
                 "main",
                 414
+              ],
+              [
+                "main",
+                415
               ],
               [
                 "ext",
@@ -9326,7 +9879,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_415": [],
+              "main_416": [],
               "ext_216": [
                 "3"
               ]
@@ -9334,7 +9887,7 @@
             "id_list": [
               [
                 "main",
-                415
+                416
               ],
               [
                 "ext",
@@ -9348,12 +9901,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_416": []
+              "main_417": []
             },
             "id_list": [
               [
                 "main",
-                416
+                417
               ]
             ]
           }
@@ -9365,14 +9918,14 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_411": [],
-              "main_412": [
+              "main_412": [],
+              "main_413": [
                 "0"
               ],
-              "main_413": [
+              "main_414": [
                 "1"
               ],
-              "main_414": [
+              "main_415": [
                 "0",
                 "1"
               ],
@@ -9387,10 +9940,6 @@
             "id_list": [
               [
                 "main",
-                411
-              ],
-              [
-                "main",
                 412
               ],
               [
@@ -9400,6 +9949,10 @@
               [
                 "main",
                 414
+              ],
+              [
+                "main",
+                415
               ],
               [
                 "ext",
@@ -9417,7 +9970,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_415": [],
+              "main_416": [],
               "ext_216": [
                 "3"
               ]
@@ -9425,7 +9978,7 @@
             "id_list": [
               [
                 "main",
-                415
+                416
               ],
               [
                 "ext",
@@ -9439,16 +9992,20 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_416": []
+              "main_417": []
             },
             "id_list": [
               [
                 "main",
-                416
+                417
               ]
             ]
           }
         },
+        "catInfo": [
+          "only:beg",
+          null
+        ],
         "variants": [
           "JD Ending",
           "Sideflip + WK Strat",
@@ -9469,13 +10026,16 @@
   },
   {
     "name": "Rainbow Ride",
-    "checkId": 418,
+    "checkId": 419,
     "ext": false,
     "color": "lb-red",
     "starList": [
       {
         "name": "Cruiser Crossing the Rainbow",
         "id": "1",
+        "short": [
+          "Cruiser"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -9485,19 +10045,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_424": [],
-              "main_426": [
+              "main_425": [],
+              "main_427": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                424
+                425
               ],
               [
                 "main",
-                426
+                427
               ]
             ]
           },
@@ -9507,12 +10067,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_428": []
+              "main_429": []
             },
             "id_list": [
               [
                 "main",
-                428
+                429
               ]
             ]
           },
@@ -9522,7 +10082,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_430": [],
+              "main_431": [],
               "ext_220": [
                 "1"
               ]
@@ -9530,7 +10090,7 @@
             "id_list": [
               [
                 "main",
-                430
+                431
               ],
               [
                 "ext",
@@ -9555,19 +10115,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_424": [],
-              "main_426": [
+              "main_425": [],
+              "main_427": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                424
+                425
               ],
               [
                 "main",
-                426
+                427
               ]
             ]
           },
@@ -9577,12 +10137,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_428": []
+              "main_429": []
             },
             "id_list": [
               [
                 "main",
-                428
+                429
               ]
             ]
           },
@@ -9592,7 +10152,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_430": [],
+              "main_431": [],
               "ext_220": [
                 "1"
               ]
@@ -9600,7 +10160,7 @@
             "id_list": [
               [
                 "main",
-                430
+                431
               ],
               [
                 "ext",
@@ -9627,26 +10187,14 @@
       {
         "name": "The Big House in the Sky",
         "id": "2",
+        "short": [
+          "Big House"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
           "Carpetless": {
             "name": "Carpetless",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "main_432": []
-            },
-            "id_list": [
-              [
-                "main",
-                432
-              ]
-            ]
-          },
-          "JD Ending": {
-            "name": "JD Ending",
             "diff": "normal",
             "ver_diff": false,
             "virtual": false,
@@ -9657,6 +10205,21 @@
               [
                 "main",
                 433
+              ]
+            ]
+          },
+          "JD Ending": {
+            "name": "JD Ending",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_434": []
+            },
+            "id_list": [
+              [
+                "main",
+                434
               ]
             ]
           }
@@ -9668,12 +10231,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_432": []
+              "main_433": []
             },
             "id_list": [
               [
                 "main",
-                432
+                433
               ]
             ]
           },
@@ -9683,21 +10246,28 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_433": []
+              "main_434": []
             },
             "id_list": [
               [
                 "main",
-                433
+                434
               ]
             ]
           }
         },
+        "catInfo": [
+          "only:120"
+        ],
         "open": []
       },
       {
         "name": "100c + The Big House in the Sky",
         "id": "100c2",
+        "short": [
+          "100c + Big House",
+          "100c + Big House (NC)"
+        ],
         "def": "jp",
         "offset": 11,
         "jp_set": {
@@ -9707,12 +10277,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_437": []
+              "main_438": []
             },
             "id_list": [
               [
                 "main",
-                437
+                438
               ]
             ]
           },
@@ -9722,12 +10292,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_439": []
+              "main_440": []
             },
             "id_list": [
               [
                 "main",
-                439
+                440
               ]
             ]
           },
@@ -9769,12 +10339,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_438": []
+              "main_439": []
             },
             "id_list": [
               [
                 "main",
-                438
+                439
               ]
             ]
           },
@@ -9784,12 +10354,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_440": []
+              "main_441": []
             },
             "id_list": [
               [
                 "main",
-                440
+                441
               ]
             ]
           },
@@ -9824,11 +10394,18 @@
             ]
           }
         },
+        "catInfo": [
+          "only:120beg",
+          "only:120beg"
+        ],
         "open": []
       },
       {
         "name": "Coins Amassed in a Maze",
         "id": "3",
+        "short": [
+          "Reds"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -9838,7 +10415,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_441": [],
+              "main_442": [],
               "ext_225": [
                 "0"
               ]
@@ -9846,7 +10423,7 @@
             "id_list": [
               [
                 "main",
-                441
+                442
               ],
               [
                 "ext",
@@ -9860,7 +10437,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_442": [],
+              "main_443": [],
               "ext_226": [
                 "0"
               ]
@@ -9868,7 +10445,7 @@
             "id_list": [
               [
                 "main",
-                442
+                443
               ],
               [
                 "ext",
@@ -9884,7 +10461,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_441": [],
+              "main_442": [],
               "ext_225": [
                 "0"
               ]
@@ -9892,7 +10469,7 @@
             "id_list": [
               [
                 "main",
-                441
+                442
               ],
               [
                 "ext",
@@ -9906,7 +10483,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_442": [],
+              "main_443": [],
               "ext_226": [
                 "0"
               ]
@@ -9914,7 +10491,7 @@
             "id_list": [
               [
                 "main",
-                442
+                443
               ],
               [
                 "ext",
@@ -9931,6 +10508,9 @@
       {
         "name": "Swingin' in the Breeze",
         "id": "4",
+        "short": [
+          "Swingin"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -9940,7 +10520,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_443": [],
+              "main_444": [],
               "ext_227": [
                 "0"
               ]
@@ -9948,7 +10528,7 @@
             "id_list": [
               [
                 "main",
-                443
+                444
               ],
               [
                 "ext",
@@ -9962,12 +10542,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_444": []
+              "main_445": []
             },
             "id_list": [
               [
                 "main",
-                444
+                445
               ]
             ]
           },
@@ -9988,7 +10568,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_443": [],
+              "main_444": [],
               "ext_227": [
                 "0"
               ]
@@ -9996,7 +10576,7 @@
             "id_list": [
               [
                 "main",
-                443
+                444
               ],
               [
                 "ext",
@@ -10010,12 +10590,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_444": []
+              "main_445": []
             },
             "id_list": [
               [
                 "main",
-                444
+                445
               ]
             ]
           },
@@ -10037,26 +10617,14 @@
       {
         "name": "Tricky Triangles!",
         "id": "5",
+        "short": [
+          "Triangles"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
           "Standard": {
             "name": "Standard",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "main_445": []
-            },
-            "id_list": [
-              [
-                "main",
-                445
-              ]
-            ]
-          },
-          "Low Dive": {
-            "name": "Low Dive",
             "diff": "normal",
             "ver_diff": false,
             "virtual": false,
@@ -10067,6 +10635,21 @@
               [
                 "main",
                 446
+              ]
+            ]
+          },
+          "Low Dive": {
+            "name": "Low Dive",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_447": []
+            },
+            "id_list": [
+              [
+                "main",
+                447
               ]
             ]
           },
@@ -10087,12 +10670,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_445": []
+              "main_446": []
             },
             "id_list": [
               [
                 "main",
-                445
+                446
               ]
             ]
           },
@@ -10102,12 +10685,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_446": []
+              "main_447": []
             },
             "id_list": [
               [
                 "main",
-                446
+                447
               ]
             ]
           },
@@ -10126,6 +10709,9 @@
       {
         "name": "Somewhere over the Rainbow",
         "id": "6",
+        "short": [
+          "Cannon"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -10135,23 +10721,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_447": [],
-              "main_448": [
+              "main_448": [],
+              "main_449": [
                 "0"
               ],
-              "main_449": [
+              "main_450": [
                 "1"
               ],
-              "main_450": [
+              "main_451": [
                 "1",
                 "0"
               ]
             },
             "id_list": [
-              [
-                "main",
-                447
-              ],
               [
                 "main",
                 448
@@ -10163,6 +10745,10 @@
               [
                 "main",
                 450
+              ],
+              [
+                "main",
+                451
               ]
             ]
           },
@@ -10172,19 +10758,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_451": [],
-              "main_452": [
+              "main_452": [],
+              "main_453": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                451
+                452
               ],
               [
                 "main",
-                452
+                453
               ]
             ]
           },
@@ -10194,8 +10780,8 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_453": [],
-              "main_454": [
+              "main_454": [],
+              "main_455": [
                 "0"
               ],
               "ext_228": [
@@ -10205,11 +10791,11 @@
             "id_list": [
               [
                 "main",
-                453
+                454
               ],
               [
                 "main",
-                454
+                455
               ],
               [
                 "ext",
@@ -10234,23 +10820,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_447": [],
-              "main_448": [
+              "main_448": [],
+              "main_449": [
                 "0"
               ],
-              "main_449": [
+              "main_450": [
                 "1"
               ],
-              "main_450": [
+              "main_451": [
                 "1",
                 "0"
               ]
             },
             "id_list": [
-              [
-                "main",
-                447
-              ],
               [
                 "main",
                 448
@@ -10262,6 +10844,10 @@
               [
                 "main",
                 450
+              ],
+              [
+                "main",
+                451
               ]
             ]
           },
@@ -10271,19 +10857,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_451": [],
-              "main_452": [
+              "main_452": [],
+              "main_453": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                451
+                452
               ],
               [
                 "main",
-                452
+                453
               ]
             ]
           },
@@ -10293,8 +10879,8 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_453": [],
-              "main_454": [
+              "main_454": [],
+              "main_455": [
                 "0"
               ],
               "ext_228": [
@@ -10304,11 +10890,11 @@
             "id_list": [
               [
                 "main",
-                453
+                454
               ],
               [
                 "main",
-                454
+                455
               ],
               [
                 "ext",
@@ -10326,6 +10912,9 @@
             "virtId": "14_6_No Bounce"
           }
         },
+        "catInfo": [
+          "only:120beg"
+        ],
         "variants": [
           "DJ Dive",
           "Full WK + Full SJ",
@@ -10336,41 +10925,13 @@
       {
         "name": "100c + Somewhere over the Rainbow",
         "id": "100c6",
+        "short": [
+          "100c + Cannon",
+          "100c + Cannon (NC)"
+        ],
         "def": "jp",
         "offset": 11,
         "jp_set": {
-          "Standard": {
-            "name": "Standard",
-            "diff": "normal",
-            "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
-              "main_455": []
-            },
-            "id_list": [
-              [
-                "main",
-                455
-              ]
-            ]
-          },
-          "No Cutscene": {
-            "name": "No Cutscene",
-            "diff": "second",
-            "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
-              "main_457": []
-            },
-            "id_list": [
-              [
-                "main",
-                457
-              ]
-            ]
-          }
-        },
-        "us_set": {
           "Standard": {
             "name": "Standard",
             "diff": "normal",
@@ -10402,6 +10963,42 @@
             ]
           }
         },
+        "us_set": {
+          "Standard": {
+            "name": "Standard",
+            "diff": "normal",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "main_457": []
+            },
+            "id_list": [
+              [
+                "main",
+                457
+              ]
+            ]
+          },
+          "No Cutscene": {
+            "name": "No Cutscene",
+            "diff": "second",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "main_459": []
+            },
+            "id_list": [
+              [
+                "main",
+                459
+              ]
+            ]
+          }
+        },
+        "catInfo": [
+          "only:120",
+          "only:120"
+        ],
         "open": []
       }
     ],
@@ -10409,33 +11006,21 @@
   },
   {
     "name": "Castle Secret Stars",
-    "checkId": 460,
+    "checkId": 461,
     "ext": false,
     "color": "lb-red",
     "starList": [
       {
         "name": "Tower of the Wing Cap",
         "id": "wc",
+        "short": [
+          "Wing Cap"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
           "Standard": {
             "name": "Standard",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "main_462": []
-            },
-            "id_list": [
-              [
-                "main",
-                462
-              ]
-            ]
-          },
-          "Switch Rollout": {
-            "name": "Switch Rollout",
             "diff": "normal",
             "ver_diff": false,
             "virtual": false,
@@ -10446,6 +11031,21 @@
               [
                 "main",
                 463
+              ]
+            ]
+          },
+          "Switch Rollout": {
+            "name": "Switch Rollout",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_464": []
+            },
+            "id_list": [
+              [
+                "main",
+                464
               ]
             ]
           },
@@ -10472,12 +11072,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_462": []
+              "main_463": []
             },
             "id_list": [
               [
                 "main",
-                462
+                463
               ]
             ]
           },
@@ -10487,12 +11087,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_463": []
+              "main_464": []
             },
             "id_list": [
               [
                 "main",
-                463
+                464
               ]
             ]
           },
@@ -10517,26 +11117,14 @@
       {
         "name": "Vanish Cap under the Moat",
         "id": "vc",
+        "short": [
+          "Vanish Cap"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
           "Standard": {
             "name": "Standard",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "main_464": []
-            },
-            "id_list": [
-              [
-                "main",
-                464
-              ]
-            ]
-          },
-          "Expert": {
-            "name": "Expert",
             "diff": "normal",
             "ver_diff": false,
             "virtual": false,
@@ -10550,8 +11138,8 @@
               ]
             ]
           },
-          "No Slope Clip": {
-            "name": "No Slope Clip",
+          "Expert": {
+            "name": "Expert",
             "diff": "normal",
             "ver_diff": false,
             "virtual": false,
@@ -10562,6 +11150,21 @@
               [
                 "main",
                 466
+              ]
+            ]
+          },
+          "No Slope Clip": {
+            "name": "No Slope Clip",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_467": []
+            },
+            "id_list": [
+              [
+                "main",
+                467
               ]
             ]
           }
@@ -10573,21 +11176,6 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_464": []
-            },
-            "id_list": [
-              [
-                "main",
-                464
-              ]
-            ]
-          },
-          "Expert": {
-            "name": "Expert",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
               "main_465": []
             },
             "id_list": [
@@ -10597,8 +11185,8 @@
               ]
             ]
           },
-          "No Slope Clip": {
-            "name": "No Slope Clip",
+          "Expert": {
+            "name": "Expert",
             "diff": "normal",
             "ver_diff": false,
             "virtual": false,
@@ -10611,14 +11199,35 @@
                 466
               ]
             ]
+          },
+          "No Slope Clip": {
+            "name": "No Slope Clip",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_467": []
+            },
+            "id_list": [
+              [
+                "main",
+                467
+              ]
+            ]
           }
         },
+        "catInfo": [
+          "only:120"
+        ],
         "variants": [],
         "open": []
       },
       {
         "name": "Cavern of the Metal Cap",
         "id": "mc",
+        "short": [
+          "Metal Cap"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -10628,12 +11237,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_467": []
+              "main_468": []
             },
             "id_list": [
               [
                 "main",
-                467
+                468
               ]
             ]
           },
@@ -10643,19 +11252,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_468": [],
-              "main_469": [
+              "main_469": [],
+              "main_470": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                468
+                469
               ],
               [
                 "main",
-                469
+                470
               ]
             ]
           }
@@ -10667,12 +11276,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_467": []
+              "main_468": []
             },
             "id_list": [
               [
                 "main",
-                467
+                468
               ]
             ]
           },
@@ -10682,23 +11291,26 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_468": [],
-              "main_469": [
+              "main_469": [],
+              "main_470": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                468
+                469
               ],
               [
                 "main",
-                469
+                470
               ]
             ]
           }
         },
+        "catInfo": [
+          "only:120"
+        ],
         "variants": [
           "Rollout to 3rd Red"
         ],
@@ -10707,6 +11319,9 @@
       {
         "name": "The Secret Aquarium",
         "id": "aqua",
+        "short": [
+          "Aquarium"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -10716,12 +11331,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_470": []
+              "main_471": []
             },
             "id_list": [
               [
                 "main",
-                470
+                471
               ]
             ]
           }
@@ -10733,43 +11348,35 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_470": []
+              "main_471": []
             },
             "id_list": [
               [
                 "main",
-                470
+                471
               ]
             ]
           }
         },
+        "catInfo": [
+          "only:120"
+        ],
         "variants": [],
         "open": null
       },
       {
         "name": "Wing Mario over the Rainbow",
         "id": "wmotr",
+        "short": [
+          "Wing Mario",
+          "Wing Mario (NC)"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
           "No Cutscene": {
             "name": "No Cutscene",
             "diff": "second",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "main_471": []
-            },
-            "id_list": [
-              [
-                "main",
-                471
-              ]
-            ]
-          },
-          "Standard": {
-            "name": "Standard",
-            "diff": "normal",
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
@@ -10782,9 +11389,9 @@
               ]
             ]
           },
-          "Pole Red Early (NC)": {
-            "name": "Pole Red Early (NC)",
-            "diff": "second",
+          "Standard": {
+            "name": "Standard",
+            "diff": "normal",
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
@@ -10797,9 +11404,9 @@
               ]
             ]
           },
-          "Pole Red Early": {
-            "name": "Pole Red Early",
-            "diff": "normal",
+          "Pole Red Early (NC)": {
+            "name": "Pole Red Early (NC)",
+            "diff": "second",
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
@@ -10812,9 +11419,9 @@
               ]
             ]
           },
-          "Stored Angle (NC)": {
-            "name": "Stored Angle (NC)",
-            "diff": "second",
+          "Pole Red Early": {
+            "name": "Pole Red Early",
+            "diff": "normal",
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
@@ -10827,9 +11434,9 @@
               ]
             ]
           },
-          "Stored Angle": {
-            "name": "Stored Angle",
-            "diff": "normal",
+          "Stored Angle (NC)": {
+            "name": "Stored Angle (NC)",
+            "diff": "second",
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
@@ -10839,6 +11446,21 @@
               [
                 "main",
                 476
+              ]
+            ]
+          },
+          "Stored Angle": {
+            "name": "Stored Angle",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_477": []
+            },
+            "id_list": [
+              [
+                "main",
+                477
               ]
             ]
           },
@@ -10884,21 +11506,6 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_471": []
-            },
-            "id_list": [
-              [
-                "main",
-                471
-              ]
-            ]
-          },
-          "Standard": {
-            "name": "Standard",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
               "main_472": []
             },
             "id_list": [
@@ -10908,9 +11515,9 @@
               ]
             ]
           },
-          "Pole Red Early (NC)": {
-            "name": "Pole Red Early (NC)",
-            "diff": "second",
+          "Standard": {
+            "name": "Standard",
+            "diff": "normal",
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
@@ -10923,9 +11530,9 @@
               ]
             ]
           },
-          "Pole Red Early": {
-            "name": "Pole Red Early",
-            "diff": "normal",
+          "Pole Red Early (NC)": {
+            "name": "Pole Red Early (NC)",
+            "diff": "second",
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
@@ -10938,9 +11545,9 @@
               ]
             ]
           },
-          "Stored Angle (NC)": {
-            "name": "Stored Angle (NC)",
-            "diff": "second",
+          "Pole Red Early": {
+            "name": "Pole Red Early",
+            "diff": "normal",
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
@@ -10953,9 +11560,9 @@
               ]
             ]
           },
-          "Stored Angle": {
-            "name": "Stored Angle",
-            "diff": "normal",
+          "Stored Angle (NC)": {
+            "name": "Stored Angle (NC)",
+            "diff": "second",
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
@@ -10965,6 +11572,21 @@
               [
                 "main",
                 476
+              ]
+            ]
+          },
+          "Stored Angle": {
+            "name": "Stored Angle",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_477": []
+            },
+            "id_list": [
+              [
+                "main",
+                477
               ]
             ]
           },
@@ -11003,6 +11625,10 @@
             ]
           }
         },
+        "catInfo": [
+          "only:120",
+          "only:120"
+        ],
         "variants": [
           "Early Cannon"
         ],
@@ -11011,31 +11637,14 @@
       {
         "name": "Princess' Secret Slide",
         "id": "pss",
+        "short": [
+          "PSS U21",
+          "PSS Box",
+          "PSS"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
-          "Under 21": {
-            "name": "Under 21",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "main_477": [],
-              "ext_235": [
-                "0"
-              ]
-            },
-            "id_list": [
-              [
-                "main",
-                477
-              ],
-              [
-                "ext",
-                235
-              ]
-            ]
-          },
           "Box Star": {
             "name": "Box Star",
             "diff": "second",
@@ -11043,7 +11652,7 @@
             "virtual": false,
             "variant_map": {
               "main_478": [],
-              "ext_236": [
+              "ext_235": [
                 "0"
               ]
             },
@@ -11051,6 +11660,28 @@
               [
                 "main",
                 478
+              ],
+              [
+                "ext",
+                235
+              ]
+            ]
+          },
+          "Under 21": {
+            "name": "Under 21",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_479": [],
+              "ext_236": [
+                "0"
+              ]
+            },
+            "id_list": [
+              [
+                "main",
+                479
               ],
               [
                 "ext",
@@ -11060,28 +11691,6 @@
           }
         },
         "us_set": {
-          "Under 21": {
-            "name": "Under 21",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "main_477": [],
-              "ext_235": [
-                "0"
-              ]
-            },
-            "id_list": [
-              [
-                "main",
-                477
-              ],
-              [
-                "ext",
-                235
-              ]
-            ]
-          },
           "Box Star": {
             "name": "Box Star",
             "diff": "second",
@@ -11089,7 +11698,7 @@
             "virtual": false,
             "variant_map": {
               "main_478": [],
-              "ext_236": [
+              "ext_235": [
                 "0"
               ]
             },
@@ -11097,6 +11706,28 @@
               [
                 "main",
                 478
+              ],
+              [
+                "ext",
+                235
+              ]
+            ]
+          },
+          "Under 21": {
+            "name": "Under 21",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_479": [],
+              "ext_236": [
+                "0"
+              ]
+            },
+            "id_list": [
+              [
+                "main",
+                479
               ],
               [
                 "ext",
@@ -11115,13 +11746,16 @@
   },
   {
     "name": "Bowser Stages",
-    "checkId": 481,
+    "checkId": 482,
     "ext": true,
     "color": "lb-green",
     "starList": [
       {
         "name": "BitDW No Reds",
         "id": "1n",
+        "short": [
+          "DW No Reds"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -11131,21 +11765,6 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_480": []
-            },
-            "id_list": [
-              [
-                "main",
-                480
-              ]
-            ]
-          },
-          "Framewalk": {
-            "name": "Framewalk",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
               "main_481": []
             },
             "id_list": [
@@ -11154,55 +11773,11 @@
                 481
               ]
             ]
-          }
-        },
-        "us_set": {
-          "Standard": {
-            "name": "Standard",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "main_480": []
-            },
-            "id_list": [
-              [
-                "main",
-                480
-              ]
-            ]
           },
           "Framewalk": {
             "name": "Framewalk",
             "diff": "normal",
             "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "main_481": []
-            },
-            "id_list": [
-              [
-                "main",
-                481
-              ]
-            ]
-          }
-        },
-        "variants": [],
-        "open": [
-          "Framewalk"
-        ]
-      },
-      {
-        "name": "BitDW Reds",
-        "id": "1r",
-        "def": "offset",
-        "offset": 2,
-        "jp_set": {
-          "Shig (Pipe)": {
-            "name": "Shig (Pipe)",
-            "diff": "second",
-            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_482": []
@@ -11213,114 +11788,59 @@
                 482
               ]
             ]
-          },
-          "Shig (Star)": {
-            "name": "Shig (Star)",
+          }
+        },
+        "us_set": {
+          "Standard": {
+            "name": "Standard",
             "diff": "normal",
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_484": []
+              "main_481": []
             },
             "id_list": [
               [
                 "main",
-                484
+                481
               ]
             ]
           },
-          "Xiah (Pipe)": {
-            "name": "Xiah (Pipe)",
-            "diff": "second",
-            "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
-              "main_485": []
-            },
-            "id_list": [
-              [
-                "main",
-                485
-              ]
-            ]
-          },
-          "Xiah (Star)": {
-            "name": "Xiah (Star)",
+          "Framewalk": {
+            "name": "Framewalk",
             "diff": "normal",
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_487": []
+              "main_482": []
             },
             "id_list": [
               [
                 "main",
-                487
-              ]
-            ]
-          },
-          "Tsuki (Pipe)": {
-            "name": "Tsuki (Pipe)",
-            "diff": "second",
-            "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
-              "main_488": []
-            },
-            "id_list": [
-              [
-                "main",
-                488
-              ]
-            ]
-          },
-          "Tsuki (Star)": {
-            "name": "Tsuki (Star)",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "main_490": []
-            },
-            "id_list": [
-              [
-                "main",
-                490
-              ]
-            ]
-          },
-          "Salt Flip (Pipe)": {
-            "name": "Salt Flip (Pipe)",
-            "diff": "second",
-            "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
-              "main_491": []
-            },
-            "id_list": [
-              [
-                "main",
-                491
-              ]
-            ]
-          },
-          "Salt Flip (Star)": {
-            "name": "Salt Flip (Star)",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "main_493": []
-            },
-            "id_list": [
-              [
-                "main",
-                493
+                482
               ]
             ]
           }
         },
-        "us_set": {
+        "catInfo": [
+          "only:any"
+        ],
+        "variants": [],
+        "open": [
+          "Framewalk"
+        ]
+      },
+      {
+        "name": "BitDW Reds",
+        "id": "1r",
+        "short": [
+          "DW Reds (Star)",
+          "DW Reds (Pipe)",
+          "DW Reds"
+        ],
+        "def": "offset",
+        "offset": 2,
+        "jp_set": {
           "Shig (Pipe)": {
             "name": "Shig (Pipe)",
             "diff": "second",
@@ -11342,12 +11862,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_484": []
+              "main_485": []
             },
             "id_list": [
               [
                 "main",
-                484
+                485
               ]
             ]
           },
@@ -11372,12 +11892,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_487": []
+              "main_488": []
             },
             "id_list": [
               [
                 "main",
-                487
+                488
               ]
             ]
           },
@@ -11402,12 +11922,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_490": []
+              "main_491": []
             },
             "id_list": [
               [
                 "main",
-                490
+                491
               ]
             ]
           },
@@ -11432,6 +11952,113 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
+              "main_494": []
+            },
+            "id_list": [
+              [
+                "main",
+                494
+              ]
+            ]
+          }
+        },
+        "us_set": {
+          "Shig (Pipe)": {
+            "name": "Shig (Pipe)",
+            "diff": "second",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "main_484": []
+            },
+            "id_list": [
+              [
+                "main",
+                484
+              ]
+            ]
+          },
+          "Shig (Star)": {
+            "name": "Shig (Star)",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_485": []
+            },
+            "id_list": [
+              [
+                "main",
+                485
+              ]
+            ]
+          },
+          "Xiah (Pipe)": {
+            "name": "Xiah (Pipe)",
+            "diff": "second",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "main_487": []
+            },
+            "id_list": [
+              [
+                "main",
+                487
+              ]
+            ]
+          },
+          "Xiah (Star)": {
+            "name": "Xiah (Star)",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_488": []
+            },
+            "id_list": [
+              [
+                "main",
+                488
+              ]
+            ]
+          },
+          "Tsuki (Pipe)": {
+            "name": "Tsuki (Pipe)",
+            "diff": "second",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "main_490": []
+            },
+            "id_list": [
+              [
+                "main",
+                490
+              ]
+            ]
+          },
+          "Tsuki (Star)": {
+            "name": "Tsuki (Star)",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_491": []
+            },
+            "id_list": [
+              [
+                "main",
+                491
+              ]
+            ]
+          },
+          "Salt Flip (Pipe)": {
+            "name": "Salt Flip (Pipe)",
+            "diff": "second",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
               "main_493": []
             },
             "id_list": [
@@ -11440,8 +12067,27 @@
                 493
               ]
             ]
+          },
+          "Salt Flip (Star)": {
+            "name": "Salt Flip (Star)",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_494": []
+            },
+            "id_list": [
+              [
+                "main",
+                494
+              ]
+            ]
           }
         },
+        "catInfo": [
+          "in:16",
+          "in:16"
+        ],
         "variants": [],
         "open": [
           "Salt Flip (Pipe)",
@@ -11451,6 +12097,9 @@
       {
         "name": "BitDW Battle",
         "id": "1x",
+        "short": [
+          "DW Battle"
+        ],
         "def": "offset",
         "offset": 27,
         "jp_set": {
@@ -11460,19 +12109,15 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_494": [],
-              "main_495": [
+              "main_495": [],
+              "main_496": [
                 "0"
               ],
-              "main_496": [
+              "main_497": [
                 "1"
               ]
             },
             "id_list": [
-              [
-                "main",
-                494
-              ],
               [
                 "main",
                 495
@@ -11480,6 +12125,10 @@
               [
                 "main",
                 496
+              ],
+              [
+                "main",
+                497
               ]
             ]
           }
@@ -11491,19 +12140,15 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_497": [],
-              "main_498": [
+              "main_498": [],
+              "main_499": [
                 "0"
               ],
-              "main_499": [
+              "main_500": [
                 "1"
               ]
             },
             "id_list": [
-              [
-                "main",
-                497
-              ],
               [
                 "main",
                 498
@@ -11511,10 +12156,17 @@
               [
                 "main",
                 499
+              ],
+              [
+                "main",
+                500
               ]
             ]
           }
         },
+        "catInfo": [
+          "in:16"
+        ],
         "variants": [
           "3/4 Spin",
           "Bowser Dance"
@@ -11524,6 +12176,9 @@
       {
         "name": "BitFS No Reds",
         "id": "2n",
+        "short": [
+          "FS No Reds"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
@@ -11533,21 +12188,6 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_500": []
-            },
-            "id_list": [
-              [
-                "main",
-                500
-              ]
-            ]
-          },
-          "Ultimate": {
-            "name": "Ultimate",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
               "main_501": []
             },
             "id_list": [
@@ -11557,8 +12197,8 @@
               ]
             ]
           },
-          "Zero Cycle": {
-            "name": "Zero Cycle",
+          "Ultimate": {
+            "name": "Ultimate",
             "diff": "normal",
             "ver_diff": false,
             "virtual": false,
@@ -11571,68 +12211,11 @@
                 502
               ]
             ]
-          }
-        },
-        "us_set": {
-          "Pole Glitch": {
-            "name": "Pole Glitch",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "main_500": []
-            },
-            "id_list": [
-              [
-                "main",
-                500
-              ]
-            ]
-          },
-          "Ultimate": {
-            "name": "Ultimate",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "main_501": []
-            },
-            "id_list": [
-              [
-                "main",
-                501
-              ]
-            ]
           },
           "Zero Cycle": {
             "name": "Zero Cycle",
             "diff": "normal",
             "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "main_502": []
-            },
-            "id_list": [
-              [
-                "main",
-                502
-              ]
-            ]
-          }
-        },
-        "variants": [],
-        "open": []
-      },
-      {
-        "name": "BitFS Reds",
-        "id": "2r",
-        "def": "offset",
-        "offset": 2,
-        "jp_set": {
-          "Lavaboost (Pipe)": {
-            "name": "Lavaboost (Pipe)",
-            "diff": "normal",
-            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_503": []
@@ -11643,24 +12226,72 @@
                 503
               ]
             ]
-          },
-          "Lavaboost (Star)": {
-            "name": "Lavaboost (Star)",
-            "diff": "second",
+          }
+        },
+        "us_set": {
+          "Pole Glitch": {
+            "name": "Pole Glitch",
+            "diff": "normal",
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_505": []
+              "main_501": []
             },
             "id_list": [
               [
                 "main",
-                505
+                501
+              ]
+            ]
+          },
+          "Ultimate": {
+            "name": "Ultimate",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_502": []
+            },
+            "id_list": [
+              [
+                "main",
+                502
+              ]
+            ]
+          },
+          "Zero Cycle": {
+            "name": "Zero Cycle",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_503": []
+            },
+            "id_list": [
+              [
+                "main",
+                503
               ]
             ]
           }
         },
-        "us_set": {
+        "catInfo": [
+          "only:16"
+        ],
+        "variants": [],
+        "open": []
+      },
+      {
+        "name": "BitFS Reds",
+        "id": "2r",
+        "short": [
+          "FS Reds (Pipe)",
+          "FS Reds (Star)",
+          "FS Reds"
+        ],
+        "def": "offset",
+        "offset": 2,
+        "jp_set": {
           "Lavaboost (Pipe)": {
             "name": "Lavaboost (Pipe)",
             "diff": "normal",
@@ -11682,12 +12313,44 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
+              "main_506": []
+            },
+            "id_list": [
+              [
+                "main",
+                506
+              ]
+            ]
+          }
+        },
+        "us_set": {
+          "Lavaboost (Pipe)": {
+            "name": "Lavaboost (Pipe)",
+            "diff": "normal",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
               "main_505": []
             },
             "id_list": [
               [
                 "main",
                 505
+              ]
+            ]
+          },
+          "Lavaboost (Star)": {
+            "name": "Lavaboost (Star)",
+            "diff": "second",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_506": []
+            },
+            "id_list": [
+              [
+                "main",
+                506
               ]
             ]
           }
@@ -11698,6 +12361,9 @@
       {
         "name": "BitFS Battle",
         "id": "2x",
+        "short": [
+          "FS Battle"
+        ],
         "def": "offset",
         "offset": 9,
         "jp_set": {
@@ -11707,19 +12373,15 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_506": [],
-              "main_507": [
+              "main_507": [],
+              "main_508": [
                 "0"
               ],
-              "main_508": [
+              "main_509": [
                 "1"
               ]
             },
             "id_list": [
-              [
-                "main",
-                506
-              ],
               [
                 "main",
                 507
@@ -11727,6 +12389,10 @@
               [
                 "main",
                 508
+              ],
+              [
+                "main",
+                509
               ]
             ]
           }
@@ -11738,19 +12404,15 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_509": [],
-              "main_510": [
+              "main_510": [],
+              "main_511": [
                 "0"
               ],
-              "main_511": [
+              "main_512": [
                 "1"
               ]
             },
             "id_list": [
-              [
-                "main",
-                509
-              ],
               [
                 "main",
                 510
@@ -11758,10 +12420,17 @@
               [
                 "main",
                 511
+              ],
+              [
+                "main",
+                512
               ]
             ]
           }
         },
+        "catInfo": [
+          "in:16"
+        ],
         "variants": [
           "3/4 Spin",
           "Half Spin"
@@ -11771,33 +12440,14 @@
       {
         "name": "BitS No Reds",
         "id": "3n",
+        "short": [
+          "BitS No Reds"
+        ],
         "def": "na",
         "offset": null,
         "jp_set": {
           "Right TJWK": {
             "name": "Right TJWK",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "main_512": [
-                "0"
-              ],
-              "main_514": []
-            },
-            "id_list": [
-              [
-                "main",
-                512
-              ],
-              [
-                "main",
-                514
-              ]
-            ]
-          },
-          "Left TJWK": {
-            "name": "Left TJWK",
             "diff": "normal",
             "ver_diff": false,
             "virtual": false,
@@ -11818,25 +12468,47 @@
               ]
             ]
           },
+          "Left TJWK": {
+            "name": "Left TJWK",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_514": [
+                "0"
+              ],
+              "main_516": []
+            },
+            "id_list": [
+              [
+                "main",
+                514
+              ],
+              [
+                "main",
+                516
+              ]
+            ]
+          },
           "TAS LJ + Ult": {
             "name": "TAS LJ + Ult",
             "diff": "normal",
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_516": [
+              "main_517": [
                 "0"
               ],
-              "main_517": []
+              "main_518": []
             },
             "id_list": [
               [
                 "main",
-                516
+                517
               ],
               [
                 "main",
-                517
+                518
               ]
             ]
           },
@@ -11857,28 +12529,6 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_512": [
-                "0"
-              ],
-              "main_514": []
-            },
-            "id_list": [
-              [
-                "main",
-                512
-              ],
-              [
-                "main",
-                514
-              ]
-            ]
-          },
-          "Left TJWK": {
-            "name": "Left TJWK",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
               "main_513": [
                 "0"
               ],
@@ -11895,25 +12545,47 @@
               ]
             ]
           },
+          "Left TJWK": {
+            "name": "Left TJWK",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_514": [
+                "0"
+              ],
+              "main_516": []
+            },
+            "id_list": [
+              [
+                "main",
+                514
+              ],
+              [
+                "main",
+                516
+              ]
+            ]
+          },
           "TAS LJ + Ult": {
             "name": "TAS LJ + Ult",
             "diff": "normal",
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_516": [
+              "main_517": [
                 "0"
               ],
-              "main_517": []
+              "main_518": []
             },
             "id_list": [
               [
                 "main",
-                516
+                517
               ],
               [
                 "main",
-                517
+                518
               ]
             ]
           },
@@ -11927,6 +12599,9 @@
             "virtId": "16_3n_Pole"
           }
         },
+        "catInfo": [
+          "notin:120"
+        ],
         "variants": [
           "w/ Manamo"
         ],
@@ -11937,6 +12612,11 @@
       {
         "name": "BitS Reds",
         "id": "3r",
+        "short": [
+          "BitS Reds (Star)",
+          "BitS Reds (Pipe)",
+          "BitS Reds"
+        ],
         "def": "offset",
         "offset": 2,
         "jp_set": {
@@ -11946,12 +12626,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_518": []
+              "main_519": []
             },
             "id_list": [
               [
                 "main",
-                518
+                519
               ]
             ]
           },
@@ -11961,12 +12641,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_520": []
+              "main_521": []
             },
             "id_list": [
               [
                 "main",
-                520
+                521
               ]
             ]
           },
@@ -12038,12 +12718,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_519": []
+              "main_520": []
             },
             "id_list": [
               [
                 "main",
-                519
+                520
               ]
             ]
           },
@@ -12053,12 +12733,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_520": []
+              "main_521": []
             },
             "id_list": [
               [
                 "main",
-                520
+                521
               ]
             ]
           },
@@ -12123,50 +12803,25 @@
             ]
           }
         },
+        "catInfo": [
+          "only:120",
+          "only:120"
+        ],
         "variants": [],
         "open": []
       },
       {
         "name": "BitS Battle",
         "id": "3x",
+        "short": [
+          "BitS Battle"
+        ],
         "def": "offset",
         "offset": {
           "120 Star File": 20,
           "Normal File": 13
         },
         "jp_set": {
-          "120 Star File": {
-            "name": "120 Star File",
-            "diff": "normal",
-            "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
-              "main_521": []
-            },
-            "id_list": [
-              [
-                "main",
-                521
-              ]
-            ]
-          },
-          "Normal File": {
-            "name": "Normal File",
-            "diff": "normal",
-            "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
-              "main_523": []
-            },
-            "id_list": [
-              [
-                "main",
-                523
-              ]
-            ]
-          }
-        },
-        "us_set": {
           "120 Star File": {
             "name": "120 Star File",
             "diff": "normal",
@@ -12198,6 +12853,41 @@
             ]
           }
         },
+        "us_set": {
+          "120 Star File": {
+            "name": "120 Star File",
+            "diff": "normal",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "main_523": []
+            },
+            "id_list": [
+              [
+                "main",
+                523
+              ]
+            ]
+          },
+          "Normal File": {
+            "name": "Normal File",
+            "diff": "normal",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "main_525": []
+            },
+            "id_list": [
+              [
+                "main",
+                525
+              ]
+            ]
+          }
+        },
+        "catInfo": [
+          "in:16"
+        ],
         "variants": [],
         "open": null
       }

@@ -87,6 +87,8 @@ export type RawStratSet = {
 export type StarDesc = {
 	"name": string,
 	"id": string,
+	"short": string[],
+	"catInfo"?: (string | null)[],
 	"def": "na" | "jp" | "us" | "offset" | "spec" | null,
 	"variants": string[] | undefined
 };
@@ -253,6 +255,8 @@ function buildStarDef(stageId: number, starDef: RawStarDef): StarDef
 	return {
 		"name": starDef.name,
 		"id": starDef.id,
+		"short": starDef.short,
+		"catInfo": starDef.catInfo,
 		"def": starDef.def,
 		"offset": buildOffsetDat(starDef.offset),
 		"secondFlag": secondFlag,

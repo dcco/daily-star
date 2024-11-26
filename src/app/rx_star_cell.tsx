@@ -1,5 +1,8 @@
 
-import playData from './json/player_data.json'
+//import playData from './json/player_data.json'
+import Link from 'next/link'
+
+import { G_SHEET } from './api_xcam'
 
 import { Ver } from './variant_def'
 import { TimeDat, VerOffset, formatTime } from './time_dat'
@@ -62,7 +65,8 @@ type TimeCellProps = {
 	"verOffset": VerOffset,
 	"active": boolean,
 	"onClick": () => void,
-	"hiddenFlag": boolean
+	"hiddenFlag": boolean,
+	"complete"?: string
 };
 
 export function TimeCell(props: TimeCellProps): React.ReactNode {
@@ -78,11 +82,18 @@ export function TimeCell(props: TimeCellProps): React.ReactNode {
 	if (timeDat !== null && timeDat.link !== null && timeDat.link !== "") {
 		timeNode = (<a href={ timeDat.link } target="_blank">{ timeNode }</a>);
 	}
+	// note if note is relevant
+	var noteNodes: React.ReactNode[] = [];
+	if (timeDat !== null && timeDat.note !== null && timeDat.note !== "") {
+		noteNodes = [<div className="triangle" key="tri"></div>,
+			<span className="note-text" key="note">{ timeDat.note }</span>];
+	}
 	// remaining annotations
 	var spanNodes: React.ReactNode[] = [];
 	if (rawText !== null) spanNodes.push(<em key="e">{ rawText }</em>);
 	if (hiddenFlag) spanNodes.push(<div className="na" key="a">*</div>);
-	return (<td className="time-cell" data-active={ active.toString() } onClick={ onClick }>{ timeNode } { spanNodes }</td>);
+	return (<td className="time-cell tooltip" data-active={ active.toString() } data-complete={ props.complete }
+		onClick={ onClick }>{ timeNode } { spanNodes } { noteNodes }</td>);
 }
 
 	/* record cell: similar to time cell, but with no interactivity */
@@ -110,18 +121,28 @@ type NameCellProps = {
 	"id": Ident,
 	"pd": PlayData,
 	"active": boolean,
-	"onClick": () => void
+	"onClick": () => void,
+	"href"?: string
 };
 
 export function NameCell(props: NameCellProps): React.ReactNode {
 	// get play standard when applicable
 	var playStd = "Unranked";
 	var name = strIdNickPD(props.pd, props.id);
-	var UNSAFE_playDat = (playData as any)[name];
+	/*var UNSAFE_playDat = (playData as any)[name];
 	if (UNSAFE_playDat !== undefined && UNSAFE_playDat.standard) {
 		playStd = UNSAFE_playDat.standard;
+	}*/
+	if (G_SHEET.playerMap !== null) {
+		var playDat = G_SHEET.playerMap.stats[name];
+		if (playDat !== undefined) playStd = playDat.standard;
 	}
 	// name + ending cell
-	return(<td className="name-cell" data-active={ props.active.toString() }
+	if (props.href !== undefined) {
+		return (<td className="name-cell link-cont" data-active={ props.active.toString() }
+			onClick={ props.onClick } data-ps={ playStd }>{ name }
+				<Link className="link-span" href={ props.href }></Link></td>);
+	}
+	return (<td className="name-cell" data-active={ props.active.toString() }
 		onClick={ props.onClick } data-ps={ playStd }>{ name }</td>);
 }

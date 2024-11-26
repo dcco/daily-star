@@ -113,8 +113,8 @@ export function linkUserRemotePD(pd: PlayData, remoteId: string): PlayData
 		pd.local.userId.remoteId = remoteId;
 		var canonNick = canonNickPD(pd, pd.local.userId, remoteId);
 		if (canonNick !== null) {
-			//pd.nickMap["google@" + pd.userId.name] = canonNick;
 			pd.local.nick = canonNick;
+			pd.nickMap["google@" + pd.local.userId.name] = canonNick;
 			pd.nickMap["remote@" + remoteId] = canonNick;
 		}
 	}

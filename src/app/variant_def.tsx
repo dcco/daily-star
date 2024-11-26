@@ -98,6 +98,8 @@ export type VarSpace = {
 export function defVerVarSpace(vs: VarSpace): Ver
 {
 	if (vs.verInfo === null) return "both";
+	if (vs.verInfo.jpFlag && !vs.verInfo.usFlag) return "jp";
+	if (vs.verInfo.usFlag && !vs.verInfo.jpFlag) return "us";
 	return vs.verInfo.def;
 }
 

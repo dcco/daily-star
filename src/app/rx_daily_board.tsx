@@ -2,13 +2,9 @@
 import React, { useState, useEffect } from 'react'
 
 import { PlayData, LocalPD } from './play_data'
-import { G_DAILY } from './api_season'
+import { G_DAILY, GlobObj } from './api_season'
 import { AuthArea } from './rx_auth_area'
 import { DSEditBoard } from './rx_ds_edit_board'
-
-	/*
-		
-	*/
 
 	/*
 		######################
@@ -20,6 +16,7 @@ import { DSEditBoard } from './rx_ds_edit_board'
 
 type DailyBoardProps = {
 	"playData": PlayData,
+	"weekly": GlobObj | null,
 	"setPlayData": (a: LocalPD) => void,
 	"reloadPlayData": () => void
 }
@@ -51,10 +48,18 @@ export function DailyBoard(props: DailyBoardProps): React.ReactNode {
 			if (ds.status === "early") mainNode = <div className="load-cont">Waiting for new season to start.</div>;
 			else failCode = 500;
 		} else {
+			// use weekly if selected
 			var starGlob = ds.starGlob;
-			var starIdList = ds.starGlob.staridlist.split(',');
-			mainNode = <DSEditBoard day={ ds.dayOffset }
-				stageId={ ds.starGlob.stageid } starIdList={ starIdList }
+			var dayOffset = ds.dayOffset;
+			if (props.weekly !== null) {
+				starGlob = props.weekly;
+				dayOffset = starGlob.day;
+			}
+			// prep editing board
+			var starIdList = starGlob.staridlist.split(',');
+			mainNode = <DSEditBoard startDate={ ds.season.startdate }
+				day={ dayOffset } weekly={ starGlob.weekly }
+				stageId={ starGlob.stageid } starIdList={ starIdList }
 				playData={ playData } reloadPlayData={ reloadPlayData }/>;
 		}
 	}

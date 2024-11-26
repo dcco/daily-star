@@ -1,31 +1,32 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation' 
+
 import { newIdent, dropIdent } from './time_table'
 import { PlayData, LocalPD, newPlayData, userKeyPD, setNickMapPD,
 	linkUserRemotePD, setLocalPD } from './play_data'
 import { initGSheet } from './api_xcam'
-import { initDailyStar } from './api_season'
+import { initDailyStar, initHistory } from './api_season'
 import { loadNickMap, loadUserId, postNick } from './api_live'
-//import { EditBoard } from './rx_edit_board'
-import { DailyBoard } from './rx_daily_board'
-import { HistoryBoard } from './rx_history_board'
-import { XcamBoard } from './rx_xcam_board'
 
-type MenuOptProps = {
+import { DailyStar } from './rx_daily_star'
+import { XcamFull } from './rx_xcam_full'
+import { About } from './rx_about'
+
+type HeadTabProps = {
 	"id": number,
 	"selId": number,
 	"setSelId": (i: number) => void,
 	"children": React.ReactNode
 };
 
-function MenuOpt(props: MenuOptProps): React.ReactNode
+function HeadTab(props: HeadTabProps): React.ReactNode
 {
 	var active = (props.id === props.selId).toString()
-	return (
-		<div className="menu-button" data-active={ active }
-			onClick={ () => props.setSelId(props.id) }>{ props.children }</div>
-	);
+	return <div className="head-tab" data-active={ active } onClick={ () => props.setSelId(props.id) }>
+		<div className="inner-tab">{ props.children }</div>
+	</div>;
 }
 
 	/*
@@ -46,14 +47,49 @@ function MenuOpt(props: MenuOptProps): React.ReactNode
 		we split external data into two parts:
 		- remote data, read from the API
 		- local data, updated by the user/frontend
+
+		there are three actions that affect this data
+		- post new time: reloads from remote
+		- login: updates local data, reloads from remote
+		- set nick: updates local data (triggers API call) [optional reload from remote]
 	*/
 
-export function MultiBoard(props: {}): React.ReactNode
+export function MultiBoard(props: { boardId?: number, subId?: number, slug?: string }): React.ReactNode
 {
-	const [menuId, setMenuId] = useState(0);
-	const [playData, setPlayData] = useState(newPlayData());
-	const [playReload, setPlayReload] = useState(playData.local as LocalPD | null);
+	// router stuff
+	var boardId = 0;
+	var subId = 0;
+	if (props.boardId !== undefined) boardId = props.boardId;
+	if (props.subId !== undefined) subId = props.subId;
+	const router = useRouter();
+
+	// main state
+	const [mainId, setMainId] = useState(boardId);
 	const [initReload, setInitReload] = useState(0);
+
+	const updateMainId = (i: number) => {
+		setMainId(i);
+		if (i === 1) router.push("/xcam");
+		else if (i === 2) router.push("/about");
+		else router.push("/home");
+	};
+
+	// the concept with play/local data is that the user modifies local data,
+	// but they read from the play data.
+	// when either is modified, we sync them up by adding the local to player data
+	const [playData, setPlayData] = useState(newPlayData());
+	const [localData, setLocalData] = useState(playData.local);
+	
+	// triggered by sub-elements when the player data itself is modified
+	const updatePlayData = (ld: LocalPD) => {
+		// update local data with whatever local changes
+		setLocalData(ld);
+		// if dirty flag is set, post local changes (only relevant to new nickname)
+		if (ld.dirtyFlag && ld.userId !== null) {
+			var nick = ld.nick;
+			if (nick !== null) postNick(ld.userId, nick);
+		}
+	};
 
 	// triggered by sub-elements to load player data while they load local data
 	const reloadPlayData = async (ld: LocalPD | null) => {
@@ -68,61 +104,41 @@ export function MultiBoard(props: {}): React.ReactNode
 		setPlayData(newData);
 	};
 
-	// triggered by sub-elements when the player data itself is modified
-	const updatePlayData = (ld: LocalPD) => {
-		// update player data with whatever local changes
-		setPlayData(setLocalPD(playData, ld));
-		// if dirty flag is set, post local changes (only relevant to new nickname)
-		if (ld.dirtyFlag && ld.userId !== null) {
-			var nick = ld.nick;
-			if (nick !== null) postNick(ld.userId, nick);
-		}
-		// reload with the most recent player data, avoids weird race conditions
-		setPlayReload(ld);
-	};
-
 	// single init data (xcam sheet, daily star season/history state)
 	useEffect(() => {
 		initGSheet(() => setInitReload(1));
 		initDailyStar(() => setInitReload(2));
+		initHistory(() => setInitReload(3));
 		reloadPlayData(null);
-			//var newData = setNickMapPD(playData, await loadNickMap());
-			///updatePlayData(newData);
 	}, []);
 
-	// trigger reload on local player data change
-	useEffect(() => {
-		if (playReload !== null) {
-			reloadPlayData(playReload);
-			setPlayReload(null);
-		}
-	}, [playReload]);
-
 	// re-initialize player data on changes
-	/*useEffect(() => {
-		
-	}, [playData]);*/
+	useEffect(() => {
+		if (playData.local !== localData) {
+			reloadPlayData(localData);
+		}
+	}, [playData, localData]);
 
-	// select board
+	// board switcher
 	var board = null;
-	if (menuId === 0) {
-		board = <DailyBoard playData={ playData }
-			reloadPlayData={ () => reloadPlayData(null) } setPlayData={ updatePlayData }/>;
-	} else if (menuId === 1) {
-		board = <HistoryBoard/>;
-	} else if (menuId === 2) {
-		board = <XcamBoard/>;
+	if (mainId === 0) {
+		board = <DailyStar playData={ playData } updatePlayData={ updatePlayData } reloadPlayData={ reloadPlayData }/>;
+	} else if (mainId === 1) {
+		board = <XcamFull subId={ subId } slug={ props.slug } key={ props.slug }/>;
+	} else {
+		board = <About/>;
 	}
 
 	return (
 		<div className="content">
-			<div className="menu-cont">
-				<MenuOpt id={ 0 } selId={ menuId } setSelId={ setMenuId }>Daily</MenuOpt>
-				<MenuOpt id={ 1 } selId={ menuId } setSelId={ setMenuId }>History</MenuOpt>
-				<MenuOpt id={ 2 } selId={ menuId } setSelId={ setMenuId }>Xcam Sheet</MenuOpt>
-			</div>
-			<div className="sep"><hr/></div>
+		<div className="cont-head">
+			<HeadTab id={ 0 } selId={ mainId } setSelId={ updateMainId }>Daily Star</HeadTab>
+			<HeadTab id={ 1 } selId={ mainId } setSelId={ updateMainId }>Xcam Viewer</HeadTab>
+			<HeadTab id={ 2 } selId={ mainId } setSelId={ updateMainId }>About</HeadTab>
+		</div>
+		<div className="cont-body headless">
 			{ board }
+		</div>
 		</div>
 	);
 }

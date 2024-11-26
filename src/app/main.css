@@ -13,6 +13,7 @@ main {
 }
 
 .na {
+	margin: auto;
 	display: inline-block;
 }
 
@@ -43,19 +44,71 @@ hr {
 	margin-top: 24px;
 	margin-left: auto;
 	margin-right: auto;
+	background-color: #242438;
 	border-radius: 8px;
-	padding: 10px;
-	padding-top: 16px;
 	justify-content: center;
-	background-color: #303050;
 	width: 800px;
 	box-shadow: 1px 1px 6px 2px #181820;
+}
+
+.cont-body {
+	background-color: #303050;
+	padding: 10px;
+	padding-top: 16px;
+}
+
+.headless {
+	border-radius: 0px 0px 8px 8px;
+}
+
+.head-tab {
+	display: inline-block;
+	border-radius: 8px 8px 0px 0px;
+	padding-left: 6px;
+	padding-right: 6px;
+	color: #808090;
+	font-weight: normal;
+}
+
+.inner-tab {
+	padding: 9px;
+	padding-top: 7px;
+	padding-bottom: 6px;
+}
+
+.head-tab[data-active="true"] {
+	background-color: #303050;
+	color: #FFFFFF;
+	font-weight: bold;
+}
+
+.head-tab[data-active="true"] .inner-tab {
+	padding-bottom: 4px;
+	border-bottom: 2px solid;
+	border-color: #4868B0;
+}
+
+.inner-tab:hover {
+	cursor: pointer;
+	padding-bottom: 4px;
+	border-bottom: 2px solid;
+	border-color: #4868B0;
 }
 
 .row-wrap {
 	display: flex;
 	justify-content: space-between;
 	text-align: left;
+}
+
+.row-margin {
+	/*margin-top: 4px;*/
+	margin-left: 6px;
+	margin-bottom: 8px;
+}
+
+.no-space {
+	justify-content: start;
 }
 
 	/* stage selector  */
@@ -83,6 +136,7 @@ select {
 
 .ds-cont {
 	text-align: left;
+	justify-content: start;
 }
 
 .load-cont {
@@ -93,6 +147,11 @@ select {
 	padding-right: 64px;
 	border: 0px solid;
 	border-radius: 8px;
+}
+
+.label-em {
+	font-style: italic;
+	color: #9090D0;
 }
 
 .label-cont {
@@ -108,6 +167,18 @@ select {
 	border: 0px solid;
 	border-radius: 6px;
 	text-align: center;
+}
+
+.alt-label {
+	background-color: #342024;
+	color: #E0A0A0;
+	font-style: italic;
+}
+
+.minor-label {
+	background-color: #282840;
+	color: #C0C0D0;
+	font-style: italic;
 }
 
 .footer {
@@ -257,6 +328,7 @@ select {
 }
 
 .time-table {
+	margin: 0 auto;
 	table-layout: fixed;
 	word-wrap: break-word;
 	width: 100%;
@@ -268,6 +340,10 @@ select {
 	background-color: #C0C0E8;
 	color: #000000;
 	font-size: 14px;
+}
+
+.small-table {
+	width: 80%;
 }
 	
 	/* -- table row styles (mostly grid lines / separators) */
@@ -347,6 +423,18 @@ a:visited {
 	color: #603030;
 }
 
+.link-cont {
+	position: relative;
+}
+
+.link-span {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+}
+
 .record-cell a {
 	color: #401020;
 }
@@ -355,6 +443,38 @@ a:visited {
 	/*background-color: #C8B0B0;*/
 	background-image: url('/icons/pattern-small.png');
 	background-attachment: fixed;
+}
+
+.tooltip {
+	position: relative;
+}
+
+.triangle {
+	position: absolute;
+	z-index: 2;
+	right: 0px;
+	top: 0px;
+	border-style: solid;
+	border-width: 0 5px 5px 0;
+	border-color: transparent #000000 transparent transparent;
+}
+
+.note-text {
+	visibility: hidden;
+	position: absolute;
+	z-index: 2;
+	background-color: #C0C0E8;
+	border: 1px solid;
+	border-radius: 4px;
+	padding-left: 4px;
+	padding-right: 4px;
+	right: 0px;
+	top: 100%;
+	box-shadow: 1px 1px 2px 1px #181820;
+}
+
+.tooltip:hover .note-text {
+	visibility: visible;
 }
 
 	/* -- name cells */
@@ -1079,6 +1199,56 @@ td:hover .float-icon[data-active="false"] {
 	opacity: 100%;
 }
 
+	/* about page  */
+
+.blurb-cont {
+	cursor: pointer;
+	background-color: #282840;
+	color: #D8D8E0;
+	margin: 48px;
+	margin-top: 12px;
+	margin-bottom: 12px;
+	border-radius: 6px;
+	padding: 4px;
+}
+
+.about-cont {
+	background-color: #282840;
+	color: #D8D8E0;
+	margin: 48px;
+	margin-top: 12px;
+	margin-bottom: 12px;
+	border-radius: 6px;
+	padding: 12px;
+}
+
+.para {
+	margin: 12px;
+}
+
+.para-inner {
+	padding-top: 4px;
+	padding-left: 12px;
+}
+
+.h-em {
+	font-weight: bold;
+}
+
+ul {
+	margin: 0px;
+}
+
+a.bright {
+	color: #D06060;
+}
+
+	/* margin alters */
+
+.less-margin {
+	margin-bottom: 0px;
+}
+
 	/* standard colors */
 
 td[data-ps="Mario"] {
@@ -1115,4 +1285,32 @@ td[data-ps="Silver"] {
 td[data-ps="Unranked"] {
 	color: #404040;
 	font-style: italic;
+}
+
+	/* star category colors */
+
+td[data-sc="c16"] {
+	background-color: #B0E0C0;
+}
+
+td[data-sc="c70"] {
+	background-color: #E0C0D0;
+}
+
+td[data-sc="n120"] {
+	background-color: #B0E0C0;
+}
+
+td[data-sc="c120"] {
+	background-color: #B090F0;
+}
+
+td[data-sc="rare"] {
+	background-color: #B0B0B0;
+}
+
+td[data-complete="false"] {
+	color: #303030;
+	font-style: italic;
+	opacity: 60%;
 }

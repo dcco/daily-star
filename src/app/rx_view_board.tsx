@@ -9,21 +9,23 @@ import { ColList, filterVarColList } from './org_strat_def'
 import { StarDef, FilterState, newFilterState, copyFilterState, fullFilterState,
 	verOffsetStarDef, hasExtStarDef, colListStarDef } from './org_star_def'
 import { TimeTable } from './time_table'
-import { newPlayData } from './play_data'
+import { PlayData, newPlayData } from './play_data'
 import { openListColConfig } from './col_config'
 import { xcamRecordMap, sortColList } from './xcam_record_map'
 import { StarTable } from './rx_star_table'
 import { VerToggle } from './rx_ver_toggle'
 import { ExtToggle } from './rx_ext_toggle'
 
-export type TimeTableFun = ((colList: ColList, fs: FilterState, vs: VerOffset) => TimeTable);
+export type TimeTableFun = ((colList: ColList, vs: VerOffset) => TimeTable);
 
 type ViewBoardProps = {
 	stageId: number,
 	starDef: StarDef,
 	ttFun: TimeTableFun,
 	cornerNode: React.ReactNode,
-	headerNode: React.ReactNode
+	headerNode: React.ReactNode,
+	playData?: PlayData,
+	extAll?: boolean
 }
 
 export function ViewBoard(props: ViewBoardProps): React.ReactNode {
@@ -46,8 +48,19 @@ export function ViewBoard(props: ViewBoardProps): React.ReactNode {
 	var starDef = props.starDef;
 	var ttFun = props.ttFun;
 
+	var playData = newPlayData();
+	if (props.playData !== undefined) playData = props.playData;
+
+	// init filter state
+	var initFS = newFilterState(false);
+	if (props.extAll !== undefined) {
+		initFS.virtFlag = true;
+		initFS.verState = [true, true];
+		initFS.extFlag = true;	
+	}
+	
 	// filter state
-	const [fs, setFS] = useState(newFilterState(false));
+	const [fs, setFS] = useState(initFS);
 	var verOffset = verOffsetStarDef(starDef, fs);
 
 	const toggleVer = (i: number) => {
@@ -105,9 +118,9 @@ export function ViewBoard(props: ViewBoardProps): React.ReactNode {
 
 	// load time table from xcam data
 	var colList = colListStarDef(starDef, fs);
-	var timeTable = ttFun(colList, fs, verOffset);
+	var timeTable = ttFun(colList, verOffset);
 	//var timeTable = xcamTimeTable(colList, fs, verOffset);
-	
+
 	// add sort record + relevant records
 	var sortRM = xcamRecordMap(colList, fullFilterState(), verOffset);
 	var relRM = xcamRecordMap(colList, fs, verOffset);
@@ -118,13 +131,13 @@ export function ViewBoard(props: ViewBoardProps): React.ReactNode {
 
 	var mainColList = filterVarColList(colList, null);
 	var mainCFG = openListColConfig(mainColList, starDef.open);
-	tableList.push(<StarTable cfg={ mainCFG } playData={ newPlayData() } timeTable={ timeTable } verOffset={ verOffset }
+	tableList.push(<StarTable cfg={ mainCFG } playData={ playData } timeTable={ timeTable } verOffset={ verOffset }
 		recordMap={ relRM } key={ stageId + "_" + starDef.name + "_0" }></StarTable>);
 
 	var varColList = filterVarColList(colList, 1);
 	if (varColList.length > 0) {
 		var varCFG = openListColConfig(varColList, starDef.open);
-		tableList.push(<StarTable cfg={ varCFG } playData={ newPlayData() } timeTable={ timeTable } verOffset={ verOffset }
+		tableList.push(<StarTable cfg={ varCFG } playData={ playData } timeTable={ timeTable } verOffset={ verOffset }
 			recordMap={ relRM }	key={ stageId + "_" + starDef.name + "_1" }></StarTable>);
 	}	
 /*
@@ -140,7 +153,6 @@ export function ViewBoard(props: ViewBoardProps): React.ReactNode {
 			{ starBtnNodes }
 		</div>
 */
-
 	return (<div>
 		<div className="row-wrap">
 			{ props.cornerNode }

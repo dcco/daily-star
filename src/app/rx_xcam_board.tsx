@@ -1,26 +1,56 @@
 
 import React, { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import orgData from './json/org_data.json'
 
 import { orgStarDef } from './org_star_def'
 import { xcamTimeTable } from './xcam_time_table'
 import { ViewBoard } from './rx_view_board'
 
-export function XcamBoard(props: {}): React.ReactNode {
+const PERM = ["bob", "wf", "jrb", "ccm", "bbh", "hmc", "lll", "ssl",
+	"ddd", "sl", "wdw", "ttm", "thi", "ttc", "rr", "sec", "bow"];
+
+function procSlug(slug?: string): [number, number]
+{
+	if (slug === undefined) return [0, 0];
+	var ss = slug.split("_");
+	if (ss.length < 2) return [0, 0];
+	// get stage id
+	var stageId = 0;
+	PERM.map((p, i) => { if (p === ss[0]) stageId = i });
+	// get star id
+	var starList = orgData[stageId].starList;
+	var starId = 0;
+	starList.map((starDef, i) => { if (starDef.id === ss[1]) starId = i });
+	return [stageId, starId]; 
+}
+
+export function XcamBoard(props: { slug?: string }): React.ReactNode {
+	// process slug when relevant
+	const router = useRouter();
+	const [defStage, defStar] = procSlug(props.slug);
+	var defCache = Array(orgData.length).fill(0);
+	defCache[defStage] = defStar;
+	
 	// star state
-	const [stageId, setStageId] = useState(0);
-	const [starIdCache, setStarIdCache] = useState(Array(orgData.length).fill(0));
+	const [stageId, setStageId] = useState(defStage);
+	const [starIdCache, setStarIdCache] = useState(defCache);
 	const starId = starIdCache[stageId];
 	var starDef = orgStarDef(stageId, starId);
 
 	// star functions
 	const changeStage = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		setStageId(parseInt(e.target.value));
+		var newStage = parseInt(e.target.value);
+		var newStar = orgData[stageId].starList[0].id;
+		setStageId(newStage);
+		router.push("/xcam?star=" + PERM[newStage] + "_" + newStar);
 	};
 
 	const changeStar = (i: number) => {
 		starIdCache[stageId] = i;
 		setStarIdCache(starIdCache.map((x) => x));
+		var newStar = orgData[stageId].starList[i].id;
+		router.push("/xcam?star=" + PERM[stageId] + "_" + newStar);
 	};
 
 	// stage select option nodes
@@ -51,7 +81,7 @@ export function XcamBoard(props: {}): React.ReactNode {
 		</div>);
 
 	return <ViewBoard stageId={ stageId } starDef={ starDef }
-		ttFun= { xcamTimeTable } cornerNode={ stageSelNode } headerNode={ starSelNode }/>;
+		ttFun={ xcamTimeTable } cornerNode={ stageSelNode } headerNode={ starSelNode }/>;
 
 	// load time table from xcam data
 	/*var colList = colListStarDef(starDef, fs);
