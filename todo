@@ -2,6 +2,7 @@
 ! properly authenticate users on the backend
 * history board
 * weekly stars
+* fix that one star in ttc/rr.... you know the one where the variant is completely mislabelled?
 
 ---------------
 
@@ -94,3 +95,26 @@ red coin star/pipe xcams can be compared relatively straightforwardly,
 with penguin + jrb pillar US/JP, they can still be compared, but the value of such
  a comparison is dubious at best. ultimately, while this is a very strange case,
  we dont really need to change anything to deal with it
+
+----------------------------
+
+main column names
+- all disjoint / vary across the same movement strat
+- open column ALWAYS exists unless the xcam is the same as the SS strat
+- for more obscure strats, the goal is competition.
+  they are given unique columns if they:
+  - see substantial use at multiple skill levels
+  - afford enough timesave that they would be used at lower skill levels
+   if they were easier
+
+obscure columns (demoted to open variants)
+- CCM 100C + Slide: Blue Coin Switch Route
+- CCM 100C + Slide: No Teleporter Route
+- CCM 100C + Race: Blue Coin Switch Route
+- CCM 100C + Race: No Teleporter Route
+- Whirl: Double Slide
+- SL 100C + Reds: Alt Route
+- Koopa Rematch: Mountain Clip
+
+special exception to avoid cluttering variant list
+- Owlless: Sideflip
