@@ -10,8 +10,8 @@ import { PlayData, newPlayData } from './play_data'
 import { newColConfig, primaryColConfig } from './col_config'
 import { xcamRecordMap, sortColList } from './xcam_record_map'
 import { MenuOptX } from './rx_menu_opt'
-import { PlayDB } from "./rx_star_row"
-import { StarTable } from './rx_star_table'
+import { PlayDB } from "./table_parts/rx_star_row"
+import { StarTable } from './table_parts/rx_star_table'
 import { VerToggle } from './rx_ver_toggle'
 import { ExtToggle } from './rx_ext_toggle'
 

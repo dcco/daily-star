@@ -9,9 +9,9 @@ import { G_SHEET } from './api_xcam'
 import { PlayData } from './play_data'
 import { newExtFilterState, copyFilterState,
 	orgStarId, orgStarDef, verOffsetStarDef } from './org_star_def'
-import { PlayDB } from './rx_star_row'
+import { PlayDB } from './table_parts/rx_star_row'
 import { MenuOpt } from './rx_menu_opt'
-import { LiveStarTable } from './rx_live_table'
+import { LiveStarTable } from './table_parts/rx_live_table'
 import { VerToggle } from './rx_ver_toggle'
 import { Countdown } from './rx_countdown'
 

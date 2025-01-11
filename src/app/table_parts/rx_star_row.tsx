@@ -1,9 +1,9 @@
 
 import React from "react"
 
-import { VerOffset, hasSubTimes } from "./time_dat"
-import { TimeRow, UserDat, hasSubRows } from "./time_table"
-import { PlayData, strIdNickPD } from "./play_data"
+import { VerOffset, hasSubTimes } from "../time_dat"
+import { TimeRow, UserDat, hasSubRows } from "../time_table"
+import { PlayData, strIdNickPD } from "../play_data"
 import { TimeCell, NameCell } from "./rx_star_cell"
 
 	/* data row: name cell + set of time cells */

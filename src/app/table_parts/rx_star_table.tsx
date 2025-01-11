@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 
-import { TimeDat, VerOffset, formatTime, zeroVerOffset } from './time_dat'
+import { TimeDat, VerOffset, formatTime, zeroVerOffset } from '../time_dat'
 import { Ident, AuthIdent, TimeTable, keyIdent, dropIdent,
-	freshUserDat, hasSubRows, sortTimeTable } from './time_table'
-import { PlayData, strIdNickPD } from './play_data'
-import { ColConfig, headerListColConfig, recordListColConfig, filterTableColConfig } from './col_config'
-import { EditObj, hasWritePerm, checkNewPerm } from './edit_perm'
-import { RecordMap } from './xcam_record_map'
+	freshUserDat, hasSubRows, sortTimeTable } from '../time_table'
+import { PlayData, strIdNickPD } from '../play_data'
+import { ColConfig, headerListColConfig, recordListColConfig, filterTableColConfig } from '../col_config'
+import { EditObj, hasWritePerm, checkNewPerm } from '../edit_perm'
+import { RecordMap } from '../xcam_record_map'
 import { TimeCell, RecordCell, NameCell } from './rx_star_cell'
 import { CellAct, PlayDB, DataRow } from './rx_star_row'
 import { EditRow, nullEditPos } from './rx_edit_row'

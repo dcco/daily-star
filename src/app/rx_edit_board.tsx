@@ -9,7 +9,7 @@ import { Ident } from './time_table'
 import { PlayData, LocalPD, } from './play_data'
 import { postNick } from './api_live'
 import { MenuOpt } from './rx_menu_opt'
-import { LiveStarTable } from './rx_live_table'
+import { LiveStarTable } from './table_parts/rx_live_table'
 import { VerToggle } from './rx_ver_toggle'
 import { AuthArea } from './rx_auth_area'
 

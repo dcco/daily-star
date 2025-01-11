@@ -2,12 +2,12 @@
 //import playData from './json/player_data.json'
 import Link from 'next/link'
 
-import { G_SHEET } from './api_xcam'
+import { G_SHEET } from '../api_xcam'
 
-import { Ver } from './variant_def'
-import { TimeDat, VerOffset, formatTime } from './time_dat'
-import { Ident } from './time_table'
-import { PlayData, strIdNickPD } from './play_data'
+import { Ver } from '../variant_def'
+import { TimeDat, VerOffset, formatTime } from '../time_dat'
+import { Ident } from '../time_table'
+import { PlayData, strIdNickPD } from '../play_data'
 
 	/* time display auxiliary functions */
 

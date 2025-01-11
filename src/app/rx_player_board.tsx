@@ -9,7 +9,7 @@ import { orgStarId, orgStarDef } from './org_star_def'
 import { statKey, recordStxStarData } from './stats_star_map'
 import { UserScore, IncScore, rankPts, fullScoreList, calcTopXStats } from './stats_user_map'
 import { G_SHEET } from './api_xcam'
-import { TimeCell, NameCell } from './rx_star_cell'
+import { TimeCell, NameCell } from './table_parts/rx_star_cell'
 import { GenInput } from './rx_gen_input'
 
 const PERM = ["bob", "wf", "jrb", "ccm", "bbh", "hmc", "lll", "ssl",

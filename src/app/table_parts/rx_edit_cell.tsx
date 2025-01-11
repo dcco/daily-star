@@ -1,9 +1,9 @@
 
-import { StratDef } from './org_strat_def'
-import { StarDef, varSpaceStarDef } from './org_star_def'
-import { TimeDat, VerOffset, rawMS, formatTime, vtagTimeDat } from './time_dat'
-import { DraftDat, toTimeDat, stratNameDraftDat, vtagDraftDat, isCompleteDraftDat } from './draft_dat'
-import { TimeRow } from './time_table'
+import { StratDef } from '../org_strat_def'
+import { StarDef, varSpaceStarDef } from '../org_star_def'
+import { TimeDat, VerOffset, rawMS, formatTime, vtagTimeDat } from '../time_dat'
+import { DraftDat, toTimeDat, stratNameDraftDat, vtagDraftDat, isCompleteDraftDat } from '../draft_dat'
+import { TimeRow } from '../time_table'
 import { timeDetail } from './rx_star_cell'
 
 	/*

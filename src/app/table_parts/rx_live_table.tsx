@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react'
 
-import { RowDef } from './row_def'
-import { TimeDat } from './time_dat'
-import { StratDef, filterVarColList, toSetColList } from './org_strat_def'
+import { RowDef } from '../row_def'
+import { TimeDat } from '../time_dat'
+import { StratDef, filterVarColList, toSetColList } from '../org_strat_def'
 import { FilterState, fullFilterState,
-	orgStarDef, verOffsetStarDef, stratOffsetStarDef, colListStarDef } from './org_star_def'
+	orgStarDef, verOffsetStarDef, stratOffsetStarDef, colListStarDef } from '../org_star_def'
 import { Ident, TimeTable, newIdent, dropIdent,
-	updateTimeTable, delTimeTable } from './time_table'
-import { PlayData } from './play_data'
-import { TTLoadType, loadTimeTable, postNewTimes } from './api_live'
-import { newColConfig, primaryColConfig } from './col_config'
-import { newEditObj, userEditPerm } from './edit_perm'
-import { xcamRecordMap, sortColList } from './xcam_record_map'
+	updateTimeTable, delTimeTable } from '../time_table'
+import { PlayData } from '../play_data'
+import { TTLoadType, loadTimeTable, postNewTimes } from '../api_live'
+import { newColConfig, primaryColConfig } from '../col_config'
+import { newEditObj, userEditPerm } from '../edit_perm'
+import { xcamRecordMap, sortColList } from '../xcam_record_map'
 import { PlayDB } from './rx_star_row'
 import { StarTable } from './rx_star_table'
 

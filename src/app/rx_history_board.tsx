@@ -13,7 +13,7 @@ import { PlayData } from './play_data'
 import { G_HISTORY, dateAndOffset, dispDate } from './api_season'
 import { procStarSlug, makeStarSlug } from './router_slug'
 import { RouterMain, navRM } from './router_main'
-import { PlayDB } from './rx_star_row'
+import { PlayDB } from './table_parts/rx_star_row'
 import { ViewBoard } from './rx_view_board'
 
 function historyStageList(): number[]

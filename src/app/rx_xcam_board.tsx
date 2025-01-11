@@ -7,7 +7,7 @@ import { G_SHEET } from './api_xcam'
 
 import { orgStarDef } from './org_star_def'
 import { xcamTimeTable } from './xcam_time_table'
-import { PlayDB } from './rx_star_row'
+import { PlayDB } from './table_parts/rx_star_row'
 import { ViewBoard } from './rx_view_board'
 import { procStarSlug, makeStarSlug } from './router_slug'
 import { RouterMain, navRM } from './router_main'
