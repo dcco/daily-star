@@ -1,7 +1,7 @@
 
 import { VerF, VarSpace } from '../variant_def'
 import { TimeDat } from '../time_dat'
-import { DraftDat, stratNameDraftDat, verDraftDat, getVarDraftDat, setVerDraftDat, setVarDraftDat } from '../draft_dat'
+import { DraftDat, stratNameDraftDat, verDraftDat, getVarDraftDat, setVerDraftDat, setVarDraftDat } from './draft_dat'
 import { StarDef } from '../org_star_def' 
 import { ColConfig, stratListColConfig } from '../col_config'
 

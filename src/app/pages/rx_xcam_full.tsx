@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 
-import { RouterMain, navRM } from './router_main'
-import { MenuOpt } from './rx_menu_opt'
-import { XcamBoard } from './rx_xcam_board'
-import { PlayerBoard } from './rx_player_board'
+import { RouterMain, navRM } from '../router_main'
+import { MenuOpt } from '../board_simple/rx_menu_opt'
+import { XcamBoard } from '../board_full/rx_xcam_board'
+import { PlayerBoard } from '../stats/rx_player_board'
 
 export function XcamFull(props: { rm: RouterMain }): React.ReactNode
 {

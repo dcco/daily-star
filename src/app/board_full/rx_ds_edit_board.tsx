@@ -1,18 +1,18 @@
 
 import React, { useState, useEffect } from 'react'
-import orgData from './json/org_data.json'
+import orgData from '../json/org_data.json'
 
-import { TTLoadType } from './api_live'
-import { GlobObj, dateRawEST, dateAndOffset, dispDate } from './api_season'
-import { G_SHEET } from './api_xcam'
+import { TTLoadType } from '../api_live'
+import { GlobObj, dateRawEST, dateAndOffset, dispDate } from '../api_season'
+import { G_SHEET } from '../api_xcam'
 
-import { PlayData } from './play_data'
+import { PlayData } from '../play_data'
 import { newExtFilterState, copyFilterState,
-	orgStarId, orgStarDef, verOffsetStarDef } from './org_star_def'
-import { PlayDB } from './table_parts/rx_star_row'
-import { MenuOpt } from './rx_menu_opt'
-import { LiveStarTable } from './table_parts/rx_live_table'
-import { VerToggle } from './rx_ver_toggle'
+	orgStarId, orgStarDef, verOffsetStarDef } from '../org_star_def'
+import { PlayDB } from '../table_parts/rx_star_row'
+import { LiveStarTable } from '../table_parts/rx_live_table'
+import { MenuOpt } from '../board_simple/rx_menu_opt'
+import { VerToggle } from '../board_simple/rx_ver_toggle'
 import { Countdown } from './rx_countdown'
 
 	/*

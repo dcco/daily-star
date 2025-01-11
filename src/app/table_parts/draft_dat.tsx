@@ -1,8 +1,8 @@
 
 import { VerF, Ver, Variant, VariantMap, VarSpace, vtagVarList, vtagVarMap,
-	isCompleteVarMap, toListVarMap, defVerVarSpace } from './variant_def'
-import { RowDef, newRowDef } from './row_def'
-import { TimeDat, VerOffset, rawMS, formatTime, newTimeDat, applyVerOffset } from './time_dat'
+	isCompleteVarMap, toListVarMap, defVerVarSpace } from '../variant_def'
+import { RowDef, newRowDef } from '../row_def'
+import { TimeDat, VerOffset, rawMS, formatTime, newTimeDat, applyVerOffset } from '../time_dat'
 
 	/*
 		draft_row: two choices, either static (for viewing/editing already existing times),

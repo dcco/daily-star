@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 
-import { PlayData, LocalPD } from './play_data'
-import { G_DAILY, mostRecentWeekly } from './api_season'
+import { PlayData, LocalPD } from '../play_data'
+import { G_DAILY, mostRecentWeekly } from '../api_season'
 
-import { RouterMain, navRM } from './router_main'
-import { MenuOpt } from './rx_menu_opt'
-import { DailyBoard } from './rx_daily_board'
-import { HistoryBoard } from './rx_history_board'
+import { RouterMain, navRM } from '../router_main'
+import { MenuOpt } from '../board_simple/rx_menu_opt'
+import { DailyBoard } from '../board_full/rx_daily_board'
+import { HistoryBoard } from '../board_full/rx_history_board'
 import { HistoryTable } from './rx_history_table'
 
 type DailyStarProps = {

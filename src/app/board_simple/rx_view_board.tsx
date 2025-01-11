@@ -1,17 +1,17 @@
 
 import React, { useState, useEffect } from 'react'
 
-import { VerOffset, StratOffset, formatFrames } from './time_dat'
-import { ColList, filterVarColList } from './org_strat_def'
+import { VerOffset, StratOffset, formatFrames } from '../time_dat'
+import { ColList, filterVarColList } from '../org_strat_def'
 import { StarDef, FilterState, newFilterState, copyFilterState, fullFilterState,
-	verOffsetStarDef, stratOffsetStarDef, hasExtStarDef, colListStarDef } from './org_star_def'
-import { TimeTable } from './time_table'
-import { PlayData, newPlayData } from './play_data'
-import { newColConfig, primaryColConfig } from './col_config'
-import { xcamRecordMap, sortColList } from './xcam_record_map'
+	verOffsetStarDef, stratOffsetStarDef, hasExtStarDef, colListStarDef } from '../org_star_def'
+import { TimeTable } from '../time_table'
+import { PlayData, newPlayData } from '../play_data'
+import { newColConfig, primaryColConfig } from '../col_config'
+import { xcamRecordMap, sortColList } from '../xcam_record_map'
 import { MenuOptX } from './rx_menu_opt'
-import { PlayDB } from "./table_parts/rx_star_row"
-import { StarTable } from './table_parts/rx_star_table'
+import { PlayDB } from "../table_parts/rx_star_row"
+import { StarTable } from '../table_parts/rx_star_table'
 import { VerToggle } from './rx_ver_toggle'
 import { ExtToggle } from './rx_ext_toggle'
 

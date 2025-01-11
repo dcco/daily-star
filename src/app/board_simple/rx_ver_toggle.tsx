@@ -1,7 +1,7 @@
 
 import React from 'react'
 
-import { VerOffset, formatFrames } from "./time_dat"
+import { VerOffset, formatFrames } from "../time_dat"
 
 type VerButtonProps = {
 	"text": string,

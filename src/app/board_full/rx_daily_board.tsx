@@ -1,8 +1,8 @@
 
 import React, { useState, useEffect } from 'react'
 
-import { PlayData, LocalPD } from './play_data'
-import { G_DAILY, GlobObj } from './api_season'
+import { PlayData, LocalPD } from '../play_data'
+import { G_DAILY, GlobObj } from '../api_season'
 import { AuthArea } from './rx_auth_area'
 import { DSEditBoard } from './rx_ds_edit_board'
 

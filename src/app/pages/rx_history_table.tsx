@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 
-import { orgStarId, orgStarDef } from './org_star_def'
-import { G_HISTORY, dateAndOffset, dispDate } from './api_season'
-import { stageShort, makeStarSlug } from './router_slug'
-import { getStarColor } from './rx_player_board'
+import { orgStarId, orgStarDef } from '../org_star_def'
+import { G_HISTORY, dateAndOffset, dispDate } from '../api_season'
+import { stageShort, makeStarSlug } from '../router_slug'
+import { getStarColor } from '../stats/rx_player_board'
 
 const PERM = ["bob", "wf", "jrb", "ccm", "bbh", "hmc", "lll", "ssl",
 	"ddd", "sl", "wdw", "ttm", "thi", "ttc", "rr", "sec", "bow"];

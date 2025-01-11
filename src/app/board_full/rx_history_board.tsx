@@ -1,20 +1,20 @@
 
 import React, { useState, useEffect } from 'react'
-import orgData from './json/org_data.json'
+import orgData from '../json/org_data.json'
 
-import { loadTTRaw } from './api_live'
-import { G_SHEET } from './api_xcam'
+import { loadTTRaw } from '../api_live'
+import { G_SHEET } from '../api_xcam'
 
-import { VerOffset, StratOffset } from './time_dat'
-import { ColList } from './org_strat_def'
-import { StarDef, orgStarId, orgStarDef } from './org_star_def'
-import { TimeTable } from './time_table'
-import { PlayData } from './play_data'
-import { G_HISTORY, dateAndOffset, dispDate } from './api_season'
-import { procStarSlug, makeStarSlug } from './router_slug'
-import { RouterMain, navRM } from './router_main'
-import { PlayDB } from './table_parts/rx_star_row'
-import { ViewBoard } from './rx_view_board'
+import { VerOffset, StratOffset } from '../time_dat'
+import { ColList } from '../org_strat_def'
+import { StarDef, orgStarId, orgStarDef } from '../org_star_def'
+import { TimeTable } from '../time_table'
+import { PlayData } from '../play_data'
+import { G_HISTORY, dateAndOffset, dispDate } from '../api_season'
+import { procStarSlug, makeStarSlug } from '../router_slug'
+import { RouterMain, navRM } from '../router_main'
+import { PlayDB } from '../table_parts/rx_star_row'
+import { ViewBoard } from '../board_simple/rx_view_board'
 
 function historyStageList(): number[]
 {

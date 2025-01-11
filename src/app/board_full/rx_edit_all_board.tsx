@@ -1,16 +1,16 @@
 
 import React, { useState, useEffect } from 'react'
-import orgData from './json/org_data.json'
+import orgData from '../json/org_data.json'
 
 import { StarDef, newExtFilterState, copyFilterState,
-	orgStarDef, verOffsetStarDef } from './org_star_def'
+	orgStarDef, verOffsetStarDef } from '../org_star_def'
 //import { newFilterState, orgColList, filterVarColList } from "./org_star_def"
-import { Ident } from './time_table'
-import { PlayData, LocalPD, } from './play_data'
-import { postNick } from './api_live'
-import { MenuOpt } from './rx_menu_opt'
-import { LiveStarTable } from './table_parts/rx_live_table'
-import { VerToggle } from './rx_ver_toggle'
+import { Ident } from '../time_table'
+import { PlayData, LocalPD, } from '../play_data'
+import { postNick } from '../api_live'
+import { LiveStarTable } from '../table_parts/rx_live_table'
+import { MenuOpt } from '../board_simple/rx_menu_opt'
+import { VerToggle } from '../board_simple/rx_ver_toggle'
 import { AuthArea } from './rx_auth_area'
 
 	/*

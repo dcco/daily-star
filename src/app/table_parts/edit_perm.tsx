@@ -1,7 +1,7 @@
 
-import { TimeDat } from './time_dat'
-import { Ident, AuthIdent, matchIdent } from './time_table'
-import { StarDef } from './org_star_def'
+import { TimeDat } from '../time_dat'
+import { Ident, AuthIdent, matchIdent } from '../time_table'
+import { StarDef } from '../org_star_def'
 
 	/*
 		edit_perm: token denoting which parts of the table are editable

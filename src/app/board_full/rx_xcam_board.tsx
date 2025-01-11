@@ -1,16 +1,16 @@
-import orgData from './json/org_data.json'
+import orgData from '../json/org_data.json'
 
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 
-import { G_SHEET } from './api_xcam'
+import { G_SHEET } from '../api_xcam'
 
-import { orgStarDef } from './org_star_def'
-import { xcamTimeTable } from './xcam_time_table'
-import { PlayDB } from './table_parts/rx_star_row'
-import { ViewBoard } from './rx_view_board'
-import { procStarSlug, makeStarSlug } from './router_slug'
-import { RouterMain, navRM } from './router_main'
+import { orgStarDef } from '../org_star_def'
+import { xcamTimeTable } from '../xcam_time_table'
+import { PlayDB } from '../table_parts/rx_star_row'
+import { ViewBoard } from '../board_simple/rx_view_board'
+import { procStarSlug, makeStarSlug } from '../router_slug'
+import { RouterMain, navRM } from '../router_main'
 
 export function XcamBoard(props: { rm: RouterMain }): React.ReactNode {
 	// process slug when relevant

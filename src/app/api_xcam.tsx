@@ -3,8 +3,8 @@ import localRowData from './json/row_data.json'
 import localXcamData from './json/xcam_dump.json'
 
 import { StarDef, orgStarDef } from './org_star_def'
-import { StxStarMap } from './stats_star_map'
-import { UserScoreMap, UserStatMap, calcUserScoreMap, calcUserStatMap } from './stats_user_map'
+import { StxStarMap } from './stats/stats_star_map'
+import { UserScoreMap, UserStatMap, calcUserScoreMap, calcUserStatMap } from './stats/stats_user_map'
 
 	/* 
 		permanent storage for xcam data

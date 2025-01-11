@@ -11,10 +11,10 @@ import { initDailyStar, initHistory } from './api_season'
 import { loadNickMap, loadUserId, postNick } from './api_live'
 
 import { RouterMain, newRouterCore, newRouterMain, navRM, reloadRM } from './router_main'
-import { DailyStar } from './rx_daily_star'
-import { XcamFull } from './rx_xcam_full'
-import { About } from './rx_about'
-import { EditBoard } from './rx_edit_board'
+import { DailyStar } from './pages/rx_daily_star'
+import { XcamFull } from './pages/rx_xcam_full'
+import { About } from './pages/rx_about'
+import { EditBoard } from './board_full/rx_edit_all_board'
 
 type HeadTabProps = {
 	"id": number,

@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { initializeApp } from 'firebase/app'
 import { GoogleAuthProvider, getAuth, onIdTokenChanged, signInWithPopup } from 'firebase/auth'
 
+import { AuthIdent, newAuthIdent, dropIdent } from '../time_table'
+import { PlayData, LocalPD, setUserLD, setUserNickLD, strIdNickPD } from '../play_data'
 import { DropDownImgMenu } from './rx_dropdown_menu'
-import { AuthIdent, newAuthIdent, dropIdent } from './time_table'
-import { PlayData, LocalPD, setUserLD, setUserNickLD, strIdNickPD } from './play_data'
 
 	// firebase initialization
 

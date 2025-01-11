@@ -1,9 +1,9 @@
 
-import { zeroRowDef } from './row_def'
-import { TimeDat, maxTimeDat } from './time_dat'
-import { Ident, keyIdent } from './time_table'
-import { toSetColList } from './org_strat_def'
-import { StarDef } from './org_star_def'
+import { zeroRowDef } from '../row_def'
+import { TimeDat, maxTimeDat } from '../time_dat'
+import { Ident, keyIdent } from '../time_table'
+import { toSetColList } from '../org_strat_def'
+import { StarDef } from '../org_star_def'
 import { StarRef, StxStarData, StxStarMap, getStarTimeMap } from './stats_star_map'
 
 	/*

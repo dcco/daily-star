@@ -10,7 +10,7 @@ import { Ident, TimeTable, newIdent, dropIdent,
 import { PlayData } from '../play_data'
 import { TTLoadType, loadTimeTable, postNewTimes } from '../api_live'
 import { newColConfig, primaryColConfig } from '../col_config'
-import { newEditObj, userEditPerm } from '../edit_perm'
+import { newEditObj, userEditPerm } from './edit_perm'
 import { xcamRecordMap, sortColList } from '../xcam_record_map'
 import { PlayDB } from './rx_star_row'
 import { StarTable } from './rx_star_table'
