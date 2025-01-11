@@ -1,22 +1,21 @@
 
-import React, { useState } from 'react'
-/*
-import { , ,
-	orgStarDef,  } from './org_star_def'
-*/
-import { VerOffset } from './time_dat'
+import React, { useState, useEffect } from 'react'
+
+import { VerOffset, StratOffset, formatFrames } from './time_dat'
 import { ColList, filterVarColList } from './org_strat_def'
 import { StarDef, FilterState, newFilterState, copyFilterState, fullFilterState,
-	verOffsetStarDef, hasExtStarDef, colListStarDef } from './org_star_def'
+	verOffsetStarDef, stratOffsetStarDef, hasExtStarDef, colListStarDef } from './org_star_def'
 import { TimeTable } from './time_table'
 import { PlayData, newPlayData } from './play_data'
-import { openListColConfig } from './col_config'
+import { newColConfig, primaryColConfig } from './col_config'
 import { xcamRecordMap, sortColList } from './xcam_record_map'
+import { MenuOptX } from './rx_menu_opt'
+import { PlayDB } from "./rx_star_row"
 import { StarTable } from './rx_star_table'
 import { VerToggle } from './rx_ver_toggle'
 import { ExtToggle } from './rx_ext_toggle'
 
-export type TimeTableFun = ((colList: ColList, vs: VerOffset) => TimeTable);
+export type TimeTableFun = ((colList: ColList, vs: VerOffset, ss: StratOffset) => TimeTable);
 
 type ViewBoardProps = {
 	stageId: number,
@@ -25,25 +24,12 @@ type ViewBoardProps = {
 	cornerNode: React.ReactNode,
 	headerNode: React.ReactNode,
 	playData?: PlayData,
-	extAll?: boolean
+	extAll?: boolean,
+	playDB?: PlayDB
 }
 
-export function ViewBoard(props: ViewBoardProps): React.ReactNode {
-	// star state
-/*	const [stageId, setStageId] = useState(0);
-	const [starIdCache, setStarIdCache] = useState(Array(orgData.length).fill(0));
-	const starId = starIdCache[stageId];
-	var starDef = orgStarDef(stageId, starId);
-
-	// star functions
-	const changeStage = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		setStageId(parseInt(e.target.value));
-	};
-
-	const changeStar = (i: number) => {
-		starIdCache[stageId] = i;
-		setStarIdCache(starIdCache.map((x) => x));
-	};*/
+export function ViewBoard(props: ViewBoardProps): React.ReactNode
+{
 	var stageId = props.stageId;
 	var starDef = props.starDef;
 	var ttFun = props.ttFun;
@@ -51,8 +37,15 @@ export function ViewBoard(props: ViewBoardProps): React.ReactNode {
 	var playData = newPlayData();
 	if (props.playData !== undefined) playData = props.playData;
 
+	// init alt state
+	var initAlt: [boolean, boolean] = [true, true];
+	var combFlag = true;
+	if (starDef.alt !== null && starDef.alt.status !== "offset" &&
+		starDef.alt.status !== "mergeOffset") combFlag = false;
+	if (!combFlag) initAlt = [true, false];
+
 	// init filter state
-	var initFS = newFilterState(false);
+	var initFS = newFilterState(initAlt, false);
 	if (props.extAll !== undefined) {
 		initFS.virtFlag = true;
 		initFS.verState = [true, true];
@@ -62,6 +55,7 @@ export function ViewBoard(props: ViewBoardProps): React.ReactNode {
 	// filter state
 	const [fs, setFS] = useState(initFS);
 	var verOffset = verOffsetStarDef(starDef, fs);
+	var sOffset = stratOffsetStarDef(starDef, fs);
 
 	const toggleVer = (i: number) => {
 		var ns = copyFilterState(fs);
@@ -77,18 +71,17 @@ export function ViewBoard(props: ViewBoardProps): React.ReactNode {
 		setFS(ns);
 	}
 
-	// stage select option nodes
-	/*var stageOptNodes = orgData.map((stage, i) =>
-		<option key={ stage.name } value={ i }>{ stage.name }</option>
-	);
+	// alt state
+	const toggleAlt = (a: [boolean, boolean]) => {
+		var ns = copyFilterState(fs);
+		ns.altState = a;
+		setFS(ns);
+	}
 
-	// star select nodes
-	var starList = orgData[stageId].starList;
-	var starBtnNodes = starList.map((star, i) => {
-		var flag = (starIdCache[stageId] === i) ? "true" : "false";
-		return <div key={ star.name } className="star-name" data-sel={ flag }
-			onClick={ () => { changeStar(i) } }>{ star.name }</div>;
-	});*/
+	// if star def changes, reset alt state
+	useEffect(() => {
+		toggleAlt(initAlt);
+	}, [starDef]);
 
 	// version toggle node (enable when relevant)
 	var verToggle: React.ReactNode = <div></div>;
@@ -102,6 +95,35 @@ export function ViewBoard(props: ViewBoardProps): React.ReactNode {
 		extToggle = <ExtToggle state={ fs.extFlag } toggle={ toggleExt }/>;
 	}
 
+	// strat offset display
+	var stratNode: React.ReactNode = <div></div>;
+	if (starDef.alt !== null && starDef.alt.offset !== undefined) {
+		var optName = starDef.alt.info.option;
+		var offVal = starDef.alt.offset;
+		if (starDef.alt.status !== "mergeOffset" && offVal < 0) {
+			optName = starDef.info.option;
+			offVal = -offVal;
+		}
+		stratNode = (<div className="variant-box slight-margin">{ optName } Offset: { formatFrames(offVal) }</div>);
+	}
+
+	// alt toggle node (enable when relevant)
+	const eqAlt = (a: [boolean, boolean], b: [boolean, boolean]): boolean => { return a[0] === b[0] && a[1] === b[1] }
+	var altToggle: React.ReactNode = <div></div>;
+	if (starDef.alt !== null)
+	{
+		var altNode: React.ReactNode = <div></div>;
+		if (combFlag) altNode = <MenuOptX eqFun={ eqAlt } id={ [true, true] }
+				selId={ fs.altState } setSelId={ () => toggleAlt([true, true]) }>Combined</MenuOptX>;
+		altToggle = (<div className="menu-cont bot-margin">
+			{ altNode }
+			<MenuOptX eqFun={ eqAlt } id={ [true, false] }
+				selId={ fs.altState } setSelId={ () => toggleAlt([true, false]) }>{ starDef.info.option }</MenuOptX>
+			<MenuOptX eqFun={ eqAlt } id={ [false, true] }
+				selId={ fs.altState } setSelId={ () => toggleAlt([false, true]) }>{ starDef.alt.info.option }</MenuOptX>
+		</div>);
+	}
+
 	// variant information
 	var varCont: React.ReactNode = <div></div>;
 	if (starDef.variants && starDef.variants.length > 0) {
@@ -111,48 +133,48 @@ export function ViewBoard(props: ViewBoardProps): React.ReactNode {
 			vstr.push("[" + (i + 1) + "] - ")
 			vstr.push(<i key={ i }>{ vName }</i>); 
 		})
-		varCont = (<div className="variant-cont">
-			<div className="variant-box">{ vstr }</div>
-		</div>);
+		varCont = (<div className="variant-box">{ vstr }</div>);
 	}
 
 	// load time table from xcam data
 	var colList = colListStarDef(starDef, fs);
-	var timeTable = ttFun(colList, verOffset);
+	var timeTable = ttFun(colList, verOffset, sOffset);
 	//var timeTable = xcamTimeTable(colList, fs, verOffset);
 
 	// add sort record + relevant records
-	var sortRM = xcamRecordMap(colList, fullFilterState(), verOffset);
-	var relRM = xcamRecordMap(colList, fs, verOffset);
+	var sortRM = xcamRecordMap(colList, fullFilterState([true, true]), verOffset, sOffset);
+	var relRM = xcamRecordMap(colList, fs, verOffset, sOffset);
 	sortColList(colList, sortRM);
 
 	// create tables
 	var tableList: React.ReactNode[] = [];
 
-	var mainColList = filterVarColList(colList, null);
-	var mainCFG = openListColConfig(mainColList, starDef.open);
-	tableList.push(<StarTable cfg={ mainCFG } playData={ playData } timeTable={ timeTable } verOffset={ verOffset }
-		recordMap={ relRM } key={ stageId + "_" + starDef.name + "_0" }></StarTable>);
+	// build filter
+	var filterColList = colList;
+	if (fs.altState[0] && !fs.altState[1]) filterColList = filterVarColList(colList, null);
+	else if (fs.altState[1] && !fs.altState[0]) filterColList = filterVarColList(colList, 1);
 
-	var varColList = filterVarColList(colList, 1);
-	if (varColList.length > 0) {
-		var varCFG = openListColConfig(varColList, starDef.open);
-		tableList.push(<StarTable cfg={ varCFG } playData={ playData } timeTable={ timeTable } verOffset={ verOffset }
-			recordMap={ relRM }	key={ stageId + "_" + starDef.name + "_1" }></StarTable>);
-	}	
-/*
-<div className="stage-select">
-				<select value={ stageId }
-					onChange={ changeStage }>
-					{ stageOptNodes }
-				</select>
-			</div>
+	var cfg = newColConfig(filterColList);
+	primaryColConfig(cfg, starDef, fs);
+	// merge open colums w/ designated semi-open columns
+	/*if (fs.altState[0]) mergeListColConfig(cfg, "Open", false, starDef.open);
+	if (fs.altState[1]) mergeListColConfig(cfg, "Open#Alt", true, starDef.open);
+	// merge alternative columns when required
+	if (starDef.alt !== null && fs.altState[0] && fs.altState[1]) {
+		if (starDef.alt.status === "mergeOffset") {
+			if (starDef.alt.specMerge !== undefined) {
+				mergeNamesColConfig(cfg, starDef.alt.specMerge);
+			} else {
+				mergeTagsColConfig(cfg, "(" + starDef.info.option + ")", "(" + starDef.alt.info.option + ")");
+			}
+		} else {
+			mergeTagsColConfig(cfg, "XXXXXX", "YYYYYY");
+		}
+	}*/
 
+	tableList.push(<StarTable cfg={ cfg } playData={ playData } timeTable={ timeTable } verOffset={ verOffset }
+		recordMap={ relRM } playDB={ props.playDB } key={ stageId + "_" + starDef.name + "_0" }></StarTable>);
 
-		<div className="star-select">
-			{ starBtnNodes }
-		</div>
-*/
 	return (<div>
 		<div className="row-wrap">
 			{ props.cornerNode }
@@ -162,11 +184,8 @@ export function ViewBoard(props: ViewBoardProps): React.ReactNode {
 			</div>
 		</div>
 		{ props.headerNode }
-		{ varCont }
+		{ altToggle }
+		<div className="row-wrap no-space variant-cont">{ stratNode } { varCont }</div>
 		{ tableList }
 	</div>);
-
-	/* 
-		{ formatMergeView(mainMV) }
-		{ "   " + formatMergeView(varMV) } */
 }

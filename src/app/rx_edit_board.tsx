@@ -2,12 +2,13 @@
 import React, { useState, useEffect } from 'react'
 import orgData from './json/org_data.json'
 
-import { newExtFilterState, copyFilterState,
+import { StarDef, newExtFilterState, copyFilterState,
 	orgStarDef, verOffsetStarDef } from './org_star_def'
 //import { newFilterState, orgColList, filterVarColList } from "./org_star_def"
 import { Ident } from './time_table'
 import { PlayData, LocalPD, } from './play_data'
 import { postNick } from './api_live'
+import { MenuOpt } from './rx_menu_opt'
 import { LiveStarTable } from './rx_live_table'
 import { VerToggle } from './rx_ver_toggle'
 import { AuthArea } from './rx_auth_area'
@@ -22,14 +23,24 @@ import { AuthArea } from './rx_auth_area'
 
 type EditBoardProps = {
 	"playData": PlayData,
-	"reloadPlayData": () => void,
-	"setPlayData": (a: LocalPD) => void
+	"updatePlayData": (ld: LocalPD) => void,
+	"reloadPlayData": () => void
+}
+
+function getInitAlt(starDef: StarDef): [boolean, [boolean, boolean]]
+{
+	var initAlt: [boolean, boolean] = [true, true];
+	var combFlag = true;
+	if (starDef.alt !== null && starDef.alt.status !== "offset" &&
+		starDef.alt.status !== "mergeOffset") combFlag = false;
+	if (!combFlag) initAlt = [true, false];
+	return [combFlag, initAlt];
 }
 
 export function EditBoard(props: EditBoardProps): React.ReactNode {
 	const playData = props.playData;
+	const updatePlayData = props.updatePlayData;
 	const reloadPlayData = props.reloadPlayData;
-	const setPlayData = props.setPlayData;
 
 	// star state
 	const [stageId, setStageId] = useState(0);
@@ -37,24 +48,41 @@ export function EditBoard(props: EditBoardProps): React.ReactNode {
 	const starId = starIdCache[stageId];
 	var starDef = orgStarDef(stageId, starId);
 
+	// filter state
+	var initFS = newExtFilterState([true, true], true);
+	initFS.verState = [true, true];
+	const [fs, setFS] = useState(initFS);
+	var verOffset = verOffsetStarDef(starDef, fs);
+
+	// alt view state
+	var combFlag = true;
+	if (starDef.alt !== null && starDef.alt.status !== "offset" &&
+		starDef.alt.status !== "mergeOffset") combFlag = false;
+	var [showComb, setShowComb] = useState(true);
+
 	// star functions
 	const changeStage = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		setStageId(parseInt(e.target.value));
+		setShowComb(true);
 	};
 
 	const changeStar = (i: number) => {
 		starIdCache[stageId] = i;
 		setStarIdCache(starIdCache.map((x) => x));
+		setShowComb(true);
 	};
 
-	// filter state
-	const [fs, setFS] = useState(newExtFilterState(true));
-	var verOffset = verOffsetStarDef(starDef, fs);
-
+	// filter functions
 	const toggleVer = (i: number) => {
 		var ns = copyFilterState(fs);
 		ns.verState[i] = !ns.verState[i];
 		if (!ns.verState[i] && !ns.verState[1 - i]) ns.verState[1 - i] = true;
+		setFS(ns);
+	}
+
+	const toggleAlt = (a: [boolean, boolean]) => {
+		var ns = copyFilterState(fs);
+		ns.altState = a;
 		setFS(ns);
 	}
 
@@ -79,6 +107,16 @@ export function EditBoard(props: EditBoardProps): React.ReactNode {
 		verToggle = <VerToggle state={ fs.verState } verOffset={ verOffset } toggle={ toggleVer }/>;
 	}
 
+	// alt toggle node (enable when relevant)
+	var combToggle: React.ReactNode = <div></div>;
+	if (starDef.alt !== null && combFlag)
+	{
+		combToggle = <div className="menu-cont">
+			<MenuOpt id={ true } selId={ showComb } setSelId={ () => setShowComb(true) }>Combined</MenuOpt>
+			<MenuOpt id={ false } selId={ showComb } setSelId={ () => setShowComb(false) }>Raw</MenuOpt>
+		</div>;
+	}
+
 	// variant information
 	var varCont: React.ReactNode = <div></div>;
 	if (starDef.variants && starDef.variants.length > 0) {
@@ -93,23 +131,28 @@ export function EditBoard(props: EditBoardProps): React.ReactNode {
 		</div>);
 	}
 
-/*
 	// build tables (in case of multiple tables)
 	var tableList = [];
-	// -- main column list
-	//var mainColList = orgVarColList(colList, null);
-	tableList.push(<LiveStarTable key={ stageId + "_" + starId + "_0" }
-		stageId={ stageId } starId={ starId } fs={ fs } variant={ null }> </LiveStarTable>
+	// -- main table
+	var mainFS = fs;
+	if (!combFlag || !showComb) {
+		mainFS = copyFilterState(fs);
+		mainFS.altState = [true, false];
+	}
+	tableList.push(
+		<LiveStarTable stageId={ stageId } starId={ starId } today={ ["def"] } fs={ mainFS }
+			playData={ playData } reloadPlayData={ reloadPlayData } key={ stageId + "_" + starId + "_0" }/>
 	);
 	// -- variant table
-	var colList = orgColList(stageId, starId, fs);
-	var varColList = filterVarColList(colList, 1);
-	if (varColList.length !== 0) {
-		tableList.push(<LiveStarTable key={ stageId + "_" + starId + "_1" }
-			stageId={ stageId } starId={ starId } fs={ fs } variant={ 1 }> </LiveStarTable>
+	if (!combFlag || !showComb) {
+		var altFS = copyFilterState(fs);
+		altFS.altState = [false, true];
+		tableList.push(
+			<LiveStarTable stageId={ stageId } starId={ starId } today={ ["def"] } fs={ altFS }
+				playData={ playData } reloadPlayData={ reloadPlayData } key={ stageId + "_" + starId + "_1" }/>
 		);
 	}
-
+/*
 	return (
 		<div>
 		<div className="stage-select">
@@ -141,11 +184,11 @@ export function EditBoard(props: EditBoardProps): React.ReactNode {
 		<div className="star-select">
 			{ starBtnNodes }
 		</div>
+		{ combToggle }
 		{ varCont }
-		<LiveStarTable stageId={ stageId } starId={ starId } today={ ["def"] } fs={ fs } varFlag={ null }
-			playData={ playData } reloadPlayData={ reloadPlayData } key={ stageId + "_" + starId }/>
+		{ tableList }
 		<div className="sep"><hr/></div>
-		<AuthArea playData={ playData } setPlayData={ setPlayData }/>
+		<AuthArea playData={ playData } setPlayData={ updatePlayData }/>
 		</div>
 	);
 

@@ -94,15 +94,20 @@ export function formatFrames(frames: number): string {
 	/*
 		time_dat:
 		* rawTime: int - unadjusted time
+		* verTime: int - partially adjusted time (only includes version adjustments)
 		* time: int - adjusted time
-		* link: string
-		* note: string
+		* adjustList: string[] - list of adjustments made from the raw time
+		* link: string | null
+		* note: string | null
 		* rowDef: row_def - xcam row represented by the time cell
+		* origin: number | null - unique submission identifier (used for deletion)
 	*/
 
 export type TimeDat = {
 	"rawTime": number,
+	"verTime": number,
 	"time": number,
+	"adjustList": string[],
 	"link": string | null,
 	"note": string | null,
 	"rowDef": RowDef,
@@ -116,7 +121,9 @@ export function newTimeDat(time: number, link: string | null, note: string | nul
 	if (rowDef === undefined) throw("New time datum created with incomplete arguments.")
 	return {
 		"rawTime": time,
+		"verTime": time,
 		"time": time,
+		"adjustList": [],
 		"link": link,
 		"note": note,
 		"rowDef": rowDef,
@@ -143,6 +150,15 @@ export function vtagTimeDat(timeDat: TimeDat): string {
 		vx = "#" + vList.map((i) => "" + i).join('_');
 	}*/
 	return rowDef.name + "_" + rowDef.ver + vtagVarList(rowDef.variant_list);
+}
+
+function adjustTime(timeDat: TimeDat, frames: number, adj: string) {
+	timeDat.time = addFrames(frames, timeDat.time);
+	if (adj === "ver") timeDat.verTime = addFrames(frames, timeDat.verTime);
+	// mark adjustment
+	var copyList = timeDat.adjustList.map((x) => x);
+	copyList.push(adj);
+	timeDat.adjustList = copyList;
 }
 
 	/* 
@@ -204,7 +220,52 @@ export function applyVerOffset(timeDat: TimeDat, verOffset: VerOffset)
 	// apply offset
 	var focusVer = verOffset.focusVer;
 	var time = timeDat.time;
-	if (focusVer === "jp" && timeDat.rowDef.ver === "us") time = addFrames(offset, time);
-	else if (focusVer === "us" && timeDat.rowDef.ver === "jp") time = addFrames(-offset, time);
-	timeDat.time = time;
+	if (focusVer === "jp" && timeDat.rowDef.ver === "us") adjustTime(timeDat, offset, "ver");
+	else if (focusVer === "us" && timeDat.rowDef.ver === "jp") adjustTime(timeDat, -offset, "ver");
+}
+
+	/*
+		strat_offset: strat offset information
+	*/
+
+export type StratOffset = {
+	"name": string,
+	"rawName": [string, string],
+	"offsetType": string | null,
+	"offset": number
+};
+
+export function newStratOffset(name: string, rawName: [string, string], offsetType: string | null, offset: number): StratOffset
+{
+	return {
+		"name": name,
+		"rawName": rawName,
+		"offsetType": offsetType,
+		"offset": offset
+	};
+}
+
+export function applyStratOffset(timeDat: TimeDat, second: boolean, sOffset: StratOffset, forceAdjust?: number)
+{
+	var offset = sOffset.offset;
+	var time = timeDat.time;
+	// null offset ignores forced adjust
+	if (sOffset.offsetType === null) return;
+	// if force adjustment, use the raw names
+	var offName = sOffset.name;
+	if (forceAdjust !== undefined) {
+		if (second) offName = sOffset.rawName[1];
+		else offName = sOffset.rawName[0];
+	}
+	// merge offset always offsets the secondary
+	if (sOffset.offsetType === "mergeOffset") {
+		if (second) adjustTime(timeDat, offset, offName);
+		else if (forceAdjust !== undefined) adjustTime(timeDat, 0, offName);
+	} else {
+		// otherwise, only apply a positive offset
+		if (second && sOffset.offset > 0) adjustTime(timeDat, offset, offName); //sOffset.name);
+		else if (!second && sOffset.offset < 0) adjustTime(timeDat, -offset, offName); //sOffset.name);
+		else if (forceAdjust !== undefined) adjustTime(timeDat, 0, offName);
+	}
+	//if (second) adjustTime(timeDat, addFrames(offset, time), sOffset.name);
 }

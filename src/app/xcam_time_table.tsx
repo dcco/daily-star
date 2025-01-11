@@ -3,13 +3,13 @@
 //import rowData from './json/row_data.json'
 import { G_SHEET } from './api_xcam' 
 
-import { VerOffset, rawMS, newTimeDat, applyVerOffset } from "./time_dat"
+import { VerOffset, StratOffset, rawMS, newTimeDat, applyVerOffset, applyStratOffset } from "./time_dat"
 import { ColList, readRefMap } from "./org_strat_def"
 import { TimeTable, newIdent, addTimeMap, buildTimeTable } from "./time_table"
 
 	/* derived "sort_data" (determines a canonical order for column sorting) */
 
-export function xcamTimeTable(colList: ColList, verOffset: VerOffset): TimeTable {
+export function xcamTimeTable(colList: ColList, verOffset: VerOffset, stratOffset: StratOffset, forceAdjust?: number): TimeTable {
 	var rowData = G_SHEET.rowData;
 	var xcamData = G_SHEET.xcamData;
 	const timeMap = {};
@@ -27,6 +27,7 @@ export function xcamTimeTable(colList: ColList, verOffset: VerOffset): TimeTable
 				var timeDat = newTimeDat(data.ms, data.link, data.note,
 					readRefMap(stratDef.row_map, xcamRef, "tt:" + stratDef.name));
 				applyVerOffset(timeDat, verOffset);
+				applyStratOffset(timeDat, stratDef.diff.includes("second"), stratOffset, forceAdjust);
 				// do not include times better than posted record
 				var recordMS = rawMS(record);
 				if (recordMS === null) {

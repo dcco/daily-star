@@ -3,12 +3,23 @@ import React from "react"
 
 import { VerOffset, hasSubTimes } from "./time_dat"
 import { TimeRow, UserDat, hasSubRows } from "./time_table"
-import { PlayData } from "./play_data"
+import { PlayData, strIdNickPD } from "./play_data"
 import { TimeCell, NameCell } from "./rx_star_cell"
 
 	/* data row: name cell + set of time cells */
 
 export type CellAct = "none" | "edit" | "stop-edit" | "view-toggle";
+
+export type PlayDB = {
+	"baseUrl": string,
+	"nameList": string[]
+};
+
+function getPlayUrl(playDB: PlayDB, name: string): string | null
+{
+	if (playDB.nameList.includes(name)) return playDB.baseUrl + "?name=" + name;
+	return null;
+}
 
 type DataRowProps = {
 	"userDat": UserDat,
@@ -17,8 +28,10 @@ type DataRowProps = {
 	"expand": boolean,
 	"action": CellAct,
 	"rowId": number,
+	"showRowId": boolean,
 	"onClick": (a: CellAct, i: number, j: number, k: number) => void
-	"endRow": boolean
+	"endRow": boolean,
+	"playDB"?: PlayDB
 };
 
 function heightColRow(timeRow: TimeRow, colId: number): number
@@ -48,8 +61,10 @@ export function DataRow(props: DataRowProps): React.ReactNode {
 	var expand = props.expand;
 	var action = props.action;
 	var rowId = props.rowId;
+	var showRowId = props.showRowId;
 	var onClick = props.onClick;
 	var endRow = props.endRow;
+	var playDB = props.playDB;
 	// get text for initializing edit row
 	//var timeText = userDat.timeRow.map(formatMultiDat);
 	//timeText.unshift(strIdNick(userDat.id));
@@ -71,9 +86,17 @@ export function DataRow(props: DataRowProps): React.ReactNode {
 		})
 		var nameAct: CellAct = "none";
 		if (hasSubRows(userDat.timeRow)) nameAct="view-toggle";
+		// get player link when applicable
+		var href: string | undefined = undefined;
+		if (playDB !== undefined) {
+			var name = strIdNickPD(props.pd, userDat.id);
+			var url = getPlayUrl(playDB, name);
+			if (url !== null) href = url;
+		} 
 		if (i === 0) timeRowNodes.unshift(<NameCell id={ userDat.id } pd={ pd } active={ nameAct !== "none" }
-			onClick={ () => onClick(nameAct, rowId, -1, i) } key="user"/>);
+			onClick={ () => {} } href={ href } key="user"/>);
 		else timeRowNodes.unshift(<td className="dark-cell" key="user"></td>);
+		if (showRowId) timeRowNodes.unshift(<td className="time-cell" key="num">{ rowId + 1 }</td>);
 		rowNodeList.push(<tr className="time-row" data-row-active={ rowActive.toString() } data-end-row={ endRow } key={ i }>
 			{ timeRowNodes }
 		</tr>);

@@ -6,14 +6,14 @@ import { TimeDat, VerOffset, rawMS, formatTime } from './time_dat'
 import { SGrid, lookupGrid, setGrid } from './sparse_grid'
 import { TimeRow, UserDat, hasSubRows, lookupTimeRow } from './time_table'
 import { PlayData, strIdNickPD } from './play_data'
-import { ColConfig, firstStratColConfig } from './col_config'
+import { ColConfig, defStratColConfig } from './col_config'
 import { StarDef, varSpaceStarDef } from './org_star_def'
 import { DraftDat, staticDraftDat, emptyDraftDat,
 	toTimeDat, changeStratDraftDat, stratNameDraftDat, isCompleteDraftDat } from './draft_dat'
 import { EditObj } from './edit_perm' 
 import { NameCell } from './rx_star_cell'
 import { CellAct } from './rx_star_row'
-import { ValidDat, EditCell, InputCell, nullValidDat, newValidDat } from './rx_edit_cell'
+import { ValidDat, EditCell, InputCell, dirtyDat, nullValidDat, newValidDat } from './rx_edit_cell'
 import { ValidStyle, EditSubmitArea } from './rx_edit_submit_area'
 
 	/* auxiliary functions for front-end time submission validity */
@@ -77,10 +77,16 @@ function cleanupDS(timeRow: TimeRow, ds: DraftState): DraftState
 	var newDS = newDraftState();
 	for (const [k, _dat] of Object.entries(ds.grid)) {
 		var [dat, i, j] = _dat;
-		// cell must be empty, and if previous time exists, must be different
+		// cell cleanup happens if not scheduled for deletion and
+		// - cell text is empty
+		// - if old time exists + new time has time + link + note unchanged
 		var timeDat = lookupTimeRow(timeRow, i, j);
-		var mDiff = (timeDat === null || formatTime(timeDat.rawTime) !== dat.text);
-		if ((dat.text !== "" && mDiff) || dat.delFlag !== null) newDS.grid[k] = _dat;
+		/*var toClean = false;
+		if (dat.text === "") toClean = true;
+		else if (timeDat !== null && formatTime(timeDat.rawTime) === dat.text &&
+			timeDat.note === dat.note && timeDat.link === dat.link) toClean = true;
+		if (!toClean || dat.delFlag !== null) newDS.grid[k] = _dat;*/
+		if (dirtyDat(timeDat, dat)) newDS.grid[k] = _dat;
 	}
 	return newDS;
 }
@@ -187,7 +193,7 @@ function lookupEditDraftDS(cfg: ColConfig, starDef: StarDef, timeRow: TimeRow,
 		return [newDat, updateDS(ds, colId, subRowId, newDat)];
 	}
 	// otherwise, initialize row definition from [default strat + variant space]
-	var stratDef = firstStratColConfig(cfg, colId);
+	var stratDef = defStratColConfig(cfg, colId);
 	var newDat = emptyDraftDat(stratDef.vs);
 	return [newDat, updateDS(ds, colId, subRowId, newDat)];
 }
@@ -232,30 +238,10 @@ export function validateDS(starDef: StarDef, timeRow: TimeRow, ds: DraftState): 
 		}
 	}
 	if (warnFlag) return [validMap, "warning", "Some submissions have times in other cells w/ the same strat variation."];
+	for (const [k, vDat] of Object.entries(validMap)) {
+		if (vDat.proper === "fix") return [validMap, "warning", "Highlighted submissions will modify link/note for previous submission."];
+	}
 	return [validMap, "valid", "Ready to submit."];
-	// valid time check
-	/*for (const [k, _draftDat] of Object.entries(ds.grid)) {
-		if (!validTime(_draftDat[0].text)) {
-			return ["error", "Must fix invalid times."];
-		}
-	}
-	// all variants are filled out
-	for (const [k, _draftDat] of Object.entries(ds.grid)) {
-		var [draftDat, i, j] = _draftDat;
-		var vs = varSpaceStarDef(starDef, stratNameDraftDat(draftDat));
-		if (vs !== null && !isCompleteDraftDat(vs, draftDat)) {
-			return ["error", "Some submissions have incomplete variant information."];
-		}
-	}
-	// all times are improvements / better
-	for (const [k, _draftDat] of Object.entries(ds.grid)) {
-		var [draftDat, i, j] = _draftDat;
-		var timeDat = lookupTimeRow(timeRow, i, j);
-		if (timeDat !== null && !isImproveDraftDat(timeDat, draftDat)) {
-			return ["error", "Time submissions must be better than old ones."];
-		}
-	}*/
-	//return ["valid", "Ready to submit."];
 }
 
 export function convertDS(timeRow: TimeRow, ds: DraftState, verOffset: VerOffset): [TimeDat[], TimeDat[]] {
@@ -263,13 +249,19 @@ export function convertDS(timeRow: TimeRow, ds: DraftState, verOffset: VerOffset
 	var timeList: TimeDat[] = [];
 	var delList: TimeDat[] = [];
 	for (const [k, _draftDat] of Object.entries(ds.grid)) {
-		var draftDat = _draftDat[0];
+		var [draftDat, i, j] = _draftDat;
+		// delete case
 		if (draftDat.delFlag !== null) {
-			delList.push(draftDat.delFlag)
-		} else {
-			var timeDat = toTimeDat(draftDat, verOffset);
-			if (timeDat !== null) timeList.push(timeDat);
+			delList.push(draftDat.delFlag);
+			continue;
 		}
+		var timeDat = toTimeDat(draftDat, verOffset);
+		if (timeDat === null) continue;
+		// edit case
+		var oldDat = lookupTimeRow(timeRow, i,  j);
+		if (oldDat !== null && oldDat.time === timeDat.time) delList.push(oldDat);
+		// submit case
+		timeList.push(timeDat);
 	}
 	return [timeList, delList];
 }
@@ -287,6 +279,7 @@ type EditRowProps = {
 	"pd": PlayData,
 	"verOffset": VerOffset,
 	"rowId": number | null,
+	"showRowId": boolean,
 	"editObj": EditObj,
 	"editPos": EditPos,
 	"cellClick": (a: CellAct, i: number | null, j: number, k: number) => void,
@@ -300,6 +293,7 @@ export function EditRow(props: EditRowProps): React.ReactNode {
 	const verOffset = props.verOffset;
 	const timeRow = userDat.timeRow;
 	const rowId = props.rowId;
+	const showRowId = props.showRowId;
 	const editObj = props.editObj;
 	const starDef = editObj.starDef;
 	const editPos = props.editPos;
@@ -368,6 +362,11 @@ export function EditRow(props: EditRowProps): React.ReactNode {
 			onClick={ () => cellClick(nameAct, rowId, -1, j) } key="name"/>);
 		else rowNodes.unshift(<td className="dark-cell" key="name"></td>);
 		editNodes.push(<tr className="time-row" key={ j }>{ rowNodes }</tr>);
+		// numeric cell
+		if (showRowId && rowId !== null) {
+			if (j === 0) rowNodes.unshift(<td className="time-cell" key="num">{ rowId + 1 }</td>);
+			else rowNodes.unshift(<td className="dark-cell" key="num"></td>);
+		}
 	}
 
 	var oldDat = lookupTimeRow(timeRow, editPos.colId, editPos.subRowId);
@@ -385,7 +384,7 @@ export function EditRow(props: EditRowProps): React.ReactNode {
 		<tr className="time-row" key="edit-info-row">
 			<td></td>
 			<td className="submit-area" colSpan={ timeRow.length }>
-				<EditSubmitArea cfg={ cfg } colId={ editPos.colId } vs={ vs }
+				<EditSubmitArea starDef={ starDef } cfg={ cfg } colId={ editPos.colId } vs={ vs }
 					curDat={ draftDat } oldDat={ oldDat }
 					editDat={ (f) => editLoc(editPos.colId, editPos.subRowId, f) }
 					changeStrat={ changeStrat } submit={ () => {
@@ -398,9 +397,3 @@ export function EditRow(props: EditRowProps): React.ReactNode {
 		</tr>
 	</React.Fragment>;
 }
-	/*	
-		-- OLD CODE FOR NAME w/ VALIDITY CHECKING
-	editNodes.unshift(<EditCell text={ eState.eData[0] } valid={ validName(eState.eData[0]) }
-			dirty={ eState.eData[0] !== eState.oldText[0] }
-			editText={ (v) => eState.write(0, v) } isInput={ eState.colId === -1 }
-			onClick={ () => eState.click("edit", rowId, -1, eState.eData) } key="name"></EditCell>); */

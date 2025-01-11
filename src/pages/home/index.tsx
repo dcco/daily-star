@@ -1,5 +1,5 @@
-import '../app/main.css'
-import { MultiBoard } from '../app/rx_multi_board'
+import '../../app/main.css'
+import { MultiBoard } from '../../app/rx_multi_board'
 
 export default function() {
 	return (<main>

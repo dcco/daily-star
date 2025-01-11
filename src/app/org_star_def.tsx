@@ -7,43 +7,49 @@ import { RawStratDef, StratSet, ColList,
 	buildStratDef, openStratDef,
 	mergeStratSet, hasExtStratSet, filterExtStratSet,
 	filterVirtStratSet, toListStratSet } from './org_strat_def'
-import { OffsetDat, VerOffset, newVerOffset } from './time_dat'
+import { OffsetDat, VerOffset, StratOffset, newVerOffset, newStratOffset } from './time_dat'
 
 	/*
 		filter_state: filter settings for the xcam viewer
 		* verState: which versions to display (when relevant)
 		* extFlag: whether to display extension sheet columns/times
+		* altState: alternate strat combination state
+		* virtFlag: whether to show virtual rows (beginner / artificial open)
 	*/
 
 export type FilterState = {
 	"verState": [boolean, boolean],
 	"extFlag": boolean,
+	"altState": [boolean, boolean],
 	"virtFlag": boolean
 }
 
-export function newFilterState(virt: boolean): FilterState
+export function newFilterState(alt: [boolean, boolean], virt: boolean): FilterState
 {
 	return {
 		"verState": [true, false],
 		"extFlag": false,
+		"altState": alt,
 		"virtFlag": virt
 	};
 }
 
-export function newExtFilterState(virt: boolean): FilterState
+export function newExtFilterState(alt: [boolean, boolean], virt: boolean): FilterState
 {
 	return {
 		"verState": [true, false],
 		"extFlag": true,
+		"altState": alt,
 		"virtFlag": virt
 	};
 }
 
-export function fullFilterState(): FilterState
+export function fullFilterState(alt: [boolean, boolean]): FilterState
 {
 	return {
 		"verState": [true, true],
 		"extFlag": true,
+		"altState": alt,
 		"virtFlag": true
 	};
 }
@@ -53,6 +59,7 @@ export function copyFilterState(fs: FilterState): FilterState
 	return {
 		"verState": [fs.verState[0], fs.verState[1]],
 		"extFlag": fs.extFlag,
+		"altState": fs.altState,
 		"virtFlag": fs.virtFlag
 	};
 }
@@ -84,11 +91,25 @@ export type RawStratSet = {
 	[key: string]: RawStratDef
 };
 
+export type StarInfo = {
+	"short": string,
+	"option": string,
+	"catInfo": string | null
+};
+
+export type StarAltDef = {
+	"globShort": string,
+	"status": "cutscene" | "diff" | "offset" | "mergeOffset",
+	"offset"?: number,
+	"info": StarInfo,
+	"specMerge"?: string[]
+};
+
 export type StarDesc = {
 	"name": string,
 	"id": string,
-	"short": string[],
-	"catInfo"?: (string | null)[],
+	"info": StarInfo,
+	"alt": null | StarAltDef,
 	"def": "na" | "jp" | "us" | "offset" | "spec" | null,
 	"variants": string[] | undefined
 };
@@ -152,7 +173,7 @@ function buildVarSpace(starDef: RawStarDef, stratName: string): VarSpace
 	var varTable = buildVarGroups(variants, varGroups);
 	// filter variants relevant to the strat (ignore if open column)
 	var stratDef = sampleStratDef(starDef, stratName);
-	if (stratDef !== null && stratDef.name !== "Open") {
+	if (stratDef !== null && !stratDef.name.startsWith("Open")) {
 		var varSet: VarSet = {};
 		for (const [k, vl] of Object.entries(stratDef.variant_map)) {
 			vl.map((x) => { varSet[x] = true });
@@ -171,7 +192,7 @@ function buildVarSpace(starDef: RawStarDef, stratName: string): VarSpace
 		star_def: definition of a star with version/variant information processed into the strat sets
 		  * jp_set/us_set: mapping of strat names to (not raw) strat defs
 		  * open: list of columns that make up the open column
-		  		(if the open column should exist it will already be added as a virtual strat)
+		  		(if the open column should exist we will add it as a virtual strat)
 	*/
 
 export type StarDef = StarDesc & {
@@ -216,6 +237,25 @@ function buildOffsetDat(offset: JSOffset): OffsetDat {
 	return { 'a': true, 'data': offset };
 }
 
+	/*
+		open list behavior: (for generating from raw)
+		-- open: null, rows: [...] => rows: [...]
+		-- open: ["A", ...], rows: ["Open", ...] => rows: ["Open/A", ...]  < may generate the open column >
+
+		if a secondary strat is introduced, we generate a second "open" column
+	*/
+
+function addOpenStrat(stageId: number, starDef: RawStarDef, jp_set: StratSet, us_set: StratSet, name: string)
+{
+	if (!jp_set[name] && !us_set[name]) {
+		var vs = buildVarSpace(starDef, name);
+		var second = name === "Open#Alt";
+		var openDef = openStratDef(stageId + "_" + starDef.id + "_" + name, second, vs);
+		jp_set[name] = openDef;
+		us_set[name] = openDef;
+	}
+}
+
 function buildStarDef(stageId: number, starDef: RawStarDef): StarDef
 {
 	var secondFlag = false;
@@ -242,21 +282,20 @@ function buildStarDef(stageId: number, starDef: RawStarDef): StarDef
 	// get list of open strats, add open strat if non-existent
 	var open: string[] = [];
 	if (starDef.open !== null) {
+		// construct open list
 		open = starDef.open;
 		if (!open.includes("Open")) open.unshift("Open");
-		if (!jp_set["Open"] && !us_set["Open"]) {
-			var vs = buildVarSpace(starDef, "Open");
-			var openDef = openStratDef(stageId + "_" + starDef.id + "_Open", vs);
-			jp_set["Open"] = openDef;
-			us_set["Open"] = openDef;
-		}
+		if (starDef.alt !== null) open.unshift("Open#Alt");
+		// build strats if necessary
+		addOpenStrat(stageId, starDef, jp_set, us_set, "Open");
+		if (starDef.alt !== null) addOpenStrat(stageId, starDef, jp_set, us_set, "Open#Alt");
 	}
 
 	return {
 		"name": starDef.name,
 		"id": starDef.id,
-		"short": starDef.short,
-		"catInfo": starDef.catInfo,
+		"info": starDef.info,
+		"alt": starDef.alt,
 		"def": starDef.def,
 		"offset": buildOffsetDat(starDef.offset),
 		"secondFlag": secondFlag,
@@ -281,6 +320,19 @@ export function verOffsetStarDef(starDef: StarDef, fs: FilterState): VerOffset
 	/*var offset = starDef.offset;
 	var complexOff = (offset !== null && typeof offset !== "number");*/
 	return newVerOffset(focusVer, starDef.offset);
+}
+
+export function stratOffsetStarDef(starDef: StarDef, fs: FilterState): StratOffset
+{
+	if (starDef.alt === null || !fs.altState[0] || !fs.altState[1]) return newStratOffset("-", ["", ""], null, 0);
+	var rawName: [string, string] = [starDef.info.option, starDef.alt.info.option];
+	var offset = starDef.alt.offset;
+	if (starDef.alt.status === "diff") return newStratOffset("-", rawName, null, 0);
+	if (offset === undefined) return newStratOffset("-", rawName, "none", 0);
+	// merge offsets require a name
+	var name = "Raw";
+	if (starDef.alt.status === "mergeOffset") name = starDef.alt.info.option;
+	return newStratOffset(name, rawName, starDef.alt.status, offset);
 }
 
 export function varSpaceStarDef(starDef: StarDef, stratName: string): VarSpace | null

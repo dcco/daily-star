@@ -163,10 +163,10 @@ export function buildStratDef(sDef: RawStratDef, virtKind: string, ver: Ver, vs:
 	};
 }
 
-export function openStratDef(virtId: string, vs: VarSpace): StratDef {
+export function openStratDef(virtId: string, second: boolean, vs: VarSpace): StratDef {
 	return {
-		"name": "Open",
-		"diff": "hard",
+		"name": second ? "Open#Alt" : "Open",
+		"diff": second ? "second" : "hard",
 		"virtId": { 'kind': 'open', 'id': virtId },
 		"vs": vs,
 		"id_list": [],
@@ -361,7 +361,7 @@ export function filterExtStratSet(vs: StratSet): StratSet {
 	Object.entries(vs).map((strat) => {
 		var [stratName, stratDef] = strat;
 		var fDef = filterExtStratDef(stratDef);
-		var emptyOpen = (stratName === "Open" && stratDef.id_list.length === 0);
+		var emptyOpen = (stratName.startsWith("Open") && stratDef.id_list.length === 0);
 		if (!emptyStratDef(fDef) && !emptyOpen) vsx[stratName] = fDef;
 	})
 	/*Object.entries(vs).map((strat) => {

@@ -8,7 +8,7 @@ import { ColConfig, headerListColConfig, recordListColConfig, filterTableColConf
 import { EditObj, hasWritePerm, checkNewPerm } from './edit_perm'
 import { RecordMap } from './xcam_record_map'
 import { TimeCell, RecordCell, NameCell } from './rx_star_cell'
-import { CellAct, DataRow } from './rx_star_row'
+import { CellAct, PlayDB, DataRow } from './rx_star_row'
 import { EditRow, nullEditPos } from './rx_edit_row'
 
 	/*
@@ -117,8 +117,11 @@ type StarTableProps = {
 	"recordMap": RecordMap,
 	"timeTable": TimeTable,
 	"playData": PlayData,
-	"editObj"?: EditObj
+	"editObj"?: EditObj,
+	"playDB"?: PlayDB,
 }
+
+const LB_NUM = false;
 
 export function StarTable(props: StarTableProps): React.ReactNode {
 	var cfg = props.cfg;
@@ -169,20 +172,11 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 		else if (action === "view-toggle" && row !== null) viewClick(row);
 	}
 
-	/*const editWrite = (col, v) => {
-		setEditText(updateArray(editText, col, v));
-	};*/
-
 	const editSubmit = (timeList: TimeDat[], delList: TimeDat[]) => {
 		setEditPos(nullEditPos());
 		//editTT(editText[0], diffText(eState.oldText, editText), colList);
 		if (editObj !== null) editObj.updateTT(timeList, delList);
 	};
-/*
-	eState.eData = editText;
-	eState.click = cellClick;
-	eState.write = editWrite;
-	eState.submit = editSubmit;*/
 
 	/* ----- TABLE HEADER ----- */
 
@@ -190,15 +184,15 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 	// -- was 77% with "extra"
 	var tdWidth = "" + Math.floor(85 / stratTotal) + "%";
 	var nameList = headerListColConfig(cfg);
-
 	var imgNodeFun = (active: boolean): React.ReactNode => (<div className="float-frame">
 		<img src="/icons/sort-icon.png" data-active={ active.toString() } className="float-icon" alt=""></img></div>);
 	var headerNodes: React.ReactNode[] = nameList.map((name, i) => {
-		return (<td className="time-cell" key={ name } data-active={ sortActive.toString() } width={ tdWidth }
+		return (<td className="time-cell" key={ name + "_" + i } data-active={ sortActive.toString() } width={ tdWidth }
 			onClick={ () => { if (sortActive) setSortId(i + 1) } }>{ name } { imgNodeFun(sortId === i + 1) }</td>);
 	});
 	headerNodes.unshift(<td className="time-cell" key="strat" data-active={ sortActive.toString() } width="15%"
 		onClick={ () => setSortId(0) }>Strat { imgNodeFun(sortId === 0) }</td>);
+	if (LB_NUM) headerNodes.unshift(<td className="time-cell" key="#" width="5%">#</td>)
 
 	/* ----- RECORD ROW ----- */
 
@@ -207,6 +201,7 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 		return <RecordCell timeDat={ record } verOffset={ verOffset } key={ record.rowDef.name + "_" + i }/>;
 	});
 	recordNodes.unshift(<td className="record-cell" key="wr">Sheet Best</td>);
+	if (LB_NUM) recordNodes.unshift(<td className="time-cell" key="#"></td>);
 
 	/* ----- TIME TABLE ROWS ----- */
 	// filter table by colums + sort table data
@@ -219,10 +214,12 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 	filterTable.map((userDat, i) => {
 		// -- edit row case
 		if (editObj !== null && editPos.active && editPos.rowId === i) {
-			//addEditRows(userDat, i, editPos, editClick);
-			timeTableNodes.push(<EditRow cfg={ cfg } userDat={ userDat } pd={ playData } verOffset={ verOffset }
-				rowId={ i } editObj={ editObj } editPos={ editPos } cellClick={ cellClick }
-				submit={ editSubmit } key="edit"></EditRow>);
+			if (hasWritePerm(editObj.perm, userDat.id)) {
+				timeTableNodes.push(<EditRow cfg={ cfg } userDat={ userDat } pd={ playData } verOffset={ verOffset }
+					rowId={ i } editObj={ editObj } editPos={ editPos } cellClick={ cellClick }
+					submit={ editSubmit } showRowId={ LB_NUM } key="edit"></EditRow>);
+				// if we lost editing permissions, exit immediately
+			} else { setEditPos(nullEditPos()); }
 			return;
 		}
 		// -- normal row case
@@ -233,8 +230,9 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 		// special CSS for last row
 		var endRow = i !== timeTable.length - 1;
 		// add row
-		timeTableNodes.push(<DataRow userDat={ userDat } pd={ playData } verOffset={ verOffset } rowId={ i } expand={ vState.rowId === i }
-			action={ action } onClick={ cellClick } endRow={ endRow } key={ keyIdent(userDat.id) }/>);
+		timeTableNodes.push(<DataRow userDat={ userDat } pd={ playData } verOffset={ verOffset } rowId={ i } showRowId={ LB_NUM }
+			expand={ vState.rowId === i } action={ action } onClick={ cellClick } endRow={ endRow }
+			key={ keyIdent(userDat.id) } playDB={ props.playDB }/>);
 	});
 	/*filterTable.map((userDat, i) => {
 		// -- edit case
@@ -296,12 +294,14 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 		timeTableNodes.push(<tr className="time-row" key="init-submit">{ exRowNodes }</tr>);
 	// -- edit case
 	} else if (editPos.active && editPos.rowId === null) {
-		if (editObj === null) throw ("Entered edit state without edit mode object.");
-		if (newPerm === null) throw ("Entered edit state with null user.");
-		var newDat = freshUserDat(stratTotal, dropIdent(newPerm));
-		timeTableNodes.push(<EditRow cfg={ cfg } userDat={ newDat } pd={ playData } verOffset={ verOffset }
-			rowId={ null } editObj={ editObj } editPos={ editPos } cellClick={ cellClick }
-			submit={ editSubmit } key="edit"></EditRow>);
+		if (newPerm !== null) {
+			if (editObj === null) throw ("BUG: Entered edit state without edit mode object.");
+			var newDat = freshUserDat(stratTotal, dropIdent(newPerm));
+			timeTableNodes.push(<EditRow cfg={ cfg } userDat={ newDat } pd={ playData } verOffset={ verOffset }
+				rowId={ null } showRowId={ false } editObj={ editObj } editPos={ editPos } cellClick={ cellClick }
+				submit={ editSubmit } key="edit"></EditRow>);
+			// if we lost editing permission, exit immediately
+		} else { setEditPos(nullEditPos()); }
 	}
 
 	return (

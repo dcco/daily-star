@@ -1,14 +1,19 @@
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import orgData from './json/org_data.json'
 
-import { VerOffset } from './time_dat'
+import { loadTTRaw } from './api_live'
+import { G_SHEET } from './api_xcam'
+
+import { VerOffset, StratOffset } from './time_dat'
 import { ColList } from './org_strat_def'
 import { StarDef, orgStarId, orgStarDef } from './org_star_def'
 import { TimeTable } from './time_table'
 import { PlayData } from './play_data'
-import { loadTTRaw } from './api_live'
 import { G_HISTORY, dateAndOffset, dispDate } from './api_season'
+import { procStarSlug, makeStarSlug } from './router_slug'
+import { RouterMain, navRM } from './router_main'
+import { PlayDB } from './rx_star_row'
 import { ViewBoard } from './rx_view_board'
 
 function historyStageList(): number[]
@@ -28,7 +33,7 @@ function historyStarTable(stageList: number[]): [StarDef, number][][]
 {
 	var starTable: [StarDef, number][][] = [];
 	for (const stageId of stageList) {
-		var starList: [StarDef, number][] = [];
+		var starList: [StarDef, number, number][] = [];
 		for (let i = 0; i < G_HISTORY.header.starList.length; i++) {
 			if (i >= G_HISTORY.data.length) continue;
 			var glob = G_HISTORY.header.starList[i];
@@ -37,46 +42,80 @@ function historyStarTable(stageList: number[]): [StarDef, number][][]
 			// for now we will only care about one star
 			var globId = globIdList[0];
 			var starId = orgStarId(stageId, globId);
-			starList.push([orgStarDef(stageId, starId), i]);
+			starList.push([orgStarDef(stageId, starId), i, starId]);
 		}
-		starTable.push(starList);
+		starList.sort(function (a, b) { return a[2] - b[2]; });
+		starTable.push(starList.map((s) => [s[0], s[1]]));
 	}
 	return starTable;
 }
 
-function historyTimeTable(ix: number, starDef: StarDef, colList: ColList, verOffset: VerOffset): TimeTable {
+function historyTimeTable(ix: number, starDef: StarDef, colList: ColList, verOffset: VerOffset, stratOffset: StratOffset): TimeTable {
 	var data = G_HISTORY.data[ix].times[0];
-	return loadTTRaw(data, starDef, colList, verOffset);
+	return loadTTRaw(data, starDef, colList, verOffset, stratOffset);
 }
 
-export function HistoryBoard(props: { playData: PlayData }): React.ReactNode
+export function HistoryBoard(props: { playData: PlayData, rm: RouterMain }): React.ReactNode
 {
 	// TODO: replace with real error messages, maybe even dont show a history tab
 	if (G_HISTORY.header.status !== 'active' || G_HISTORY.data.length === 0) {
 		return <div className="blurb-cont"><div className="para">Loading...</div></div>;
 	}
 
+	// router state
+	const rm = props.rm;
+	const [defStage, starSlug, _defStar] = procStarSlug(rm.core.slug);
+	var defStar = 0;
+
 	const [playCount, setPlayCount] = useState(0);
 
 	// stage state
 	var stageList = historyStageList();
-	const [id1, setId1] = useState(0);
+	const [id1, setId1] = useState(defStage);
+
+	// re-calculate default star based on history table
+	var starTable = historyStarTable(stageList);
+	starTable[id1].map(([starDef, _ix], i) => {
+		if (starDef.id === starSlug) defStar = i;
+	})
+	var defCache = Array(orgData.length).fill(0);
+	defCache[defStage] = defStar;
 
 	// star state
-	var starTable = historyStarTable(stageList);
-	const [id2Cache, setId2Cache] = useState(Array(stageList.length).fill(0));
+	const [id2Cache, setId2Cache] = useState(defCache);
 	const id2 = id2Cache[id1];
 	var [starDef, globIx] = starTable[id1][id2];
 
 	// stage/star functions
 	const changeStage = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		setId1(parseInt(e.target.value));
+		var newStage = parseInt(e.target.value);
+		var newStar = starTable[newStage][0][0].id;
+		setId1(newStage);
+		navRM(rm, "home", "history", makeStarSlug(newStage, newStar));
+		//router.push("/home/history?star=" + makeStarSlug(newStage, newStar));
 	};
 
 	const changeStar = (i: number) => {
 		id2Cache[id1] = i;
 		setId2Cache(id2Cache.map((x: number) => x));
+		var newStar = starTable[id1][i][0].id;
+		navRM(rm, "home", "history", makeStarSlug(id1, newStar));
+		//router.push("/home/history?star=" + makeStarSlug(id1, newStar));
 	};
+
+	// if route changes, re-render board
+	useEffect(() => {
+		const [newStage, newSlug, _xStar] = procStarSlug(rm.core.slug);
+		if (id1 !== newStage || starDef.id !== newSlug) {
+			var newStar = 0;
+			starTable[newStage].map(([starDef, _ix], i) => {
+				if (starDef.id === newSlug) newStar = i;
+			})
+			id2Cache[newStage] = newStar;
+			setId1(newStage);
+			setId2Cache(id2Cache.map((x) => x));
+		}
+	}, [rm.core]);
 
 	// stage select option nodes
 	var stageOptNodes = stageList.map((stageId, i) =>
@@ -104,6 +143,16 @@ export function HistoryBoard(props: { playData: PlayData }): React.ReactNode
 		</div>;
 	}
 
+	// standard xcam player list
+	var playNameList: string[] = [];
+	if (G_SHEET.userMap !== null) {
+		playNameList = Object.entries(G_SHEET.userMap.stats).map(([k, v]) => k);
+	}
+	var playDB: PlayDB = {
+		"baseUrl": "/xcam/players",
+		"nameList": playNameList
+	};
+
 	// main nodes to pass into viewer
 	var stageSelNode = (
 		<div className="stage-select">
@@ -125,13 +174,17 @@ export function HistoryBoard(props: { playData: PlayData }): React.ReactNode
 		</div>
 	</div>);
 
+	const ttFun = (colList: ColList, verOffset: VerOffset, sOffset: StratOffset) => {
+		var newTable = historyTimeTable(globIx, starDef, colList, verOffset, sOffset);
+		// must be an effect to prevent illegal insta re-render
+		useEffect(() => {
+			if (playCount !== newTable.length) setPlayCount(newTable.length);
+		}, [playCount]);
+		return newTable;
+	};
+
 	return (<div>
 		<ViewBoard stageId={ stageList[id1] } starDef={ starDef } playData={ props.playData } extAll={ true }
-			ttFun= { (colList: ColList, verOffset: VerOffset) => {
-				var newTable = historyTimeTable(globIx, starDef, colList, verOffset);
-				if (playCount !== newTable.length) setPlayCount(newTable.length);
-				return newTable;
-			} }
-			cornerNode={ stageSelNode } headerNode={ starSelNode }/>
+			ttFun= { ttFun } cornerNode={ stageSelNode } headerNode={ starSelNode } playDB={ playDB } />
 	</div>);
 }

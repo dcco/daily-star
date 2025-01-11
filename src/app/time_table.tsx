@@ -318,6 +318,7 @@ export function sortTimeTable(timeTable: TimeTable, sortId: number): TimeTable {
 	} else {
 		return sortCopy(exTable, function (a, b) {
 			var si = sortId - 1;
+			if (si >= a.timeRow.length) return compTimeRow(a._sort, b._sort);
 			var ai = a.timeRow[si];
 			var bi = b.timeRow[si];
 			if (ai === null) {

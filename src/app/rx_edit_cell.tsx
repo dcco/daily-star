@@ -30,9 +30,17 @@ export function validTime(s: string): boolean {
 	return s.match(/^([0-9]?[0-9]:)?[0-5]?[0-9](\.[0-9][036]?)?$/) !== null;
 }
 
-function dirtyDat(oldDat: TimeDat | null, draftDat: DraftDat): boolean {
+function sameNote(x: string | null, y: string): boolean
+{
+	if (x === null && y === "") return true;
+	return x === y;
+}
+
+export function dirtyDat(oldDat: TimeDat | null, draftDat: DraftDat): boolean {
 	if (draftDat.delFlag !== null) return true;
-	return draftDat.text !== "" && (oldDat === null || formatTime(oldDat.rawTime) !== draftDat.text);
+	if (draftDat.text === "") return false;
+	if (oldDat === null) return true;
+	return formatTime(oldDat.rawTime) !== draftDat.text || !sameNote(oldDat.note, draftDat.note) || !sameNote(oldDat.link, draftDat.link);
 }
 
 function completeDat(starDef: StarDef, draftDat: DraftDat, dirty: boolean): boolean {
@@ -42,12 +50,13 @@ function completeDat(starDef: StarDef, draftDat: DraftDat, dirty: boolean): bool
 	return isCompleteDraftDat(vs, draftDat);
 }
 
-function properDat(oldDat: TimeDat | null, draftDat: DraftDat, valid: boolean, dirty: boolean): ProperState {
+function properDat(oldDat: TimeDat | null, draftDat: DraftDat, valid: boolean, dirty: boolean, strict: boolean): ProperState {
 	if (oldDat === null || !dirty || !valid) return "na";
 	var newTime = rawMS(draftDat.text);
 	if (newTime === null) return "na";
 	if (newTime < oldDat.rawTime) return "new";
-	//if (newTime === oldDat.time && (oldDat.link !== draftDat.link || oldDat.note !== draftDat.note)) return "fix";
+	if (newTime === oldDat.time && !strict &&
+		(!sameNote(oldDat.link, draftDat.link) || !sameNote(oldDat.note, draftDat.note))) return "fix";
 	return "improper";
 }
 
@@ -62,7 +71,7 @@ function properAllDat(timeRow: TimeRow, oldDat: TimeDat | null, draftDat: DraftD
 	var propList: [TimeDat, ProperState][] = [];
 	for (const timeDat of tdList) {
 		if (timeDat !== oldDat && vtagTimeDat(timeDat) === vtagDraftDat(draftDat)) {
-			propList.push([timeDat, properDat(timeDat, draftDat, true, true)]);
+			propList.push([timeDat, properDat(timeDat, draftDat, true, true, true)]);
 		}
 	}
 	return propList;
@@ -99,7 +108,7 @@ export function newValidDat(starDef: StarDef, timeRow: TimeRow, oldDat: TimeDat 
 		"valid": valid,
 		"dirty": dirty,
 		"complete": complete,
-		"proper": properDat(oldDat, draftDat, valid, dirty),
+		"proper": properDat(oldDat, draftDat, valid, dirty, false),
 		"properAll": propList
 	};
 }
@@ -187,7 +196,7 @@ export function EditCell(props: EditCellProps): React.ReactNode {
 
 	// fill out information if time cell exists
 	if (timeDat !== null) {
-		var [_fText, _rawText] = timeDetail(timeDat, verOffset);
+		var [_fText, _rawText] = timeDetail(timeDat, verOffset, false);
 		cellText = _fText;
 		rawText = _rawText;
 	}
@@ -195,7 +204,7 @@ export function EditCell(props: EditCellProps): React.ReactNode {
 	//var complete = completeCell(starDef, draftDat, props.dirty);
 	var fErr = "na";
 	if (!validDat.complete || improperValidDat(validDat)) fErr = "error";
-	else if (validDat.properAll.length > 0) fErr = "warning";
+	else if (validDat.properAll.length > 0 || validDat.proper === "fix") fErr = "warning";
 
 	return (<td className="edit-cell" onClick={ props.onClick }>
 		<div className="cell-wrap" data-use={ cellText !== "" } data-del={ delFlag.toString() }
@@ -231,7 +240,7 @@ export function InputCell(props: InputCellProps): React.ReactNode {
 	// misc error behavior
 	var fErr = "na";
 	if (!validDat.complete || improperValidDat(validDat)) fErr = "error";
-	else if (validDat.properAll.length > 0) fErr = "warning";
+	else if (validDat.properAll.length > 0 || validDat.proper === "fix") fErr = "warning";
 
 	return (<td className="edit-cell" onClick={ () => {} }>
 		<div className="cell-wrap">

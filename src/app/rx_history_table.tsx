@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
+import Link from 'next/link'
 
 import { orgStarId, orgStarDef } from './org_star_def'
 import { G_HISTORY, dateAndOffset, dispDate } from './api_season'
+import { stageShort, makeStarSlug } from './router_slug'
 import { getStarColor } from './rx_player_board'
 
 const PERM = ["bob", "wf", "jrb", "ccm", "bbh", "hmc", "lll", "ssl",
@@ -17,37 +19,39 @@ type ShortData = {
 
 export function HistoryTable(props: {}): React.ReactNode
 {
+	// TODO: replace with real error messages, maybe even dont show a history tab
+	if (G_HISTORY.header.status !== 'active' || G_HISTORY.data.length === 0) {
+		return <div className="blurb-cont"><div className="para">Loading...</div></div>;
+	}
+
 	const [sortId, setSortId] = useState(0);
 
 	// calculate star data
-	var playList: ShortData[] = [];
-	if (G_HISTORY.header.status === "active" && G_HISTORY.data.length !== 0) {
-		playList = G_HISTORY.header.starList.map((glob, ix) => {
-			// short code
-			var starIdList = glob.staridlist.split(",");
-			var starDef = orgStarDef(glob.stageid, orgStarId(glob.stageid, starIdList[0]));
-			var short = starDef.short[0];
-			if (starDef.short.length > 2) short = starDef.short[2];
-			// calculate star name
-			var starName = short;
-			if (glob.stageid >= 0 && glob.stageid <= 14) {
-				starName = PERM[glob.stageid].toUpperCase() + " " + short;
+	var playList = G_HISTORY.header.starList.map((glob, ix) => {
+		// short code
+		var starIdList = glob.staridlist.split(",");
+		var starDef = orgStarDef(glob.stageid, orgStarId(glob.stageid, starIdList[0]));
+		var short = starDef.info.short;
+		if (starDef.alt !== null) short = starDef.alt.globShort;
+		// calculate star name
+		var starName = short;
+		var ss = stageShort(glob.stageid);
+		if (ss !== null) starName = ss + " " + short;
+		// calculate star color
+		var starColor = "default";
+		if (starDef.info.catInfo !== null) starColor = getStarColor(starDef.info.catInfo);
+		// calculate player count
+		var playerList: number[] = [];
+		if (ix < G_HISTORY.data.length) {
+			var timeList = G_HISTORY.data[ix].times[0];
+			for (const timeObj of timeList) {
+				if (!playerList.includes(timeObj.p_id)) playerList.push(timeObj.p_id);
 			}
-			// calculate star color
-			var starColor = "default";
-			if (starDef.catInfo !== undefined) starColor = getStarColor(starDef.catInfo[0]);
-			// calculate player count
-			var playerList: number[] = [];
-			if (ix < G_HISTORY.data.length) {
-				var timeList = G_HISTORY.data[ix].times[0];
-				for (const timeObj of timeList) {
-					if (!playerList.includes(timeObj.p_id)) playerList.push(timeObj.p_id);
-				}
-			}
-			return { 'name': starName, 'color': starColor, 'total': playerList.length,
-				'day': ix, 'weekly': glob.weekly };
-		});
-	}
+		}
+		return { 'name': starName, 'color': starColor, 'total': playerList.length,
+			'stageId': glob.stageid, 'starId': starIdList[0],
+			'day': ix, 'weekly': glob.weekly };
+	});
 
 	playList.sort((a, b) => {
 		if (sortId === 1) return b.total - a.total;
@@ -70,7 +74,8 @@ export function HistoryTable(props: {}): React.ReactNode
 		// build table row
 		var playNodes: React.ReactNode[] = [];
 		playNodes.push(<td className="time-cell link-cont" data-active={ true } data-complete={ true }
-			data-sc={ data.color } key="star">{ data.name }</td>);
+			data-sc={ data.color } key="star">{ data.name }
+			<Link className="link-span" href={ "/home/history?star=" + makeStarSlug(data.stageId, data.starId) }></Link></td>);
 		playNodes.push(<td className="time-cell" key="day">Day { data.day + 1 }</td>);
 		playNodes.push(<td className="time-cell" key="count">{ total }</td>);
 		playNodes.push(<td className="time-cell" key="date">{ dispDate(startDate) }</td>);

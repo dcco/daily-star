@@ -15,6 +15,10 @@ export function About(): React.ReactNode {
 			</a> (in the hopes that if something happens to me the site won't completely die.) 
 		</div>
 		<div className="para">
+			NOTE: If you have problems with submission, try refreshing the page first, this
+			fixes most known issues.
+		</div>
+		<div className="para">
 			<div className="h-em">Format:</div>
 			<div className="para-inner">Every day, a random star is selected and players have 24 hrs
 			to submit the fastest completion possible. In addition to a daily star,

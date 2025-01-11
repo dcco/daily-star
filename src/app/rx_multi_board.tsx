@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation' 
+//import { useRouter } from 'next/navigation' 
 
 import { newIdent, dropIdent } from './time_table'
 import { PlayData, LocalPD, newPlayData, userKeyPD, setNickMapPD,
@@ -10,9 +10,11 @@ import { initGSheet } from './api_xcam'
 import { initDailyStar, initHistory } from './api_season'
 import { loadNickMap, loadUserId, postNick } from './api_live'
 
+import { RouterMain, newRouterCore, newRouterMain, navRM, reloadRM } from './router_main'
 import { DailyStar } from './rx_daily_star'
 import { XcamFull } from './rx_xcam_full'
 import { About } from './rx_about'
+import { EditBoard } from './rx_edit_board'
 
 type HeadTabProps = {
 	"id": number,
@@ -57,21 +59,42 @@ function HeadTab(props: HeadTabProps): React.ReactNode
 export function MultiBoard(props: { boardId?: number, subId?: number, slug?: string }): React.ReactNode
 {
 	// router stuff
-	var boardId = 0;
+	/*var boardId = 0;
 	var subId = 0;
 	if (props.boardId !== undefined) boardId = props.boardId;
 	if (props.subId !== undefined) subId = props.subId;
-	const router = useRouter();
+	const router = useRouter();*/
+	var boardId = 0;
+	if (props.boardId !== undefined) boardId = props.boardId;
+	const _core = newRouterCore(boardId, props.subId, props.slug);
+	const [core, setCore] = useState(_core);
+	const rm = newRouterMain(core, setCore);
 
 	// main state
-	const [mainId, setMainId] = useState(boardId);
+	//const [mainId, setMainId] = useState(boardId);
+	var mainId = core.boardId;
 	const [initReload, setInitReload] = useState(0);
 
-	const updateMainId = (i: number) => {
+	// if we hit the back button, refresh
+	if (typeof window !== 'undefined') {
+		//window.addEventListener('popstate', () => window.location.reload())
+		window.addEventListener('popstate', () => reloadRM(rm));
+	};
+
+	/*const updateMainId = (i: number) => {
 		setMainId(i);
 		if (i === 1) router.push("/xcam");
 		else if (i === 2) router.push("/about");
 		else router.push("/home");
+	};*/
+	const updateMainId = (i: number) => {
+		if (i === 1) navRM(rm, "xcam", "", "");
+		else if (i === 2) navRM(rm, "about", "", "");
+		else navRM(rm, "home", "", "");
+		/*setMainId(i);
+		if (i === 1) router.push("/xcam");
+		else if (i === 2) router.push("/about");
+		else router.push("/home");*/
 	};
 
 	// the concept with play/local data is that the user modifies local data,
@@ -121,14 +144,18 @@ export function MultiBoard(props: { boardId?: number, subId?: number, slug?: str
 
 	// board switcher
 	var board = null;
+	var boardKey = rm.core.subId;
 	if (mainId === 0) {
-		board = <DailyStar playData={ playData } updatePlayData={ updatePlayData } reloadPlayData={ reloadPlayData }/>;
+		board = <DailyStar rm={ rm } playData={ playData }
+			updatePlayData={ updatePlayData } reloadPlayData={ reloadPlayData } key={ boardKey }/>;
 	} else if (mainId === 1) {
-		board = <XcamFull subId={ subId } slug={ props.slug } key={ props.slug }/>;
+		board = <XcamFull rm={ rm } key={ boardKey }/>;
+	} else if (mainId === 3) {
+		board = <EditBoard playData={ playData } updatePlayData={ updatePlayData } reloadPlayData={ () => reloadPlayData(null) }/>;
 	} else {
 		board = <About/>;
 	}
-
+	// <HeadTab id={ 3 } selId={ mainId } setSelId={ updateMainId }>Editor (ADMIN)</HeadTab>
 	return (
 		<div className="content">
 		<div className="cont-head">

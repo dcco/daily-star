@@ -1,34 +1,21 @@
-
-import React, { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import orgData from './json/org_data.json'
+
+import React, { useState, useEffect } from 'react'
+import Link from 'next/link'
+
+import { G_SHEET } from './api_xcam'
 
 import { orgStarDef } from './org_star_def'
 import { xcamTimeTable } from './xcam_time_table'
+import { PlayDB } from './rx_star_row'
 import { ViewBoard } from './rx_view_board'
+import { procStarSlug, makeStarSlug } from './router_slug'
+import { RouterMain, navRM } from './router_main'
 
-const PERM = ["bob", "wf", "jrb", "ccm", "bbh", "hmc", "lll", "ssl",
-	"ddd", "sl", "wdw", "ttm", "thi", "ttc", "rr", "sec", "bow"];
-
-function procSlug(slug?: string): [number, number]
-{
-	if (slug === undefined) return [0, 0];
-	var ss = slug.split("_");
-	if (ss.length < 2) return [0, 0];
-	// get stage id
-	var stageId = 0;
-	PERM.map((p, i) => { if (p === ss[0]) stageId = i });
-	// get star id
-	var starList = orgData[stageId].starList;
-	var starId = 0;
-	starList.map((starDef, i) => { if (starDef.id === ss[1]) starId = i });
-	return [stageId, starId]; 
-}
-
-export function XcamBoard(props: { slug?: string }): React.ReactNode {
+export function XcamBoard(props: { rm: RouterMain }): React.ReactNode {
 	// process slug when relevant
-	const router = useRouter();
-	const [defStage, defStar] = procSlug(props.slug);
+	const slug = props.rm.core.slug;
+	const [defStage, _starSlug, defStar] = procStarSlug(slug);
 	var defCache = Array(orgData.length).fill(0);
 	defCache[defStage] = defStar;
 	
@@ -43,15 +30,25 @@ export function XcamBoard(props: { slug?: string }): React.ReactNode {
 		var newStage = parseInt(e.target.value);
 		var newStar = orgData[stageId].starList[0].id;
 		setStageId(newStage);
-		router.push("/xcam?star=" + PERM[newStage] + "_" + newStar);
+		navRM(props.rm, "xcam", "", makeStarSlug(newStage, newStar));
 	};
 
 	const changeStar = (i: number) => {
 		starIdCache[stageId] = i;
 		setStarIdCache(starIdCache.map((x) => x));
 		var newStar = orgData[stageId].starList[i].id;
-		router.push("/xcam?star=" + PERM[stageId] + "_" + newStar);
+		navRM(props.rm, "xcam", "", makeStarSlug(stageId, newStar));
 	};
+
+	// if route changes, re-render board
+	useEffect(() => {
+		const [newStage, _, newStar] = procStarSlug(slug);
+		if (stageId !== newStage || starIdCache[newStar] !== newStar) {
+			starIdCache[newStage] = newStar;
+			setStageId(newStage);
+			setStarIdCache(starIdCache.map((x) => x));
+		}
+	}, [props.rm.core]);
 
 	// stage select option nodes
 	var stageOptNodes = orgData.map((stage, i) =>
@@ -62,9 +59,22 @@ export function XcamBoard(props: { slug?: string }): React.ReactNode {
 	var starList = orgData[stageId].starList;
 	var starBtnNodes = starList.map((star, i) => {
 		var flag = (starIdCache[stageId] === i) ? "true" : "false";
-		return <div key={ star.name } className="star-name" data-sel={ flag }
+		//var starId = starList[i].id;
+		//var url = "/xcam?star=" + makeStarSlug(stageId, starId);
+		// <Link className="link-span" href={ "/xcam?star=" + makeStarSlug(stageId, starId) }></Link>
+		return <div key={ star.name } className="star-name link-cont" data-sel={ flag }
 			onClick={ () => { changeStar(i) } }>{ star.name }</div>;
 	});
+
+	// standard xcam player list
+	var playNameList: string[] = [];
+	if (G_SHEET.userMap !== null) {
+		playNameList = Object.entries(G_SHEET.userMap.stats).map(([k, v]) => v.id.name);
+	}
+	var playDB: PlayDB = {
+		"baseUrl": "/xcam/players",
+		"nameList": playNameList
+	};
 
 	// main nodes to pass into viewer
 	var stageSelNode = (
@@ -80,54 +90,6 @@ export function XcamBoard(props: { slug?: string }): React.ReactNode {
 			{ starBtnNodes }
 		</div>);
 
-	return <ViewBoard stageId={ stageId } starDef={ starDef }
-		ttFun={ xcamTimeTable } cornerNode={ stageSelNode } headerNode={ starSelNode }/>;
-
-	// load time table from xcam data
-	/*var colList = colListStarDef(starDef, fs);
-	var timeTable = xcamTimeTable(colList, fs, verOffset);
-	
-	// add sort record + relevant records
-	var sortRM = xcamRecordMap(colList, fullFilterState(), verOffset);
-	var relRM = xcamRecordMap(colList, fs, verOffset);
-	sortColList(colList, sortRM);
-
-	// create tables
-	var tableList: React.ReactNode[] = [];
-
-	var mainColList = filterVarColList(colList, null);
-	var mainCFG = openListColConfig(mainColList, starDef.open);
-	tableList.push(<StarTable cfg={ mainCFG } playData={ newPlayData() } timeTable={ timeTable } verOffset={ verOffset }
-		recordMap={ relRM } key={ stageId + "_" + starId + "_0" }></StarTable>);
-
-	var varColList = filterVarColList(colList, 1);
-	if (varColList.length > 0) {
-		var varCFG = openListColConfig(varColList, starDef.open);
-		tableList.push(<StarTable cfg={ varCFG } playData={ newPlayData() } timeTable={ timeTable } verOffset={ verOffset }
-			recordMap={ relRM }	key={ stageId + "_" + starId + "_1" }></StarTable>);
-	}	
-
-	return (<div>
-		<div className="row-wrap">
-			<div className="stage-select">
-				<select value={ stageId }
-					onChange={ changeStage }>
-					{ stageOptNodes }
-				</select>
-			</div>
-			<div className="toggle-sidebar">
-				{ extToggle }
-				{ verToggle }
-			</div>
-		</div>
-		<div className="star-select">
-			{ starBtnNodes }
-		</div>
-		{ varCont }
-		{ tableList }
-	</div>);
-*/
-	/* 
-		{ formatMergeView(mainMV) }
-		{ "   " + formatMergeView(varMV) } */
+	return <ViewBoard stageId={ stageId } starDef={ starDef } ttFun={ xcamTimeTable }
+		cornerNode={ stageSelNode } headerNode={ starSelNode } playDB={ playDB }/>;
 }

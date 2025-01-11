@@ -1,0 +1,2166 @@
+{
+	"stages": [
+		{
+			"name": "Bob-omb Battlefield",
+			"color": "lb-green",
+			"rta_len": 2,
+			"stars": [
+				{
+					"name": "Big Bob-omb on the Summit",
+					"id": "1",
+					"info": ["King", "only:120"],
+					"def": "jp",
+					"offset": -37,
+					"rows": [
+						["JP"],
+						["US"],
+						["misc"],
+						["Left Side", "JP"],
+						["Left Side", "US"],
+						["misc"],
+						["misc"],
+						["misc"]
+					],
+					"open": []
+				},
+				{
+					"name": "Footrace with Koopa the Quick",
+					"id": "2",
+					"info": ["KtQ", "only:120"],
+					"alt": {
+						"status": "cutscene",
+						"info": ["KtQ (NC)", "only:120"]	
+					},
+					"def": "jp",
+					"offset": { "Standard": 0, "No Cutscene": 1 },
+					"rows": [
+						["JP"],
+						["US"]
+					],
+					"ext": [
+						["No Cutscene", "JP", "second"],
+						["No Cutscene", "US", "second"]
+					],
+					"open": []
+				},
+				{
+					"name": "Shoot to the Island in the Sky",
+					"id": "3",
+					"info": ["Island", "main:Skyjump"],
+					"alt": {
+						"status": "diff",
+						"info": ["Ihop", "only:70"]
+					},
+					"def": null,
+					"offset": 0,
+					"variants": [
+						"Camera Glitch"
+					],
+					"rows": [
+						["Skyjump", "JP", "alt:0"],
+						["Skyjump", "JP"],
+						["Skyjump", "US"],
+						["Slope Start", "JP", "alt:0"],
+						["Slope Start", "JP"],
+						["Slope Start", "US"],
+						["Island Hop", "second"]
+					],
+					"ext": [
+						["TJ Ihop", "second"]
+					],
+					"open": ["Slope Start", "TJ Ihop"]
+				},
+				{
+					"name": "100c + Find the 8 Red Coins",
+					"id": "100c4",
+					"info": ["100c + Reds", "only:120"],
+					"def": "jp",
+					"variants": ["DSS"],
+					"offset": 11,
+					"100c": true,
+					"rows": [
+						["JP"],
+						["US"]
+					],
+					"ext": [
+						["JP", "alt:0"],
+						["US", "alt:0"]
+					],
+					"open": []
+				},
+				{
+					"name": "Mario Wings to the Sky",
+					"id": "5",
+					"info": ["Secrets", "only:120"],
+					"def": null,
+					"offset": 0,
+					"variants": [
+						"Camera Glitch"
+					],
+					"rows": [
+						["Skyjump", "JP", "alt:0"],
+						["Skyjump", "JP"],
+						["Skyjump", "US"],
+						["Slope Start", "JP", "alt:0"],
+						["Slope Start", "JP"],
+						["Slope Start", "US"]
+					],
+					"open": ["Slope Start"]
+				},
+				{
+					"name": "Behind Chain Chomp's Gate",
+					"id": "6",
+					"info": ["Clip", "in:16no"],
+					"variants": [
+						"Slope Start", "Backflip End", "SJ Throw", "Goomba Bounce"
+					],
+					"var_groups": [["start", "3", "0"]],
+					"rows": [
+						["Bomb Clip"],
+						["Backflip Clip"],
+						["misc"]
+					],
+					"ext": [
+						["Bomb Clip", "alt:1"],
+						["Bomb Clip", "alt:2"],
+						["Backflip Clip", "alt:2"],
+						["Bomb Clip", "alt:1", "alt:2"],
+						["Bomb Clip", "alt:0"],
+						["Backflip Clip", "alt:0"],
+						["Bomb Clip", "alt:0", "alt:1"],
+						["Bomb Clip", "alt:0", "alt:2"],
+						["Backflip Clip", "alt:0", "alt:2"],
+						["Bomb Clip", "alt:0", "alt:2", "alt:1"],
+						["misc"],
+						["Bomb Clip", "alt:3"],
+						["Backflip Clip", "alt:3"],
+						["Bomb Clip", "alt:1", "alt:3"],
+						["Bomb Clip", "alt:2", "alt:3"],
+						["Backflip Clip", "alt:2", "alt:3"],
+						["Bomb Clip", "alt:2", "alt:1", "alt:3"],
+						["misc"]
+					],
+					"open": []
+				}
+			]
+		},
+
+		{
+			"name": "Whomp's Fortress",
+			"color": "lb-gray",
+			"rta_len": 2,
+			"stars": [
+				{
+					"name": "Chip off Whomp's Block",
+					"id": "1",
+					"info": ["King", "in:16no"],
+					"def": "jp",
+					"offset": 28,
+					"variants": [
+						"Double JD", "Tree Backflip"
+					],
+					"rows": [
+						["JP"],
+						["misc"],
+						["US"],
+						["misc"]
+					],
+					"ext": [
+						["JP", "alt:0"],
+						["misc"],
+						["US", "alt:0"],
+						["misc"],
+						["JP", "alt:1"],
+						["misc"],
+						["US", "alt:1"],
+						["misc"]
+					],
+					"open": []
+				},
+				{
+					"name": "To the Top of the Fortress",
+					"id": "2",
+					"info": ["Tower", "in:16no"],
+					"variants": [
+						"Double JD", "Elevator TJ", "Tree Backflip"
+					],
+					"rows": [
+						["Triple Jump"],
+						["Double Jump"]
+					],
+					"beg": ["Sideflip WK"],
+					"ext": [
+						["Triple Jump", "alt:1"],
+						["Double Jump", "alt:0"],
+						["Double Jump", "alt:2"],
+						["Triple Jump", "alt:0"],
+						["Triple Jump", "alt:2"]
+					],
+					"open": ["Double Jump"]
+				},
+				{
+					"name": "Shoot into the Wild Blue",
+					"id": "3",
+					"info": ["Wild Blue", "in:16"],
+					"variants": [
+						"Speedkick"
+					],
+					"rows": [
+						[],
+						["Single Jump", "alt:0"],
+						["Single Jump"]
+					],
+					"open": null
+				},
+				{
+					"name": "100c + Red Coins on the Floating Isle",
+					"id": "100c4",
+					"info": ["100c + Reds"],
+					"offset": 11,
+					"def": "offset",
+					"variants": [
+						"Double Piranha"
+					],
+					"100c": true,
+					"rows": [
+						["Pro Cycle", "JP"],
+						["Pro Cycle", "US"],
+						["misc"],
+						["Half Cycle Skip", "JP", "easy"],
+						["Half Cycle Skip", "US", "easy"],
+						["misc"]
+					],
+					"ext": [
+						["Kanno Cycle", "JP"],
+						["Kanno Cycle", "US"],
+						["misc"],
+						["Pro Cycle", "JP", "alt:0"],
+						["misc"]
+					],
+					"open": ["Kanno Cycle"]
+				},
+				{
+					"name": "Fall onto the Caged Island",
+					"id": "5",
+					"info": ["Owlless", "in:16"],
+					"offset": 4,
+					"variants": [
+						"Direct GP", "Double JD + Stairs Speedkick", "Tree Backflip"
+					],
+					"def": "offset",
+					"rows": [
+						["TJ Owlless"],
+						["DJ Owlless"],
+						["Owl", "JP", "easy"],
+						["Owl", "US", "easy"]
+					],
+					"ext": [
+						["DJ Owlless", "alt:0"],
+						["DJ Owlless", "alt:1"],
+						["DJ Owlless", "alt:0", "alt:1"],
+						["DJ Owlless", "alt:2"],
+						["DJ Owlless", "alt:2", "alt:0"],
+						["Sideflip"],
+						["Sideflip", "alt:1"],
+						["Sideflip", "alt:2"],
+						["Mad Owl", "JP"],
+						["Mad Owl", "US"]
+					],
+					"open": ["Sideflip"]
+				},
+				{
+					"name": "Blast Away the Wall",
+					"id": "6",
+					"info": ["Cless", "in:16"],
+					"variants": [
+						"Tree Backflip", "Plank JD Clip"
+					],
+					"rows": [
+						["Sockfolder"],
+						["Texture"],
+						["Salt"],
+						["OG", "hard"],
+						["LJ", "hard"]
+					],
+					"ext": [
+						["Open", "alt:1"],
+						["Salt", "alt:0"],
+						["OG", "alt:0"],
+						["LJ", "alt:0"]
+					],
+					"open": ["LJ"]
+				}
+			]
+		},
+
+		{
+			"name": "Jolly Roger Bay",
+			"color": "lb-blue",
+			"rta_len": 3,
+			"stars": [
+				{
+					"name": "Plunder in the Sunken Ship",
+					"id": "1",
+					"info": ["Ship", "only:120"],
+					"variants": [
+						"Punch Ending"
+					],
+					"rows": [
+						["Ship Clip"],
+						["misc"],
+						["Ship Clip", "alt:0"],
+						["misc"],
+						["misc"]
+					],
+					"beg": ["No Ship Clip"],
+					"open": []
+				},
+				{
+					"name": "Can the Eel Come Out to Play?",
+					"id": "2",
+					"info": ["Eel", "only:120"],
+					"rows": [
+						[]
+					],
+					"ext": [
+						["BLJ"]
+					],
+					"open": ["BLJ"]
+				},
+				{
+					"name": "Treasure of the Ocean Cave",
+					"id": "3",
+					"info": ["Cave", "only:120"],
+					"rows": [
+						[]
+					],
+					"ext": [
+						["BLJ"]
+					],
+					"open": ["BLJ"]
+				},
+				{
+					"name": "100c + Red Coins on the Ship Afloat",
+					"id": "100c4",
+					"info": ["100c + Reds", "only:120"],
+					"alt": {
+						"status": "cutscene",
+						"info": ["100c + Reds (NC)", "only:120"]
+					},
+					"def": "jp",
+					"offset": 11,
+					"100c": true,
+					"rows": [
+						["JP"],
+						["US"],
+						["JP", "No Cutscene", "second"],
+						["US", "No Cutscene", "second"],
+						["misc"]
+					],
+					"open": null
+				},
+				{
+					"name": "Blast to the Stone Pillar",
+					"id": "5",
+					"info": ["Pillar", "main:Cannon", "only:120beg"],
+					"alt": {
+						"status": "offset",
+						"offset": -300,
+						"info": ["Cless", "only:120"]
+					},
+					"def": "jp",
+					"offset": -110,
+					"variants": [
+						"TJ Start", "No WK"
+					],
+					"rows": [
+						["Cannon (Direct)", "JP"],
+						["Cannon (Direct)", "US"],
+						["misc"],
+						["Cannon (Direct)", "JP", "alt:0"],
+						["Cannon (Direct)", "US", "alt:0"],
+						["misc"],
+						["Ship LJ", "JP", "second"],
+						["Framewalk", "JP", "alt:1", "second"],
+						["Framewalk", "JP", "second"]
+					],
+					"beg": ["second:Cannon (Pole)"],
+					"ext": [
+						["Ship LJ", "US", "second"],
+						["Framewalk", "US", "alt:1", "second"],
+						["Framewalk", "US", "second"]
+					],
+					"open": []
+				},
+				{
+					"name": "Through the Jet Stream",
+					"id": "6",
+					"info": ["Jet Stream", "only:120"],
+					"rows": [
+						[]
+					],
+					"open": []
+				}
+			]
+		},
+
+		{
+			"name": "Cool, Cool Mountain",
+			"color": "lb-snow",
+			"rta_len": 4,
+			"stars": [
+				{
+					"name": "Slip Slidin' Away",
+					"id": "1",
+					"info": ["Slide"],
+					"rows": [
+						[],
+						["No Clip"]
+					],
+					"open": []
+				},
+				{
+					"name": "100c + Slip Slidin' Away",
+					"id": "100c1",
+					"info": ["100c + Slide", "only:70"],
+					"def": "us",
+					"100c": true,
+					"offset": 11,
+					"variants": ["Blue Coin Switch", "No Teleport"],
+					"rows": [
+						["JP"],
+						["US"],
+						["misc"],
+						["misc"]
+					],
+					"ext": [
+						["Open", "JP", "alt:0"],
+						["Open", "US", "alt:0"],
+						["misc"],
+						["misc"],
+						["Open", "JP", "alt:1"],
+						["Open", "US", "alt:1"],
+						["misc"],
+						["misc"]
+					],
+					"open": []
+				},
+				{
+					"name": "Li'l Penguin Lost",
+					"id": "2",
+					"info": ["Penguin", "in:16no"],
+					"def": "spec",
+					"offset": { "Standard": 1, "Pingu Trick": 11 },
+					"rows": [
+						["JP"],
+						["US"],
+						["Pingu Trick", "US"]
+					],
+					"ext": [
+						["Pingu Trick", "JP"]
+					],
+					"open": []
+				},
+				{
+					"name": "100c + Big Penguin Race",
+					"id": "100c3",
+					"info": ["100c + Race"],
+					"def": "jp",
+					"100c": true,
+					"offset": 9,
+					"variants": ["Blue Coin Switch", "No Teleport"],
+					"rows": [
+						["JP"],
+						["misc"],
+						["US"],
+						["misc"],
+						["misc"],
+						["Atmpas Route", "JP"],
+						["misc"],
+						["Atmpas Route", "US"],
+						["misc"],
+						["misc"]
+					],
+					"ext": [
+						["Open", "JP", "alt:1"],
+						["Open", "US", "alt:1"],
+						["misc"],
+						["Open", "JP", "alt:0"],
+						["Open", "US", "alt:0"],
+						["misc"]
+					],
+					"open": ["Atmpas Route"]
+				},
+				{
+					"name": "Frosty Slide for 8 Red Coins",
+					"id": "4",
+					"info": ["Reds", "only:120"],
+					"variants": ["Teleporter Red Late"],
+					"rows": [
+						[]
+					],
+					"ext": [
+						["alt:0"]
+					],
+					"open": []
+				},
+				{
+					"name": "Snowman's Lost His Head",
+					"id": "5",
+					"info": ["Head", "only:120"],
+					"variants": ["SJ Start"],
+					"def": "jp",
+					"offset": 33,
+					"rows": [
+						["JP"],
+						["US"],
+						["misc"],
+						["Head Manip", "JP"],
+						["Head Manip", "US"],
+						["misc"]
+					],
+					"ext": [
+						["JP", "alt:0"],
+						["US", "alt:0"],
+						["misc"]
+					],
+					"open": null
+				},
+				{
+					"name": "Wall Kicks Will Work",
+					"id": "6",
+					"info": ["WKWW", "in:16no"],
+					"rows": [
+						["Backflip WK"]
+					],
+					"beg": ["Beginner"],
+					"ext": [
+						["SJ WK"]
+					],
+					"open": []
+				}
+			]
+		},
+
+		{
+			"name": "Big Boo's Haunt",
+			"color": "lb-gray",
+			"rta_len": 2,
+			"stars": [
+				{
+					"name": "Go on a Ghost Hunt",
+					"id": "1",
+					"info": ["Ghost Hunt", "only:120"],
+					"def": "jp",
+					"offset": { "Standard": -54 },
+					"variants": ["First Door", "Last Door", "JP Text Skip"],
+					"rows": [
+						["JP"],
+						["Door Skips", "JP", "alt:0"],
+						["Door Skips", "JP", "alt:1"],
+						["Door Skips", "JP", "alt:0", "alt:1"],
+						["misc"],
+						["misc"],
+						["US"],
+						["Text Skip", "US"],
+						["misc"]
+					],
+					"ext": [
+						["Open", "JP", "alt:2"],
+						["Open", "JP", "alt:2", "alt:0"],
+						["Open", "JP", "alt:2", "alt:1"],
+						["Open", "JP", "alt:2", "alt:0", "alt:1"]
+					],
+					"open": []
+				},
+				{
+					"name": "Ride Big Boo's Merry-Go-Round",
+					"id": "2",
+					"info": ["Merry-Go-Round", "only:120"],
+					"rows": [
+						[],
+						["misc"],
+						["DJ Dive"],
+						["misc"]
+					],
+					"open": []
+				},
+				{
+					"name": "Secret of the Haunted Books",
+					"id": "3",
+					"info": ["Books"],
+					"variants": [
+						"Phantaxx Ending", "Bottom Door"
+					],
+					"rows": [
+						[],
+						["Right WK", "easy"]
+					],
+					"ext": [
+						["Open", "alt:0"],
+						["Open", "alt:1"]
+					],
+					"open": []
+				},
+				{
+					"name": "100c + Seek the 8 Red Coins",
+					"id": "100c4",
+					"info": ["100c + Reds", "only:120"],
+					"def": "jp",
+					"100c": true,
+					"variants": ["DSS"],
+					"rows": [
+						["JP"],
+						["US"],
+						["misc"],
+						["misc"]
+					],
+					"ext": [
+						["JP", "alt:0"],
+						["US", "alt:0"],
+						["misc"]
+					],
+					"open": []
+				},
+				{
+					"name": "Big Boo's Balcony",
+					"id": "5",
+					"info": ["Balcony"],
+					"rows": [
+						["Pro Kill"],
+						["Other Kill", "easy"],
+						["misc"]
+					],
+					"open": null
+				},
+				{
+					"name": "Eye to Eye in the Secret Room",
+					"id": "6",
+					"info": ["Mr I", "only:120"],
+					"rows": [
+						[],
+						["misc"]
+					],
+					"open": []
+				}
+			]
+		},
+
+		{
+			"name": "Hazy Maze Cave",
+			"color": "lb-green",
+			"rta_len": 4,
+			"stars": [
+				{
+					"name": "Swimming Beast in the Cavern",
+					"id": "1",
+					"info": ["Cavern", "in:16"],
+					"rows": [
+						["Box Triple"]
+					],
+					"beg": ["Elevator Clip"],
+					"open": []
+				},
+				{
+					"name": "100c + Elevate for 8 Red Coins",
+					"id": "100c2",
+					"info": ["100c + Reds", "only:120"],
+					"def": "jp",
+					"offset": 11,
+					"variants": [
+						"Salt Clip", "Eye Early"
+					],
+					"100c": true,
+					"rows": [
+						["JP", "alt:0"],
+						["US", "alt:0"],
+						["misc"]
+					],
+					"ext": [
+						["JP"],
+						["US"],
+						["No BLJ", "JP", "easy"],
+						["No BLJ", "US", "easy"],
+						["JP", "alt:1"],
+						["US", "alt:1"],
+						["misc"],
+						["misc"]
+					],
+					"open": []
+				},
+				{
+					"name": "Metal-Head Mario Can Move!",
+					"id": "3",
+					"info": ["Metal-Head"],
+					"variants": ["Small WK"],
+					"rows": [
+						["Xmas Miracle", "alt:0"],
+						["Xmas Miracle"],
+						["misc"]
+					],
+					"ext": [
+						["BLJ"]
+					],
+					"open": ["BLJ"]
+				},
+				{
+					"name": "Navigating the Toxic Maze",
+					"id": "4",
+					"info": ["Toxic Maze", "only:120"],
+					"variants": ["Fast Clip"],
+					"rows": [
+						["BLJ"],
+						["Wall Clip", "easy"],
+						["misc"]
+					],
+					"beg": ["No Clip"],
+					"ext": [
+						["BLJ", "alt:0"]
+					],
+					"open": []
+				},
+				{
+					"name": "A-Maze-ing Emergency Exit",
+					"id": "5",
+					"info": ["Exit", "in:16"],
+					"variants": [
+						"LJ + TJ"
+					],
+					"id": "5",
+					"rows": [
+						["Rightside"],
+						["Leftside"]
+					],
+					"ext": [
+						["Open", "alt:0"],
+						["SS"]
+					],
+					"open": ["SS"]
+				},
+				{
+					"name": "Watch for Rolling Rocks",
+					"id": "6",
+					"info": ["Rocks", "in:16"],
+					"variants": ["Rightside End"],
+					"rows": [
+						[],
+						["GTM Slide"],
+						["GTM Slide", "alt:0"]
+					],
+					"open": []
+				},
+				{
+					"name": "CotMC (Metal Cap) Entry",
+					"id": "premc",
+					"info": ["MC Entry", "only:120"],
+					"variants": [],
+					"rows": [
+						["Box Triple"]
+					],
+					"open": []
+				}
+			]
+		},
+
+		{
+			"name": "Lethal Lava Land",
+			"color": "lb-red",
+			"rta_len": 3,
+			"stars": [
+				{
+					"name": "Boil the Big Bully",
+					"id": "1",
+					"info": ["Bully", "in:16"],
+					"variants": ["Platform Rollout"],
+					"rows": [
+						["No Ledgegrab"],
+						["Right GP Kill"],
+						["Double Burn"]
+					],
+					"beg": ["Ledgegrab"],
+					"ext": [
+						["Double Burn", "alt:0"]
+					],
+					"open": []
+				},
+				{
+					"name": "Bully the Bullies",
+					"id": "2",
+					"info": ["Bullies"],
+					"variants": [
+						"Speedkick DJ Dive", "LJx2 DJ Dive"
+					],
+					"var_groups": [["rightside", "0", "1"]],
+					"rows": [
+						["Ledgegrab"],
+						["No Ledgegrab"],
+						["Rightside"],
+						["Rightside", "hard", "alt:0"]
+					],
+					"ext": [
+						["Rightside", "alt:1"]
+					],
+					"open": []
+				},
+				{
+					"name": "8-Coin Puzzle with 15 Pieces",
+					"id": "3",
+					"info": ["Reds", "in:16"],
+					"rows": [
+						[],
+						["Beginner", "easy"],
+						["3x LJ"]
+					],
+					"open": null
+				},
+				{
+					"name": "Red-Hot Log Rolling",
+					"id": "4",
+					"info": ["Log", "main:Wing"],
+					"alt": {
+						"status": "diff",
+						"info": ["Sidehop", "only:16"]
+					},
+					"variants": [
+						"DJ + LJ"
+					],
+					"rows": [
+						[],
+						["TJ Strat"],
+						["2x LJ Sidehop", "second"],
+						["LJ JD Sidehop", "second"]
+					],
+					"ext": [
+						["Open", "alt:0"],
+						["DJ Sidehop", "second"]
+					],
+					"open": ["DJ Sidehop"]
+				},
+				{
+					"name": "Hot-Foot-it into the Volcano",
+					"id": "5",
+					"info": ["Volcano", "notin:120"],
+					"rows": [
+						["Pro Boost"],
+						["misc"],
+						["Akira Boost"],
+						["misc"],
+						["Double Pole Skip"],
+						["misc"],
+						["misc"]
+					],
+					"beg": ["Beginner", "TJ Boost"],
+					"open": null
+				},
+				{
+					"name": "100c + Hot-Foot-it into the Volcano",
+					"id": "100c5",
+					"info": ["100c + Volcano", "only:120"],
+					"offset": 11,
+					"def": "jp",
+					"100c": true,
+					"rows": [
+						["JP"],
+						["misc"],
+						["US"],
+						["misc"],
+						["misc"],
+						["misc"]
+					],
+					"ext": [
+						["Lavaboost", "JP"],
+						["Lavaboost", "US"],
+						["misc"]
+					],
+					"open": ["Lavaboost"]
+				},
+				{
+					"name": "Elevator Tour in the Volcano",
+					"id": "6",
+					"info": ["Elevator", "in:16"],
+					"rows": [
+						[],
+						["misc"]
+					],
+					"open": []
+				}
+			]
+		},
+
+		{
+			"name": "Shifting Sand Land",
+			"color": "lb-yellow",
+			"rta_len": 3,
+			"stars": [
+				{
+					"name": "In the Talons of the Big Bird",
+					"id": "1",
+					"info": ["Bird", "in:16"],
+					"variants": ["Speed SJ + Dive", "Speed SJ x2", "Side LJ", "Speed Punch x2"],
+					"var_groups": [["speed_pres", "0", "1", "2", "3"]],
+					"rows": [
+						[],
+						["Speed Pres", "alt:0"],
+						["Speed Pres", "alt:1"],
+						["Speed Pres", "alt:2"],
+						["Flyguyless"]
+					],
+					"ext": [
+						["Speed Pres", "alt:3"]
+					],
+					"open": null
+				},
+				{
+					"name": "Shining Atop the Pyramid",
+					"id": "2",
+					"info": ["Pyramid", "in:16"],
+					"rows": [
+						[]
+					],
+					"open": []
+				},
+				{
+					"name": "Inside the Ancient Pyramid",
+					"id": "3",
+					"info": ["Pless", "in:16"],
+					"rows": [
+						["Pillarless"],
+						["SJ Pless"],
+						["Tama Pless"]
+					],
+					"beg": ["Shell"],
+					"ext": [
+						["Nuts Pless"]
+					],
+					"open": ["Nuts Pless"]
+				},
+				{
+					"name": "Stand Tall on the Four Pillars",
+					"id": "4",
+					"info": ["Eyerok", "only:120"],
+					"def": "jp",
+					"offset": -77,
+					"rows": [
+						["Topless", "JP"],
+						["misc"],
+						["Topless", "US"],
+						["misc"],
+						["misc"]
+					],
+					"beg": ["Backside", "TJWK"],
+					"open": []
+				},
+				{
+					"name": "Free Flying for 8 Red Coins",
+					"id": "5",
+					"info": ["Reds", "only:120"],
+					"variants": ["Speed Jump to Cap Box", "Speed Wing"],
+					"rows": [
+						["Wall Bounce"],
+						["No Wall Bounce", "easy"],
+						["Z-Slide", "alt:0"],
+						["Z-Slide"]
+					],
+					"ext": [
+						["Z-Slide", "alt:1"]
+					],
+					"open": []
+				},
+				{
+					"name": "Pyramid Puzzle",
+					"id": "6",
+					"info": ["Secrets", "only:70"],
+					"variants": ["SJ", "Tama"],
+					"var_groups": [["pless", "0", "1"]],
+					"rows": [
+						["Solo Secrets"],
+						["Solo Secrets", "alt:0"],
+						["Solo Secrets", "alt:1"],
+						["misc"]
+					],
+					"ext": [
+						["Nuts Pless"]
+					],
+					"open": ["Nuts Pless"]
+				},
+				{
+					"name": "100c + Pyramid Puzzle",
+					"id": "100c6",
+					"info": ["100c + Secrets", "only:120"],
+					"def": "jp",
+					"offset": 11,
+					"100c": true,
+					"rows": [
+						["JP"],
+						["misc"],
+						["US"],
+						["misc"],
+						["misc"],
+						["misc"]
+					],
+					"ext": [
+						["Alt Pillar", "JP"],
+						["Alt Pillar", "US"],
+						["misc"],
+						["misc"]
+					],
+					"open": []
+				}
+			]
+		},
+
+		{
+			"name": "Dire, Dire Docks",
+			"color": "lb-blue",
+			"rta_len": 3,
+			"stars": [
+				{
+					"name": "Board Bowser's Sub",
+					"id": "1",
+					"info": ["Sub", "in:16"],
+					"variants": ["Chip Clip", "Side Sub"],
+					"rows": [
+						["Front Sub"],
+						["Back Sub", "easy"],
+						["Front Sub", "alt:0"]
+					],
+					"ext": [
+						["Open", "alt:1"],
+						["Back Sub", "easy", "alt:0"],
+						["Open", "alt:0", "alt:1"]
+					],
+					"open": ["Chip Clip"]
+				},
+				{
+					"name": "Chests in the Current",
+					"id": "2",
+					"info": ["Chests"],
+					"rows": [
+						[]
+					],
+					"ext": [
+						["Downwarp"]
+					],
+					"open": null
+				},
+				{
+					"name": "100c + Pole-Jumping for Red Coins",
+					"id": "100c3",
+					"info": ["100c + Reds", "only:120"],
+					"def": "jp",
+					"offset": 11,
+					"100c": true,
+					"rows": [
+						["JP"],
+						["US"],
+						["misc"],
+						["misc"],
+						["misc"]
+					],
+					"open": []
+				},
+				{
+					"name": "Through the Jet Stream",
+					"id": "4",
+					"info": ["Jet Stream", "only:120"],
+					"rows": [
+						[],
+						["Chip Clip"],
+						["Chip Clip", "rt"]
+					],
+					"open": []
+				},
+				{
+					"name": "The Manta Ray's Reward",
+					"id": "5",
+					"info": ["Manta"],
+					"rows": [
+						[]
+					],
+					"open": null
+				},
+				{
+					"name": "Collect the Caps...",
+					"id": "6",
+					"info": ["Caps", "only:120"],
+					"rows": [
+						[],
+						["Chip Clip"],
+						["Chip Clip", "rt"]
+					],
+					"open": []
+				}
+			]
+		},
+
+		{
+			"name": "Snowman's Land",
+			"color": "lb-snow",
+			"rta_len": 3,
+			"stars": [
+				{
+					"name": "Snowman's Big Head",
+					"id": "1",
+					"info": ["Head"],
+					"variants": ["SJ Strat"],
+					"rows": [
+						[],
+						["alt:0"]
+					],
+					"beg": ["Beginner"],
+					"ext": [
+						["Pingu Flip"]
+					],
+					"open": null
+				},
+				{
+					"name": "Chill with the Bully",
+					"id": "2",
+					"info": ["Bully"],
+					"variants": ["Slidekick"],
+					"rows": [
+						[],
+						["Crouch Kill", "alt:0"]
+					],
+					"ext": [
+						["Crouch Kill"],
+						["alt:0"]
+					],
+					"open": null
+				},
+				{
+					"name": "In the Deep Freeze",
+					"id": "3",
+					"info": ["Freeze"],
+					"rows": [
+						[],
+						["TJ Strat", "easy"]
+					],
+					"open": []
+				},
+				{
+					"name": "Whirl from the Freezing Pond",
+					"id": "4",
+					"info": ["Whirl"],
+					"variants": [
+						"Box Break Below", "Double Slide"
+					],
+					"rows": [
+						[]
+					],
+					"ext": [
+						["Leftside", "easy"],
+						["alt:0"],
+						["Open", "alt:1"]
+					],
+					"open": []
+				},
+				{
+					"name": "Shell Shreddin' for Red Coins",
+					"id": "5",
+					"info": ["Reds", "only:70beg"],
+					"variants": [
+						"Leftside Start"
+					],
+					"rows": [
+						["Solo Reds"]
+					],
+					"ext": [
+						["Solo Reds", "alt:0", "easy"]
+					],
+					"open": []
+				},
+				{
+					"name": "100c + Shell Shreddin' for Red Coins",
+					"id": "100c5",
+					"info": ["100c + Reds", "only:120"],
+					"def": "jp",
+					"100c": true,
+					"offset": 11,
+					"variants": [
+						"Early Spindrifts"	
+					],
+					"rows": [
+						["JP"],
+						["US"],
+						["misc"],
+						["misc"]
+					],
+					"ext": [
+						["Open", "JP", "alt:0"],
+						["Open", "US", "alt:0"],
+						["misc"],
+						["misc"]
+					],
+					"open": []
+				},
+				{
+					"name": "Into the Igloo",
+					"id": "6",
+					"info": ["Igloo", "only:120"],
+					"variants": [
+						"Phantaxx Ending", "Side Entry"
+					],
+					"rows": [
+						[],
+						["misc"],
+						["misc"]
+					],
+					"ext": [
+						["alt:0"],
+						["alt:1"],
+						["alt:1", "alt:0"],
+						["misc"],
+						["Igloo Clip"],
+						["Igloo Clip", "alt:0"],
+						["misc"],
+						["misc"]
+					],
+					"open": null
+				}
+			]
+		},
+
+		{
+			"name": "Wet-Dry World",
+			"color": "lb-gray",
+			"rta_len": 3,
+			"stars": [
+				{
+					"name": "Shocking Arrow Lifts!",
+					"id": "1",
+					"info": ["Arrow Lifts"],
+					"variants": ["Jump + Dive Start"],
+					"rows": [
+						[]
+					],
+					"ext": [
+						["Mid Water"],
+						["alt:0"]
+					],
+					"open": ["Mid Water"]
+				},
+				{
+					"name": "Top o' the Town",
+					"id": "2",
+					"info": ["Top"],
+					"variants": ["Sideflip TJWK", "TJ Dive"],
+					"rows": [
+						["Cage TJWK"],
+						["Purple Switch", "easy"]
+					],
+					"ext": [
+						["Cage TJWK", "alt:0"],
+						["Direct TJ"],
+						["Purple Switch", "easy", "alt:1"]
+					],
+					"open": ["Direct TJ"]
+				},
+				{
+					"name": "Secrets in the Shallows and Sky",
+					"id": "3",
+					"info": ["Secrets", "only:120"],
+					"def": "jp",
+					"offset": 0,
+					"rows": [
+						["Solo Secrets", "JP"],
+						["Solo Secrets", "US"],
+						["misc"]
+					],
+					"open": []
+				},
+				{
+					"name": "100c + Secrets in the Shallows and Sky",
+					"id": "100c3",
+					"info": ["100c + Secrets", "only:70"],
+					"def": "us",
+					"100c": true,
+					"offset": 11,
+					"rows": [
+						["JP"],
+						["US"],
+						["misc"]
+					],
+					"open": []
+				},
+				{
+					"name": "Express Elevator--Hurry Up!",
+					"id": "4",
+					"info": ["Elevator"],
+					"variants": ["Sideflip TJWK"],
+					"rows": [
+						["Cage TJWK"],
+						["Early Box Break"],
+						["Purple Switch", "easy"]
+					],
+					"ext": [
+						["Early Box Break", "alt:0"]
+					],
+					"open": []
+				},
+				{
+					"name": "100c + Go to Town for Red Coins",
+					"id": "100c5",
+					"info": ["100c + Reds", "only:120"],
+					"def": "jp",
+					"100c": true,
+					"offset": 11,
+					"rows": [
+						["JP"],
+						["US"],
+						["misc"],
+						["misc"]
+					],
+					"open": []
+				},
+				{
+					"name": "Quick Race Through Downtown!",
+					"id": "6",
+					"info": ["Downtown", "only:120"],
+					"rows": [
+						["CCW"],
+						["misc"],
+						["CW"],
+						["misc"]
+					],
+					"open": []
+				}
+			]
+		},
+
+		{
+			"name": "Tall, Tall Mountain",
+			"color": "lb-red",
+			"rta_len": 3,
+			"stars": [
+				{
+					"name": "Scale the Mountain",
+					"id": "1",
+					"info": ["Top"],
+					"rows": [
+						["Log WK"],
+						["Log Firsty"]
+					],
+					"beg": ["No Log WK"],
+					"open": []
+				},
+				{
+					"name": "Mystery of the Monkey Cage",
+					"id": "2",
+					"info": ["Monkey", "only:120"],
+					"def": "jp",
+					"offset": -6,
+					"variants": ["Cage WK"],
+					"rows": [
+						["Log WK", "JP"],
+						["Log WK", "US"],
+						["Log Firsty", "JP"],
+						["Log Firsty", "US"]
+					],
+					"beg": ["No Log WK"],
+					"ext": [
+						["Log WK", "JP", "alt:0"],
+						["Log WK", "US", "alt:0"],
+						["Log Firsty", "JP", "alt:0"],
+						["Log Firsty", "US", "alt:0"]
+					],
+					"open": []
+				},
+				{
+					"name": "Scary 'Shrooms, Red Coins",
+					"id": "3",
+					"info": ["Reds", "only:70"],
+					"variants": ["LJ After 4th Red"],
+					"rows": [
+						[],
+						["alt:0"]
+					],
+					"open": []
+				},
+				{
+					"name": "100c + Scary 'Shrooms, Red Coins",
+					"id": "100c3",
+					"info": ["100c + Reds", "only:120"],
+					"def": "jp",
+					"100c": true,
+					"offset": 11,
+					"rows": [
+						["JP"],
+						["misc"],
+						["US"],
+						["misc"],
+						["misc"],
+						["Late Red", "JP"],
+						["misc"],
+						["Late Red", "US"],
+						["misc"],
+						["misc"],
+						["misc"]
+					],
+					"open": []
+				},
+				{
+					"name": "Mysterious Mountainside",
+					"id": "4",
+					"info": ["Breeze"],
+					"rows": [
+						["Breezeless"],
+						["Slowturn Bless"],
+						["Breeze", "easy"]
+					],
+					"beg": ["Slowturn Breeze"],
+					"open": []
+				},
+				{
+					"name": "Breathtaking View from Bridge",
+					"id": "5",
+					"info": ["Waterfall"],
+					"rows": [
+						["Log WK"],
+						["Log Firsty"]
+					],
+					"beg": ["Slidekick (No LWK)", "No Log WK"],
+					"open": []
+				},
+				{
+					"name": "Blast to the Lonely Mushroom",
+					"id": "6",
+					"info": ["Shroom"],
+					"rows": [
+						[]
+					],
+					"beg": ["Beginner"],
+					"ext": [
+						["No Setup"]
+					],
+					"open": ["No Setup"]
+				}
+			]
+		},
+
+		{
+			"name": "Tiny-Huge Island",
+			"color": "lb-green",
+			"rta_len": 2,
+			"stars": [
+				{
+					"name": "Pluck the Piranha Flower",
+					"id": "1",
+					"info": ["Plants"],
+					"rows": [
+						["CCW"],
+						["CW"],
+						["misc"]
+					],
+					"open": []
+				},
+				{
+					"name": "The Tip Top of the Huge Island",
+					"id": "2",
+					"info": ["Box"],
+					"variants": [
+						"Ledgegrab Cancel"	
+					],
+					"rows": [
+						["Rightside Clip"],
+						["misc"],
+						["Leftside Clip"],
+						["misc"],
+						["No Clip", "easy"],
+						["misc"],
+						["misc"]
+					],
+					"ext": [
+						["Leftside Clip", "alt:0"],
+						["misc"],
+						["TJ Dive Start"],
+						["misc"]
+					],
+					"open": []
+				},
+				{
+					"name": "Rematch with Koopa the Quick",
+					"id": "3",
+					"info": ["KtQ", "only:120"],
+					"def": "jp",
+					"offset": 8,
+					"variants": ["14.7-14.9 Race", "Mountain Clip"],
+					"rows": [
+						["JP"],
+						["US"],
+						["JP", "alt:0"],
+						["US", "alt:0"]
+					],
+					"beg": ["Intended"],
+					"ext": [
+						["Open", "JP", "alt:1"],
+						["Open", "US", "alt:1"],
+						["TJ Dive Start", "JP"],
+						["TJ Dive Start", "US"]
+					],
+					"open": []
+				},
+				{
+					"name": "100c + Rematch with Koopa the Quick",
+					"id": "100c3",
+					"info": ["100c + KtQ", "option:Huge", "only:120beg"],
+					"alt": {
+						"status": "offset",
+						"offset": -78,
+						"info": ["100c + KtQ (Tiny)", "option:Tiny", "only:120beg"]
+					},
+					"def": "jp",
+					"offset": 19,
+					"rows": [],
+					"ext": [
+						["JP"],
+						["US"],
+						["Tiny Route", "JP", "second"],
+						["Tiny Route", "US", "second"],
+						["misc"]
+					],
+					"open": []
+				},
+				{
+					"name": "Five Itty Bitty Secrets",
+					"id": "4",
+					"info": ["Secrets"],
+					"rows": [
+						[],
+						["Slide Strat"]
+					],
+					"beg": ["Beginner"],
+					"open": []
+				},
+				{
+					"name": "Wiggler's Red Coins",
+					"id": "5",
+					"info": ["Reds", "only:120beg"],
+					"rows": [
+						["Solo Reds"],
+						["misc"],
+						["misc"]
+					],
+					"open": []
+				},
+				{
+					"name": "100c + Wiggler's Red Coin",
+					"id": "100c5",
+					"info": ["100c + Reds", "only:120"],
+					"def": "jp",
+					"100c": true,
+					"offset": 11,
+					"rows": [
+						["16c Start", "JP"],
+						["misc"],
+						["16c Start", "US"],
+						["misc"],
+						["misc"],
+						["misc"],
+						["misc"],
+						["13c Start + Pole", "JP", "easy"],
+						["13c Start + Pole", "US", "easy"],
+						["misc"],
+						["misc"],
+						["11c Start + Pole", "JP", "easy"],
+						["11c Start + Pole", "US", "easy"],
+						["misc"],
+						["misc"]
+					],
+					"open": []
+				},
+				{
+					"name": "Make Wiggler Squirm",
+					"id": "6",
+					"info": ["Wiggler", "only:120"],
+					"def": "jp",
+					"offset": -40,
+					"rows": [
+						["JP"],
+						["misc"],
+						["US"],
+						["misc"],
+						["misc"]
+					],
+					"ext": [
+						["TJ Dive Start", "JP"],
+						["TJ Dive Start", "US"]
+					],
+					"open": []
+				}
+			]
+		},
+
+		{
+			"name": "Tick Tock Clock",
+			"color": "lb-yellow",
+			"rta_len": 2,
+			"stars": [
+				{
+					"name": "Roll into the Cage",
+					"id": "1",
+					"info": ["Cage", "main:Cage (Moving)", "option:Moving"],
+					"alt": {
+						"status": "offset",
+						"offset": 64,
+						"info": ["Cage (Time Stop)", "option:Time Stop"]
+					},
+					"variants": ["Low Dive", "GP Ending"],
+					"var_groups": [["end", "0", "1"]],
+					"rows": [
+						["Flippies"],
+						["Cog Rollout"],
+						["Time Stop", "easy", "second"]
+					],
+					"ext": [
+						["Flippies", "alt:0"],
+						["Flippies", "alt:1"],
+						["Cog Rollout", "alt:0"],
+						["Cog Rollout", "alt:1"],
+						["Side Flippies"]
+					],
+					"open": ["Side Flippies"]
+				},
+				{
+					"name": "The Pit and the Pendulums",
+					"id": "2",
+					"info": ["Pendulum", "main:Pendulum (Moving)", "option:Moving"],
+					"alt": {
+						"status": "offset",
+						"offset": 64,
+						"info": ["Pendulum (Time Stop)", "option:Time Stop"]
+					},
+					"rows": [
+						["Flippies"],
+						["Cog Rollout"],
+						["Time Stop", "easy", "second"]
+					],
+					"open": []
+				},
+				{
+					"name": "Get a Hand",
+					"id": "3",
+					"info": ["Get a Hand", "main:Get A Hand (Moving)", "option:Moving"],
+					"alt": {
+						"status": "offset",
+						"offset": 64,
+						"info": ["Get A Hand (Time Stop)", "option:Time Stop"]
+					},
+					"variants": ["3x LJ"],
+					"rows": [
+						["Flippies"],
+						["Time Stop", "easy", "second"]
+					],
+					"ext": [
+						["Flippies", "alt:0"]
+					],
+					"open": []
+				},
+				{
+					"name": "Stomp on the Thwomp",
+					"id": "4",
+					"info": ["Thwomp", "only:70beg"],
+					"rows": [
+						[]
+					],
+					"open": []
+				},
+				{
+					"name": "100c + Stomp on the Thwomp",
+					"id": "100c4",
+					"info": ["100c + Thwomp"],
+					"def": "offset",
+					"100c": true,
+					"offset": 11,
+					"rows": [
+						["JP"],
+						["US"],
+						["misc"],
+						["misc"],
+						["Safety Red", "JP"],
+						["Safety Red", "US"],
+						["misc"],
+						["misc"]
+					],
+					"open": []
+				},
+				{
+					"name": "Timed Jumps on Moving Bars",
+					"id": "5",
+					"info": ["Bars", "main:Bars (Time Stop)", "option:Time Stop"],
+					"alt": {
+						"status": "offset",
+						"offset": -64,
+						"info": ["Bars (Moving)", "option:Moving"]
+					},
+					"variants": ["Cog Rollout"],
+					"rows": [
+						["Time Stop"],
+						["Moving Moving", "alt:0", "second"]
+					],
+					"ext": [
+						["Open", "second"],
+						["Moving Moving", "second"]
+					],
+					"open": []
+				},
+				{
+					"name": "Stop Time for Red Coins",
+					"id": "6",
+					"info": ["Reds", "main:Still Reds", "option:Time Stop", "only:beg"],
+					"alt": {
+						"status": "offset",
+						"offset": -64,
+						"info": ["Moving Reds", "option:Moving"]
+					},
+					"variants": ["JD Ending", "Sideflip + WK Strat", "Rollout Ending", "LJ Ending"],
+					"var_groups": [["end", "0", "2"]],
+					"rows": [
+						["Time Stop"],
+						["Time Stop", "alt:0"],
+						["Time Stop", "alt:1"],
+						["Time Stop", "alt:0", "alt:1"],
+						["Hanoji Reds", "second"],
+						["Moving Reds", "second"]
+					],
+					"ext": [
+						["Time Stop", "alt:2"],
+						["Time Stop", "alt:1", "alt:2"],
+						["Hanoji Reds", "second", "alt:3"]
+					],
+					"open": []
+				}
+			]
+		},
+
+		{
+			"name": "Rainbow Ride",
+			"color": "lb-red",
+			"rta_len": 4,
+			"stars": [
+				{
+					"name": "Cruiser Crossing the Rainbow",
+					"id": "1",
+					"info": ["Cruiser"],
+					"variants": ["Full WK + Full SJ", "Low DJ"],
+					"rows": [
+						["Lakitu Bounce"],
+						["misc"],
+						["Lakitu Bounce", "alt:0"],
+						["misc"],
+						["Sideflip Bounce"],
+						["misc"],
+						["Assless"],
+						["misc"]
+					],
+					"beg": ["No Bounce"],
+					"ext": [
+						["Assless", "alt:1"]
+					],
+					"open": []
+				},
+				{
+					"name": "The Big House in the Sky",
+					"id": "2",
+					"info": ["Big House", "only:120"],
+					"rows": [
+						["Carpetless"],
+						["JD Ending"],
+						["misc"],
+						["misc"],
+						["misc"]
+					],
+					"open": []
+				},
+				{
+					"name": "100c + The Big House in the Sky",
+					"id": "100c2",
+					"info": ["100c + Big House", "only:120beg"],
+					"alt": {
+						"status": "cutscene",
+						"info": ["100c + Big House (NC)", "only:120beg"]
+					},
+					"def": "jp",
+					"offset": 11,
+					"100c": true,
+					"rows": [
+						["Carpetful", "JP", "easy"],
+						["Carpetful", "US", "easy"],
+						["No Cutscene", "JP", "second"],
+						["No Cutscene", "US", "second"]
+					],
+					"ext": [
+						["Carpetless", "JP"],
+						["Carpetless", "US"],
+						["Carpetless (NC)", "JP", "second"],
+						["Carpetless (NC)", "US", "second"]
+					],
+					"open": []
+				},
+				{
+					"name": "Coins Amassed in a Maze",
+					"id": "3",
+					"info": ["Reds"],
+					"variants": [
+						"GWK Start"
+					],
+					"rows": [
+						["Kick Back End", "hard"],
+						["Kick Recoil End"]
+					],
+					"ext": [
+						["Kick Back End", "hard", "alt:0"],
+						["Kick Recoil End", "hard", "alt:0"]
+					],
+					"open": []
+				},
+				{
+					"name": "Swingin' in the Breeze",
+					"id": "4",
+					"info": ["Swingin"],
+					"variants": ["TJ Dive End"],
+					"rows": [
+						["Sideflip"],
+						["Pro Strat"]
+					],
+					"beg": ["Flame TJ"],
+					"ext": [
+						["Sideflip", "alt:0"]
+					],
+					"open": []
+				},
+				{
+					"name": "Tricky Triangles!",
+					"id": "5",
+					"info": ["Triangles"],
+					"rows": [
+						[],
+						["Low Dive"]
+					],
+					"beg": ["Beginner"],
+					"open": []
+				},
+				{
+					"name": "Somewhere over the Rainbow",
+					"id": "6",
+					"info": ["Cannon", "only:120beg"],
+					"variants": ["DJ Dive", "Full WK + Full SJ", "Low DJ"],
+					"rows": [
+						["Lakitu Bounce"],
+						["Lakitu Bounce", "alt:0"],
+						["Lakitu Bounce", "alt:1"],
+						["Lakitu Bounce", "alt:1", "alt:0"],
+						["Sideflip Bounce"],
+						["Sideflip Bounce", "alt:0"],
+						["Assless"],
+						["Assless", "alt:0"]
+					],
+					"beg": ["No Bounce"],
+					"ext": [
+						["Assless", "alt:2"]
+					],
+					"open": []
+				},
+				{
+					"name": "100c + Somewhere over the Rainbow",
+					"id": "100c6",
+					"info": ["100c + Cannon", "only:120"],
+					"alt": {
+						"status": "cutscene",
+						"info": ["100c + Cannon (NC)", "only:120"]
+					},
+					"def": "jp",
+					"offset": 11,
+					"100c": true,
+					"rows": [
+						["JP"],
+						["US"],
+						["No Cutscene", "JP", "second"],
+						["No Cutscene", "US", "second"]
+					],
+					"open": []
+				}
+			]
+		},
+
+		{
+			"name": "Castle Secret Stars",
+			"color": "lb-red",
+			"rta_len": 0,
+			"stars": [
+				{
+					"name": "Tower of the Wing Cap",
+					"id": "wc",
+					"info": ["Wing Cap"],
+					"rows": [
+						[],
+						["Switch Rollout"]
+					],
+					"ext": [
+						["Wall Rollout"]
+					],
+					"open": []
+				},
+				{
+					"name": "Vanish Cap under the Moat",
+					"id": "vc",
+					"info": ["Vanish Cap", "only:120"],
+					"variants": [],
+					"rows": [
+						[],
+						["Expert"],
+						["No Slope Clip"]
+					],
+					"open": []
+				},
+				{
+					"name": "Cavern of the Metal Cap",
+					"id": "mc",
+					"info": ["Metal Cap", "only:120"],
+					"variants": ["Rollout to 3rd Red"],
+					"rows": [
+						["Right Side"],
+						["Left Side"],
+						["Left Side", "alt:0"]
+					],
+					"open": []
+				},
+				{
+					"name": "The Secret Aquarium",
+					"id": "aqua",
+					"info": ["Aquarium", "only:120"],
+					"variants": [],
+					"rows": [
+						[]
+					],
+					"open": null
+				},
+				{
+					"name": "Wing Mario over the Rainbow",
+					"id": "wmotr",
+					"info": ["Wing Mario", "only:120"],
+					"alt": {
+						"status": "cutscene",
+						"info": ["Wing Mario (NC)", "only:120"]
+					},
+					"variants": ["Early Cannon"],
+					"rows": [
+						["No Cutscene", "second"],
+						[],
+						["Pole Red Early (NC)", "second"],
+						["Pole Red Early"],
+						["Stored Angle (NC)", "second"],
+						["Stored Angle"]
+					],
+					"ext": [
+						["Open (NC)", "second", "alt:0"],
+						["Open", "alt:0"]
+					],
+					"open": []
+				},
+				{
+					"name": "Princess' Secret Slide",
+					"id": "pss",
+					"info": ["PSS", "main:PSS U21"],
+					"alt": {
+						"status": "diff",
+						"info": ["PSS Box"]
+					},
+					"variants": ["Late Wall Bounce"],
+					"rows": [
+						["Box Star", "second"],
+						["Under 21"],
+						["misc"]
+					],
+					"ext": [
+						["Box Star", "second", "alt:0"],
+						["Under 21", "alt:0"],
+						["misc"]
+					],
+					"open": []
+				}
+			]
+		},
+
+		{
+			"name": "Bowser Stages",
+			"ext": true,
+			"color": "lb-green",
+			"rta_len": 0,
+			"stars": [
+				{
+					"name": "BitDW No Reds",
+					"id": "1n",
+					"info": ["DW No Reds", "only:any"],
+					"variants": [],
+					"rows": [
+						[],
+						["Framewalk"]
+					],
+					"open": ["Framewalk"]
+				},
+				{
+					"name": "BitDW Reds",
+					"id": "1r",
+					"info": ["DW Reds", "main:DW Reds (Star)", "option:Star", "in:16"],
+					"alt": {
+						"status": "mergeOffset",
+						"offset": -147,
+						"info": ["DW Reds (Pipe)", "option:Pipe", "in:16"]
+					},
+					"def": "offset",
+					"offset": 2,
+					"variants": [],
+					"rows": [
+						["Shig (Pipe)", "JP", "second"],
+						["Shig (Pipe)", "US", "second"],
+						["Shig (Star)"],
+						["Xiah (Pipe)", "JP", "second"],
+						["Xiah (Pipe)", "US", "second"],
+						["Xiah (Star)"],
+						["Tsuki (Pipe)", "JP", "second"],
+						["Tsuki (Pipe)", "US", "second"],
+						["Tsuki (Star)"],
+						["Salt Flip (Pipe)", "JP", "second"],
+						["Salt Flip (Pipe)", "US", "second"],
+						["Salt Flip (Star)"]
+					],
+					"open": ["Salt Flip (Pipe)", "Salt Flip (Star)"]
+				},
+				{
+					"name": "BitDW Battle",
+					"id": "1x",
+					"info": ["DW Battle", "in:16"],
+					"def": "offset",
+					"offset": 27,
+					"variants": ["3/4 Spin", "Bowser Dance"],
+					"rows": [
+						["JP"],
+						["JP", "alt:0"],
+						["JP", "alt:1"],
+						["US"],
+						["US", "alt:0"],
+						["US", "alt:1"]
+					],
+					"open": null
+				},
+				{
+					"name": "BitFS No Reds",
+					"id": "2n",
+					"info": ["FS No Reds", "only:16"],
+					"variants": [],
+					"rows": [
+						["Pole Glitch"],
+						["Ultimate"],
+						["Zero Cycle"]
+					],
+					"open": []
+				},
+				{
+					"name": "BitFS Reds",
+					"id": "2r",
+					"info": ["FS Reds", "main:FS Reds (Star)", "option:Star"],
+					"alt": {
+						"status": "mergeOffset",
+						"offset": -252,
+						"info": ["FS Reds (Pipe)", "option:Pipe"]
+					},
+					"def": "offset",
+					"offset": 2,
+					"variants": [],
+					"rows": [
+						["Lavaboost (Pipe)", "JP", "second"],
+						["Lavaboost (Pipe)", "US", "second"],
+						["Lavaboost (Star)"]
+					],
+					"open": null
+				},
+				{
+					"name": "BitFS Battle",
+					"id": "2x",
+					"info": ["FS Battle", "in:16"],
+					"def": "offset",
+					"offset": 9,
+					"variants": ["3/4 Spin", "Half Spin"],
+					"rows": [
+						["JP"],
+						["JP", "alt:0"],
+						["JP", "alt:1"],
+						["US"],
+						["US", "alt:0"],
+						["US", "alt:1"]
+					],
+					"open": null
+				},
+				{
+					"name": "BitS No Reds",
+					"id": "3n",
+					"info": ["BitS No Reds", "notin:120"],
+					"variants": ["w/ Manamo"],
+					"rows": [
+						["Right TJWK", "alt:0"],
+						["Left TJWK", "alt:0"],
+						["Right TJWK"],
+						["Left TJWK"],
+						["TAS LJ + Ult", "alt:0"],
+						["TAS LJ + Ult"]
+					],
+					"beg": ["Pole"],
+					"open": ["TAS LJ + Ult"]
+				},
+				{
+					"name": "BitS Reds",
+					"id": "3r",
+					"info": ["BitS Reds", "main:BitS Reds (Star)", "option:Star", "only:120"],
+					"alt": {
+						"status": "mergeOffset",
+						"offset": -169,
+						"info": ["BitS Reds (Pipe)", "option:Pipe", "only:120"]
+					},
+					"def": "offset",
+					"offset": 2,
+					"variants": [],
+					"rows": [
+						["Standard (Pipe)", "JP", "second"],
+						["Standard (Pipe)", "US", "second"],
+						["Standard (Star)"]
+					],
+					"ext": [
+						["Early Cycle (Pipe)", "JP", "second"],
+						["Early Cycle (Pipe)", "US", "second"],
+						["Early Cycle (Star)"],
+						["Ultimate Cycle (Pipe)", "JP", "second"],
+						["Ultimate Cycle (Pipe)", "US", "second"],
+						["Ultimate Cycle (Star)"]
+					],
+					"open": ["Ultimate Cycle (Star)", "Ultimate Cycle (Pipe)"]
+				},
+				{
+					"name": "BitS Battle",
+					"id": "3x",
+					"info": ["BitS Battle", "main:BitS Battle (Normal)", "option:Normal", "in:16"],
+					"alt": {
+						"status": "mergeOffset",
+						"offset": -11,
+						"info": ["BitS Battle (120)", "option:120", "only:120"],
+						"specMerge": ["Throws", "Normal File", "120 Star File"] 
+					},
+					"def": "offset",
+					"offset": { "120 Star File": 20, "Normal File": 13 },
+					"variants": [],
+					"rows": [
+						["120 Star File", "JP", "second"],
+						["120 Star File", "US", "second"],
+						["Normal File", "JP"],
+						["Normal File", "US"]
+					],
+					"open": null
+				}
+			]
+		},
+
+		{
+			"end": "Castle (Lobby)"
+		}		
+	]
+}

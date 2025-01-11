@@ -2,7 +2,8 @@
 import { VerF, VarSpace } from './variant_def'
 import { TimeDat } from './time_dat'
 import { DraftDat, stratNameDraftDat, verDraftDat, getVarDraftDat, setVerDraftDat, setVarDraftDat } from './draft_dat'
-import { ColConfig, nameListColConfig } from './col_config'
+import { StarDef } from './org_star_def' 
+import { ColConfig, stratListColConfig } from './col_config'
 
 export type ValidStyle = "init" | "warning" | "error" | "valid";
 /*
@@ -46,6 +47,7 @@ function OptionGroup(props: OptionGroupProps): React.ReactNode
 }
 
 type ESAProps = {
+	"starDef": StarDef,
 	"cfg": ColConfig,
 	"colId": number,
 	"vs": VarSpace
@@ -59,6 +61,15 @@ type ESAProps = {
 	"style": ValidStyle,
 	"infoText": string | null
 };
+
+function cleanNameList(starDef: StarDef, nameList: string[]): string[] {
+	return nameList.map((name) => {
+		if (starDef.alt === null) return name;
+		if (name === "Open") return "Open (" + starDef.info.option + ")";
+		else if (name === "Open#Alt") return "Open (" + starDef.alt.info.option + ")";
+		return name;
+	})
+}
 
 export function EditSubmitArea(props: ESAProps): React.ReactNode
 {
@@ -74,11 +85,12 @@ export function EditSubmitArea(props: ESAProps): React.ReactNode
 
 	// alt strat node (for when multiple strats are in the same column)
 	var curStrat = stratNameDraftDat(curDat);
-	var nameList = nameListColConfig(cfg, colId);
+	var stratList = stratListColConfig(cfg, colId); 
+	var nameList = stratList.map((strat) => strat.name);
 	var altNode: React.ReactNode = "";
 	if (nameList.length > 1) {
 		altNode = <OptionGroup title="Strat:" connected={ false } active={ dynFlag }
-			textList={ nameList } selList={ nameList } curSel={ curStrat }
+			textList={ cleanNameList(props.starDef, nameList) } selList={ nameList } curSel={ curStrat }
 			actFun={ (i) => changeStrat(nameList[i]) } key="opt-strat"/>;
 	}
 

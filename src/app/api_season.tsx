@@ -1,5 +1,5 @@
 
-import { ReadObj } from './api_live'
+import { ReadTimeObj } from './api_types'
 
 //const API_endpoint = "http://ec2-3-129-19-199.us-east-2.compute.amazonaws.com:5500";
 const API_endpoint = "https://0lcnm5wjck.execute-api.us-east-2.amazonaws.com/Main";
@@ -69,7 +69,7 @@ export type HistoryDesc = {
 
 export type HistoryEntry = {
 	"star": GlobObj,
-	"times": ReadObj[][]
+	"times": ReadTimeObj[]
 }
 
 export type HistoryObj = {
@@ -106,7 +106,7 @@ export function dateRawEST(startDate: string, day: number, offset: number): numb
 }
 
 async function loadPastStar(startDate: string, day: number, weekly: boolean,
-	stageId: number, starId: string): Promise<ReadObj[]>
+	stageId: number, starId: string): Promise<ReadTimeObj>
 {
 	var date = dateWithOffset(startDate, day);
 	var lk = API_endpoint + "/times/read/from_day?stage=" + stageId +
@@ -118,7 +118,7 @@ async function loadPastStar(startDate: string, day: number, weekly: boolean,
 		console.log(res.err);
 		return [];
 	}
-	return res.res as ReadObj[];
+	return res.res as ReadTimeObj;
 }
 
 export async function initHistory(callback: () => void) {
@@ -139,7 +139,7 @@ export async function initHistory(callback: () => void) {
 	{
 		if (glob.day >= daysSinceStart(desc.season.startdate, today)) continue;
 		var starIdList = glob.staridlist.split(',');
-		var times: ReadObj[][] = [];
+		var times: ReadTimeObj[] = [];
 		var err = false;
 		for (const starId of starIdList) {
 			var t = await loadPastStar(desc.season.startdate, glob.day, glob.weekly, glob.stageid, starId);

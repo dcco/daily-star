@@ -2,11 +2,15 @@
 import React, { useState, useEffect } from 'react'
 import orgData from './json/org_data.json'
 
+import { TTLoadType } from './api_live'
+import { GlobObj, dateRawEST, dateAndOffset, dispDate } from './api_season'
+import { G_SHEET } from './api_xcam'
+
 import { PlayData } from './play_data'
 import { newExtFilterState, copyFilterState,
 	orgStarId, orgStarDef, verOffsetStarDef } from './org_star_def'
-import { TTLoadType } from './api_live'
-import { GlobObj, dateRawEST, dateAndOffset, dispDate } from './api_season'
+import { PlayDB } from './rx_star_row'
+import { MenuOpt } from './rx_menu_opt'
 import { LiveStarTable } from './rx_live_table'
 import { VerToggle } from './rx_ver_toggle'
 import { Countdown } from './rx_countdown'
@@ -46,9 +50,18 @@ export function DSEditBoard(props: DSEditBoardProps): React.ReactNode {
 
 	// filter state
 	// unlike viewboard, extensions always on
-	const [fs, setFS] = useState(newExtFilterState(true));
+	var initFS = newExtFilterState([true, true], true);
+	initFS.verState = [true, true];
+	const [fs, setFS] = useState(initFS);
 	var verOffset = verOffsetStarDef(starDef, fs);
 
+	// alt view state
+	var combFlag = true;
+	if (starDef.alt !== null && starDef.alt.status !== "offset" &&
+		starDef.alt.status !== "mergeOffset") combFlag = false;
+	var [showComb, setShowComb] = useState(true);
+
+	// filter functions
 	const toggleVer = (i: number) => {
 		var ns = copyFilterState(fs);
 		ns.verState[i] = !ns.verState[i];
@@ -56,10 +69,26 @@ export function DSEditBoard(props: DSEditBoardProps): React.ReactNode {
 		setFS(ns);
 	}
 
+	const toggleAlt = (a: [boolean, boolean]) => {
+		var ns = copyFilterState(fs);
+		ns.altState = a;
+		setFS(ns);
+	}
+
 	// version toggle node (enable when relevant)
 	var verToggle = <div></div>;
 	if (starDef.def !== "na") {
 		verToggle = <VerToggle state={ fs.verState } verOffset={ verOffset } toggle={ toggleVer }/>;
+	}
+
+	// alt toggle node (enable when relevant)
+	var combToggle: React.ReactNode = <div></div>;
+	if (starDef.alt !== null && combFlag)
+	{
+		combToggle = <div className="menu-cont">
+			<MenuOpt id={ true } selId={ showComb } setSelId={ () => setShowComb(true) }>Combined</MenuOpt>
+			<MenuOpt id={ false } selId={ showComb } setSelId={ () => setShowComb(false) }>Raw</MenuOpt>
+		</div>;
 	}
 
 	// variant information
@@ -75,67 +104,6 @@ export function DSEditBoard(props: DSEditBoardProps): React.ReactNode {
 			<div className="variant-box">{ vstr }</div>
 		</div>);
 	}
-
-	// star state
-	/*const [stageId, setStageId] = useState(-1);
-	const [starId, setStarId] = useState("0");
-	var starDef: StarDef | null = null;
-	if (stageId !== -1) orgStarDef(stageId, starId);
-
-	// star functions
-	const initStage = (stage: number, star: string) => {
-		setStageId(stage);
-		setStarId(star);
-	};
-
-	// filter state
-	const [fs, setFS] = useState(newExtFilterState(true));
-	var verOffset = verOffsetStarDef(starDef, fs);
-
-	const toggleVer = (i: number) => {
-		var ns = copyFilterState(fs);
-		ns.verState[i] = !ns.verState[i];
-		if (!ns.verState[i] && !ns.verState[1 - i]) ns.verState[1 - i] = true;
-		setFS(ns);
-	}
-
-
-	// stage select option nodes
-	var stageOptNodes = orgData.map((stage, i) =>
-		<option key={ stage.name } value={ i }>{ stage.name }</option>
-	);
-
-	// star select nodes
-	var starList = orgData[stageId].starList;
-	var starBtnNodes = starList.map((star, i) => {
-		var flag = (starIdCache[stageId] === i) ? "true" : "false";
-		return <div key={ star.name } className="star-name" data-sel={ flag }
-			onClick={ () => { changeStar(i) } }>{ star.name }</div>;
-	});
-
-	// main display content toggle
-	var mainNode: React.ReactNode = <div>Loading the Daily Star...</div>;
-	if (stageId !== -1) {
-		mainNode = (<React.Fragment>
-		<div className="row-wrap">
-			<div> </div>
-				<div className="toggle-sidebar">
-				{ verToggle }
-				</div>
-			</div>
-			{ varCont }
-			<LiveStarTable stageId={ stageId } starId={ starId } fs={ fs }
-				playData={ playData } setPlayData={ setPlayData } key={ stageId + "_" + starId }/>
-		</React.Fragment>;
-	}
-
-	return (
-		<div>
-		{ mainNode }
-		<div className="sep"><hr/></div>
-		<AuthArea playData={ playData } setPlayData={ setPlayData }/>
-		</div>
-	);*/
 
 	// week data
 	var loadType: TTLoadType = ["today"];
@@ -153,21 +121,50 @@ export function DSEditBoard(props: DSEditBoardProps): React.ReactNode {
 		</div>;
 		var dateNode2: React.ReactNode = <Countdown endTime={ dateRawEST(props.startDate, props.day, 7) }/>;
 	}
-	/*if (weekly) {
-		dateNode = <div className='label-cont'>Weekly 100 Coin</div>; 
-	}*/
+
+	// daily star player list (currently we are just using xcam data)
+	var playNameList: string[] = [];
+	if (G_SHEET.userMap !== null) {
+		playNameList = Object.entries(G_SHEET.userMap.stats).map(([k, v]) => v.id.name);
+	}
+	var playDB: PlayDB = {
+		"baseUrl": "/xcam/players",
+		"nameList": playNameList
+	};
 
 	// create tables
-	var tableList: React.ReactNode[] = [];
+	/*var tableList: React.ReactNode[] = [];
 	tableList.push(
-		<LiveStarTable stageId={ stageId } starId={ starId } today={ loadType } fs={ fs } varFlag={ null } setPlayCount={ setPlayCount }
+		<LiveStarTable stageId={ stageId } starId={ starId } today={ loadType } fs={ fs } setPlayCount={ setPlayCount }
 			playData={ playData } reloadPlayData={ reloadPlayData } key={ stageId + "_" + starId }/>
-	);
+	);*/
 
-	if (starDef.secondFlag) {
+	// build tables (in case of multiple tables)
+	var tableList: React.ReactNode[] = [];
+	// -- main table
+	var mainFS = fs;
+	if (!combFlag || !showComb) {
+		mainFS = copyFilterState(fs);
+		mainFS.altState = [true, false];
+	}
+	tableList.push(
+		<LiveStarTable stageId={ stageId } starId={ starId } today={ ["def"] } fs={ mainFS } setPlayCount={ setPlayCount }
+			playData={ playData } reloadPlayData={ reloadPlayData } playDB={ playDB } key={ stageId + "_" + starId + "_0" }/>
+	);
+	// -- variant table
+	if (!combFlag || !showComb) {
+		var altFS = copyFilterState(fs);
+		altFS.altState = [false, true];
+		tableList.push(
+			<LiveStarTable stageId={ stageId } starId={ starId } today={ ["def"] } fs={ altFS }
+				playData={ playData } reloadPlayData={ reloadPlayData } playDB={ playDB } key={ stageId + "_" + starId + "_1" }/>
+		);
+	}
+
+	/*if (starDef.secondFlag) {
 		tableList.push(<LiveStarTable stageId={ stageId } starId={ starId } today={ loadType } fs={ fs } varFlag={ 1 }
 			playData={ playData } reloadPlayData={ reloadPlayData } key={ stageId + "_" + starId + "_var" }/>);
-	}
+	}*/
 
 	return (
 		<div className="ds-cont">
@@ -185,6 +182,7 @@ export function DSEditBoard(props: DSEditBoardProps): React.ReactNode {
 				{ verToggle }
 			</div>
 		</div>	
+		{ combToggle }
 		{ varCont }
 		{ tableList }
 		</div>
