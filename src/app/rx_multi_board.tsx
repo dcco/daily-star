@@ -7,7 +7,7 @@ import { newIdent, dropIdent } from './time_table'
 import { PlayData, LocalPD, newPlayData, userKeyPD, setNickMapPD,
 	linkUserRemotePD, setLocalPD } from './play_data'
 import { initGSheet } from './api_xcam'
-import { initDailyStar, initHistory } from './api_season'
+import { initDailyStar, initHistory, calcHistoryStatData } from './api_season'
 import { loadNickMap, loadUserId, postNick } from './api_live'
 
 import { RouterMain, newRouterCore, newRouterMain, navRM, reloadRM } from './router_main'
@@ -131,7 +131,10 @@ export function MultiBoard(props: { boardId?: number, subId?: number, slug?: str
 	useEffect(() => {
 		initGSheet(() => setInitReload(1));
 		initDailyStar(() => setInitReload(2));
-		initHistory(() => setInitReload(3));
+		initHistory(() => {
+			setInitReload(3);
+			calcHistoryStatData(() => setInitReload(4));
+		});
 		reloadPlayData(null);
 	}, []);
 

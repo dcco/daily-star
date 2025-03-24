@@ -12,7 +12,7 @@ import { ReadTimeObj, SubmitTimeUnit, SubmitTimeObj, ReadNickObj, SubmitNickObj 
 // const API_endpoint = "http://ec2-3-129-19-199.us-east-2.compute.amazonaws.com:5500";
 // const API_endpoint = "https://g6u2bjvfoh.execute-api.us-east-2.amazonaws.com";
 const API_endpoint = "https://0lcnm5wjck.execute-api.us-east-2.amazonaws.com/Main";
-//const API_endpoint = "http://ec2-18-219-11-239.us-east-2.compute.amazonaws.com:5500";
+//const API_endpoint = "http://ec2-3-133-113-99.us-east-2.compute.amazonaws.com:5500";
 
 	/*
 		xcam time API functions

@@ -1,10 +1,12 @@
 
 //import xcamData from './json/xcam_dump.json'
 //import rowData from './json/row_data.json'
-import { G_SHEET } from './api_xcam' 
+import { G_SHEET } from './api_xcam'
+import { StarLoadFun } from './api_season'
 
 import { VerOffset, StratOffset, rawMS, newTimeDat, applyVerOffset, applyStratOffset } from "./time_dat"
 import { ColList, readRefMap } from "./org_strat_def"
+import { StarDef } from "./org_star_def"
 import { TimeTable, newIdent, addTimeMap, buildTimeTable } from "./time_table"
 
 	/* derived "sort_data" (determines a canonical order for column sorting) */
@@ -43,4 +45,8 @@ export function xcamTimeTable(colList: ColList, verOffset: VerOffset, stratOffse
 	}
 	var tt = buildTimeTable(timeMap, colList.length);
 	return tt;
+}
+
+export const xcamTTFun: StarLoadFun = (stageId, starDef, colList, verOffset, stratOffset) => {
+	return xcamTimeTable(colList, verOffset, stratOffset, 1);
 }

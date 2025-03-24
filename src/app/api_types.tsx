@@ -21,6 +21,14 @@ export type ReadTimeUnit = {
 
 export type ReadTimeObj = ReadTimeUnit[];
 
+export type ReadAnyTimeUnit = ReadTimeUnit & {
+	"stageid": number,
+	"starid": string,
+	"recvtime": string
+};
+
+export type ReadAnyTimeObj = ReadAnyTimeUnit[];
+
 	// submit_time_unit / submit_time_obj: object expected by a time submission
 
 export type SubmitTimeUnit = {

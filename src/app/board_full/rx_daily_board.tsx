@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'
 
 import { PlayData, LocalPD } from '../play_data'
-import { G_DAILY, GlobObj } from '../api_season'
+import { G_DAILY, GlobNorm, readCodeList } from '../api_season'
 import { AuthArea } from './rx_auth_area'
 import { DSEditBoard } from './rx_ds_edit_board'
 
@@ -16,7 +16,8 @@ import { DSEditBoard } from './rx_ds_edit_board'
 
 type DailyBoardProps = {
 	"playData": PlayData,
-	"weekly": GlobObj | null,
+	"weekly": GlobNorm | null,
+	"overrideMessage"?: string,
 	"setPlayData": (a: LocalPD) => void,
 	"reloadPlayData": () => void
 }
@@ -43,10 +44,14 @@ export function DailyBoard(props: DailyBoardProps): React.ReactNode {
 	// main display content toggle
 	var failCode = 0;
 	var mainNode: React.ReactNode = <div className="load-cont">Loading the Daily Star...</div>;
+	var message: string | null = null;
 	if (ds.status !== "null") {
 		if (ds.starGlob === undefined) {
 			if (ds.status === "early") mainNode = <div className="load-cont">Waiting for new season to start.</div>;
+			else if (ds.status === "none") mainNode = <div className="load-cont">Season has ended.</div>;
 			else failCode = 500;
+		} else if (ds.starGlob.day === null) {
+			mainNode = <div className="load-cont">Season has ended.</div>;
 		} else {
 			// use weekly if selected
 			var starGlob = ds.starGlob;
@@ -55,14 +60,22 @@ export function DailyBoard(props: DailyBoardProps): React.ReactNode {
 				starGlob = props.weekly;
 				dayOffset = starGlob.day;
 			}
-			// prep editing board
-			var starIdList = starGlob.staridlist.split(',');
-			mainNode = <DSEditBoard startDate={ ds.season.startdate }
-				day={ dayOffset } weekly={ starGlob.weekly }
-				stageId={ starGlob.stageid } starIdList={ starIdList }
-				playData={ playData } reloadPlayData={ reloadPlayData }/>;
+			if (starGlob.message !== null) message = starGlob.message;
+			if (starGlob.special === null) {
+				// prep editing board
+				var starCodeList = readCodeList(starGlob.stageid, starGlob.staridlist);
+				//var starIdList = starGlob.staridlist.split(',');
+				mainNode = <DSEditBoard startDate={ ds.season.startdate }
+					day={ dayOffset } weekly={ starGlob.weekly }
+					starCodeList={ starCodeList }
+					//stageId={ starGlob.stageid } starIdList={ starIdList }
+					playData={ playData } reloadPlayData={ reloadPlayData }/>;
+			} else if (starGlob.special === "skip") {
+				mainNode = <div className="load-cont">No Daily Star: { starGlob.message }</div>;
+			}
 		}
 	}
+	if (props.overrideMessage !== undefined) message = props.overrideMessage;
 
 	// failure
 	if (failCode !== 0) {
@@ -74,8 +87,14 @@ export function DailyBoard(props: DailyBoardProps): React.ReactNode {
 		</div>;
 	}
 
+	var msgNode: React.ReactNode = null;
+	if (message !== null) msgNode = <div className="msg-cont">{ message }</div>;
+
 	return (
 		<div className="super-cont">
+			<div className="msg-cont">Take the <a className="msg-link" href={ "https://forms.gle/BHpptf6or9hoYXDW9" }>Daily Star Survey</a>!
+				(Feedback will be used for scores next season)</div><br/>
+			{ msgNode }
 			{ mainNode }
 			<div className="sep"><hr/></div>
 			<AuthArea playData={ playData } setPlayData={ setPlayData }/>

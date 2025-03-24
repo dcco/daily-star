@@ -1,4 +1,6 @@
 
+import { StarLoadFun } from '../api_season'
+
 import { TimeDat, VerOffset, StratOffset } from '../time_dat'
 import { TimeTable, filterTimeTable } from '../time_table'
 import { ColList, filterVarColList } from '../org_strat_def'
@@ -64,12 +66,12 @@ export type StxStarData = StarRef & {
 	"timeTable": TimeTable
 };
 
-function getStxStarData(stageId: number, starDef: StarDef, colList: ColList, fs: FilterState): StxStarData
+function getStxStarData(f: StarLoadFun, stageId: number, starDef: StarDef, colList: ColList, fs: FilterState): StxStarData
 {
 	// read raw data
 	var verOffset = verOffsetStarDef(starDef, fs);
 	var sOffset = stratOffsetStarDef(starDef, fs);
-	var timeTable = xcamTimeTable(colList, verOffset, sOffset, 1);
+	var timeTable = f(stageId, starDef, colList, verOffset, sOffset);
 	// transform into filtered data
 	var relRM = xcamRecordMap(colList, fs, verOffset, sOffset, 1);
 	// has alts
@@ -122,7 +124,7 @@ export type StxStarMap = {
 	[key: string]: StxStarData
 };
 
-export function getStarTimeMap(starSet: [StarDef, number][][]): StxStarMap {
+export function getStarTimeMap(f: StarLoadFun, starSet: [StarDef, number][][], extFlag: boolean): StxStarMap {
 	var starMap: StxStarMap = {};
 	// for every stage + star
 	for (let i = 0; i < starSet.length; i++) {
@@ -132,12 +134,13 @@ export function getStarTimeMap(starSet: [StarDef, number][][]): StxStarMap {
 			var [starDef, starId] = starSet[i][j];
 			var key = i + "_" + starDef.id;
 			// no extension data, combine alt strats when applicable
-			var fs = newFilterState([true, true], false);
+			var fs = newFilterState([true, true], extFlag);
+			if (extFlag) fs.extFlag = true;
 			fs.verState = [true, true];
 			// get un-split time data
 			var colList = colListStarDef(starDef, fs);
 			if (colList.length === 0) continue;
-			var timeData = getStxStarData(i, starDef, colList, fs);
+			var timeData = getStxStarData(f, i, starDef, colList, fs);
 			// add the "all" comparison for regular stars + offset stars
 			if (starDef.alt === null || starDef.alt.status === "offset") starMap[key] = timeData;
 			// for any other alternates, add the variant comparison

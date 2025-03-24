@@ -395,6 +395,11 @@ type OrgCache = {
 
 const ORG_CACHE: OrgCache = {};
 
+export function orgStageTotal(): number
+{
+	return orgData.length;
+}
+
 export function orgStarDef(stageId: number, starId: number): StarDef
 {
 	var k = stageId + "_" + starId;

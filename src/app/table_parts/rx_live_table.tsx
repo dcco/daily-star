@@ -30,7 +30,7 @@ type LiveStarTableProps = {
 	"fs": FilterState,
 	"playData": PlayData,
 	"reloadPlayData": () => void,
-	"setPlayCount"?: (a: number) => void,
+	"updatePlayCount"?: (a: Ident[]) => void,
 	"playDB"?: PlayDB
 };
 
@@ -51,6 +51,7 @@ export function LiveStarTable(props: LiveStarTableProps): React.ReactNode
 
 	// time table
 	const [timeTable, setTimeTable] = useState([] as TimeTable);
+	const [firstInit, setFirstInit] = useState(true);
 	const [reload, setReload] = useState(1);
 
 	// having last load time as key forces full edit state reload on table reload
@@ -63,10 +64,11 @@ export function LiveStarTable(props: LiveStarTableProps): React.ReactNode
 			if (dirty) {
 				var newTable = await loadTimeTable(stageId, starId, props.today, colList, fs, verOffset, sOffset);
 				setTimeTable(newTable);
-				if (props.setPlayCount !== undefined) props.setPlayCount(newTable.length);
-				// reloads the player data since submitting a time
+				if (props.updatePlayCount !== undefined) props.updatePlayCount(newTable.map((table) => table.id));
+				// reloads the player data (if the previous table wasnt empty) since submitting a time
 				// may have created a new user
-				reloadPlayData();
+				if (!firstInit) reloadPlayData();
+				setFirstInit(false);
 				// if the user has changed, triggers a nickname data reload
 				// since submitting a time may have created a new user
 				/*if (playData.newUserSync === "unsync") {

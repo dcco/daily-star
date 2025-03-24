@@ -59,6 +59,9 @@ star_def
 
 -- depends on time_dat 
 
+ident
+- used to represent player identities (differentiates xcam sheet names + google accounts)
+
 time_map
 - auxiliary data structure used to construct time tables
 
@@ -93,6 +96,12 @@ merge_view
 - essentially a stronger column list, used only at the very end
 
 
+  ## edit_perm ##
+
+-- captures the edit-permission state of a star table
+-- which rows can be edited + whether new rows can be created
+
+
   ## rx_star_table ##
 
 -- reads from player_data (for standard display)
@@ -120,3 +129,6 @@ approximate flow:
 sudo -u postgres psql
 \c xcam_db
 \dt (shows all tables)
+
+
+search "UNSAFE_" for unsafe type coercions

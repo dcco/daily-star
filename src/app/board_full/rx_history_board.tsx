@@ -2,15 +2,14 @@
 import React, { useState, useEffect } from 'react'
 import orgData from '../json/org_data.json'
 
-import { loadTTRaw } from '../api_live'
 import { G_SHEET } from '../api_xcam'
+import { G_HISTORY, readCodeList, dateAndOffset, dispDate, historyTimeTable } from '../api_season'
 
 import { VerOffset, StratOffset } from '../time_dat'
 import { ColList } from '../org_strat_def'
 import { StarDef, orgStarId, orgStarDef } from '../org_star_def'
 import { TimeTable } from '../time_table'
 import { PlayData } from '../play_data'
-import { G_HISTORY, dateAndOffset, dispDate } from '../api_season'
 import { procStarSlug, makeStarSlug } from '../router_slug'
 import { RouterMain, navRM } from '../router_main'
 import { PlayDB } from '../table_parts/rx_star_row'
@@ -22,6 +21,7 @@ function historyStageList(): number[]
 	var hList = G_HISTORY.header.starList;
 	for (let i = 0; i < hList.length; i++) {
 		var star = hList[i];
+		if (star.special !== null) continue;
 		if (i < G_HISTORY.data.length && !stageList.includes(star.stageid)) {
 			stageList.push(star.stageid);
 		}
@@ -29,36 +29,36 @@ function historyStageList(): number[]
 	return stageList.sort((a, b) => a - b);
 }
 
-function historyStarTable(stageList: number[]): [StarDef, number][][]
+function historyStarTable(stageList: number[]): [StarDef, number, number][][]
 {
-	var starTable: [StarDef, number][][] = [];
+	var starTable: [StarDef, number, number, number][][] = Array(stageList.length).fill(0).map(() => { return []; });
 	for (const stageId of stageList) {
-		var starList: [StarDef, number, number][] = [];
 		for (let i = 0; i < G_HISTORY.header.starList.length; i++) {
 			if (i >= G_HISTORY.data.length) continue;
 			var glob = G_HISTORY.header.starList[i];
+			if (glob.special !== null) continue;
 			if (glob.stageid !== stageId) continue;
-			var globIdList = glob.staridlist.split(',');
-			// for now we will only care about one star
-			var globId = globIdList[0];
-			var starId = orgStarId(stageId, globId);
-			starList.push([orgStarDef(stageId, starId), i, starId]);
+			var globIdList = readCodeList(glob.stageid, glob.staridlist);
+			// for each glob in the glob list
+			for (let j = 0; j < globIdList.length; j++) {
+				var [globStageId, globId] = globIdList[j];
+				var starId = orgStarId(globStageId, globId);
+				starTable[globStageId].push([orgStarDef(globStageId, starId), i, j, starId]);
+			}
 		}
-		starList.sort(function (a, b) { return a[2] - b[2]; });
-		starTable.push(starList.map((s) => [s[0], s[1]]));
 	}
-	return starTable;
-}
-
-function historyTimeTable(ix: number, starDef: StarDef, colList: ColList, verOffset: VerOffset, stratOffset: StratOffset): TimeTable {
-	var data = G_HISTORY.data[ix].times[0];
-	return loadTTRaw(data, starDef, colList, verOffset, stratOffset);
+	var retTable: [StarDef, number, number][][] = starTable.map((starList) => {
+		starList.sort(function (a, b) { return a[3] - b[3]; });
+		return starList.map((s) => [s[0], s[1], s[2]]);
+	});
+	return retTable;
 }
 
 export function HistoryBoard(props: { playData: PlayData, rm: RouterMain }): React.ReactNode
 {
 	// TODO: replace with real error messages, maybe even dont show a history tab
-	if (G_HISTORY.header.status !== 'active' || G_HISTORY.data.length === 0) {
+	var status = G_HISTORY.header.status;
+	if (status !== 'active' || G_HISTORY.data.length === 0) {
 		return <div className="blurb-cont"><div className="para">Loading...</div></div>;
 	}
 
@@ -84,7 +84,7 @@ export function HistoryBoard(props: { playData: PlayData, rm: RouterMain }): Rea
 	// star state
 	const [id2Cache, setId2Cache] = useState(defCache);
 	const id2 = id2Cache[id1];
-	var [starDef, globIx] = starTable[id1][id2];
+	var [starDef, globIx, globIx2] = starTable[id1][id2];
 
 	// stage/star functions
 	const changeStage = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -175,11 +175,11 @@ export function HistoryBoard(props: { playData: PlayData, rm: RouterMain }): Rea
 	</div>);
 
 	const ttFun = (colList: ColList, verOffset: VerOffset, sOffset: StratOffset) => {
-		var newTable = historyTimeTable(globIx, starDef, colList, verOffset, sOffset);
+		var newTable = historyTimeTable(globIx, globIx2, starDef, colList, verOffset, sOffset);
 		// must be an effect to prevent illegal insta re-render
 		useEffect(() => {
 			if (playCount !== newTable.length) setPlayCount(newTable.length);
-		}, [playCount]);
+		}, [newTable]);
 		return newTable;
 	};
 

@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 import { G_SHEET } from '../api_xcam'
 
-import { orgStarDef } from '../org_star_def'
+import { RawStarDef, orgStarDef } from '../org_star_def'
 import { xcamTimeTable } from '../xcam_time_table'
 import { PlayDB } from '../table_parts/rx_star_row'
 import { ViewBoard } from '../board_simple/rx_view_board'
@@ -55,9 +55,17 @@ export function XcamBoard(props: { rm: RouterMain }): React.ReactNode {
 		<option key={ stage.name } value={ i }>{ stage.name }</option>
 	);
 
+	// star list w/ index, sans pure virtual stars
+	var rawStarList = (orgData[stageId].starList as unknown[]) as RawStarDef[];
+	var starList = rawStarList.map((star, i) => [star, i] as [RawStarDef, number]).filter(([star, i]) => {
+		var isVirtual = true;
+		Object.values(star.jp_set).map((row) => { if (!row.virtual) isVirtual = false; });
+		Object.values(star.us_set).map((row) => { if (!row.virtual) isVirtual = false; });
+		return !isVirtual;
+	});
+
 	// star select nodes
-	var starList = orgData[stageId].starList;
-	var starBtnNodes = starList.map((star, i) => {
+	var starBtnNodes = starList.map(([star, i]) => {
 		var flag = (starIdCache[stageId] === i) ? "true" : "false";
 		//var starId = starList[i].id;
 		//var url = "/xcam?star=" + makeStarSlug(stageId, starId);

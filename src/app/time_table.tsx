@@ -34,6 +34,11 @@ export function keyIdent(id: Ident): string {
 	return id.service + "@" + id.name;
 }
 
+export function rawIdent(id: Ident): string {
+	return id.name;
+}
+
+
 	/*
 		auth_ident: an identity used for submitting times (includes a token for verification)
 			stronger but compatible with the regular identitiy token

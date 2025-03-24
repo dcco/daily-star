@@ -26,10 +26,10 @@
 				{
 					"name": "Footrace with Koopa the Quick",
 					"id": "2",
-					"info": ["KtQ", "only:120"],
+					"info": ["KtQ", "option:Cutscene", "only:120"],
 					"alt": {
-						"status": "cutscene",
-						"info": ["KtQ (NC)", "only:120"]	
+						"status": "diff",
+						"info": ["KtQ (NC)", "option:NC", "only:120"]	
 					},
 					"def": "jp",
 					"offset": { "Standard": 0, "No Cutscene": 1 },
@@ -320,7 +320,8 @@
 					"id": "2",
 					"info": ["Eel", "only:120"],
 					"rows": [
-						[]
+						[],
+						["misc"]
 					],
 					"ext": [
 						["BLJ"]
@@ -342,10 +343,10 @@
 				{
 					"name": "100c + Red Coins on the Ship Afloat",
 					"id": "100c4",
-					"info": ["100c + Reds", "only:120"],
+					"info": ["100c + Reds", "option:Cutscene", "only:120"],
 					"alt": {
 						"status": "cutscene",
-						"info": ["100c + Reds (NC)", "only:120"]
+						"info": ["100c + Reds (NC)", "option:NC", "only:120"]
 					},
 					"def": "jp",
 					"offset": 11,
@@ -384,7 +385,7 @@
 						["Framewalk", "JP", "alt:1", "second"],
 						["Framewalk", "JP", "second"]
 					],
-					"beg": ["second:Cannon (Pole)"],
+					"beg": ["args:Cannon (Pole),JP", "args:Cannon (Pole),US"],
 					"ext": [
 						["Ship LJ", "US", "second"],
 						["Framewalk", "US", "alt:1", "second"],
@@ -512,16 +513,14 @@
 					"def": "jp",
 					"offset": 33,
 					"rows": [
-						["JP"],
-						["US"],
+						["Upper Start", "JP"],
+						["Upper Start", "US"],
 						["misc"],
-						["Head Manip", "JP"],
-						["Head Manip", "US"],
-						["misc"]
-					],
-					"ext": [
-						["JP", "alt:0"],
-						["US", "alt:0"],
+						["Lower Start", "JP"],
+						["Lower Start", "US"],
+						["misc"],
+						["Lower Start", "JP", "alt:0"],
+						["Lower Start", "US", "alt:0"],
 						["misc"]
 					],
 					"open": null
@@ -655,10 +654,15 @@
 					"name": "Swimming Beast in the Cavern",
 					"id": "1",
 					"info": ["Cavern", "in:16"],
+					"variants": ["Breakdance"],
 					"rows": [
 						["Box Triple"]
 					],
 					"beg": ["Elevator Clip"],
+					"ext": [
+						["Sign Clip", "JP"],
+						["Sign Clip", "alt:0"]
+					],
 					"open": []
 				},
 				{
@@ -692,14 +696,17 @@
 					"name": "Metal-Head Mario Can Move!",
 					"id": "3",
 					"info": ["Metal-Head"],
-					"variants": ["Small WK"],
+					"variants": ["Small WK", "Box Triple + Slide SJ", "Breakdance"],
 					"rows": [
 						["Xmas Miracle", "alt:0"],
 						["Xmas Miracle"],
 						["misc"]
 					],
 					"ext": [
-						["BLJ"]
+						["BLJ"],
+						["Open", "alt:1"],
+						["Sign Clip", "JP"],
+						["Sign Clip", "alt:2"]
 					],
 					"open": ["BLJ"]
 				},
@@ -710,13 +717,11 @@
 					"variants": ["Fast Clip"],
 					"rows": [
 						["BLJ"],
+						["BLJ", "alt:0"],
 						["Wall Clip", "easy"],
 						["misc"]
 					],
 					"beg": ["No Clip"],
-					"ext": [
-						["BLJ", "alt:0"]
-					],
 					"open": []
 				},
 				{
@@ -729,11 +734,11 @@
 					"id": "5",
 					"rows": [
 						["Rightside"],
-						["Leftside"]
+						["Leftside"],
+						["SS"]
 					],
 					"ext": [
-						["Open", "alt:0"],
-						["SS"]
+						["Open", "alt:0"]
 					],
 					"open": ["SS"]
 				},
@@ -753,9 +758,13 @@
 					"name": "CotMC (Metal Cap) Entry",
 					"id": "premc",
 					"info": ["MC Entry", "only:120"],
-					"variants": [],
+					"variants": ["Breakdance"],
 					"rows": [
 						["Box Triple"]
+					],
+					"ext": [
+						["Sign Clip", "JP"],
+						["Sign Clip", "alt:0"]
 					],
 					"open": []
 				}
@@ -840,12 +849,19 @@
 					"name": "Hot-Foot-it into the Volcano",
 					"id": "5",
 					"info": ["Volcano", "notin:120"],
+					"variants": [
+						"Speed Pres"
+					],
 					"rows": [
+						["Pro Boost", "alt:0"],
+						["misc"],
 						["Pro Boost"],
 						["misc"],
-						["Akira Boost"],
+						["Double Pole Skip", "alt:0"],
 						["misc"],
 						["Double Pole Skip"],
+						["misc"],
+						["Akira Boost"],
 						["misc"],
 						["misc"]
 					],
@@ -869,7 +885,10 @@
 					],
 					"ext": [
 						["Lavaboost", "JP"],
+						["misc"],
 						["Lavaboost", "US"],
+						["misc"],
+						["misc"],
 						["misc"]
 					],
 					"open": ["Lavaboost"]
@@ -900,9 +919,9 @@
 					"var_groups": [["speed_pres", "0", "1", "2", "3"]],
 					"rows": [
 						[],
+						["Speed Pres", "alt:2"],
 						["Speed Pres", "alt:0"],
 						["Speed Pres", "alt:1"],
-						["Speed Pres", "alt:2"],
 						["Flyguyless"]
 					],
 					"ext": [
@@ -996,9 +1015,7 @@
 						["US"],
 						["misc"],
 						["misc"],
-						["misc"]
-					],
-					"ext": [
+						["misc"],
 						["Alt Pillar", "JP"],
 						["Alt Pillar", "US"],
 						["misc"],
@@ -1105,12 +1122,10 @@
 					"variants": ["SJ Strat"],
 					"rows": [
 						[],
-						["alt:0"]
+						["alt:0"],
+						["Pingu Flip", "hard"]
 					],
 					"beg": ["Beginner"],
-					"ext": [
-						["Pingu Flip"]
-					],
 					"open": null
 				},
 				{
@@ -1184,9 +1199,7 @@
 						["JP"],
 						["US"],
 						["misc"],
-						["misc"]
-					],
-					"ext": [
+						["misc"],
 						["Open", "JP", "alt:0"],
 						["Open", "US", "alt:0"],
 						["misc"],
@@ -1204,16 +1217,16 @@
 					"rows": [
 						[],
 						["misc"],
+						["Igloo Clip"],
+						["Igloo Clip", "alt:0"],
+						["misc"],
+						["misc"],
 						["misc"]
 					],
 					"ext": [
 						["alt:0"],
 						["alt:1"],
 						["alt:1", "alt:0"],
-						["misc"],
-						["Igloo Clip"],
-						["Igloo Clip", "alt:0"],
-						["misc"],
 						["misc"]
 					],
 					"open": null
@@ -1294,8 +1307,17 @@
 						["Purple Switch", "easy"]
 					],
 					"ext": [
-						["Early Box Break", "alt:0"]
+						["Early Box Break", "alt:0"],
+						["Elevator Clip"]
 					],
+					"open": ["Elevator Clip"]
+				},
+				{
+					"name": "Go to Town for Red Coins",
+					"id": "5",
+					"info": ["Reds", "only:120beg"],
+					"rows": [],
+					"beg": ["Solo Reds"],
 					"open": []
 				},
 				{
@@ -1370,7 +1392,7 @@
 					"name": "Scary 'Shrooms, Red Coins",
 					"id": "3",
 					"info": ["Reds", "only:70"],
-					"variants": ["LJ After 4th Red"],
+					"variants": ["SJ Start + Right After 4th Red"],
 					"rows": [
 						[],
 						["alt:0"]
@@ -1526,10 +1548,12 @@
 					"id": "4",
 					"info": ["Secrets"],
 					"rows": [
-						[],
-						["Slide Strat"]
+						[]
 					],
 					"beg": ["Beginner"],
+					"ext": [
+						["Slide Strat"]
+					],
 					"open": []
 				},
 				{
@@ -1561,7 +1585,9 @@
 						["13c Start + Pole", "JP", "easy"],
 						["13c Start + Pole", "US", "easy"],
 						["misc"],
-						["misc"],
+						["misc"]
+					],
+					"ext": [
 						["11c Start + Pole", "JP", "easy"],
 						["11c Start + Pole", "US", "easy"],
 						["misc"],
@@ -1640,11 +1666,11 @@
 				{
 					"name": "Get a Hand",
 					"id": "3",
-					"info": ["Get a Hand", "main:Get A Hand (Moving)", "option:Moving"],
+					"info": ["Get a Hand", "main:Get a Hand (Moving)", "option:Moving"],
 					"alt": {
 						"status": "offset",
 						"offset": 64,
-						"info": ["Get A Hand (Time Stop)", "option:Time Stop"]
+						"info": ["Get a Hand (Time Stop)", "option:Time Stop"]
 					},
 					"variants": ["3x LJ"],
 					"rows": [
@@ -1707,11 +1733,11 @@
 				{
 					"name": "Stop Time for Red Coins",
 					"id": "6",
-					"info": ["Reds", "main:Still Reds", "option:Time Stop", "only:beg"],
+					"info": ["Reds", "main:Reds (Time Stop)", "option:Time Stop", "only:beg"],
 					"alt": {
 						"status": "offset",
 						"offset": -64,
-						"info": ["Moving Reds", "option:Moving"]
+						"info": ["Reds (Moving)", "option:Moving"]
 					},
 					"variants": ["JD Ending", "Sideflip + WK Strat", "Rollout Ending", "LJ Ending"],
 					"var_groups": [["end", "0", "2"]],
@@ -1765,8 +1791,10 @@
 					"info": ["Big House", "only:120"],
 					"rows": [
 						["Carpetless"],
+						["misc"],
 						["JD Ending"],
 						["misc"],
+						["Usamune (Dezanig)"],
 						["misc"],
 						["misc"]
 					],
@@ -1775,21 +1803,21 @@
 				{
 					"name": "100c + The Big House in the Sky",
 					"id": "100c2",
-					"info": ["100c + Big House", "only:120beg"],
+					"info": ["100c + Big House", "option:Cutscene", "only:120beg"],
 					"alt": {
 						"status": "cutscene",
-						"info": ["100c + Big House (NC)", "only:120beg"]
+						"info": ["100c + Big House (NC)", "option:NC", "only:120beg"]
 					},
 					"def": "jp",
 					"offset": 11,
 					"100c": true,
 					"rows": [
 						["Carpetful", "JP", "easy"],
-						["Carpetful", "US", "easy"],
-						["No Cutscene", "JP", "second"],
-						["No Cutscene", "US", "second"]
+						["Carpetful", "US", "easy"]
 					],
 					"ext": [
+						["No Cutscene", "JP", "second"],
+						["No Cutscene", "US", "second"],
 						["Carpetless", "JP"],
 						["Carpetless", "US"],
 						["Carpetless (NC)", "JP", "second"],
@@ -1864,20 +1892,22 @@
 				{
 					"name": "100c + Somewhere over the Rainbow",
 					"id": "100c6",
-					"info": ["100c + Cannon", "only:120"],
+					"info": ["100c + Cannon", "option:Cutscene", "only:120"],
 					"alt": {
 						"status": "cutscene",
-						"info": ["100c + Cannon (NC)", "only:120"]
+						"info": ["100c + Cannon (NC)", "option:NC", "only:120"]
 					},
 					"def": "jp",
 					"offset": 11,
 					"100c": true,
 					"rows": [
 						["JP"],
-						["US"],
+						["US"]
+					],
+					"ext": [
 						["No Cutscene", "JP", "second"],
 						["No Cutscene", "US", "second"]
-					],
+					],	
 					"open": []
 				}
 			]
@@ -1938,23 +1968,23 @@
 				{
 					"name": "Wing Mario over the Rainbow",
 					"id": "wmotr",
-					"info": ["Wing Mario", "only:120"],
+					"info": ["Wing Mario", "option:Cutscene", "only:120"],
 					"alt": {
 						"status": "cutscene",
-						"info": ["Wing Mario (NC)", "only:120"]
+						"info": ["Wing Mario (NC)", "option:NC", "only:120"]
 					},
 					"variants": ["Early Cannon"],
 					"rows": [
-						["No Cutscene", "second"],
 						[],
-						["Pole Red Early (NC)", "second"],
 						["Pole Red Early"],
-						["Stored Angle (NC)", "second"],
 						["Stored Angle"]
 					],
 					"ext": [
-						["Open (NC)", "second", "alt:0"],
-						["Open", "alt:0"]
+						["No Cutscene", "second"],
+						["Pole Red Early (NC)", "second"],
+						["Stored Angle (NC)", "second"],
+						["Open", "alt:0"],
+						["Open#Alt", "second", "alt:0"]
 					],
 					"open": []
 				},
@@ -2052,6 +2082,7 @@
 					"rows": [
 						["Pole Glitch"],
 						["Ultimate"],
+						["BLJ"],
 						["Zero Cycle"]
 					],
 					"open": []
@@ -2114,7 +2145,7 @@
 					"info": ["BitS Reds", "main:BitS Reds (Star)", "option:Star", "only:120"],
 					"alt": {
 						"status": "mergeOffset",
-						"offset": -169,
+						"offset": -162,
 						"info": ["BitS Reds (Pipe)", "option:Pipe", "only:120"]
 					},
 					"def": "offset",
@@ -2146,7 +2177,7 @@
 						"specMerge": ["Throws", "Normal File", "120 Star File"] 
 					},
 					"def": "offset",
-					"offset": { "120 Star File": 20, "Normal File": 13 },
+					"offset": { "120 Star File": 13, "Normal File": 20 },
 					"variants": [],
 					"rows": [
 						["120 Star File", "JP", "second"],

@@ -45,13 +45,18 @@ export function xcamRecordMap(colList: ColList, fs: FilterState,
 				if (timeDat.time < allRecordAlt.time && secondFlag) allRecordAlt = timeDat;
 			}
 		} else if (stratDef.virtId.kind === 'beg') {
-			console.log(stratDef);
+			//console.log(stratDef);
+			if (rowData.beg[stratDef.virtId.id] === undefined) {
+				throw ("No beginner strat found for " + stratDef.virtId.id);
+			}
 			var rawTime = rawMS(rowData.beg[stratDef.virtId.id][0]);
 			if (rawTime === null) throw ("Bad beginner time listed for " + stratDef.name);
 			var timeDat = newTimeDat(rawTime, null, null, begRowDef(stratDef.name));
 			applyVerOffset(timeDat, verOffset);
 			applyStratOffset(timeDat, secondFlag, stratOffset, forceAdjust);
 			if (timeDat.time < record.time) record = timeDat;
+			if (timeDat.time < allRecord.time && !secondFlag) allRecord = timeDat;
+			if (timeDat.time < allRecordAlt.time && secondFlag) allRecordAlt = timeDat;
 		}
 		recordMap[stratDef.name] = record;
 	}
