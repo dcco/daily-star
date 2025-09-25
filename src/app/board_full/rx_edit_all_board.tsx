@@ -49,7 +49,9 @@ export function EditBoard(props: EditBoardProps): React.ReactNode {
 	var starDef = orgStarDef(stageId, starId);
 
 	// filter state
-	var initFS = newExtFilterState([true, true], true);
+	var varTotal = 0;
+	if (starDef.variants) varTotal = starDef.variants.length;
+	var initFS = newExtFilterState([true, true], true, varTotal);
 	initFS.verState = [true, true];
 	const [fs, setFS] = useState(initFS);
 	var verOffset = verOffsetStarDef(starDef, fs);

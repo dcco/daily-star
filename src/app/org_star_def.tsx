@@ -6,7 +6,7 @@ import { VerF, Ver, VerInfo, VarSet, VarSpace,
 import { RawStratDef, StratSet, ColList,
 	buildStratDef, openStratDef,
 	mergeStratSet, hasExtStratSet, filterExtStratSet,
-	filterVirtStratSet, toListStratSet } from './org_strat_def'
+	filterVirtStratSet, filterVariantStratSet, toListStratSet } from './org_strat_def'
 import { OffsetDat, VerOffset, StratOffset, newVerOffset, newStratOffset } from './time_dat'
 
 	/*
@@ -15,42 +15,47 @@ import { OffsetDat, VerOffset, StratOffset, newVerOffset, newStratOffset } from 
 		* extFlag: whether to display extension sheet columns/times
 		* altState: alternate strat combination state
 		* virtFlag: whether to show virtual rows (beginner / artificial open)
+		* varFlagList: which variants to display
 	*/
 
 export type FilterState = {
 	"verState": [boolean, boolean],
 	"extFlag": boolean,
 	"altState": [boolean, boolean],
-	"virtFlag": boolean
+	"virtFlag": boolean,
+	"varFlagList": boolean[]
 }
 
-export function newFilterState(alt: [boolean, boolean], virt: boolean): FilterState
+export function newFilterState(alt: [boolean, boolean], virt: boolean, varTotal: number): FilterState
 {
 	return {
 		"verState": [true, false],
 		"extFlag": false,
 		"altState": alt,
-		"virtFlag": virt
+		"virtFlag": virt,
+		"varFlagList": new Array(varTotal).fill(true)
 	};
 }
 
-export function newExtFilterState(alt: [boolean, boolean], virt: boolean): FilterState
+export function newExtFilterState(alt: [boolean, boolean], virt: boolean, varTotal: number): FilterState
 {
 	return {
 		"verState": [true, false],
 		"extFlag": true,
 		"altState": alt,
-		"virtFlag": virt
+		"virtFlag": virt,
+		"varFlagList": new Array(varTotal).fill(true)
 	};
 }
 
-export function fullFilterState(alt: [boolean, boolean]): FilterState
+export function fullFilterState(alt: [boolean, boolean], varTotal: number): FilterState
 {
 	return {
 		"verState": [true, true],
 		"extFlag": true,
 		"altState": alt,
-		"virtFlag": true
+		"virtFlag": true,
+		"varFlagList": new Array(varTotal).fill(true)
 	};
 }
 
@@ -60,7 +65,8 @@ export function copyFilterState(fs: FilterState): FilterState
 		"verState": [fs.verState[0], fs.verState[1]],
 		"extFlag": fs.extFlag,
 		"altState": fs.altState,
-		"virtFlag": fs.virtFlag
+		"virtFlag": fs.virtFlag,
+		"varFlagList": fs.varFlagList.map((b) => b)
 	};
 }
 
@@ -355,6 +361,12 @@ export function stratSetStarDef(starDef: StarDef, fs: FilterState): StratSet
 	if (fs.extFlag === false) verSet = filterExtStratSet(verSet);
 	// virtual filter
 	if (fs.virtFlag === false) verSet = filterVirtStratSet(verSet);
+	// variant filter
+	var varAllFlag = true;
+	for (let i = 0; i < fs.varFlagList.length; i++) {
+		if (!fs.varFlagList[i]) varAllFlag = false;
+	}
+	if (!varAllFlag) verSet = filterVariantStratSet(verSet, fs.varFlagList);
 	return verSet;
 }
 

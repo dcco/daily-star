@@ -14,6 +14,7 @@ import { PlayDB } from '../table_parts/rx_star_row'
 import { LiveStarTable } from '../table_parts/rx_live_table'
 import { MenuOpt } from '../board_simple/rx_menu_opt'
 import { VerToggle } from '../board_simple/rx_ver_toggle'
+import { VariantToggle } from '../board_simple/rx_variant_toggle'
 import { Countdown } from './rx_countdown'
 
 type CountMap = {
@@ -93,7 +94,7 @@ export function DSEditBoard(props: DSEditBoardProps): React.ReactNode {
 	// filter state
 	// unlike viewboard, extensions always on
 	// WARNING: versions always on (too much of a pain to change), may want to fix eventually but idk
-	var initFS = newExtFilterState([true, true], true);
+	var initFS = newExtFilterState([true, true], true, 0);
 	initFS.verState = [true, true];
 	const [fs, setFS] = useState(initFS);
 	
@@ -143,7 +144,7 @@ export function DSEditBoard(props: DSEditBoardProps): React.ReactNode {
 
 	// variant information
 	var varContList = starDefList.map((starDef, i) => {
-		var varContNode: React.ReactNode = <div></div>;
+		/*var varContNode: React.ReactNode = <div></div>;
 		if (starDef.variants && starDef.variants.length > 0) {
 			var vstr: React.ReactNode[] = ["Variants: "];
 			starDef.variants.map((vName, i) => {
@@ -155,8 +156,13 @@ export function DSEditBoard(props: DSEditBoardProps): React.ReactNode {
 				<div className="variant-box">{ vstr }</div>
 			</div>);
 		}
-		return varContNode;
+		return varContNode;*/
+		return <VariantToggle variants={ starDef.variants }
+			state={ fs.varFlagList } toggle={ function() {} }></VariantToggle>;
 	});
+
+	/*var varTotal = 0;
+	if (starDef.variants) varTotal = starDef.variants.length;*/
 
 	// player count functionality
 	const updatePlayCount = (key: string) => (idList: Ident[]) => {

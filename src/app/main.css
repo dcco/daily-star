@@ -332,16 +332,64 @@ select {
 }
 
 .variant-box {
-	display: inline-block;
-	background-color: #282840;
-	border-radius: 2px;
-	padding: 2px;
-	padding-left: 8px;
-	padding-right: 8px;
-	padding-bottom: 3px;
-	color: #D0D0F0;
+	display: flex;
+	align-items: stretch;
 	font-size: 12px;
 }
+
+.variant-title {
+	background-color: #282840;
+	color: #D0D0F0;
+	font-size: 12px;
+	border-radius: 2px;
+	padding: 2px;
+	padding-bottom: 3px;
+	padding-left: 8px;
+	padding-right: 8px;
+	margin-right: 3px;
+}
+
+.variant-button {
+	background-color: #C0C0E0;
+	color: #202020;
+	font-size: 11px;
+	/*background-color: #282840;
+	color: #D0D0F0;*/
+	border-radius: 2px;
+	margin-left: 4px;
+	margin-top: 1px;
+	margin-bottom: 1px;
+	padding: 1px;
+	padding-bottom: 1px;
+	padding-left: 8px;
+	padding-right: 8px;
+}
+
+.variant-button[data-active="true"]:hover {
+	background-color: #B0B0D6;
+	cursor: pointer;
+}
+
+.variant-button[data-active="false"] {
+	background-color: #282840;
+	color: #D0D0F0;
+	font-style: italic;
+}
+
+.variant-button[data-active="false"]:hover {
+	background-color: #181830;
+	cursor: pointer;
+}
+
+.variant-num {
+	display: inline-block;
+	font-style: normal;
+	padding-right: 4px;
+}
+
+/*
+	display: inline-block;
+*/
 
 	/* star selector */
 

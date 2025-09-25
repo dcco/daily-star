@@ -14,6 +14,7 @@ import { PlayDB } from "../table_parts/rx_star_row"
 import { StarTable } from '../table_parts/rx_star_table'
 import { VerToggle } from './rx_ver_toggle'
 import { ExtToggle } from './rx_ext_toggle'
+import { VariantToggle } from './rx_variant_toggle'
 
 export type TimeTableFun = ((colList: ColList, vs: VerOffset, ss: StratOffset) => TimeTable);
 
@@ -45,7 +46,9 @@ export function ViewBoard(props: ViewBoardProps): React.ReactNode
 	if (!combFlag) initAlt = [true, false];
 
 	// init filter state
-	var initFS = newFilterState(initAlt, false);
+	var varTotal = 0;
+	if (starDef.variants) varTotal = starDef.variants.length;
+	var initFS = newFilterState(initAlt, false, varTotal);
 	if (props.extAll !== undefined) {
 		initFS.virtFlag = true;
 		initFS.verState = [true, true];
@@ -78,9 +81,19 @@ export function ViewBoard(props: ViewBoardProps): React.ReactNode
 		setFS(ns);
 	}
 
-	// if star def changes, reset alt state
+	// variant state
+	const toggleVar = (i: number) => {
+		var ns = copyFilterState(fs);
+		ns.varFlagList[i] = !ns.varFlagList[i];
+		setFS(ns);
+	}
+
+	// if star def changes, reset alt state + filter state
 	useEffect(() => {
-		toggleAlt(initAlt);
+		var ns = copyFilterState(fs);
+		ns.altState = initAlt;
+		ns.varFlagList = initFS.varFlagList.map((b) => b);
+		setFS(ns);
 	}, [starDef]);
 
 	// version toggle node (enable when relevant)
@@ -104,7 +117,7 @@ export function ViewBoard(props: ViewBoardProps): React.ReactNode
 			optName = starDef.info.option;
 			offVal = -offVal;
 		}
-		stratNode = (<div className="variant-box slight-margin">{ optName } Offset: { formatFrames(offVal) }</div>);
+		stratNode = (<div className="variant-title slight-margin">{ optName } Offset: { formatFrames(offVal) }</div>);
 	}
 
 	// alt toggle node (enable when relevant)
@@ -125,8 +138,9 @@ export function ViewBoard(props: ViewBoardProps): React.ReactNode
 	}
 
 	// variant information
-	var varCont: React.ReactNode = <div></div>;
-	if (starDef.variants && starDef.variants.length > 0) {
+	var varCont: React.ReactNode = <VariantToggle variants={ starDef.variants }
+		state={ fs.varFlagList } toggle={ toggleVar }></VariantToggle>;
+	/*if (starDef.variants && starDef.variants.length > 0) {
 		var vstr: React.ReactNode[] = ["Variants: "];
 		starDef.variants.map((vName, i) => {
 			if (i !== 0) vstr.push(", ");
@@ -134,7 +148,7 @@ export function ViewBoard(props: ViewBoardProps): React.ReactNode
 			vstr.push(<i key={ i }>{ vName }</i>); 
 		})
 		varCont = (<div className="variant-box">{ vstr }</div>);
-	}
+	}*/
 
 	// load time table from xcam data
 	var colList = colListStarDef(starDef, fs);
@@ -142,7 +156,7 @@ export function ViewBoard(props: ViewBoardProps): React.ReactNode
 	//var timeTable = xcamTimeTable(colList, fs, verOffset);
 
 	// add sort record + relevant records
-	var sortRM = xcamRecordMap(colList, fullFilterState([true, true]), verOffset, sOffset);
+	var sortRM = xcamRecordMap(colList, fullFilterState([true, true], varTotal), verOffset, sOffset);
 	var relRM = xcamRecordMap(colList, fs, verOffset, sOffset);
 	sortColList(colList, sortRM);
 

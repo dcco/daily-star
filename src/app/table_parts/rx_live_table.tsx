@@ -46,7 +46,9 @@ export function LiveStarTable(props: LiveStarTableProps): React.ReactNode
 	var starDef = orgStarDef(stageId, starId);
 	var verOffset = verOffsetStarDef(starDef, fs);
 	var sOffset = stratOffsetStarDef(starDef, fs);
-	var colList = colListStarDef(starDef, fullFilterState([true, true]));
+	var varTotal = 0;
+	if (starDef.variants) varTotal = starDef.variants.length;
+	var colList = colListStarDef(starDef, fullFilterState([true, true], varTotal));
 	var preColList = colListStarDef(starDef, fs);
 
 	// time table
@@ -103,7 +105,7 @@ export function LiveStarTable(props: LiveStarTableProps): React.ReactNode
 	};
 
 	// add sort record + relevant records
-	var sortRM = xcamRecordMap(colList, fullFilterState([true, true]), verOffset, sOffset);
+	var sortRM = xcamRecordMap(colList, fullFilterState([true, true], varTotal), verOffset, sOffset);
 	var relRM = xcamRecordMap(colList, fs, verOffset, sOffset);
 	sortColList(colList, sortRM);
 

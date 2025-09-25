@@ -134,7 +134,9 @@ export function getStarTimeMap(f: StarLoadFun, starSet: [StarDef, number][][], e
 			var [starDef, starId] = starSet[i][j];
 			var key = i + "_" + starDef.id;
 			// no extension data, combine alt strats when applicable
-			var fs = newFilterState([true, true], extFlag);
+			var varTotal = 0;
+			if (starDef.variants) varTotal = starDef.variants.length;
+			var fs = newFilterState([true, true], extFlag, varTotal);
 			if (extFlag) fs.extFlag = true;
 			fs.verState = [true, true];
 			// get un-split time data
