@@ -1,38 +1,32 @@
 
-! properly authenticate users on the backend
-* history board
-* weekly stars
+STAR ORG
 * fix that one star in ttc/rr.... you know the one where the variant is completely mislabelled?
+* fix ssl bird variants being mislabelled
 
----------------
+REFACTORING
+* refactor playdb / how player data is sent to the star cell area
 
 DAILY STAR GENERATOR
 * test "multi-glob" stars
--- time until next star clock
 
 FRONTEND
 -- mobile viewer
-* double board variant switcher
 
 BACKEND
 -- functionality for if i have to shut off the backend
 -- automatic backups
 -- better server-side validation
-
 -- auto-commit to the xcam cache
 
 TSC STUFF
 -- properly deal with typescript w/ firebase, json, etc
 
 NICKNAME EDIT
-* more robust nickname loading
 -- better nickname validator
-* crashes when nicknames opened w/ editor
 
 STRAT-VIEW RELATED BUGS
 * remove JP/US toggle from BBH text skip
 * figure out how row stuff works when JP/US is toggled
-* amazing emergency exit doesnt need JP/US toggle either
 * disable columns when switching between view/edit + when user auth changes
 -- custom variants (for open strats)
 
@@ -45,20 +39,14 @@ STRAT-VIEW RELATED BUGS
 
 * deal with "special stars"
 -- lil penguin
--- jrb cannon
 -- sl cannon
--- all cutscene vs no cutscene
--- moving reds / stopped reds merge
--- thi painting entry stars
 -- wdw arrow lifts
 
 MONTY BUGS
 -- validation for URLS
 -- validation for URL/note length
--- get notes to display
 
 OTHER SUBMISSION RELATED
-* allow time updates
 -- handle duplicate user nicknames
 -- canonical nicknames
 -- player colors
@@ -118,3 +106,68 @@ obscure columns (demoted to open variants)
 
 special exception to avoid cluttering variant list
 - Owlless: Sideflip
+
+salt flip JP: 47.23
+salt flp star: 42.33
+raw diff: 4.90
+frame diff: 147
+
+fs reds JP: 1:00.03
+fs reds star: 51.63
+raw diff: 8.40
+frame diff: 252
+
+sky reds JP: 1:07.70
+sky reds star: 1:02.30
+raw diff: 5.40
+frame diff: 162
+
+
+--------------------------
+
+
+  ## main info
+name: string
+id: string
+100c?: boolean
+
+  ## version info
+def?: "jp" | "us" | null | "offset" | "spec"
+offset?: int | { string => int }
+
+  ## variant + strat info
+variants?: [string]
+var_groups?: [[string, "{int}", ...]]
+beg?: [string]
+rows: [
+  ["JP" | "US" | "second" | "misc" | "rt" |
+    "easy" | "hard" | "alt:{int}" | string]
+]
+ext?: [ ... ]
+open: [string] | null
+
+
+- we need short codes to display for the main star + its alts
+- we need category info for the main star + its alts
+- we need to know the relationship between the main + alt
+ (how does the offset work)
+
+info: ["only:120" | "only:70" | "only:120beg" | "only:70beg" |
+  "in:16" | "in:16no" | "only:16" | "notin:120" | "only:any" |
+  "only:beg" | "main:{string}" | string],
+alt?: {
+  status: "cutscene" | "diff" | "offset" | "softOffset", 
+  offset?: int,
+  info: ["KtQ (NC)", "only:120"],
+}
+
+
+info/alt needs enough information to distinguish major secondary strats,
+ both informationally, and functionally. the main use cases are:
+- short codes for displaying star scores [visual]
+- major strat names for viewer toggle [visual]
+- a method for merging major strats when relevant [functional]
+
+
+
+

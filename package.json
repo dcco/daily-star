@@ -6,23 +6,20 @@
     "dev": "WATCHPACK_POLLING=true next dev",
     "build": "next build",
     "start": "WATCHPACK_POLLING=true next start",
-    "lint": "next lint",
     "tsc": "tsc --noEmit --incremental --strict"
   },
   "dependencies": {
-    "eslint": "^8.57.1",
     "firebase": "^10.14.0",
     "google-auth-library": "^9.14.1",
     "net": "^1.0.2",
     "next": "^14.2.14",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@types/node": "^22.7.5",
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.0",
-    "eslint-config-next": "14.2.15",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.3"
   }

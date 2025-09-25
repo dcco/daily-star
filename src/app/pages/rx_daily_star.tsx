@@ -9,6 +9,7 @@ import { DailyBoard } from '../board_full/rx_daily_board'
 import { HistoryBoard } from '../board_full/rx_history_board'
 import { HistoryTable } from './rx_history_table'
 import { PlayerBoard } from '../stats/rx_player_board'
+import { S3NewsBoard } from '../news_pages/s3_news_board'
 
 type DailyStarProps = {
 	"rm": RouterMain,
@@ -60,6 +61,7 @@ export function DailyStar(props: DailyStarProps): React.ReactNode
 		else if (i === 2) navRM(props.rm, "home", "weekly", "");
 		else if (i === 3) navRM(props.rm, "home", "history", "");
 		else if (i === 4) navRM(props.rm, "home", "stats", "");
+		else if (i === 5) navRM(props.rm, "home", "news", "");
 	};
 
 	// calculate whether season has ended
@@ -109,6 +111,8 @@ export function DailyStar(props: DailyStarProps): React.ReactNode
 		board = <PlayerBoard hrefBase={ ["/home/stats", "/home/history"] } slug={ props.rm.core.slug }
 			aboutNode={ <StatsAbout/> }	idType="remote" lowNum={ 30 } midNum={ 50 } pd={ playData }
 			starMap={ G_HISTORY.starMap } userMap={ G_HISTORY.userMap }/>;
+	} else if (menuId === 5) {
+		board = <S3NewsBoard/>;
 	}
 
 	var dailyOptNode: React.ReactNode = <MenuOpt id={ 0 } selId={ menuId } setSelId={ updateMenuId }>Daily</MenuOpt>;
@@ -125,6 +129,7 @@ export function DailyStar(props: DailyStarProps): React.ReactNode
 		<div className="menu-cont">
 			{ dailyOptNode }
 			{ weeklyOptNode }
+			<MenuOpt id={ 5 } selId={ menuId } setSelId={ updateMenuId }>News</MenuOpt>
 			<MenuOpt id={ 3 } selId={ menuId } setSelId={ updateMenuId }>History</MenuOpt>
 			<MenuOpt id={ 1 } selId={ menuId } setSelId={ updateMenuId }>Archive</MenuOpt>
 			<MenuOpt id={ 4 } selId={ menuId } setSelId={ updateMenuId }>Stats</MenuOpt>

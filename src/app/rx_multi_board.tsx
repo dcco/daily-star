@@ -66,7 +66,9 @@ export function MultiBoard(props: { boardId?: number, subId?: number, slug?: str
 	const router = useRouter();*/
 	var boardId = 0;
 	if (props.boardId !== undefined) boardId = props.boardId;
-	const _core = newRouterCore(boardId, props.subId, props.slug);
+	var subId = props.subId;
+	if (boardId === 0 && props.subId === undefined) subId = 5;
+	const _core = newRouterCore(boardId, subId, props.slug);
 	const [core, setCore] = useState(_core);
 	const rm = newRouterMain(core, setCore);
 

@@ -1331,6 +1331,11 @@ td:hover .float-icon[data-active="false"] {
 	font-weight: bold;
 }
 
+.chart-cont {
+	padding-top: 12px;
+	padding-left: 12px;
+}
+
 ul {
 	margin: 0px;
 }

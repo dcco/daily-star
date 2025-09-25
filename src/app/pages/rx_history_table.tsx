@@ -39,9 +39,9 @@ export function HistoryTable(props: {}): React.ReactNode
 	// season message
 	var seasonEnd = G_DAILY.status === "none" || (G_DAILY.starGlob !== undefined && G_DAILY.starGlob.day === null);
 	var msgNode: React.ReactNode = null;
-	if (seasonEnd) msgNode = <div className="msg-cont">Daily Star season has ended :)
-		Check back in March / in the Discord for news on when it will resume. Thanks for playing the Daily Star!</div>;
-
+	//if (seasonEnd) msgNode = <div className="msg-cont">Daily Star season has ended :)
+	//	Check back in March / in the Discord for news on when it will resume. Thanks for playing the Daily Star!</div>;
+	
 	const [sortId, setSortId] = useState(0);
 	// calculate star data
 	var playList: ShortDataEx[] = G_HISTORY.header.starList.map((glob, ix) => {
@@ -126,10 +126,12 @@ export function HistoryTable(props: {}): React.ReactNode
 
 	var imgNodeFun = (active: boolean): React.ReactNode => (<div className="float-frame">
 		<img src="/icons/sort-icon.png" data-active={ active.toString() } className="float-icon" alt=""></img></div>);
-	return (
-		<div className="super-cont">
+	/*
 		<div className="msg-cont">Take the <a className="msg-link" href={ "https://forms.gle/BHpptf6or9hoYXDW9" }>Daily Star Survey</a>!
 			(Feedback will be used for scores next season)</div>
+	*/
+	return (
+		<div className="super-cont">
 		{ msgNode }
 		<div className="table-cont">
 			<table className="time-table small-table"><tbody>

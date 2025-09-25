@@ -54,8 +54,10 @@ function navData(board: string, subId: string, slug: string): [string, number, n
 		return ["/home/stats", 0, 4];
 	} else if (board === "home" && subId === "weekly") {
 		return ["/home/weekly", 0, 2];
+	} else if (board === "home" && subId === "news") {
+		return ["/home/news", 0, 5];
 	} else if (board === "home") {
-		return ["/home", 0, 0];
+		return ["/home", 0, 5];
 	} else if (board === "xcam" && subId === "players") {
 		if (slug === "") return ["/xcam/players", 1, 1];
 		else return ["/xcam/players?name=" + slug, 1, 1];
