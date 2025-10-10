@@ -1,8 +1,10 @@
 
 //import playData from './json/player_data.json'
 import Link from 'next/link'
+import React from 'react'
 
 import { G_SHEET } from '../api_xcam'
+import { RANK_NAME_LIST } from '../standards/rank_const'
 
 import { Ver } from '../variant_def'
 import { TimeDat, VerOffset, formatTime } from '../time_dat'
@@ -78,6 +80,36 @@ export function timeDetail(timeDat: TimeDat | null, verOffset: VerOffset, hideSt
 	return [timeText, rawText];
 }
 
+function getRank(rankKey: string, stratName: string, timeDat: TimeDat): string
+{
+	// lookup strat ranks
+	var stratSet = G_SHEET.srMap[rankKey];
+	var ver = timeDat.rowDef.ver;
+	/*var altSet = G_SHEET.srMap[rankKey + "#" + ver];
+	if (altSet !== undefined) {
+		stratSet = altSet;
+		altFlag = true;
+	}*/
+	if (stratSet === undefined || stratSet[stratName] === undefined) return "Unranked";
+	var st = stratSet[stratName];
+	// iterate through strat ranks
+	for (let i = 0; i < RANK_NAME_LIST.length - 1; i++) {
+		var rankName = RANK_NAME_LIST[i][0];
+		var rankInfo = st.times[rankName];
+		if (rankInfo === undefined || rankInfo.sr === "none") continue;
+		var rankDat = rankInfo.time;
+		// lookup if alt strat should be used
+		var altFlag = false;
+		var rankTime = rankDat.time;
+		if (rankDat.alt !== null && rankDat.alt[1] === ver) rankTime = rankDat.alt[0];
+		// if using alt, compare raw time
+		//if (altFlag && timeDat.rawTime <= rankTime) return rankName;
+		//else if (!altFlag && timeDat.verTime <= rankTime) return rankName;
+		if (timeDat.rawTime <= rankTime) return rankName;
+	}
+	return "Iron";
+}
+
 	/* time cell: displays a time w/ version adjustment, variant info, video link, etc */
 
 type TimeCellProps = {
@@ -86,8 +118,10 @@ type TimeCellProps = {
 	"active": boolean,
 	"onClick": () => void,
 	"hiddenFlag": boolean,
+	"super"?: string,
 	"complete"?: string,
-	"hideStratOffset"?: boolean
+	"hideStratOffset"?: boolean,
+	"rankKey"?: string
 };
 
 export function TimeCell(props: TimeCellProps): React.ReactNode {
@@ -102,6 +136,7 @@ export function TimeCell(props: TimeCellProps): React.ReactNode {
 	var [cellText, rawText] = timeDetail(timeDat, verOffset, hideStratOffset);
 	// link if link is relevant
 	var timeNode: React.ReactNode = cellText;
+	if (props.super) timeNode = <React.Fragment>{ timeNode }<sup data-k={ props.super }>{ props.super }</sup></React.Fragment>;
 	if (timeDat !== null && timeDat.link !== null && timeDat.link !== "") {
 		timeNode = (<a href={ timeDat.link } target="_blank">{ timeNode }</a>);
 	}
@@ -115,8 +150,39 @@ export function TimeCell(props: TimeCellProps): React.ReactNode {
 	var spanNodes: React.ReactNode[] = [];
 	if (rawText !== null) spanNodes.push(<em key="e">{ rawText }</em>);
 	if (hiddenFlag) spanNodes.push(<div className="na" key="a">*</div>);
-	return (<td className="time-cell tooltip" data-active={ active.toString() } data-complete={ props.complete }
-		onClick={ onClick }>{ timeNode } { spanNodes } { noteNodes }</td>);
+	// add rank node if necessary
+	var hasRankNode = props.rankKey && timeDat !== null && cellText !== "";
+	timeNode = (<td className="time-cell tooltip" data-active={ active.toString() } data-complete={ props.complete }
+		colSpan={ hasRankNode ? 1 : 2 } onClick={ onClick }>{ timeNode } { spanNodes } { noteNodes }</td>);
+	// -- do this again to appease typescript
+	if (props.rankKey && timeDat !== null && cellText !== "") {
+		var rankName = getRank(props.rankKey, timeDat.rowDef.name, timeDat);
+		return <React.Fragment>
+			{ timeNode }
+			<td className="time-rank" data-ps={ rankName }>
+				<div className="time-rank-inner">{ rankName }</div>
+				<div className="time-rank-hat"></div>
+			</td>
+		</React.Fragment>;
+	}
+	return timeNode;
+}
+
+type SimpleCellProps = {
+	"time": number,
+	"alter"?: boolean,
+	"altTime"?: [number, string]
+};
+
+export function SimpleTimeCell(props: SimpleCellProps): React.ReactNode {
+	var timeText = formatTime(props.time);
+	var alter = props.alter === true;
+	var spanText: React.ReactNode = "";
+	if (props.altTime) {
+		var sText = "(" + formatTime(props.altTime[0]) + " " + props.altTime[1].toUpperCase() + ")";
+		spanText = <em>{ sText }</em>;
+	}
+	return (<td className="time-cell tooltip" data-active={ "false" } data-alter={ alter.toString() }>{ timeText } { spanText }</td>);
 }
 
 	/* record cell: similar to time cell, but with no interactivity */
@@ -138,7 +204,7 @@ export function RecordCell(props: RecordCellProps): React.ReactNode {
 	if (timeDat !== null && timeDat.link !== null && timeDat.link !== "") {
 		timeNode = (<a href={ timeDat.link } target="_blank">{ timeNode }</a>);
 	}
-	return (<td className="record-cell">{ timeNode } { rawText }</td>);
+	return (<td className="record-cell" colSpan={ 2 }>{ timeNode } { rawText }</td>);
 }
 
 	/* name cell: displays a player name */

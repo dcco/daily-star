@@ -3,6 +3,8 @@ import playData from '../json/player_data.json'
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 
+import { DEV } from '../rx_multi_board'
+
 import { IdService, Ident, newIdent, keyIdent, rawIdent } from '../time_table'
 import { PlayData, newPlayData } from '../play_data'
 import { orgStarId, orgStarDef } from '../org_star_def'
@@ -121,7 +123,7 @@ export function DetailTable(props: DetailTableProps): React.ReactNode
 		if (!userScore.comp) {
 			var rankText = "?/" + userScore.playTotal;
 			var score = "-";
-			var timeNode: React.ReactNode = <td className="time-cell" key="time">-</td>;
+			var timeNode: React.ReactNode = <td className="time-cell" colSpan={ 2 } key="time">-</td>;
 			if (userScore.rank !== null) {
 				var rankNo = userScore.rank + 1;
 				rankText = rankNo + "/" + userScore.playTotal;
@@ -174,8 +176,8 @@ export function DetailTable(props: DetailTableProps): React.ReactNode
 					<td className="time-cell" width="5%">#</td>
 					<td className="time-cell" width="10%">Rank</td>
 					<td className="time-cell" width="8%">Score</td>
-					<td className="time-cell">Time</td>
-					<td className="time-cell">Sheet Best</td>
+					<td className="time-cell" width="25.5%" colSpan={ 2 }>Time</td>
+					<td className="time-cell" width="25.5%" colSpan={ 2 }>Sheet Best</td>
 				</tr>
 				{ playTableNodes }
 			</tbody></table>
@@ -235,9 +237,10 @@ export function PlayerTable(props: PlayerTableProps): React.ReactNode
 		return {
 			'id': player.id,
 			'total': total,
-			'top30': calcTopXStats(player, props.lowNum),
-			'topNum': calcTopXStats(player, number),
-			'topAll': calcTopXStats(player, starTotal)
+			// CHANGE FOR THE LAUNCH
+			'top30': calcTopXStats(player, props.lowNum, DEV),
+			'topNum': calcTopXStats(player, number, false),
+			'topAll': calcTopXStats(player, starTotal, false)
 		};
 	});
 	playerList.sort(function (a, b) {

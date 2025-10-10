@@ -184,7 +184,7 @@ export function HistoryBoard(props: { playData: PlayData, rm: RouterMain }): Rea
 	};
 
 	return (<div>
-		<ViewBoard stageId={ stageList[id1] } starDef={ starDef } playData={ props.playData } extAll={ true }
-			ttFun= { ttFun } cornerNode={ stageSelNode } headerNode={ starSelNode } playDB={ playDB } />
+		<ViewBoard kind="view" mergeRaw={ true } stageId={ stageList[id1] } starDef={ starDef } playData={ props.playData } extAll={ true }
+			ttFun= { ttFun } cornerNode={ stageSelNode } headerNode={ starSelNode } showStd={ false } playDB={ playDB } />
 	</div>);
 }

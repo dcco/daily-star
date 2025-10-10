@@ -206,7 +206,7 @@ export function EditCell(props: EditCellProps): React.ReactNode {
 	if (!validDat.complete || improperValidDat(validDat)) fErr = "error";
 	else if (validDat.properAll.length > 0 || validDat.proper === "fix") fErr = "warning";
 
-	return (<td className="edit-cell" onClick={ props.onClick }>
+	return (<td className="edit-cell" colSpan={ 2 } onClick={ props.onClick }>
 		<div className="cell-wrap" data-use={ cellText !== "" } data-del={ delFlag.toString() }
 			data-valid={ validDat.valid.toString() } data-err={ fErr.toString() }
 			data-dirty={ validDat.dirty.toString() }> { cellText } { rawText }</div></td>);
@@ -242,7 +242,7 @@ export function InputCell(props: InputCellProps): React.ReactNode {
 	if (!validDat.complete || improperValidDat(validDat)) fErr = "error";
 	else if (validDat.properAll.length > 0 || validDat.proper === "fix") fErr = "warning";
 
-	return (<td className="edit-cell" onClick={ () => {} }>
+	return (<td className="edit-cell" colSpan={ 2 } onClick={ () => {} }>
 		<div className="cell-wrap">
 			<input className="cell-input" value={ cellText } data-del={ delFlag.toString() }
 				data-valid={ validDat.valid.toString() } data-err={ fErr.toString() }

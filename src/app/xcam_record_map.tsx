@@ -5,7 +5,7 @@ import { G_SHEET } from './api_xcam'
 import { TimeDat, VerOffset, StratOffset, rawMS,
 	newTimeDat, maxTimeDat, applyVerOffset, applyStratOffset } from './time_dat'
 import { zeroRowDef, begRowDef } from './row_def'
-import { ColList, readRefMap } from './org_strat_def'
+import { StratDef, ColList, readRefMap } from './org_strat_def'
 import { FilterState } from './org_star_def'
 
 	/*
@@ -16,10 +16,45 @@ export type RecordMap = {
 	[key: string]: TimeDat;
 }
 
-export function xcamRecordMap(colList: ColList, fs: FilterState,
-	verOffset: VerOffset, stratOffset: StratOffset, forceAdjust?: number): RecordMap
+type BanMap = {
+	[key: string]: [string, string][]
+}
+
+function makeBanMap(banList: string[][]): BanMap
+{
+	var bm: BanMap = {};
+	for (const banData of banList)
+	{
+		if (bm[banData[1]] === undefined) bm[banData[1]] = [];
+		bm[banData[1]].push([banData[0], banData[2]]);
+	}
+	return bm;
+}
+
+function checkBanMap(bm: BanMap, sDef: StratDef, timeDat: TimeDat): string | null
+{
+	if (bm[sDef.name] === undefined) return null;
+	var banList = bm[sDef.name];
+	for (const variant of timeDat.rowDef.variant_list)
+	{
+		var [vId, groupName] = variant;
+		if (vId === -1) continue;
+		var vName = sDef.vs.variants[vId];
+		for (const banEx of banList) {
+			var [xName, altName] = banEx;
+			if (vName === xName) {
+				return altName;
+			}
+		}
+	}
+	return null;
+}
+
+export function xcamRecordMapBan(colList: ColList, fs: FilterState,
+	verOffset: VerOffset, stratOffset: StratOffset, banList: string[][], forceAdjust?: number): RecordMap
 {
 	var rowData = G_SHEET.rowData;
+	var bm = makeBanMap(banList);
 	// build record map
 	var recordMap: RecordMap = {};
 	var allRecord = maxTimeDat(zeroRowDef("Open"));
@@ -40,7 +75,12 @@ export function xcamRecordMap(colList: ColList, fs: FilterState,
 					readRefMap(stratDef.row_map, xcamRef, "rm:" + stratDef.name));
 				applyVerOffset(timeDat, verOffset);
 				applyStratOffset(timeDat, secondFlag, stratOffset, forceAdjust);
-				if (timeDat.time < record.time) record = timeDat;
+				var altName = checkBanMap(bm, stratDef, timeDat);
+				if (altName === null && timeDat.time < record.time) record = timeDat;
+				else if (altName !== null) {
+					var banRecord = recordMap[altName];
+					if (banRecord === undefined || timeDat.time < banRecord.time) recordMap[altName] = timeDat;
+				}
 				if (timeDat.time < allRecord.time && !secondFlag) allRecord = timeDat;
 				if (timeDat.time < allRecordAlt.time && secondFlag) allRecordAlt = timeDat;
 			}
@@ -63,6 +103,12 @@ export function xcamRecordMap(colList: ColList, fs: FilterState,
 	recordMap["Open"] = allRecord;
 	recordMap["Open#Alt"] = allRecordAlt;
 	return recordMap;
+}
+
+export function xcamRecordMap(colList: ColList, fs: FilterState,
+	verOffset: VerOffset, stratOffset: StratOffset, forceAdjust?: number): RecordMap
+{
+	return xcamRecordMapBan(colList, fs, verOffset, stratOffset, [], forceAdjust);
 }
 
 export function sortColList(colList: ColList, recordMap: RecordMap)

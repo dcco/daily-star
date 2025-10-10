@@ -16,6 +16,8 @@ import { XcamFull } from './pages/rx_xcam_full'
 import { About } from './pages/rx_about'
 import { EditBoard } from './board_full/rx_edit_all_board'
 
+export const DEV = false;
+
 type HeadTabProps = {
 	"id": number,
 	"selId": number,
@@ -92,6 +94,7 @@ export function MultiBoard(props: { boardId?: number, subId?: number, slug?: str
 	const updateMainId = (i: number) => {
 		if (i === 1) navRM(rm, "xcam", "", "");
 		else if (i === 2) navRM(rm, "about", "", "");
+		else if (i === 3 && DEV) navRM(rm, "editor", "", "");
 		else navRM(rm, "home", "", "");
 		/*setMainId(i);
 		if (i === 1) router.push("/xcam");
@@ -155,17 +158,25 @@ export function MultiBoard(props: { boardId?: number, subId?: number, slug?: str
 			updatePlayData={ updatePlayData } reloadPlayData={ reloadPlayData } key={ boardKey }/>;
 	} else if (mainId === 1) {
 		board = <XcamFull rm={ rm } key={ boardKey }/>;
-	} else if (mainId === 3) {
+	} else if (mainId === 3 && DEV) {
 		board = <EditBoard playData={ playData } updatePlayData={ updatePlayData } reloadPlayData={ () => reloadPlayData(null) }/>;
 	} else {
 		board = <About/>;
 	}
 	// <HeadTab id={ 3 } selId={ mainId } setSelId={ updateMainId }>Editor (ADMIN)</HeadTab>
+
+	var adminNode: React.ReactNode[] = [];
+	if (DEV) {
+		adminNode.push(
+			<HeadTab id={ 3 } key={ 3 } selId={ mainId } setSelId={ updateMainId }>Editor (ADMIN)</HeadTab>
+		);
+	}
 	return (
 		<div className="content">
 		<div className="cont-head">
 			<HeadTab id={ 0 } selId={ mainId } setSelId={ updateMainId }>Daily Star</HeadTab>
 			<HeadTab id={ 1 } selId={ mainId } setSelId={ updateMainId }>Xcam Viewer</HeadTab>
+			{ adminNode }
 			<HeadTab id={ 2 } selId={ mainId } setSelId={ updateMainId }>About</HeadTab>
 		</div>
 		<div className="cont-body headless">

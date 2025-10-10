@@ -352,7 +352,7 @@ export function EditRow(props: EditRowProps): React.ReactNode {
 				rowNodes.push(<EditCell validDat={ vDat } draftDat={ draftDatN } verOffset={ verOffset }
 					onClick={ () => cellClick("edit", rowId, i, j) } key={ i }/>);
 			} else {
-				rowNodes.push(<td className="dark-cell" key={ i }></td>);
+				rowNodes.push(<td className="dark-cell" key={ i } colSpan={ 2 }></td>);
 			}
 		}
 		// player name cell
@@ -383,7 +383,7 @@ export function EditRow(props: EditRowProps): React.ReactNode {
 		{ editNodes }
 		<tr className="time-row" key="edit-info-row">
 			<td></td>
-			<td className="submit-area" colSpan={ timeRow.length }>
+			<td className="submit-area" colSpan={ timeRow.length * 2 }>
 				<EditSubmitArea starDef={ starDef } cfg={ cfg } colId={ editPos.colId } vs={ vs }
 					curDat={ draftDat } oldDat={ oldDat }
 					editDat={ (f) => editLoc(editPos.colId, editPos.subRowId, f) }

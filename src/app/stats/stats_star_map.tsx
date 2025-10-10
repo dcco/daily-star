@@ -7,7 +7,6 @@ import { ColList, filterVarColList } from '../org_strat_def'
 import { FilterState, StarDef, newFilterState, copyFilterState,
 	orgStarDef, verOffsetStarDef, stratOffsetStarDef, colListStarDef } from '../org_star_def'
 import { RecordMap, xcamRecordMap } from '../xcam_record_map'
-import { xcamTimeTable } from '../xcam_time_table'
 
 	/*
 		alt state: represents both what variant of a star is being used

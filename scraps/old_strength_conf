@@ -1,0 +1,51 @@
+	// calculate strong/weak player ratio
+	var strongTotal = 0;
+	var weakTotal = 0;
+	for (let i = 0; i < times.length; i++) {
+		var [playStd, timeDat] = times[i];
+		if (RANK_NAME_MAP[playStd] <= 2) strongTotal = strongTotal + 1;
+		if (RANK_NAME_MAP[playStd] >= 5) weakTotal = weakTotal + 1;
+	}
+	// - adjusted by how many "strong" players have played the star
+	// -- increases OPR if majority weak players   [smurf rank indicator, buff decreases if many strong players]
+	// -- decreases OPR if majority weak players, but many strong players also  [beginner strat indicator]
+	// [0, 1] - 0 = low strength conf, 1 = high strength conf
+	var strengthConf = 1 - (Math.max(0, (RANK_CONFIDENCE * 2) - strongTotal) / (RANK_CONFIDENCE * 2));
+	var invConfSq = (1 - strengthConf) * (1 - strengthConf);
+	// [0, 1] - 0 = strong players present, 1 = majority weak players
+	var strengthRatio = 1;
+	if (weakTotal !== 0) strengthRatio = Math.min(1, (strongTotal * 1.5) / weakTotal);
+	strengthRatio = 1 - (strengthRatio * strengthRatio);
+	// calculate buff + debuff
+	var oprPlus = strengthRatio * invConfSq;
+	var oprMinus = Math.max(0, 1 - (strengthConf * 0.5 * strengthRatio));
+	overPerfRank = overPerfRank * overPerfRank * 2.8;
+	overPerfRank = overPerfRank * (1 + oprPlus * 0.4);
+	overPerfRank = overPerfRank * oprMinus;
+	// calculate how many players of each rank have a time
+	var skillEx = 1 + Math.min(overPerfRank, 0.35);
+	var rankPlayRate: number[] = Array(RANK_NAME_LIST.length).fill(0);
+	for (const timeInfo of times) {
+		var [playStd, timeDat] = timeInfo;
+		var rankNum = RANK_NAME_MAP[playStd];
+		if (rankNum === undefined) rankNum = rankPlayRate.length - 1;
+		rankPlayRate[rankNum] = rankPlayRate[rankNum] + 1;
+	}
+
+	// re-distribute platinum to gold into
+	// the plat to silver range, to deal with lower player rates
+	/*var lowRankTotal = rankPlayRate[4] + rankPlayRate[5];
+	var lowRankRates = [0.39, 0.35, 0.26];
+	var curTotal = lowRankTotal;*/
+	/*var lowRankRate = Math.ceil(lowRankTotal / 4);*/
+	/*for (let i = 4; i <= 6; i++) {
+		var adjRate = Math.ceil(lowRankTotal * lowRankRates[i - 4]);
+		if (curTotal >= adjRate) {
+			rankPlayRate[i] = adjRate;
+			curTotal = curTotal - adjRate;
+		} else {
+			rankPlayRate[i] = curTotal;
+			curTotal = 0;
+		}
+	}
+	*/

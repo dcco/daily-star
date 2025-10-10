@@ -251,7 +251,7 @@ export function fillIncompleteStats(userSx: UserStats, refList: [string, StarRef
 	}
 }
 
-export function calcTopXStats(userSx: UserStats, x: number): number
+export function calcTopXStats(userSx: UserStats, x: number, descale: boolean): number
 {
 	// assumes that user stats are already sorted during the standards function
 	var ix = 0;
@@ -261,6 +261,7 @@ export function calcTopXStats(userSx: UserStats, x: number): number
 		topX = topX + star.scorePts;
 		ix = ix + 1;
 	}
+	if (descale && ix !== 0) return (topX * 100) / ix;
 	return (topX * 100) / x;
 }
 
@@ -349,12 +350,12 @@ function getStandard(n: number): string
 	return "Bronze";
 }
 
-export function fillStandardsStatMap(statMap: UserStatMap)
+export function fillStandardsStatMap(statMap: UserStatMap, descale: boolean)
 {
 	for (const [userKey, userSx] of Object.entries(statMap.stats)) {
 		userSx.starList.sort(function (a, b) { return b.scorePts - a.scorePts; });
-		if (userSx.starList.length < 20) continue;
-		var top30 = calcTopXStats(userSx, 30);
+		if (!descale && userSx.starList.length < 20) continue;
+		var top30 = calcTopXStats(userSx, 30, descale);
 		// standard calculated after rounding since a player will normally see their rounded score
 		userSx.standard = getStandard(Math.round(top30 * 100) / 100);
 	}
@@ -373,7 +374,15 @@ export function calcUserScoreMap(starSet: [StarDef, number][][], f: StarLoadFun,
 	return [starMap, scoreMap];
 }
 
-export function calcUserStatMap(starSet: [StarDef, number][][], scoreMap: UserScoreMap, split: boolean, nobody: Ident | null): UserStatMap
+	/*
+		starSet: list of stars + indices for generating statistics
+		scoreMap: pre-generated map of user scores per star
+		split: determines whether to grade "offset" stars separately
+		nobody: adds mr nobody to the statistics
+		descale: whether to allow users without the requisite number of stars to have a scaled up score
+	*/
+export function calcUserStatMap(starSet: [StarDef, number][][], scoreMap: UserScoreMap,
+	split: boolean, nobody: Ident | null, descale: boolean): UserStatMap
 {
 	// filter based on split type
 	scoreMap = filterScoreMap(starSet, scoreMap, split);
@@ -387,7 +396,7 @@ export function calcUserStatMap(starSet: [StarDef, number][][], scoreMap: UserSc
 	// add mr nobody
 	if (nobody !== null) safeLookupStatMap(statMap, nobody);
 	// standards + incomplete stars calc
-	fillStandardsStatMap(statMap);
+	fillStandardsStatMap(statMap, descale);
 	var refList: [string, StarRef, number][] = Object.entries(scoreMap).map((entry) => {
 		var [key, ref] = entry;
 		return [key, ref[0], ref.length]

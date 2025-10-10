@@ -27,6 +27,23 @@ hr {
 	border-top: 1px solid #585880;
 }
 
+sup {
+	font-size: 10px;
+	font-weight: bold;
+}
+
+sup[data-k='a'] {
+	color: #903040;
+}
+
+sup[data-k='b'] {
+	color: #805030;
+}
+
+sup[data-k='c'] {
+	color: #307030;
+}
+
 .header {
 	background-color: #303050;
 	margin-left: auto;
@@ -337,7 +354,14 @@ select {
 	font-size: 12px;
 }
 
+.variant-inner {
+	display: flex;
+	padding-left: 3px;
+	padding-right: 3px;
+}
+
 .variant-title {
+	display: flex;
 	background-color: #282840;
 	color: #D0D0F0;
 	font-size: 12px;
@@ -446,15 +470,54 @@ select {
 	background-color: #C0C0E8;
 	color: #000000;
 	font-size: 14px;
+	border-collapse: separate;
+	border-spacing: 0px;
 }
 
 .small-table {
 	width: 80%;
 }
-	
+
+.rank-cont {
+	display: flex;
+}
+
+.rank-table {
+	display: inline-block;
+	margin-left: 6px;
+	border-spacing: 0px;
+	border: 1px solid;
+	border-color: #000000;
+	text-align: center;
+	background-color: #C0C0E8;
+	color: #000000;
+	font-size: 13px;
+}
+
+.rank-table[data-method="easy"] {
+	background-color: #E0C0C8;
+}
+
+.rank-table[data-method="hard"] {
+	background-color: #E0C0E0;
+}
+
+.rank-table[data-method="rewrite"] {
+	background-color: #A8A8E8;
+}
+
+.rank-table[data-method="rescale"] {
+	background-color: #B8D8B8;
+}
+
+.rank-table[data-method="error"] {
+	background-color: #EE0000;
+}
+
 	/* -- table row styles (mostly grid lines / separators) */
 
 .time-row {
+	height: 21px;
 }
 
 .time-row:first-child {
@@ -466,7 +529,8 @@ select {
 	border-bottom: 1px solid;
 	border-color: #000000;
 	padding: 0px;
-	height: 21px;
+	height: 100%;
+	/*height: 21px;*/
 }
 
 .time-row[data-end-row="true"] td {
@@ -502,6 +566,10 @@ select {
 	font-weight: bold;
 }
 
+.time-cell[data-alter="true"] {
+	background-color: #D0B0C0;
+}
+
 .time-cell[data-active="true"]:hover {
 	background-color: #B0B0D6;
 	cursor: pointer;
@@ -531,6 +599,63 @@ a:visited {
 
 .msg-link:visited {
 	color: #A04070;
+}
+/*
+.inner-table {
+	table-layout: fixed;
+	min-height: 21px;
+	border-collapse: collapse;
+	z-index: 1.9;
+	width: 100%;
+	height: 100%;
+	border: 0px;
+	padding: 0px;
+}
+
+.inner-table td {
+	overflow: hidden;
+	word-wrap: normal;
+	word-break: normal;
+	position: relative;
+	width: 50%;
+	height: 100%;
+	margin-bottom: -2px;
+	border: 0px;
+	border-right: 1px solid;
+	border-color: #A0A0C0;
+}
+
+.inner-table td:last-child {
+	margin-bottom: -1px;
+	border: 1px solid;
+}*/
+
+
+.time-rank-hat {
+	position: absolute;
+	height: 1px;
+	background-color: black;
+	left: -1px;
+	right: 0px;
+	top: -1px;
+	z-index: 3;
+	transform: scaleY(1);
+}
+
+.time-row td.time-rank {
+	position: relative;
+	border-left: 1px solid;
+	border-color: #000000;
+}
+
+.time-rank-inner {
+	overflow: hidden;
+	word-wrap: normal;
+	word-break: normal;
+}
+
+td:has(+ td.time-rank) {
+	border-right: 0px;
 }
 
 
@@ -1408,52 +1533,57 @@ a.bright {
 
 	/* standard colors */
 
-td[data-ps="Mario"] {
+*[data-ps="Mario"] {
 	background-color: #CC2424;
 	color: #FFFFFF;
 }
 
-td[data-ps="Grandmaster"] {
+*[data-ps="Grandmaster"] {
 	background-color: #851313;
 	color: #FFFFFF;
 }
 
-td[data-ps="Master"] {
+*[data-ps="Master"] {
 	/*background-color: #7A378F;*/
 	background-color: #70125E;
 	color: #F7DFF4;
 	/*color: #FFFFFF;*/
 }
 
-td[data-ps="Diamond"] {
+*[data-ps="Diamond"] {
 	background-color: #8080D0;
 }
 
-td[data-ps="Platinum"] {
+*[data-ps="Platinum"] {
 	background-color: #80D080;
 }
 
-td[data-ps="Gold"] {
+*[data-ps="Gold"] {
 	background-color: #E0D490;
 	/*background-color: #D0D080;
 	#FFE3A7*/
 }
 
-td[data-ps="Silver"] {
+*[data-ps="Silver"] {
 	/*background-color: #CCCCCC;*/
 	background-color: #CCD4D0;
 	color: #18212C;
 	/*background-color: #D0D0D0;*/
 }
 
-td[data-ps="Bronze"] {
+*[data-ps="Bronze"] {
 	/*background-color: #A66E4F;
 	color: #FCECE0;*/
 	background-color: #C48865;
 	color: #2C1003;
 }
 
-td[data-ps="Unranked"] {
+*[data-ps="Iron"] {
+	background-color: #A0A0A6;
+	color: #202020;
+}
+
+*[data-ps="Unranked"] {
 	color: #404040;
 	font-style: italic;
 }

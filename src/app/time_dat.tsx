@@ -36,6 +36,16 @@ export function rawMS(fillText: string): number | null {
 	}
 }
 
+export function rawMSFull(text: string): number | null {
+	var ft = text.split('-');
+	if (ft.length >= 2) {
+		var n = rawMS(ft[1]);
+		if (n === null) return null;
+		return -n;
+	}
+	return rawMS(ft[0]);
+}
+
 	/*
 		functions for doing math in "frames"
 	*/
@@ -131,6 +141,40 @@ export function newTimeDat(time: number, link: string | null, note: string | nul
 	};
 }
 
+export function adjustTimeDat(time: number, source: TimeDat): TimeDat
+{
+	var timeFrames = msToFrames(time);
+	return {
+		"rawTime": framesToMS(timeFrames + (msToFrames(source.rawTime) - msToFrames(source.time))),
+		"verTime": framesToMS(timeFrames + (msToFrames(source.verTime) - msToFrames(source.time))),
+		"time": time,
+		"adjustList": source.adjustList.map((a) => a),
+		"link": null,
+		"note": null,
+		"rowDef": source.rowDef,
+		"origin": null
+	}
+}
+
+export function copyTimeDat(source: TimeDat): TimeDat
+{
+	return adjustTimeDat(source.time, source);
+}
+
+export function resetTimeDat(source: TimeDat): TimeDat
+{
+	return {
+		"rawTime": source.rawTime,
+		"verTime": source.rawTime,
+		"time": source.rawTime,
+		"adjustList": [],
+		"link": null,
+		"note": null,
+		"rowDef": source.rowDef,
+		"origin": null
+	}
+}
+
 export function maxTimeDat(rowDef: RowDef): TimeDat
 {
 	return newTimeDat(999900, null, null, rowDef);
@@ -155,6 +199,16 @@ export function vtagTimeDat(timeDat: TimeDat): string {
 function adjustTime(timeDat: TimeDat, frames: number, adj: string) {
 	timeDat.time = addFrames(frames, timeDat.time);
 	if (adj === "ver") timeDat.verTime = addFrames(frames, timeDat.verTime);
+	// mark adjustment
+	var copyList = timeDat.adjustList.map((x) => x);
+	copyList.push(adj);
+	timeDat.adjustList = copyList;
+}
+
+function natAdjustTime(timeDat: TimeDat, frames: number, adj: string) {
+	timeDat.time = addFrames(frames, timeDat.time);
+	timeDat.verTime = addFrames(frames, timeDat.verTime);
+	timeDat.rawTime = addFrames(frames, timeDat.rawTime);
 	// mark adjustment
 	var copyList = timeDat.adjustList.map((x) => x);
 	copyList.push(adj);
@@ -224,6 +278,23 @@ export function applyVerOffset(timeDat: TimeDat, verOffset: VerOffset)
 	else if (focusVer === "us" && timeDat.rowDef.ver === "jp") adjustTime(timeDat, -offset, "ver");
 }
 
+	// assumes that the time is for the opposing version
+export function applyVerOffsetRaw(stratName: string, time: number, verOffset: VerOffset): number | null
+{
+	// calc offset
+	var offDat = verOffset.offset;
+	var offset = 0;
+	if (offDat.a) {
+		if (offDat.data[stratName] === undefined) return null;
+		offset = offDat.data[stratName];
+	} else offset = offDat.num;
+	// apply offset
+	var focusVer = verOffset.focusVer;
+	if (focusVer === "jp") return addFrames(offset, time);
+	else if (focusVer === "us") return addFrames(-offset, time);
+	return null;
+}
+
 	/*
 		strat_offset: strat offset information
 	*/
@@ -268,4 +339,10 @@ export function applyStratOffset(timeDat: TimeDat, second: boolean, sOffset: Str
 		else if (forceAdjust !== undefined) adjustTime(timeDat, 0, offName);
 	}
 	//if (second) adjustTime(timeDat, addFrames(offset, time), sOffset.name);
+}
+
+
+export function applyManualOffset(timeDat: TimeDat, frames: number, offName: string)
+{
+	natAdjustTime(timeDat, frames, offName);
 }

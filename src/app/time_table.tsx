@@ -2,7 +2,7 @@
 //import orgData from './json/org_data.json'
 //import playerData from './json/player_data.json'
 
-import { TimeDat, MultiDat, vtagTimeDat, hasSubTimes } from './time_dat'
+import { TimeDat, MultiDat, copyTimeDat, vtagTimeDat, hasSubTimes, applyManualOffset } from './time_dat'
 import { ColList } from './org_strat_def'
 
 	/*
@@ -184,6 +184,19 @@ export function buildTimeTable(timeMap: TimeMap, colTotal: number): TimeTable {
 	return timeTable;
 }
 
+export function copyTimeTable(timeTable: TimeTable): TimeTable {
+	return timeTable.map((userDat) => {
+		var newTimeRow: TimeRow = userDat.timeRow.map((multiDat) => {
+			if (multiDat === null) return null;
+			return multiDat.map((timeDat) => copyTimeDat(timeDat));
+		});
+		return {
+			"id": userDat.id,
+			"timeRow": newTimeRow,
+		};
+	});
+}
+
 export function findIdTimeTable(timeTable: TimeTable, id: AuthIdent): number
 {
 	for (let i = 0; i < timeTable.length; i++) {
@@ -275,6 +288,22 @@ export function filterTimeTable(timeTable: TimeTable, colList: ColList): TimeTab
 		});
 	}
 	return filterTable;
+}
+
+	/* -- offset: applies a manual offset to a column in a table
+	*/
+
+export function offsetColTimeTable(timeTable: TimeTable, colId: number, frames: number) {
+	for (let i = 0; i < timeTable.length; i++) {
+		var userDat = timeTable[i];
+		var timeRow = userDat.timeRow;
+		var mDat = timeRow[colId];
+		if (mDat !== null) {
+			for (const timeDat of mDat) {
+				applyManualOffset(timeDat, frames, "manual");
+			}
+		}
+	}
 }
 
 	/* -- sort: sort table based on best times (can prioritize one column) */

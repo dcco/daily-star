@@ -47,10 +47,9 @@ export function loadTTRaw(rawData: ReadTimeObj, starDef: StarDef,
 
 export type TTLoadType = ["def"] | ["today"] | ["week", string];
 
-export async function loadTimeTable(stageId: number, _starId: number, today: TTLoadType,
+export async function loadTimeTable(stageId: number, starDef: StarDef, today: TTLoadType,
 	colList: ColList, fs: FilterState, verOffset: VerOffset, stratOffset: StratOffset): Promise<TimeTable>
 {
-	var starDef = orgStarDef(stageId, _starId);
 	var starId = starDef.id;
 	// api request - load rows
 	var lk = "/times/read?stage=" + stageId + "&star=" + starId;
@@ -70,11 +69,10 @@ export async function loadTimeTable(stageId: number, _starId: number, today: TTL
 	return tt;
 }
 
-export function postNewTimes(stageId: number, starId: number,
+export function postNewTimes(stageId: number, starDef: StarDef,
 	userId: AuthIdent, nick: string | null, timeList: TimeDat[], delList: TimeDat[])
 {
 	// initial star info
-	var starDef = orgStarDef(stageId, starId);
 	var variants: string[] = [];
 	if (starDef.variants) variants = starDef.variants;
 	// get list of times to submit

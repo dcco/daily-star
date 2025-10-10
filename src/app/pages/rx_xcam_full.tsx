@@ -14,7 +14,7 @@ export function XcamFull(props: { rm: RouterMain }): React.ReactNode
 
 	var board = null;
 	if (menuId === 0) {
-		board = <XcamBoard rm={ props.rm }/>;
+		board = <XcamBoard rm={ props.rm } showStd={ false } beta={ false }/>;
 	} else if (menuId === 1) {
 		board = <PlayerBoard hrefBase={ ["/xcam/players", "/xcam"] } slug={ props.rm.core.slug }
 			starMap={ G_SHEET.starMap } userMap={ G_SHEET.userMap }

@@ -329,7 +329,7 @@
         },
         "variants": [
           "Camera Glitch",
-          "Slope Start"
+          "Slope Start for Ihop"
         ],
         "open": [
           "Slope Start",
@@ -1243,6 +1243,15 @@
               ]
             ]
           },
+          "Half Cycle": {
+            "name": "Half Cycle",
+            "diff": "easy",
+            "ver_diff": false,
+            "virtual": true,
+            "variant_map": {},
+            "id_list": [],
+            "virtId": "1_100c4_Half Cycle"
+          },
           "Kanno Cycle": {
             "name": "Kanno Cycle",
             "diff": "normal",
@@ -1289,6 +1298,15 @@
                 52
               ]
             ]
+          },
+          "Half Cycle": {
+            "name": "Half Cycle",
+            "diff": "easy",
+            "ver_diff": false,
+            "virtual": true,
+            "variant_map": {},
+            "id_list": [],
+            "virtId": "1_100c4_Half Cycle"
           },
           "Kanno Cycle": {
             "name": "Kanno Cycle",
@@ -1678,7 +1696,7 @@
           "Direct GP",
           "Double JD + Stairs Speedkick",
           "Tree Backflip",
-          "Stairs Fence CLip"
+          "Stairs Fence Clip"
         ],
         "open": [
           "Sideflip"
@@ -4043,8 +4061,8 @@
               ]
             ]
           },
-          "Ceiling BLJ": {
-            "name": "Ceiling BLJ",
+          "Sazandora": {
+            "name": "Sazandora",
             "diff": "normal",
             "ver_diff": false,
             "virtual": false,
@@ -4136,8 +4154,8 @@
               ]
             ]
           },
-          "Ceiling BLJ": {
-            "name": "Ceiling BLJ",
+          "Sazandora": {
+            "name": "Sazandora",
             "diff": "normal",
             "ver_diff": false,
             "virtual": false,
@@ -4192,8 +4210,7 @@
           "Breakdance"
         ],
         "open": [
-          "BLJ",
-          "Ceiling BLJ"
+          "BLJ"
         ],
         "info": {
           "short": "Metal-Head",
@@ -4575,6 +4592,15 @@
               ]
             ]
           },
+          "Elevator Clip": {
+            "name": "Elevator Clip",
+            "diff": "easy",
+            "ver_diff": false,
+            "virtual": true,
+            "variant_map": {},
+            "id_list": [],
+            "virtId": "5_premc_Elevator Clip"
+          },
           "Sign Clip": {
             "name": "Sign Clip",
             "diff": "normal",
@@ -4613,6 +4639,15 @@
                 197
               ]
             ]
+          },
+          "Elevator Clip": {
+            "name": "Elevator Clip",
+            "diff": "easy",
+            "ver_diff": false,
+            "virtual": true,
+            "variant_map": {},
+            "id_list": [],
+            "virtId": "5_premc_Elevator Clip"
           },
           "Sign Clip": {
             "name": "Sign Clip",
@@ -6330,7 +6365,7 @@
               "ext_149": [
                 "1"
               ],
-              "ext_154": [
+              "ext_156": [
                 "2"
               ]
             },
@@ -6345,7 +6380,7 @@
               ],
               [
                 "ext",
-                154
+                156
               ]
             ]
           }
@@ -6390,10 +6425,10 @@
               "ext_146": [
                 "0"
               ],
-              "ext_151": [
+              "ext_152": [
                 "1"
               ],
-              "ext_156": [
+              "ext_159": [
                 "2"
               ]
             },
@@ -6404,11 +6439,11 @@
               ],
               [
                 "ext",
-                151
+                152
               ],
               [
                 "ext",
-                156
+                159
               ]
             ]
           }
@@ -6470,7 +6505,7 @@
             "virtual": false,
             "variant_map": {
               "main_284": [],
-              "ext_163": [
+              "ext_167": [
                 "0"
               ]
             },
@@ -6481,7 +6516,7 @@
               ],
               [
                 "ext",
-                163
+                167
               ]
             ]
           },
@@ -6491,10 +6526,10 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_162": [
+              "ext_166": [
                 "1"
               ],
-              "ext_164": [
+              "ext_168": [
                 "0",
                 "1"
               ]
@@ -6502,11 +6537,11 @@
             "id_list": [
               [
                 "ext",
-                162
+                166
               ],
               [
                 "ext",
-                164
+                168
               ]
             ]
           }
@@ -6541,7 +6576,7 @@
             "virtual": false,
             "variant_map": {
               "main_284": [],
-              "ext_163": [
+              "ext_167": [
                 "0"
               ]
             },
@@ -6552,7 +6587,7 @@
               ],
               [
                 "ext",
-                163
+                167
               ]
             ]
           },
@@ -6562,10 +6597,10 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_162": [
+              "ext_166": [
                 "1"
               ],
-              "ext_164": [
+              "ext_168": [
                 "0",
                 "1"
               ]
@@ -6573,11 +6608,11 @@
             "id_list": [
               [
                 "ext",
-                162
+                166
               ],
               [
                 "ext",
-                164
+                168
               ]
             ]
           }
@@ -6623,12 +6658,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_165": []
+              "ext_169": []
             },
             "id_list": [
               [
                 "ext",
-                165
+                169
               ]
             ]
           }
@@ -6655,12 +6690,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_165": []
+              "ext_169": []
             },
             "id_list": [
               [
                 "ext",
-                165
+                169
               ]
             ]
           }
@@ -6693,6 +6728,15 @@
                 287
               ]
             ]
+          },
+          "Poles": {
+            "name": "Poles",
+            "diff": "easy",
+            "ver_diff": false,
+            "virtual": true,
+            "variant_map": {},
+            "id_list": [],
+            "virtId": "8_100c3_Poles"
           }
         },
         "us_set": {
@@ -6710,6 +6754,15 @@
                 288
               ]
             ]
+          },
+          "Poles": {
+            "name": "Poles",
+            "diff": "easy",
+            "ver_diff": false,
+            "virtual": true,
+            "variant_map": {},
+            "id_list": [],
+            "virtId": "8_100c3_Poles"
           }
         },
         "open": [],
@@ -6942,7 +6995,7 @@
         "alt": null
       }
     ],
-    "extCheckId": 160
+    "extCheckId": 164
   },
   {
     "name": "Snowman's Land",
@@ -7075,7 +7128,7 @@
             "virtual": false,
             "variant_map": {
               "main_308": [],
-              "ext_170": [
+              "ext_174": [
                 "0"
               ]
             },
@@ -7086,7 +7139,7 @@
               ],
               [
                 "ext",
-                170
+                174
               ]
             ]
           },
@@ -7099,7 +7152,7 @@
               "main_309": [
                 "0"
               ],
-              "ext_169": []
+              "ext_173": []
             },
             "id_list": [
               [
@@ -7108,7 +7161,7 @@
               ],
               [
                 "ext",
-                169
+                173
               ]
             ]
           }
@@ -7121,7 +7174,7 @@
             "virtual": false,
             "variant_map": {
               "main_308": [],
-              "ext_170": [
+              "ext_174": [
                 "0"
               ]
             },
@@ -7132,7 +7185,7 @@
               ],
               [
                 "ext",
-                170
+                174
               ]
             ]
           },
@@ -7145,7 +7198,7 @@
               "main_309": [
                 "0"
               ],
-              "ext_169": []
+              "ext_173": []
             },
             "id_list": [
               [
@@ -7154,7 +7207,7 @@
               ],
               [
                 "ext",
-                169
+                173
               ]
             ]
           }
@@ -7260,7 +7313,7 @@
             "virtual": false,
             "variant_map": {
               "main_312": [],
-              "ext_172": [
+              "ext_176": [
                 "0"
               ]
             },
@@ -7271,7 +7324,7 @@
               ],
               [
                 "ext",
-                172
+                176
               ]
             ]
           },
@@ -7281,12 +7334,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_171": []
+              "ext_175": []
             },
             "id_list": [
               [
                 "ext",
-                171
+                175
               ]
             ]
           },
@@ -7296,14 +7349,14 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_173": [
+              "ext_177": [
                 "1"
               ]
             },
             "id_list": [
               [
                 "ext",
-                173
+                177
               ]
             ]
           }
@@ -7316,7 +7369,7 @@
             "virtual": false,
             "variant_map": {
               "main_312": [],
-              "ext_172": [
+              "ext_176": [
                 "0"
               ]
             },
@@ -7327,7 +7380,7 @@
               ],
               [
                 "ext",
-                172
+                176
               ]
             ]
           },
@@ -7337,12 +7390,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_171": []
+              "ext_175": []
             },
             "id_list": [
               [
                 "ext",
-                171
+                175
               ]
             ]
           },
@@ -7352,14 +7405,14 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_173": [
+              "ext_177": [
                 "1"
               ]
             },
             "id_list": [
               [
                 "ext",
-                173
+                177
               ]
             ]
           }
@@ -7389,7 +7442,7 @@
             "virtual": false,
             "variant_map": {
               "main_313": [],
-              "ext_174": [
+              "ext_178": [
                 "0"
               ]
             },
@@ -7400,7 +7453,7 @@
               ],
               [
                 "ext",
-                174
+                178
               ]
             ]
           }
@@ -7413,7 +7466,7 @@
             "virtual": false,
             "variant_map": {
               "main_313": [],
-              "ext_174": [
+              "ext_178": [
                 "0"
               ]
             },
@@ -7424,7 +7477,7 @@
               ],
               [
                 "ext",
-                174
+                178
               ]
             ]
           }
@@ -7461,15 +7514,13 @@
               ]
             ]
           },
-          "Open": {
-            "name": "Open",
+          "Early Spindrifts": {
+            "name": "Early Spindrifts",
             "diff": "normal",
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_321": [
-                "0"
-              ]
+              "main_321": []
             },
             "id_list": [
               [
@@ -7484,12 +7535,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "ext_175": []
+              "ext_179": []
             },
             "id_list": [
               [
                 "ext",
-                175
+                179
               ]
             ]
           }
@@ -7510,15 +7561,13 @@
               ]
             ]
           },
-          "Open": {
-            "name": "Open",
+          "Early Spindrifts": {
+            "name": "Early Spindrifts",
             "diff": "normal",
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_323": [
-                "0"
-              ]
+              "main_323": []
             },
             "id_list": [
               [
@@ -7533,19 +7582,16 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "ext_176": []
+              "ext_180": []
             },
             "id_list": [
               [
                 "ext",
-                176
+                180
               ]
             ]
           }
         },
-        "variants": [
-          "Early Spindrifts"
-        ],
         "open": [
           "Moneybag Dupe"
         ],
@@ -7569,13 +7615,13 @@
             "virtual": false,
             "variant_map": {
               "main_327": [],
-              "ext_177": [
+              "ext_181": [
                 "0"
               ],
-              "ext_178": [
+              "ext_182": [
                 "1"
               ],
-              "ext_179": [
+              "ext_183": [
                 "1",
                 "0"
               ]
@@ -7587,15 +7633,15 @@
               ],
               [
                 "ext",
-                177
+                181
               ],
               [
                 "ext",
-                178
+                182
               ],
               [
                 "ext",
-                179
+                183
               ]
             ]
           },
@@ -7630,13 +7676,13 @@
             "virtual": false,
             "variant_map": {
               "main_327": [],
-              "ext_177": [
+              "ext_181": [
                 "0"
               ],
-              "ext_178": [
+              "ext_182": [
                 "1"
               ],
-              "ext_179": [
+              "ext_183": [
                 "1",
                 "0"
               ]
@@ -7648,15 +7694,15 @@
               ],
               [
                 "ext",
-                177
+                181
               ],
               [
                 "ext",
-                178
+                182
               ],
               [
                 "ext",
-                179
+                183
               ]
             ]
           },
@@ -7696,7 +7742,7 @@
         "alt": null
       }
     ],
-    "extCheckId": 167
+    "extCheckId": 171
   },
   {
     "name": "Wet-Dry World",
@@ -7717,7 +7763,7 @@
             "virtual": false,
             "variant_map": {
               "main_340": [],
-              "ext_185": [
+              "ext_189": [
                 "0"
               ]
             },
@@ -7728,7 +7774,7 @@
               ],
               [
                 "ext",
-                185
+                189
               ]
             ]
           },
@@ -7738,12 +7784,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_184": []
+              "ext_188": []
             },
             "id_list": [
               [
                 "ext",
-                184
+                188
               ]
             ]
           }
@@ -7756,7 +7802,7 @@
             "virtual": false,
             "variant_map": {
               "main_340": [],
-              "ext_185": [
+              "ext_189": [
                 "0"
               ]
             },
@@ -7767,7 +7813,7 @@
               ],
               [
                 "ext",
-                185
+                189
               ]
             ]
           },
@@ -7777,12 +7823,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_184": []
+              "ext_188": []
             },
             "id_list": [
               [
                 "ext",
-                184
+                188
               ]
             ]
           }
@@ -7813,7 +7859,7 @@
             "virtual": false,
             "variant_map": {
               "main_341": [],
-              "ext_186": [
+              "ext_190": [
                 "0"
               ]
             },
@@ -7824,7 +7870,7 @@
               ],
               [
                 "ext",
-                186
+                190
               ]
             ]
           },
@@ -7835,7 +7881,7 @@
             "virtual": false,
             "variant_map": {
               "main_342": [],
-              "ext_188": [
+              "ext_192": [
                 "1"
               ]
             },
@@ -7846,7 +7892,7 @@
               ],
               [
                 "ext",
-                188
+                192
               ]
             ]
           },
@@ -7856,12 +7902,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_187": []
+              "ext_191": []
             },
             "id_list": [
               [
                 "ext",
-                187
+                191
               ]
             ]
           }
@@ -7874,7 +7920,7 @@
             "virtual": false,
             "variant_map": {
               "main_341": [],
-              "ext_186": [
+              "ext_190": [
                 "0"
               ]
             },
@@ -7885,7 +7931,7 @@
               ],
               [
                 "ext",
-                186
+                190
               ]
             ]
           },
@@ -7896,7 +7942,7 @@
             "virtual": false,
             "variant_map": {
               "main_342": [],
-              "ext_188": [
+              "ext_192": [
                 "1"
               ]
             },
@@ -7907,7 +7953,7 @@
               ],
               [
                 "ext",
-                188
+                192
               ]
             ]
           },
@@ -7917,12 +7963,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_187": []
+              "ext_191": []
             },
             "id_list": [
               [
                 "ext",
-                187
+                191
               ]
             ]
           }
@@ -7953,12 +7999,19 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_343": []
+              "main_343": [],
+              "ext_193": [
+                "0"
+              ]
             },
             "id_list": [
               [
                 "main",
                 343
+              ],
+              [
+                "ext",
+                193
               ]
             ]
           }
@@ -7970,16 +8023,26 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_344": []
+              "main_344": [],
+              "ext_194": [
+                "0"
+              ]
             },
             "id_list": [
               [
                 "main",
                 344
+              ],
+              [
+                "ext",
+                194
               ]
             ]
           }
         },
+        "variants": [
+          "JD Ending"
+        ],
         "open": [],
         "info": {
           "short": "Secrets",
@@ -8063,7 +8126,7 @@
             "virtual": false,
             "variant_map": {
               "main_350": [],
-              "ext_189": [
+              "ext_195": [
                 "0"
               ]
             },
@@ -8074,7 +8137,7 @@
               ],
               [
                 "ext",
-                189
+                195
               ]
             ]
           },
@@ -8099,12 +8162,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_190": []
+              "ext_196": []
             },
             "id_list": [
               [
                 "ext",
-                190
+                196
               ]
             ]
           }
@@ -8132,7 +8195,7 @@
             "virtual": false,
             "variant_map": {
               "main_350": [],
-              "ext_189": [
+              "ext_195": [
                 "0"
               ]
             },
@@ -8143,7 +8206,7 @@
               ],
               [
                 "ext",
-                189
+                195
               ]
             ]
           },
@@ -8168,12 +8231,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_190": []
+              "ext_196": []
             },
             "id_list": [
               [
                 "ext",
-                190
+                196
               ]
             ]
           }
@@ -8351,7 +8414,7 @@
         "alt": null
       }
     ],
-    "extCheckId": 182
+    "extCheckId": 186
   },
   {
     "name": "Tall, Tall Mountain",
@@ -8467,7 +8530,7 @@
             "virtual": false,
             "variant_map": {
               "main_368": [],
-              "ext_194": [
+              "ext_200": [
                 "0"
               ]
             },
@@ -8478,7 +8541,7 @@
               ],
               [
                 "ext",
-                194
+                200
               ]
             ]
           },
@@ -8489,7 +8552,7 @@
             "virtual": false,
             "variant_map": {
               "main_370": [],
-              "ext_196": [
+              "ext_202": [
                 "0"
               ]
             },
@@ -8500,7 +8563,7 @@
               ],
               [
                 "ext",
-                196
+                202
               ]
             ]
           },
@@ -8522,7 +8585,7 @@
             "virtual": false,
             "variant_map": {
               "main_369": [],
-              "ext_195": [
+              "ext_201": [
                 "0"
               ]
             },
@@ -8533,7 +8596,7 @@
               ],
               [
                 "ext",
-                195
+                201
               ]
             ]
           },
@@ -8544,7 +8607,7 @@
             "virtual": false,
             "variant_map": {
               "main_371": [],
-              "ext_197": [
+              "ext_203": [
                 "0"
               ]
             },
@@ -8555,7 +8618,7 @@
               ],
               [
                 "ext",
-                197
+                203
               ]
             ]
           },
@@ -8995,12 +9058,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_198": []
+              "ext_204": []
             },
             "id_list": [
               [
                 "ext",
-                198
+                204
               ]
             ]
           }
@@ -9036,12 +9099,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_198": []
+              "ext_204": []
             },
             "id_list": [
               [
                 "ext",
-                198
+                204
               ]
             ]
           }
@@ -9057,7 +9120,7 @@
         "alt": null
       }
     ],
-    "extCheckId": 192
+    "extCheckId": 198
   },
   {
     "name": "Tiny-Huge Island",
@@ -9170,7 +9233,7 @@
             "virtual": false,
             "variant_map": {
               "main_404": [],
-              "ext_202": [
+              "ext_208": [
                 "0"
               ]
             },
@@ -9181,7 +9244,7 @@
               ],
               [
                 "ext",
-                202
+                208
               ]
             ]
           },
@@ -9206,12 +9269,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_204": []
+              "ext_210": []
             },
             "id_list": [
               [
                 "ext",
-                204
+                210
               ]
             ]
           }
@@ -9239,7 +9302,7 @@
             "virtual": false,
             "variant_map": {
               "main_404": [],
-              "ext_202": [
+              "ext_208": [
                 "0"
               ]
             },
@@ -9250,7 +9313,7 @@
               ],
               [
                 "ext",
-                202
+                208
               ]
             ]
           },
@@ -9275,12 +9338,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_204": []
+              "ext_210": []
             },
             "id_list": [
               [
                 "ext",
-                204
+                210
               ]
             ]
           }
@@ -9339,14 +9402,14 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "ext_206": [
+              "ext_212": [
                 "1"
               ]
             },
             "id_list": [
               [
                 "ext",
-                206
+                212
               ]
             ]
           },
@@ -9356,12 +9419,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "ext_210": []
+              "ext_216": []
             },
             "id_list": [
               [
                 "ext",
-                210
+                216
               ]
             ]
           }
@@ -9404,14 +9467,14 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "ext_208": [
+              "ext_214": [
                 "1"
               ]
             },
             "id_list": [
               [
                 "ext",
-                208
+                214
               ]
             ]
           },
@@ -9421,12 +9484,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "ext_211": []
+              "ext_217": []
             },
             "id_list": [
               [
                 "ext",
-                211
+                217
               ]
             ]
           }
@@ -9455,12 +9518,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "ext_212": []
+              "ext_218": []
             },
             "id_list": [
               [
                 "ext",
-                212
+                218
               ]
             ]
           },
@@ -9470,12 +9533,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "ext_214": []
+              "ext_220": []
             },
             "id_list": [
               [
                 "ext",
-                214
+                220
               ]
             ]
           }
@@ -9487,12 +9550,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "ext_213": []
+              "ext_219": []
             },
             "id_list": [
               [
                 "ext",
-                213
+                219
               ]
             ]
           },
@@ -9502,12 +9565,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "ext_215": []
+              "ext_221": []
             },
             "id_list": [
               [
                 "ext",
-                215
+                221
               ]
             ]
           }
@@ -9565,12 +9628,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_216": []
+              "ext_222": []
             },
             "id_list": [
               [
                 "ext",
-                216
+                222
               ]
             ]
           }
@@ -9606,12 +9669,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_216": []
+              "ext_222": []
             },
             "id_list": [
               [
                 "ext",
-                216
+                222
               ]
             ]
           }
@@ -9713,12 +9776,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "ext_218": []
+              "ext_224": []
             },
             "id_list": [
               [
                 "ext",
-                218
+                224
               ]
             ]
           }
@@ -9760,12 +9823,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "ext_219": []
+              "ext_225": []
             },
             "id_list": [
               [
                 "ext",
-                219
+                225
               ]
             ]
           }
@@ -9805,12 +9868,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "ext_223": []
+              "ext_229": []
             },
             "id_list": [
               [
                 "ext",
-                223
+                229
               ]
             ]
           }
@@ -9837,12 +9900,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "ext_224": []
+              "ext_230": []
             },
             "id_list": [
               [
                 "ext",
-                224
+                230
               ]
             ]
           }
@@ -9856,7 +9919,7 @@
         "alt": null
       }
     ],
-    "extCheckId": 200
+    "extCheckId": 206
   },
   {
     "name": "Tick Tock Clock",
@@ -9877,10 +9940,10 @@
             "virtual": false,
             "variant_map": {
               "main_444": [],
-              "ext_228": [
+              "ext_234": [
                 "0"
               ],
-              "ext_229": [
+              "ext_235": [
                 "1"
               ]
             },
@@ -9891,11 +9954,11 @@
               ],
               [
                 "ext",
-                228
+                234
               ],
               [
                 "ext",
-                229
+                235
               ]
             ]
           },
@@ -9906,10 +9969,10 @@
             "virtual": false,
             "variant_map": {
               "main_445": [],
-              "ext_230": [
+              "ext_236": [
                 "0"
               ],
-              "ext_231": [
+              "ext_237": [
                 "1"
               ]
             },
@@ -9920,11 +9983,11 @@
               ],
               [
                 "ext",
-                230
+                236
               ],
               [
                 "ext",
-                231
+                237
               ]
             ]
           },
@@ -9949,12 +10012,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_232": []
+              "ext_238": []
             },
             "id_list": [
               [
                 "ext",
-                232
+                238
               ]
             ]
           }
@@ -9967,10 +10030,10 @@
             "virtual": false,
             "variant_map": {
               "main_444": [],
-              "ext_228": [
+              "ext_234": [
                 "0"
               ],
-              "ext_229": [
+              "ext_235": [
                 "1"
               ]
             },
@@ -9981,11 +10044,11 @@
               ],
               [
                 "ext",
-                228
+                234
               ],
               [
                 "ext",
-                229
+                235
               ]
             ]
           },
@@ -9996,10 +10059,10 @@
             "virtual": false,
             "variant_map": {
               "main_445": [],
-              "ext_230": [
+              "ext_236": [
                 "0"
               ],
-              "ext_231": [
+              "ext_237": [
                 "1"
               ]
             },
@@ -10010,11 +10073,11 @@
               ],
               [
                 "ext",
-                230
+                236
               ],
               [
                 "ext",
-                231
+                237
               ]
             ]
           },
@@ -10039,12 +10102,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_232": []
+              "ext_238": []
             },
             "id_list": [
               [
                 "ext",
-                232
+                238
               ]
             ]
           }
@@ -10208,7 +10271,7 @@
             "virtual": false,
             "variant_map": {
               "main_450": [],
-              "ext_233": [
+              "ext_239": [
                 "0"
               ]
             },
@@ -10219,7 +10282,7 @@
               ],
               [
                 "ext",
-                233
+                239
               ]
             ]
           },
@@ -10247,7 +10310,7 @@
             "virtual": false,
             "variant_map": {
               "main_450": [],
-              "ext_233": [
+              "ext_239": [
                 "0"
               ]
             },
@@ -10258,7 +10321,7 @@
               ],
               [
                 "ext",
-                233
+                239
               ]
             ]
           },
@@ -10452,7 +10515,7 @@
               "main_462": [
                 "0"
               ],
-              "ext_235": []
+              "ext_241": []
             },
             "id_list": [
               [
@@ -10461,7 +10524,7 @@
               ],
               [
                 "ext",
-                235
+                241
               ]
             ]
           },
@@ -10471,12 +10534,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_234": []
+              "ext_240": []
             },
             "id_list": [
               [
                 "ext",
-                234
+                240
               ]
             ]
           }
@@ -10506,7 +10569,7 @@
               "main_462": [
                 "0"
               ],
-              "ext_235": []
+              "ext_241": []
             },
             "id_list": [
               [
@@ -10515,7 +10578,7 @@
               ],
               [
                 "ext",
-                235
+                241
               ]
             ]
           },
@@ -10525,12 +10588,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_234": []
+              "ext_240": []
             },
             "id_list": [
               [
                 "ext",
-                234
+                240
               ]
             ]
           }
@@ -10578,10 +10641,10 @@
                 "0",
                 "1"
               ],
-              "ext_236": [
+              "ext_242": [
                 "2"
               ],
-              "ext_237": [
+              "ext_243": [
                 "1",
                 "2"
               ]
@@ -10605,11 +10668,11 @@
               ],
               [
                 "ext",
-                236
+                242
               ],
               [
                 "ext",
-                237
+                243
               ]
             ]
           },
@@ -10620,7 +10683,7 @@
             "virtual": false,
             "variant_map": {
               "main_467": [],
-              "ext_238": [
+              "ext_244": [
                 "3"
               ]
             },
@@ -10631,7 +10694,7 @@
               ],
               [
                 "ext",
-                238
+                244
               ]
             ]
           },
@@ -10669,10 +10732,10 @@
                 "0",
                 "1"
               ],
-              "ext_236": [
+              "ext_242": [
                 "2"
               ],
-              "ext_237": [
+              "ext_243": [
                 "1",
                 "2"
               ]
@@ -10696,11 +10759,11 @@
               ],
               [
                 "ext",
-                236
+                242
               ],
               [
                 "ext",
-                237
+                243
               ]
             ]
           },
@@ -10711,7 +10774,7 @@
             "virtual": false,
             "variant_map": {
               "main_467": [],
-              "ext_238": [
+              "ext_244": [
                 "3"
               ]
             },
@@ -10722,7 +10785,7 @@
               ],
               [
                 "ext",
-                238
+                244
               ]
             ]
           },
@@ -10773,7 +10836,7 @@
         }
       }
     ],
-    "extCheckId": 226
+    "extCheckId": 232
   },
   {
     "name": "Rainbow Ride",
@@ -10831,7 +10894,7 @@
             "virtual": false,
             "variant_map": {
               "main_482": [],
-              "ext_242": [
+              "ext_248": [
                 "1"
               ]
             },
@@ -10842,7 +10905,7 @@
               ],
               [
                 "ext",
-                242
+                248
               ]
             ]
           },
@@ -10901,7 +10964,7 @@
             "virtual": false,
             "variant_map": {
               "main_482": [],
-              "ext_242": [
+              "ext_248": [
                 "1"
               ]
             },
@@ -10912,7 +10975,7 @@
               ],
               [
                 "ext",
-                242
+                248
               ]
             ]
           },
@@ -11072,12 +11135,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "ext_243": []
+              "ext_249": []
             },
             "id_list": [
               [
                 "ext",
-                243
+                249
               ]
             ]
           },
@@ -11087,12 +11150,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "ext_245": []
+              "ext_251": []
             },
             "id_list": [
               [
                 "ext",
-                245
+                251
               ]
             ]
           },
@@ -11102,12 +11165,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "ext_247": []
+              "ext_253": []
             },
             "id_list": [
               [
                 "ext",
-                247
+                253
               ]
             ]
           }
@@ -11134,12 +11197,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "ext_244": []
+              "ext_250": []
             },
             "id_list": [
               [
                 "ext",
-                244
+                250
               ]
             ]
           },
@@ -11149,12 +11212,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "ext_246": []
+              "ext_252": []
             },
             "id_list": [
               [
                 "ext",
-                246
+                252
               ]
             ]
           },
@@ -11164,12 +11227,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "ext_248": []
+              "ext_254": []
             },
             "id_list": [
               [
                 "ext",
-                248
+                254
               ]
             ]
           }
@@ -11203,7 +11266,7 @@
             "virtual": false,
             "variant_map": {
               "main_493": [],
-              "ext_249": [
+              "ext_255": [
                 "0"
               ]
             },
@@ -11214,7 +11277,7 @@
               ],
               [
                 "ext",
-                249
+                255
               ]
             ]
           },
@@ -11225,7 +11288,7 @@
             "virtual": false,
             "variant_map": {
               "main_494": [],
-              "ext_250": [
+              "ext_256": [
                 "0"
               ]
             },
@@ -11236,7 +11299,7 @@
               ],
               [
                 "ext",
-                250
+                256
               ]
             ]
           }
@@ -11249,7 +11312,7 @@
             "virtual": false,
             "variant_map": {
               "main_493": [],
-              "ext_249": [
+              "ext_255": [
                 "0"
               ]
             },
@@ -11260,7 +11323,7 @@
               ],
               [
                 "ext",
-                249
+                255
               ]
             ]
           },
@@ -11271,7 +11334,7 @@
             "virtual": false,
             "variant_map": {
               "main_494": [],
-              "ext_250": [
+              "ext_256": [
                 "0"
               ]
             },
@@ -11282,7 +11345,7 @@
               ],
               [
                 "ext",
-                250
+                256
               ]
             ]
           }
@@ -11311,10 +11374,10 @@
             "virtual": false,
             "variant_map": {
               "main_495": [],
-              "ext_251": [
+              "ext_257": [
                 "0"
               ],
-              "ext_252": [
+              "ext_258": [
                 "1"
               ]
             },
@@ -11325,11 +11388,11 @@
               ],
               [
                 "ext",
-                251
+                257
               ],
               [
                 "ext",
-                252
+                258
               ]
             ]
           },
@@ -11366,10 +11429,10 @@
             "virtual": false,
             "variant_map": {
               "main_495": [],
-              "ext_251": [
+              "ext_257": [
                 "0"
               ],
-              "ext_252": [
+              "ext_258": [
                 "1"
               ]
             },
@@ -11380,11 +11443,11 @@
               ],
               [
                 "ext",
-                251
+                257
               ],
               [
                 "ext",
-                252
+                258
               ]
             ]
           },
@@ -11595,7 +11658,7 @@
               "main_506": [
                 "0"
               ],
-              "ext_253": [
+              "ext_259": [
                 "2"
               ]
             },
@@ -11610,7 +11673,7 @@
               ],
               [
                 "ext",
-                253
+                259
               ]
             ]
           },
@@ -11694,7 +11757,7 @@
               "main_506": [
                 "0"
               ],
-              "ext_253": [
+              "ext_259": [
                 "2"
               ]
             },
@@ -11709,7 +11772,7 @@
               ],
               [
                 "ext",
-                253
+                259
               ]
             ]
           },
@@ -11763,12 +11826,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "ext_254": []
+              "ext_260": []
             },
             "id_list": [
               [
                 "ext",
-                254
+                260
               ]
             ]
           }
@@ -11795,12 +11858,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "ext_255": []
+              "ext_261": []
             },
             "id_list": [
               [
                 "ext",
-                255
+                261
               ]
             ]
           }
@@ -11822,7 +11885,7 @@
         }
       }
     ],
-    "extCheckId": 240
+    "extCheckId": 246
   },
   {
     "name": "Castle Secret Stars",
@@ -11846,10 +11909,10 @@
               "main_514": [
                 "0"
               ],
-              "ext_259": [
+              "ext_265": [
                 "1"
               ],
-              "ext_261": [
+              "ext_267": [
                 "0",
                 "1"
               ]
@@ -11865,11 +11928,11 @@
               ],
               [
                 "ext",
-                259
+                265
               ],
               [
                 "ext",
-                261
+                267
               ]
             ]
           },
@@ -11901,19 +11964,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_260": [],
-              "ext_262": [
+              "ext_266": [],
+              "ext_268": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "ext",
-                260
+                266
               ],
               [
                 "ext",
-                262
+                268
               ]
             ]
           }
@@ -11929,10 +11992,10 @@
               "main_514": [
                 "0"
               ],
-              "ext_259": [
+              "ext_265": [
                 "1"
               ],
-              "ext_261": [
+              "ext_267": [
                 "0",
                 "1"
               ]
@@ -11948,11 +12011,11 @@
               ],
               [
                 "ext",
-                259
+                265
               ],
               [
                 "ext",
-                261
+                267
               ]
             ]
           },
@@ -11984,19 +12047,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_260": [],
-              "ext_262": [
+              "ext_266": [],
+              "ext_268": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "ext",
-                260
+                266
               ],
               [
                 "ext",
-                262
+                268
               ]
             ]
           }
@@ -12320,12 +12383,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_263": []
+              "ext_269": []
             },
             "id_list": [
               [
                 "ext",
-                263
+                269
               ]
             ]
           },
@@ -12335,12 +12398,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_264": []
+              "ext_270": []
             },
             "id_list": [
               [
                 "ext",
-                264
+                270
               ]
             ]
           },
@@ -12350,12 +12413,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_265": []
+              "ext_271": []
             },
             "id_list": [
               [
                 "ext",
-                265
+                271
               ]
             ]
           },
@@ -12365,14 +12428,14 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_266": [
+              "ext_272": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "ext",
-                266
+                272
               ]
             ]
           },
@@ -12382,14 +12445,14 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_267": [
+              "ext_273": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "ext",
-                267
+                273
               ]
             ]
           }
@@ -12446,12 +12509,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_263": []
+              "ext_269": []
             },
             "id_list": [
               [
                 "ext",
-                263
+                269
               ]
             ]
           },
@@ -12461,12 +12524,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_264": []
+              "ext_270": []
             },
             "id_list": [
               [
                 "ext",
-                264
+                270
               ]
             ]
           },
@@ -12476,12 +12539,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_265": []
+              "ext_271": []
             },
             "id_list": [
               [
                 "ext",
-                265
+                271
               ]
             ]
           },
@@ -12491,14 +12554,14 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_266": [
+              "ext_272": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "ext",
-                266
+                272
               ]
             ]
           },
@@ -12508,14 +12571,14 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_267": [
+              "ext_273": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "ext",
-                267
+                273
               ]
             ]
           }
@@ -12552,7 +12615,7 @@
             "virtual": false,
             "variant_map": {
               "main_526": [],
-              "ext_268": [
+              "ext_274": [
                 "0"
               ]
             },
@@ -12563,7 +12626,7 @@
               ],
               [
                 "ext",
-                268
+                274
               ]
             ]
           },
@@ -12574,7 +12637,7 @@
             "virtual": false,
             "variant_map": {
               "main_527": [],
-              "ext_269": [
+              "ext_275": [
                 "0"
               ]
             },
@@ -12585,7 +12648,7 @@
               ],
               [
                 "ext",
-                269
+                275
               ]
             ]
           }
@@ -12598,7 +12661,7 @@
             "virtual": false,
             "variant_map": {
               "main_526": [],
-              "ext_268": [
+              "ext_274": [
                 "0"
               ]
             },
@@ -12609,7 +12672,7 @@
               ],
               [
                 "ext",
-                268
+                274
               ]
             ]
           },
@@ -12620,7 +12683,7 @@
             "virtual": false,
             "variant_map": {
               "main_527": [],
-              "ext_269": [
+              "ext_275": [
                 "0"
               ]
             },
@@ -12631,7 +12694,7 @@
               ],
               [
                 "ext",
-                269
+                275
               ]
             ]
           }
@@ -12656,7 +12719,7 @@
         }
       }
     ],
-    "extCheckId": 257
+    "extCheckId": 263
   },
   {
     "name": "Bowser Stages",
@@ -13266,6 +13329,24 @@
                 555
               ]
             ]
+          },
+          "No Early Ellies (Pipe)": {
+            "name": "No Early Ellies (Pipe)",
+            "diff": "easy",
+            "ver_diff": false,
+            "virtual": true,
+            "variant_map": {},
+            "id_list": [],
+            "virtId": "16_2r_No Early Ellies (Pipe)"
+          },
+          "No Early Ellies (Star)": {
+            "name": "No Early Ellies (Star)",
+            "diff": "easy",
+            "ver_diff": false,
+            "virtual": true,
+            "variant_map": {},
+            "id_list": [],
+            "virtId": "16_2r_No Early Ellies (Star)"
           }
         },
         "us_set": {
@@ -13298,6 +13379,24 @@
                 555
               ]
             ]
+          },
+          "No Early Ellies (Pipe)": {
+            "name": "No Early Ellies (Pipe)",
+            "diff": "easy",
+            "ver_diff": false,
+            "virtual": true,
+            "variant_map": {},
+            "id_list": [],
+            "virtId": "16_2r_No Early Ellies (Pipe)"
+          },
+          "No Early Ellies (Star)": {
+            "name": "No Early Ellies (Star)",
+            "diff": "easy",
+            "ver_diff": false,
+            "virtual": true,
+            "variant_map": {},
+            "id_list": [],
+            "virtId": "16_2r_No Early Ellies (Star)"
           }
         },
         "variants": [],
@@ -13596,12 +13695,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "ext_271": []
+              "ext_277": []
             },
             "id_list": [
               [
                 "ext",
-                271
+                277
               ]
             ]
           },
@@ -13611,12 +13710,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_273": []
+              "ext_279": []
             },
             "id_list": [
               [
                 "ext",
-                273
+                279
               ]
             ]
           },
@@ -13626,12 +13725,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "ext_274": []
+              "ext_280": []
             },
             "id_list": [
               [
                 "ext",
-                274
+                280
               ]
             ]
           },
@@ -13641,12 +13740,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_276": []
+              "ext_282": []
             },
             "id_list": [
               [
                 "ext",
-                276
+                282
               ]
             ]
           }
@@ -13688,12 +13787,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "ext_272": []
+              "ext_278": []
             },
             "id_list": [
               [
                 "ext",
-                272
+                278
               ]
             ]
           },
@@ -13703,12 +13802,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_273": []
+              "ext_279": []
             },
             "id_list": [
               [
                 "ext",
-                273
+                279
               ]
             ]
           },
@@ -13718,12 +13817,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "ext_275": []
+              "ext_281": []
             },
             "id_list": [
               [
                 "ext",
-                275
+                281
               ]
             ]
           },
@@ -13733,12 +13832,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_276": []
+              "ext_282": []
             },
             "id_list": [
               [
                 "ext",
-                276
+                282
               ]
             ]
           }
@@ -13860,6 +13959,6 @@
         }
       }
     ],
-    "extCheckId": 272
+    "extCheckId": 278
   }
 ]

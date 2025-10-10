@@ -85,11 +85,6 @@ export function DSEditBoard(props: DSEditBoardProps): React.ReactNode {
 	// star definitions from star ids
 	var starIdList = starCodeList.map((starPx) => [starPx[0], orgStarId(starPx[0], starPx[1])]);
 	var starDefList = starIdList.map((starPx) => orgStarDef(starPx[0], starPx[1]));
-	
-	// stores the first star for convenience when interacting with variant stars
-	// WARNING: not designed to work with "glob star days" (days that have multiple unrelated stars on the same day)
-	//var [stageId0, starId0] = starIdList[0];
-	//var starDef0 = starDefList[0];
 
 	// filter state
 	// unlike viewboard, extensions always on
@@ -225,7 +220,7 @@ export function DSEditBoard(props: DSEditBoardProps): React.ReactNode {
 		}
 		tableList.push(<React.Fragment key={ stageIdX + "_" + starIdX + "_" + i }>
 			{ sepNode } { varContList[i] }
-			<LiveStarTable stageId={ stageIdX } starId={ starIdX } today={ ["def"] } fs={ mainFS }
+			<LiveStarTable stageId={ stageIdX } starDef={ starDef } today={ ["def"] } fs={ mainFS }
 				updatePlayCount={ updatePlayCount("" + i) } playData={ playData } reloadPlayData={ reloadPlayDataEx } playDB={ playDB }/>
 		</React.Fragment>);
 		// variant tables
@@ -233,48 +228,12 @@ export function DSEditBoard(props: DSEditBoardProps): React.ReactNode {
 			var altFS = copyFilterState(fs);
 			altFS.altState = [false, true];
 			tableList.push(
-				<LiveStarTable stageId={ stageIdX } starId={ starIdX } today={ ["def"] } fs={ altFS }
+				<LiveStarTable stageId={ stageIdX } starDef={ starDef } today={ ["def"] } fs={ altFS }
 					updatePlayCount={ updatePlayCount("" + i) } playData={ playData } reloadPlayData={ reloadPlayDataEx }
 					playDB={ playDB } key={ stageIdX + "_" + starIdX + "_" + i + "_alt" }/>
 			);
 		}
 	});
-
-	// build tables (in case of multiple tables)
-	/*var tableList: React.ReactNode[] = [];
-	// -- main table
-	var mainFS = fs;
-	if (hasCombFlag || !showComb) {
-		mainFS = copyFilterState(fs);
-		mainFS.altState = [true, false];
-	}
-	tableList.push(<React.Fragment>
-		<LiveStarTable stageId={ stageId0 } starId={ starId0 } today={ ["def"] } fs={ mainFS } setPlayCount={ setPlayCount }
-			playData={ playData } reloadPlayData={ reloadPlayData } playDB={ playDB } key={ stageId0 + "_" + starId0 + "_0" }/>
-	</React.Fragment>);
-	// -- variant table OR glob star tables
-	// WARNING: currently these features are mutually exclusive
-	if (hasCombFlag || !showComb) {
-		var altFS = copyFilterState(fs);
-		altFS.altState = [false, true];
-		tableList.push(
-			<LiveStarTable stageId={ stageId0 } starId={ starId0 } today={ ["def"] } fs={ altFS }
-				playData={ playData } reloadPlayData={ reloadPlayData } playDB={ playDB } key={ stageId0 + "_" + starId0 + "_1" }/>
-		);
-	} else if (starIdList.length > 1) {
-		for (let i = 1; i < starIdList.length; i++) {
-			var [stageIdX, starIdX] = starIdList[i];
-			tableList.push(<div>
-				<div className="sep"><hr/></div>
-				<div className="row-wrap no-space">
-					<div className='label-cont'>{ orgData[stageIdX].name }</div>
-					<div className='label-cont'>{ starDefList[i].name }</div>
-				</div>
-				<LiveStarTable stageId={ stageIdX } starId={ starIdX } today={ ["def"] } fs={ mainFS } setPlayCount={ setPlayCount }
-					playData={ playData } reloadPlayData={ reloadPlayData } playDB={ playDB } key={ stageIdX + "_" + starIdX }/>
-			</div>);
-		}
-	}*/
 
 	var starName = starDefList[0].name;
 	if (starIdList.length > 1) starName = starDefList[0].name + "+";
@@ -296,12 +255,4 @@ export function DSEditBoard(props: DSEditBoardProps): React.ReactNode {
 		{ tableList }
 		</div>
 	);
-	/*
-
-			<div className="toggle-sidebar">
-				{ verToggle }
-			</div>
-		<!-- <LiveStarTable stageId={ stageId } starId={ starId } today={ true } fs={ fs }
-			playData={ playData } setPlayData={ setPlayData } key={ stageId + "_" + starId }/> -->
-	*/
 }

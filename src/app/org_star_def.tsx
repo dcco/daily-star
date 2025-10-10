@@ -5,7 +5,7 @@ import { VerF, Ver, VerInfo, VarSet, VarSpace,
 	buildVarGroups, filterVarGroups } from './variant_def'
 import { RawStratDef, StratSet, ColList,
 	buildStratDef, openStratDef,
-	mergeStratSet, hasExtStratSet, filterExtStratSet,
+	mergeStratSet, hasExtStratSet, hasExtOnlyStratSet, filterExtStratSet,
 	filterVirtStratSet, filterVariantStratSet, toListStratSet } from './org_strat_def'
 import { OffsetDat, VerOffset, StratOffset, newVerOffset, newStratOffset } from './time_dat'
 
@@ -392,9 +392,11 @@ export function orgColList(stageId, starId, fs) {
 }*/
 
 export function hasExtStarDef(starDef: StarDef): boolean {
-	//var fullSet = Object.entries(starDef.jp_set);
-	//fullSet = fullSet.concat(Object.entries(starDef.us_set));
 	return hasExtStratSet(starDef.jp_set) || hasExtStratSet(starDef.us_set);
+}
+
+export function hasExtOnlyStarDef(starDef: StarDef): boolean {
+	return hasExtOnlyStratSet(starDef.jp_set, starDef.us_set);
 }
 
 	/*

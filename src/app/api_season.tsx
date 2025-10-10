@@ -186,7 +186,10 @@ export async function initHistory(callback: () => void) {
 	for (const glob of desc.starList)
 	{
 		if (glob.day >= dayTotal) continue;
-		if (glob.special !== null) continue;
+		if (glob.special !== null) {
+			data.push({ "star": glob, "times": [] });
+			continue;
+		}
 		var starIdList = readCodeList(glob.stageid, glob.staridlist);
 		var times: ReadTimeObj[] = [];
 		for (const [stageId, starId] of starIdList) {
@@ -325,7 +328,7 @@ export async function calcHistoryStatData(callback: () => void)
 {
 	var starSet = historyStarSet();
 	var [starMap, scoreMap] = calcUserScoreMap(starSet, historyTTFun, true);
-	var userMap = calcUserStatMap(starSet, scoreMap, false, newIdent("remote", "Nobody"));
+	var userMap = calcUserStatMap(starSet, scoreMap, false, newIdent("remote", "Nobody"), false);
 	G_HISTORY.starMap = starMap;
 	G_HISTORY.userMap = userMap;
 	callback();

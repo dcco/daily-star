@@ -29,9 +29,11 @@ type DataRowProps = {
 	"action": CellAct,
 	"rowId": number,
 	"showRowId": boolean,
-	"onClick": (a: CellAct, i: number, j: number, k: number) => void
+	"onClick": (a: CellAct, i: number, j: number, k: number) => void,
 	"endRow": boolean,
-	"playDB"?: PlayDB
+	"headerList": string[][],
+	"playDB"?: PlayDB,
+	"rankKey"?: string
 };
 
 function heightColRow(timeRow: TimeRow, colId: number): number
@@ -80,9 +82,19 @@ export function DataRow(props: DataRowProps): React.ReactNode {
 		var timeRowNodes = userDat.timeRow.map((multiDat, j) => {
 			var timeDat = null;
 			if (multiDat !== null && i < multiDat.length) timeDat = multiDat[i];
-			if (timeDat === null && i !== 0) return <td className="dark-cell" key={ j }></td>;
+			if (timeDat === null && i !== 0) return <td className="dark-cell" colSpan={ 2 } key={ j }></td>;
+			// check for ambiguous strat number
+			var header = props.headerList[j];
+			var superX: string | undefined = undefined;
+			if (header.length > 1) {
+				for (let k = 0; k < header.length; k++) {
+					var h = header[k];
+					if (timeDat !== null && timeDat.rowDef.name.includes(h)) superX = "" + String.fromCharCode(k + 97);
+				}
+			}  
 			return <TimeCell timeDat={ timeDat } verOffset={ verOffset } active={ active }
-				onClick={ () => onClick(action, rowId, j, i) } hiddenFlag={ !expand && hasSubTimes(multiDat) } key={ j }/>; 
+				onClick={ () => onClick(action, rowId, j, i) } super={ superX }
+				rankKey={ props.rankKey } hiddenFlag={ !expand && hasSubTimes(multiDat) } key={ j }/>; 
 		})
 		var nameAct: CellAct = "none";
 		if (hasSubRows(userDat.timeRow)) nameAct="view-toggle";
@@ -96,7 +108,7 @@ export function DataRow(props: DataRowProps): React.ReactNode {
 		if (i === 0) timeRowNodes.unshift(<NameCell id={ userDat.id } pd={ pd } active={ nameAct !== "none" }
 			onClick={ () => {} } href={ href } key="user"/>);
 		else timeRowNodes.unshift(<td className="dark-cell" key="user"></td>);
-		if (showRowId) timeRowNodes.unshift(<td className="time-cell" key="num">{ rowId + 1 }</td>);
+		if (showRowId) timeRowNodes.unshift(<td className="time-cell" colSpan={ 2 } key="num">{ rowId + 1 }</td>);
 		rowNodeList.push(<tr className="time-row" data-row-active={ rowActive.toString() } data-end-row={ endRow } key={ i }>
 			{ timeRowNodes }
 		</tr>);
@@ -106,8 +118,10 @@ export function DataRow(props: DataRowProps): React.ReactNode {
 		var sepList1 = [];
 		var sepList2 = [];
 		for (let i = 0; i < userDat.timeRow.length + 1; i++) {
-			sepList1.push(<td className="sep-cell" key={ i }></td>);
-			sepList2.push(<td className="sep-cell" key={ i }></td>);
+			var c = 2;
+			if (i === 0) c = 1;
+			sepList1.push(<td className="sep-cell" colSpan={ c } key={ i }></td>);
+			sepList2.push(<td className="sep-cell" colSpan={ c } key={ i }></td>);
 		};
 		rowNodeList.unshift(<tr className="sep-row" key={ rowId + "#A" }>{ sepList1 }</tr>);
 		rowNodeList.push(<tr className="sep-row" key={ rowId + "#B" }>{ sepList2 }</tr>);

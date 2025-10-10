@@ -1,10 +1,13 @@
 
 import { StratDef, ColList } from './org_strat_def'
 import { StarDef, FilterState } from './org_star_def'
-import { TimeDat, MultiDat } from './time_dat'
+import { TimeDat, MultiDat, maxTimeDat } from './time_dat'
 import { TimeTable, filterTimeTable } from './time_table'
 import { RecordMap } from './xcam_record_map'
-import { MergeView, newMergeView, findColMergeView, findHeaderMergeView, mergeColMergeView, renameColMergeView } from './col_merge_view'
+import { MergeView, newMergeView, findColMergeView, findColByHeaderMergeView, findHeaderMergeView,
+	mergeColMergeView, mergeColByHeaderMergeView, splitColMergeView,
+	addNameColMergeView, renameColMergeView, renameListColMergeView,
+	addNLColMergeView, addNameColByHeaderMergeView } from './col_merge_view'
 
 	/*
 		* how does the open column work?
@@ -19,27 +22,6 @@ import { MergeView, newMergeView, findColMergeView, findHeaderMergeView, mergeCo
 			normally and merge whatever is in the list of open columns. notably, we no longer
 			need to virtually track the open column
 	*/
-
-/*
-function filterOpenList(colList: ColList, openList: string[]): string[]
-{
-	var nameList = colList.map((_strat) => _strat[1].name);
-	return openList.filter((name) => nameList.includes(name));
-}
-
-function openListMergeView(colList: ColList, openList: string[]): MergeView | null
-{
-	// exclude columns that dont matter
-	openList = filterOpenList(colList, openList);
-	// if open list is empty, or the open column has been filtered out, dont merge view
-	if (openList.length === 0 || !openList.includes("Open")) return null;
-	// otherwise, merge everything from open list into the open column (we assume Open exists by construction)
-	var mv = newMergeView(colList);
-	mergeColListMergeView(mv, "Open", openList);
-	return mv;
-}
-*/
-
 
 	/* 
 		col_config: bundles a merge-view together with a column list
@@ -68,7 +50,25 @@ function excludeNameList(config: ColConfig, nameList: string[]): string[]
 	return nameList.map((name) => name).filter((name) => hList.includes(name));
 }
 
-export function mergeListColConfig(config: ColConfig, mainName: string | null, second: boolean, nameList: string[])
+export function mergeHeaderColConfig(config: ColConfig, h1: string, h2: string)
+{
+	// initialize merge view
+	if (config.mv === null) config.mv = newMergeView(config.colList);
+	var mv = config.mv;
+	// find column 1
+	var r1 = findColByHeaderMergeView(mv, h1);
+	if (r1 === null) return;
+	var [i, mainCol] = r1;
+	// find column 2 + merge
+	var r2 = findColByHeaderMergeView(mv, h2);
+	if (r2 === null) return;
+	mergeColByHeaderMergeView(mv, h1, h2);
+	// change header
+	addNameColByHeaderMergeView(mv, h1, h1, h2);
+	config.stratTotal = mv.colList.length;
+}
+
+export function mergeListColConfig(config: ColConfig, mainName: string | null, second: boolean | null, nameList: string[])
 {
 	// exclude filtered columns - if no columns are left / main column is filtered, do not continue
 	nameList = excludeNameList(config, nameList);
@@ -84,20 +84,22 @@ export function mergeListColConfig(config: ColConfig, mainName: string | null, s
 		var res = findColMergeView(mv, name);
 		if (res === null) continue;
 		var [i, mCol] = res;
-		var mSecond = mCol.partList[0][1].diff.includes("second");
-		if (second === mSecond) {
+		var mSecond = mCol.partList[0][1].def.diff.includes("second");
+		if (second === null || second === mSecond) {
 			mergeColMergeView(mv, mainName, name);
-			secHeaderList.push(mCol.header);
+			//secHeaderList.push(mCol.header);
+			secHeaderList = secHeaderList.concat(mCol.headerList);
 		}
 	}
 	// change header
 	var mainHeader = findHeaderMergeView(mv, mainName);
 	if (mainHeader !== null) {
-		var newHeader = mainHeader;
+		/*var newHeader = mainHeader;
 		for (const header of secHeaderList) {
 			if (header !== mainHeader) newHeader = newHeader + "/" + header;
 		}
-		renameColMergeView(mv, mainName, mainName, newHeader);
+		renameColMergeView(mv, mainName, mainName, newHeader);*/
+		addNLColMergeView(mv, mainName, mainName, secHeaderList);
 	}
 	config.stratTotal = mv.colList.length;
 }
@@ -125,8 +127,9 @@ export function mergeTagsColConfig(config: ColConfig, tag1: string, tag2: string
 		var res = findColMergeView(mv, n1);
 		if (res === null) throw ("BUG: Attempted to find unknown column " + n1 + ".");
 		var [i, mCol] = res;
-		var newHeader = mCol.header.replace(tag1, "").trim();
-		renameColMergeView(mv, n1, newId, newHeader);
+		var newHeader = mCol.headerList.map((header) => header.replace(tag1, "").trim());
+		//addNLColMergeView(mv, n1, newId, newHeader);
+		renameListColMergeView(mv, n1, newId, newHeader);
 	}
 	config.stratTotal = mv.colList.length;
 }
@@ -138,7 +141,18 @@ export function mergeNamesColConfig(config: ColConfig, specMerge: string[])
 	var mv = config.mv;
 	// merge columns
 	mergeColMergeView(mv, specMerge[1], specMerge[2]);
+	//renameColMergeView(mv, specMerge[1], specMerge[0], specMerge[0])
 	renameColMergeView(mv, specMerge[1], specMerge[0], specMerge[0])
+	config.stratTotal = mv.colList.length;
+}
+
+export function splitVariantPosColConfig(config: ColConfig, idName: string, vName: string, header: string)
+{
+	// initialize merge view
+	if (config.mv === null) config.mv = newMergeView(config.colList);
+	var mv = config.mv;
+	// split columns
+	splitColMergeView(mv, idName, vName, idName, header);
 	config.stratTotal = mv.colList.length;
 }
 
@@ -151,25 +165,25 @@ export function idColConfig(config: ColConfig, colId: number): string
 	return mv.colList[colId].id;
 }
 
-export function headerColConfig(config: ColConfig, colId: number): string
+export function headerColConfig(config: ColConfig, colId: number): string[]
 {
 	var mv = config.mv;
-	if (mv === null) return config.colList[colId][1].name;
-	return mv.colList[colId].header;
+	if (mv === null) return [config.colList[colId][1].name];
+	return mv.colList[colId].headerList;
 }
-
+/*
 export function renameHeaderColConfig(config: ColConfig, id: string, header: string)
 {
 	if (config.mv === null) config.mv = newMergeView(config.colList);
 	var mv = config.mv;
 	renameColMergeView(config.mv, id, id, header);
-}
+}*/
 
 export function stratListColConfig(config: ColConfig, colId: number): StratDef[]
 {
 	var mv = config.mv;
 	if (mv === null) return [config.colList[colId][1]];
-	return mv.colList[colId].partList.map((part) => part[1]);	
+	return mv.colList[colId].partList.map((part) => part[1].def);	
 }
 
 export function defStratColConfig(config: ColConfig, colId: number): StratDef
@@ -177,9 +191,38 @@ export function defStratColConfig(config: ColConfig, colId: number): StratDef
 	var mv = config.mv;
 	if (mv === null) return config.colList[colId][1];
 	var partList = mv.colList[colId].partList;
-	var strat = partList[0][1];
-	if (strat.name === "Open" && partList.length > 1) strat = partList[1][1];
+	var strat = partList[0][1].def;
+	if (strat.name === "Open" && partList.length > 1) strat = partList[1][1].def;
 	return strat;
+}
+
+function filterTimeCheck(sDef: StratDef, neg: string[], pos: string[], timeDat: TimeDat): boolean
+{
+	var vs = sDef.vs;
+	// check for bad variants, while collecting the names of variants
+	var varList: string[] = [];
+	for (const variant of timeDat.rowDef.variant_list) {
+		var [vId, groupName] = variant;
+		if (vId === -1) continue;
+		var vName = vs.variants[vId];
+		if (neg.includes(vName)) return false;
+		varList.push(vName);
+	}
+	// check to make sure all necessary variants are included
+	for (const p of pos) {
+		if (!varList.includes(p)) return false;
+	}
+	return true;
+}
+
+function filterCellCheck(sDef: StratDef, neg: string[], pos: string[], multiDat: TimeDat[]): TimeDat[]
+{
+	var vs = sDef.vs;
+	var newDat: TimeDat[] = [];
+	for (const timeDat of multiDat) {
+		if (filterTimeCheck(sDef, neg, pos, timeDat)) newDat.push(timeDat);
+	}
+	return newDat;
 }
 
 export function recordColConfig(config: ColConfig, recordMap: RecordMap, colId: number): TimeDat
@@ -187,11 +230,17 @@ export function recordColConfig(config: ColConfig, recordMap: RecordMap, colId: 
 	var mv = config.mv;
 	if (mv === null) return recordMap[config.colList[colId][1].name];
 	var mCol = mv.colList[colId];
-	var recordDat = recordMap[mCol.partList[0][1].name];
-	for (let j = 1; j < mCol.partList.length; j++) {
+	var recordDat = maxTimeDat(recordMap[mCol.partList[0][1].def.name].rowDef);
+	var xFlag = false
+	for (let j = 0; j < mCol.partList.length; j++) {
 		var strat = mCol.partList[j][1];
-		var curDat = recordMap[strat.name];
-		if (curDat.time < recordDat.time) recordDat = curDat;
+		var recName = strat.def.name;
+		if (strat.neg.length > 0 || strat.pos.length > 0) {
+			recName = strat.header;
+			xFlag = true;
+		}
+		var curDat = recordMap[recName];
+		if (curDat !== undefined && curDat.time < recordDat.time) recordDat = curDat;
 	}
 	return recordDat;
 }
@@ -205,11 +254,11 @@ export function idListColConfig(config: ColConfig): string[]
 	return mv.colList.map((mCol) => mCol.id);
 }
 
-export function headerListColConfig(config: ColConfig): string[]
+export function headerListColConfig(config: ColConfig): string[][]
 {
 	var mv = config.mv;
-	if (mv === null) return config.colList.map((colRef) => colRef[1].name);
-	return mv.colList.map((mCol) => mCol.header);
+	if (mv === null) return config.colList.map((colRef) => [colRef[1].name]);
+	return mv.colList.map((mCol) => mCol.headerList);
 }
 
 export function recordListColConfig(config: ColConfig, recordMap: RecordMap): TimeDat[]
@@ -235,7 +284,12 @@ export function filterTableColConfig(timeTable: TimeTable, config: ColConfig): T
 				var timeCell = userDat.timeRow[colId];
 				if (timeCell === null) continue;
 				empty = false;
-				mergeCell = mergeCell.concat(timeCell);
+				if (strat.neg.length > 0 || strat.pos.length > 0) {
+					var xCell = filterCellCheck(strat.def, strat.neg, strat.pos, timeCell);
+					mergeCell = mergeCell.concat(xCell);
+				} else {
+					mergeCell = mergeCell.concat(timeCell);
+				}
 			}
 			mergeCell.sort(function(a, b) { return a.time - b.time });
 			if (mergeCell.length === 0) mergeCell = null;
@@ -268,214 +322,3 @@ export function primaryColConfig(cfg: ColConfig, starDef: StarDef, fs: FilterSta
 		}
 	}
 }
-
-/*
-export function openListColConfig(colList: ColList, openList: string[]): ColConfig {
-	var mv = openListMergeView(colList, openList);
-	var stratTotal = colList.length;
-	if (mv !== null) stratTotal = mv.list.length;
-	return {
-		"colList": colList,
-		"mv": mv,
-		"stratTotal": stratTotal
-	};
-}
-
-export function firstStratColConfig(config: ColConfig, colId: number): StratDef
-{
-	var mv = config.mv
-	if (mv === null) return config.colList[colId][1];
-	var strat = mv.list[colId][0][1];
-	console.log("CONFIG PICK");
-	console.log(strat);
-	// use non-open column when available
-	if (strat.name === "Open" && mv.list[colId].length > 1) strat = mv.list[colId][1][1];
-	return strat;
-}
-
-function hasNameStratList(sl: ColRef[], name: string): boolean
-{
-	for (const _strat of sl)
-	{
-		if (_strat[1].name === name) return true;
-	}
-	return false;
-}
-export function nameListColConfig(config: ColConfig, colId: number): string[]
-{
-	var mv = config.mv;
-	if (mv === null) return [config.colList[colId][1].name];
-	var mainList = mv.list[colId].map((_strat) => _strat[1].name);
-	//if (mv.openName !== null && hasNameStratList(mv.list[colId], mv.openName)) mainList.unshift("Open");
-	return mainList;
-}*/
-
-
-
-/*
-function nameListStratList(sl: ColRef[], openName: string | null): string
-{
-	var str = sl[0][1].name;
-	for (let i = 1; i < sl.length; i++) {
-		str = str + "/" + sl[i][1].name;
-	}
-	if (openName !== null && hasNameStratList(sl, openName)) {
-		str = "Open/" + str;
-	}
-	return str;
-}*/
-
-/*
-export function recordListColConfig(config: ColConfig, recordMap: RecordMap): TimeDat[]
-{
-	var mv = config.mv;
-	if (mv === null) return config.colList.map((_strat) => recordMap[_strat[1].name]);
-	return mv.list.map((sl, i) => {
-		var recordDat = recordMap[sl[0][1].name];
-		for (let j = 1; j < sl.length; j++) {
-			var curDat = recordMap[sl[j][1].name];
-			if (curDat.time < recordDat.time) recordDat = curDat;
-		}
-		return recordDat;
-	});
-}
-
-export function filterTableColConfig(timeTable: TimeTable, config: ColConfig): TimeTable
-{
-	var mv = config.mv;
-	if (mv === null) return filterTimeTable(timeTable, config.colList);
-	var filterTable: TimeTable = [];
-	for (let i = 0; i < timeTable.length; i++) {
-		var userDat = timeTable[i];
-		var empty = true;
-		var mergeRow = mv.list.map((sl) => {
-			var mergeCell: MultiDat | null = [];
-			for (const _strat of sl) {
-				var [colId, strat] = _strat;
-				var timeCell = userDat.timeRow[colId];
-				if (timeCell === null) continue;
-				empty = false;
-				mergeCell = mergeCell.concat(timeCell);
-			}
-			mergeCell.sort(function(a, b) { return a.time - b.time });
-			if (mergeCell.length === 0) mergeCell = null;
-			return mergeCell;
-		});
-		if (!empty) filterTable.push({
-			"id": userDat.id,
-			"timeRow": mergeRow
-		});
-	}
-	return filterTable;
-}*/
-
-
-
-
-
-
-	/*
-		merge_view: an abstract data structure defining sets of column ids
-		 that should be viewed as individual columns. this system is used
-		 to merge strats without having to actually make "merged strat defs"
-		 (which would be more complicated overall).
-		* list: an array of lists of [column id, strat def] pairs, each representing a "merged" column.
-	*/
-
-	/* merge view creation functions */
-/*
-type ColRef = [number, StratDef]
-
-type MergeView = {
-	"list": ColRef[][]
-};
-
-	// would export
-function newMergeView(colList: ColList): MergeView
-{
-	return {
-		"list": colList.map((strat) => [strat])
-	};
-}
-
-function findColMergeView(mv: MergeView, name: string): [number, ColRef] | null
-{
-	for (let i = 0; i < mv.list.length; i++) {
-		var sl = mv.list[i];
-		for (let j = 0; j < sl.length; j++) {
-			var [colId, strat] = sl[j];
-			if (strat.name === name) return [i, sl[j]];
-		}
-	}
-	return null;
-}
-
-function removeColMergeView(mv: MergeView, name: string): ColRef
-{
-	var res = findColMergeView(mv, name);
-	if (res === null) throw ("Attempted to remove column with non-existent strat " + name + " from merge view.");
-	var [i, _strat] = res;
-	mv.list.splice(i, 1);
-	return _strat;
-}
-
-function addColMergeView(mv: MergeView, name: string, strat: ColRef)
-{
-	var res = findColMergeView(mv, name);
-	if (res === null) throw ("Attempted to add strat " + strat[1].name + " to column with non-existent strat " + name + " from merge view.");
-	var [i, _s] = res;
-	mv.list[i].push(strat);
-}
-
-function mergeColMergeView(mv: MergeView, n1: string, n2: string)
-{
-	if (n1 === n2) return;
-	var _strat = removeColMergeView(mv, n2);
-	addColMergeView(mv, n1, _strat);
-}
-
-function mergeColListMergeView(mv: MergeView, n: string, nl: string[])
-{
-	for (let i = 0; i < nl.length; i++) {
-		mergeColMergeView(mv, n, nl[i]);
-	}
-}
-
-function filterOpenList(colList: ColList, openList: string[]): string[]
-{
-	var nameList = colList.map((_strat) => _strat[1].name);
-	return openList.filter((name) => nameList.includes(name));
-}
-
-function openListMergeView(colList: ColList, openList: string[]): MergeView | null
-{
-	// exclude columns that dont matter
-	openList = filterOpenList(colList, openList);
-	// if open list is empty, or the open column has been filtered out, dont merge view
-	if (openList.length === 0 || !openList.includes("Open")) return null;
-	// otherwise, merge everything from open list into the open column (we assume Open exists by construction)
-	var mv = newMergeView(colList);
-	mergeColListMergeView(mv, "Open", openList);
-	return mv;
-}
-
-	// would export
-function formatMergeView(mv: MergeView): string
-{
-	if (mv === null) return "mv { null }";
-	var str = "mv {";
-	for (let i = 0; i < mv.list.length; i++)
-	{
-		if (i !== 0) str = str + ", ";
-		var sl = mv.list[i];
-		var cx = "[";
-		for (let j = 0; j < sl.length; j++) {
-			if (j !== 0) cx = cx + ", ";
-			cx = cx + sl[j][1].name;
-		}
-		str = str + cx + "]";
-	}
-	str = str + "}";
-	//if (mv.openName !== null) str = str + ": " + mv.openName;
-	return str;
-}*/

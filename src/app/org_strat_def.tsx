@@ -141,6 +141,18 @@ export function openStratDef(virtId: string, second: boolean, vs: VarSpace): Str
 	};
 }
 
+function blankStratDef(sDef: StratDef): StratDef
+{
+	return {
+		"name": sDef.name,
+		"diff": sDef.diff,
+		"virtId": sDef.virtId,
+		"vs": sDef.vs,
+		"id_list": [],
+		"row_map": {}
+	};
+}
+
 function copyStratDef(sDef: StratDef): StratDef
 {
 	return {
@@ -177,6 +189,18 @@ function hasExtStratDef(sDef: StratDef): boolean
 	return false;
 }
 
+type PartRes = "yes" | "no" | "maybe"
+
+function isExtOnlyStratDef(sDef: StratDef): PartRes
+{
+	var rowMapList = Object.entries(sDef.row_map);
+	if (rowMapList.length === 0) return "maybe";
+	for (const [k, rowDef] of rowMapList) {
+		if (rowDef.sheet !== 'ext') return "no";
+	}
+	return "yes";
+}
+
 function filterExtStratDef(sDef: StratDef): StratDef
 {
 	var newDef = copyStratDef(sDef);
@@ -210,6 +234,33 @@ function filterVariantStratDef(sDef: StratDef, varFlagList: boolean[]): StratDef
 	newDef.row_map = newRowMap;
 	return newDef;
 }
+/*
+	this is basically not helpful
+export function splitVariantStratDef(sDef: StratDef, vName: string): [StratDef, StratDef]
+{
+	var def1 = blankStratDef(sDef);
+	var def2 = blankStratDef(sDef);
+	var vs = sDef.vs;
+	for (let i = 0; i < sDef.id_list.length; i++) {
+		var rowId = sDef.id_list[i];
+		var rowDef = lookupRefMap(sDef.row_map, rowId);
+		if (rowDef === null) continue;
+		var badRow = false;
+		for (const variant of rowDef.variant_list) {
+			var [vId, groupName] = variant;
+			if (vId === -1) continue;
+			if (vs.variants[vId] === vName) badRow = true;
+		}
+		if (badRow) {
+			def2.id_list.push(rowId);
+			addRefMap(def2.row_map, rowId, rowDef);
+		} else {
+			def1.id_list.push(rowId);
+			addRefMap(def1.row_map, rowId, rowDef);
+		}
+	}
+	return [def1, def2];
+}*/
 
 	/*
 		strat_set: a mapping of strat names into strat defs
@@ -239,6 +290,21 @@ export function mergeStratSet(vs1: StratSet, vs2: StratSet): StratSet {
 export function hasExtStratSet(vs: StratSet): boolean {
 	for (const [name, strat] of Object.entries(vs)) {
 		if (hasExtStratDef(strat)) return true;
+	}
+	return false;
+}
+
+export function hasExtOnlyStratSet(vs1: StratSet, vs2: StratSet): boolean {
+	for (const [name, strat] of Object.entries(vs1)) {
+		var r1 = isExtOnlyStratDef(strat);
+		if (r1 === "yes" && vs2[name] === undefined) return true;
+		if (vs2[name] === undefined) continue;
+		var r2 = isExtOnlyStratDef(vs2[name]);
+		if ((r1 === "yes" || r2 === "yes") && r1 !== "no" && r2 !== "no") return true;
+	}
+	var v1Keys = Object.keys(vs1);
+	for (const [name, strat] of Object.entries(vs2)) {
+		if (!v1Keys.includes(name) && isExtOnlyStratDef(strat) === "yes") return true;
 	}
 	return false;
 }
@@ -288,6 +354,13 @@ export function toListStratSet(vs: StratSet): ColList {
 		colList.push([i, stratDef]);
 	});
 	return colList;
+}
+
+export function findIdColList(list: ColList, name: string): number {
+	for (let i = 0; i < list.length; i++) {
+		if (list[i][1].name === name) return i;
+	}
+	return -1;
 }
 
 export function toSetColList(list: ColList): [StratSet, IndexSet] {

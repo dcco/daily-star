@@ -119,6 +119,7 @@ type StarTableProps = {
 	"playData": PlayData,
 	"editObj"?: EditObj,
 	"playDB"?: PlayDB,
+	"rankKey"?: string
 }
 
 const LB_NUM = false;
@@ -183,14 +184,20 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 	var sortActive = !editPos.active;
 	// -- was 77% with "extra"
 	var tdWidth = "" + Math.floor(85 / stratTotal) + "%";
-	var nameList = headerListColConfig(cfg);
+	var headerList = headerListColConfig(cfg);
 	var imgNodeFun = (active: boolean): React.ReactNode => (<div className="float-frame">
 		<img src="/icons/sort-icon.png" data-active={ active.toString() } className="float-icon" alt=""></img></div>);
-	var headerNodes: React.ReactNode[] = nameList.map((name, i) => {
-		return (<td className="time-cell" key={ name + "_" + i } data-active={ sortActive.toString() } width={ tdWidth }
-			onClick={ () => { if (sortActive) setSortId(i + 1) } }>{ name } { imgNodeFun(sortId === i + 1) }</td>);
+	var headerNodes: React.ReactNode[] = headerList.map((header, i) => {
+		var hNew: React.ReactNode[] = header.map((h) => h);
+		if (hNew.length > 1) hNew = hNew.map((h, i) => {
+			var c = String.fromCharCode(i + 97);
+			if (i !== 0) return <React.Fragment key={ i }>/{ h }<sup data-k={ c }>{ c }</sup></React.Fragment>;
+			return <React.Fragment key={ i }>{ h }<sup data-k={ c }>{ c }</sup></React.Fragment>;
+		});
+		return (<td className="time-cell" key={ header[0] + "_" + i } colSpan={ 2 } data-active={ sortActive.toString() } width={ tdWidth }
+			onClick={ () => { if (sortActive) setSortId(i + 1) } }>{ hNew } { imgNodeFun(sortId === i + 1) }</td>);
 	});
-	headerNodes.unshift(<td className="time-cell" key="strat" data-active={ sortActive.toString() } width="15%"
+	headerNodes.unshift(<td className="time-cell" key="strat"  data-active={ sortActive.toString() } width="15%"
 		onClick={ () => setSortId(0) }>Strat { imgNodeFun(sortId === 0) }</td>);
 	if (LB_NUM) headerNodes.unshift(<td className="time-cell" key="#" width="5%">#</td>)
 
@@ -231,8 +238,8 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 		var endRow = i !== timeTable.length - 1;
 		// add row
 		timeTableNodes.push(<DataRow userDat={ userDat } pd={ playData } verOffset={ verOffset } rowId={ i } showRowId={ LB_NUM }
-			expand={ vState.rowId === i } action={ action } onClick={ cellClick } endRow={ endRow }
-			key={ keyIdent(userDat.id) } playDB={ props.playDB }/>);
+			expand={ vState.rowId === i } action={ action } onClick={ cellClick } endRow={ endRow } headerList={ headerList }
+			key={ keyIdent(userDat.id) } playDB={ props.playDB } rankKey={ props.rankKey }/>);
 	});
 	/*filterTable.map((userDat, i) => {
 		// -- edit case
@@ -283,7 +290,7 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 	if (canSubmitNew && newPerm !== null && (!editPos.active || editPos.rowId !== null)) {
 		var exRowNodes: React.ReactNode[] = [];
 		for (let i = 0; i < stratTotal; i++) {
-			exRowNodes.push(<td className="init-cell" key={ i }
+			exRowNodes.push(<td className="init-cell" key={ i } colSpan={ 2 } 
 				onClick={ () => editClick(null, i, /*Array(stratTotal + 1).fill(""),*/ 0) }></td>);
 		}
 		var nText = strIdNickPD(playData, dropIdent(newPerm));

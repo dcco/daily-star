@@ -1,3 +1,4 @@
+import { DEV } from '../rx_multi_board'
 import orgData from '../json/org_data.json'
 
 import React, { useState, useEffect } from 'react'
@@ -9,10 +10,11 @@ import { RawStarDef, orgStarDef } from '../org_star_def'
 import { xcamTimeTable } from '../xcam_time_table'
 import { PlayDB } from '../table_parts/rx_star_row'
 import { ViewBoard } from '../board_simple/rx_view_board'
+import { StratRankTable } from '../board_simple/rx_sr_table'
 import { procStarSlug, makeStarSlug } from '../router_slug'
 import { RouterMain, navRM } from '../router_main'
 
-export function XcamBoard(props: { rm: RouterMain }): React.ReactNode {
+export function XcamBoard(props: { rm: RouterMain, showStd: boolean, beta: boolean }): React.ReactNode {
 	// process slug when relevant
 	const slug = props.rm.core.slug;
 	const [defStage, _starSlug, defStar] = procStarSlug(slug);
@@ -25,19 +27,27 @@ export function XcamBoard(props: { rm: RouterMain }): React.ReactNode {
 	const starId = starIdCache[stageId];
 	var starDef = orgStarDef(stageId, starId);
 
+	// navigation handling
+	var baseDir = "xcam";
+	var subDir = "";
+	if (props.beta) {
+		baseDir = "home";
+		subDir = "beta_xcam";
+	}
+
 	// star functions
 	const changeStage = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		var newStage = parseInt(e.target.value);
 		var newStar = orgData[stageId].starList[0].id;
 		setStageId(newStage);
-		navRM(props.rm, "xcam", "", makeStarSlug(newStage, newStar));
+		navRM(props.rm, baseDir, subDir, makeStarSlug(newStage, newStar));
 	};
 
 	const changeStar = (i: number) => {
 		starIdCache[stageId] = i;
 		setStarIdCache(starIdCache.map((x) => x));
 		var newStar = orgData[stageId].starList[i].id;
-		navRM(props.rm, "xcam", "", makeStarSlug(stageId, newStar));
+		navRM(props.rm, baseDir, subDir, makeStarSlug(stageId, newStar));
 	};
 
 	// if route changes, re-render board
@@ -93,11 +103,15 @@ export function XcamBoard(props: { rm: RouterMain }): React.ReactNode {
 			</select>
 		</div>);
 
-	var starSelNode = (
+	var newNode: React.ReactNode = <div></div>; 
+	if (props.showStd) newNode = <StratRankTable stageId={ stageId } starDef={ starDef }/>
+		
+	var starSelNode = (<div>
 		<div className="star-select">
 			{ starBtnNodes }
+		</div> { newNode }
 		</div>);
 
-	return <ViewBoard stageId={ stageId } starDef={ starDef } ttFun={ xcamTimeTable }
-		cornerNode={ stageSelNode } headerNode={ starSelNode } playDB={ playDB }/>;
+	return <ViewBoard kind="view" stageId={ stageId } starDef={ starDef } ttFun={ xcamTimeTable }
+		cornerNode={ stageSelNode } headerNode={ starSelNode } showStd={ props.showStd } playDB={ playDB }/>;
 }

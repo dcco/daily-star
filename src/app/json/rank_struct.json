@@ -1,0 +1,914 @@
+{
+	"bob_1": {
+		"benchmark": "Standard",
+		"offset": [
+			["Standard", "Silver", "7.8", "No wall kicks"]
+		]
+	},
+	"bob_2": {
+		"benchmark": "Standard",
+		"offset": [
+			["Standard", "Silver", "6.5", "Cannon first"]
+		],
+		"ext": {
+			"No Cutscene": { "kind": "benchmarkDef" }
+		}
+	},
+	"bob_3": {
+		"benchmark": "Skyjump",
+		"protect": ["Island Hop"],
+		"ext": {
+			"TJ Ihop": { "kind": "benchmark", "strat": "Island Hop" }
+		}
+	},
+	"bob_5": {
+		"benchmark": "Skyjump"
+	},
+	"bob_6": {
+		"benchmark": "Bomb Clip",
+		"offset": [
+			["Bomb Clip", "Silver", "0.3", "Slow grab"]
+		]
+	},
+
+	"wf_1": {
+		"offset": [
+			["Standard", "Silver", "1.7", "Island first"]
+		]
+	},
+	"wf_2": {
+		"benchmark": "Triple Jump",
+		"beg": { "kind": "benchmarkDef" },
+		"offset": [
+			["Sideflip WK", "Gold", "1.7", "Island first"]
+		]
+	},
+	"wf_3": {
+		"benchmark": "Standard"
+	},
+	"wf_100c4": {
+		"mergeTable": [
+			["Half Cycle Skip", "Pro Cycle"]
+		],
+		"mergeOffset": [["Half Cycle Skip", "-1.60"]],
+		"beg": { "kind": "approx" },
+		"force": {
+			"Half Cycle": {
+				"Mario": "1:06.40",
+				"Master": "1:07.96",
+				"Platinum": "1:09.53"
+			}
+		},
+		"ext": {
+			"Kanno Cycle": { "kind": "benchmark", "strat": "Half Cycle Skip" }
+		},
+		"descale": [
+			["Kanno Cycle", "1:04.73"],
+			["Pro Cycle", "1:17.50"],
+			["Pro Cycle", "1:06.73", "Grandmaster"],
+			["Half Cycle Skip", "1:18.50"],
+			["Half Cycle Skip", "1:09.96", "Master"]
+		],
+		"offset": [
+			["Half Cycle", "Gold", "5", "Beginner cycle"],
+			["Half Cycle", "Silver", "7", "Piranha kill + slow ending"],
+			["Half Cycle", "Bronze", "2", "Slower ending"]
+		]
+	},
+	"wf_5": {
+		"benchmark": "TJ Owlless",
+		"protect": ["Owl"],
+		"ext": {
+			"Sideflip": { "kind": "benchmarkDef" },
+			"Mad Owl": { "kind": "benchmark", "strat": "Owl" }
+		}
+	},
+	"wf_6": {
+		"benchmark": "Salt",
+		"protect": ["Texture", "Sockfolder"],
+		"offset": [
+			["Sockfolder", "Bronze", "6.0", "Long way around"]
+		],
+		"ext": {
+			"Open": { "kind": "benchmarkDef" }
+		}
+	},
+
+	"jrb_1": {
+		"beg": { "kind": "benchmark", "strat": "Ship Clip" }
+	},
+	"jrb_2": {
+		"force": {
+			"BLJ": {
+				"Mario": "29.90",
+				"Platinum": "33.30",
+				"Bronze": "38.06"
+			}
+		},
+		"ext": {
+			"BLJ": { "kind": "approx" }
+		}
+	},
+	"jrb_3": {
+		"force": {
+			"BLJ": {
+				"Mario": "34.50",
+				"Platinum": "37.10" 
+			}
+		},
+		"ext": {
+			"BLJ": { "kind": "approx" }
+		}
+	},
+	"jrb_100c4": {
+		"cutscene": [
+			["Standard", "No Cutscene"]
+		]
+	},
+	"jrb_5": {
+		"beg": { "kind": "benchmark", "strat": "Cannon (Direct)" },
+		"descale": [
+			["Framewalk", "21.63", "Grandmaster"]
+		]
+	},
+
+	"ccm_1": {
+		"mergeTable": [
+			["No Clip", "Standard"]
+		],
+		"offset": [
+			["No Clip", "Silver", "0.9", "No moonwalk"]
+		]
+	},
+	"ccm_100c1": {
+		"benchmark": "Standard",
+		"ext": {
+			"Open": { "kind": "benchmarkDef" }
+		}
+	},
+	"ccm_2": {
+		"benchmark": "Standard"
+	},
+	"ccm_100c3": {
+		"mergeTable": [
+			["Standard", "Atmpas Route"]
+		],
+		"ext": {
+			"Open": { "kind": "benchmark", "strat": "Standard" }
+		}
+	},
+	"ccm_4": {
+		"offset": [
+			["Standard", "Gold", "2.0", "Tree grab"],
+			["Standard", "Silver", "3.3", "Homebrew"]
+		]
+	},
+	"ccm_5": {
+		"mergeTable": [
+			["Upper Start", "Lower Start"]
+		]
+	},
+	"ccm_6": {
+		"beg": { "kind": "approx" },
+		"force": {
+			"Beginner": {
+				"Grandmaster": "11.10",
+				"Gold": "12.0",
+				"Silver": "12.56"
+			},
+			"Floor Clip": {
+				"Mario": "6.70",
+				"Gold": "8.00"
+			}
+		},
+		"ext": {
+			"SJ WK": { "kind": "benchmark", "strat": "Backflip WK" },
+			"Floor Clip": { "kind": "approx" }
+		}
+	},
+
+	"bbh_1": {
+		"benchmark": "Standard",
+		"offset": [
+			["Standard", "Silver", "1.3", "No double boo kill"]
+		],
+		"ext": {
+			"Open": { "kind": "benchmarkDef" }
+		}
+	},
+	"bbh_2": {
+		"benchmark": "Standard",
+		"offset": [
+			["Standard", "Bronze", "3", "Land in water"]
+		]
+	},
+	"bbh_3": {
+		"mergeTable": [
+			["Standard", "Right WK"]
+		],
+		"offset": [
+			["Standard", "Silver", "1.2", "Easier ending"]
+		],
+		"ext": {
+			"Open": { "kind": "benchmark", "strat": "Standard" }
+		}
+	},
+	"bbh_5": {
+		"mergeTable": [
+			["Other Kill", "Pro Kill"]
+		],
+		"offset": [
+			["Other Kill", "Silver", "1", "Beginner kill"]
+		]
+	},
+	"bbh_6": {
+		"benchmark": "Standard"
+	},
+
+	"hmc_1": {
+		"beg": { "kind": "approx" },
+		"force": {
+			"Elevator Clip": {
+				"Mario": "19.53",
+				"Grandmaster": "19.56",
+				"Gold": "19.96",
+				"Silver": "20.26"
+			},
+			"Sign Clip": {
+				"Mario": "13.06",
+				"Platinum": "13.96",
+				"Gold": "14.56"
+			}
+		}
+	},
+	"hmc_100c2": {
+		"ext": {
+			"No BLJ": { "kind": "benchmark", "strat": "Standard" }
+		},
+		"descale": [
+			["No BLJ", "3:32.76"]
+		]
+	},
+	"hmc_3": {
+		"force": {
+			"BLJ": {
+				"Mario": "21.40",
+				"Diamond": "23.66",
+				"Bronze": "26.76" 
+			},
+			"Sazandora": {
+				"Mario": "20.96",
+				"Diamond": "23.36",
+				"Bronze": "26.76"
+			},
+			"Sign Clip": {
+				"Mario": "22.96",
+				"Platinum": "24.40" 
+			}
+		},
+		"ext": {
+			"BLJ": { "kind": "approx" },
+			"Sazandora": { "kind": "approx" },
+			"Sign Clip": { "kind": "approx" }
+		}
+	},
+	"hmc_4": {
+		"beg": { "kind": "benchmark", "strat": "Wall Clip" },
+		"descale": [
+			["BLJ", "36.93", "Master"]
+		]
+	},
+	"hmc_5": {
+		"benchmark": "Leftside",
+		"protect": ["Rightside"],
+		"offset": [
+			["Rightside", "Silver", "0.7", "Ledgegrab"],
+			["Rightside", "Bronze", "0.5", "Sideflip"]
+		],
+		"ext": {
+			"Open": { "kind": "benchmarkDef" }
+		}
+	},
+	"hmc_6": {
+		"mergeTable": [
+			["Standard", "GTM Slide"]
+		],
+		"offset": [
+			["Standard", "Bronze", "1.5", "Slow ending"]
+		]
+	},
+	"hmc_premc": {
+		"beg": { "kind": "approx" },
+		"force": {
+			"Elevator Clip": {
+				"Platinum": "27.86",
+				"Silver": "28.8",
+				"Bronze": "30.06"
+			},
+			"Sign Clip": {
+				"Mario": "20.96",
+				"Platinum": "22.50"
+			}
+		},
+		"ext": {
+			"Sign Clip": { "kind": "approx" }
+		}
+	},
+
+	"lll_1": {
+		"mergeTable": [
+		 	["No Ledgegrab", "Right GP Kill"]
+		],
+		"benchmark": "No Ledgegrab",
+		"beg": { "kind": "benchmarkDef" }
+	},
+	"lll_2": {
+		"mergeTable": [
+		 	["Ledgegrab", "No Ledgegrab"]
+		]
+	},
+	"lll_3": {
+		"mergeTable": [
+		 	["Beginner", "3x LJ", "Standard"]
+		]
+	},
+	"lll_4": {
+		"mergeTable": [
+		 	["2x LJ Sidehop", "LJ JD Sidehop"]
+		],
+		"mergeOffset": [["2x LJ Sidehop", "-0.23"]],
+		"benchmark": "Standard",
+		"protect": ["2x LJ Sidehop", "LJ JD Sidehop"],
+		"ext": {
+			"Open": { "kind": "benchmark", "strat": "Standard" },
+			"DJ Sidehop": { "kind": "benchmark", "strat": "2x LJ Sidehop" }
+		}
+	},
+	"lll_5": {
+		"mergeTable": [
+		 	["Akira Boost", "Pro Boost"]
+		],
+		"benchmark": "Akira Boost",
+		"beg": { "kind": "multi", "map": {
+			"Beginner": { "kind": "approx" },
+			"TJ Boost": { "kind": "benchmarkDef" }
+		}},
+		"force": {
+			"Beginner": {
+				"Mario": "27.30",
+				"Silver": "36.50"
+			}
+		}
+	},
+	"lll_100c5": {
+		"ext": {
+			"Lavaboost": { "kind": "benchmark", "strat": "Standard" }
+		}
+	},
+	"lll_6": {
+		"offset": [
+			["Standard", "Silver", "1", "Slow ending"]
+		]
+	},
+
+	"ssl_1": {
+		"benchmark": "Standard",
+		"protect": ["Flyguyless"],
+		"offset": [
+			["Standard", "Silver", "0.4", "Slow hill"],
+			["Standard", "Bronze", "1.2", "Very slow hill"]
+		]
+	},
+	"ssl_3": {
+		"mergeTable": [
+		 	["Pillarless", "SJ Pless", "Tama Pless"]
+		],
+		"beg": { "kind": "approx" },
+		"ext": {
+			"Nuts Pless": { "kind": "benchmark", "strat": "Pillarless" }
+		},
+		"force": {
+			"Shell": {
+				"Mario": "28.8",
+				"Silver": "30.96"
+			}
+		}
+	},
+	"ssl_4": {
+		"beg": { "kind": "benchmark", "strat": "Topless" },
+		"offset": [
+			["Backside", "Silver", "2.5", "Slow entry"]
+		]
+	},
+	"ssl_5": {
+		"mergeTable": [
+		 	["No Wall Bounce", "Wall Bounce", "Z-Slide"]
+		]
+	},
+	"ssl_6": {
+		"offset": [
+			["Solo Secrets", "Gold", "14", "Shell"]
+		],
+		"ext": {
+			"Nuts Pless": { "kind": "benchmark", "strat": "Solo Secrets" }
+		}
+	},
+	"ssl_100c6": {
+		"mergeTable": [
+		 	["Standard", "Alt Pillar"]
+		],
+		"ext": {
+			"Open": { "kind": "benchmark", "strat": "Standard" }
+		}
+	},
+
+	"ddd_1": {
+		"mergeTable": [
+		 	["Front Sub", "Back Sub"]
+		],
+		"ext": {
+			"Open": { "kind": "benchmark", "strat": "Front Sub" }
+		}
+	},
+	"ddd_2": {
+		"offset": [
+			["Standard", "Silver", "2", "Bad swimming"]
+		],
+		"ext": {
+			"Downwarp": { "kind": "benchmark", "strat": "Standard" }
+		},
+		"descale": [
+			["Downwarp", "34.66", "Grandmaster"]
+		]
+	},
+	"ddd_100c3": {
+		"beg": { "kind": "approx" },
+		"force": {
+			"Poles": {
+				"Master": "3:07.06",
+				"Platinum": "3:26.43",
+				"Gold": "3:30.90",
+				"Silver": "3:59.80",
+				"Bronze": "4:30.16"
+			}
+		}
+	},
+	"ddd_4": {
+		"benchmark": "Standard",
+		"offset": [
+			["Standard", "Silver", "3", "Slow ending"],
+			["Standard", "Bronze", "7", "Slow rings"]
+		]
+	},
+	"ddd_5": {
+		"benchmark": "Standard",
+		"offset": [
+			["Standard", "Bronze", "0.8", "Bad swimming"]
+		]
+	},
+	"ddd_6": {
+		"benchmark": "Standard",
+		"offset": [
+			["Standard", "Silver", "2.4", "Bad swimming"]
+		]
+	},
+
+	"sl_1": {
+		"beg": { "kind": "approx" },
+		"force": {
+			"Beginner": {
+				"Mario": "10.96",
+				"Platinum": "13.7",
+				"Silver": "18.30",
+				"Bronze": "22.36"
+			}
+		}
+	},
+	"sl_2": {
+		"benchmark": "Standard"
+	},
+	"sl_3": {
+		"benchmark": "TJ Strat"
+	},
+	"sl_4": {
+		"offset": [
+			["Leftside", "Bronze", "0.7", "Slow start"]
+		],
+		"ext": {
+			"Open": { "kind": "benchmark", "strat": "Standard" },
+			"Leftside": { "kind": "benchmark", "strat": "Standard" }
+		}
+	},
+	"sl_5": {
+		"offset": [
+			["Solo Reds", "Silver", "1", "Slow box"],
+			["Solo Reds", "Bronze", "1.2", "Beginner strat"]
+		]
+	},
+	"sl_100c5": {
+		"offset": [
+			["Early Spindrifts", "Mario", "-0.46", "Even with normal route"]
+		],
+		"benchmark": "Standard",
+		"ext": {
+			"Moneybag Dupe": { "kind": "benchmark", "strat": "Standard" }
+		}
+	},
+	"sl_6": {
+		"benchmark": "Standard"
+	},
+
+	"wdw_1": {
+		"force": {
+			"Mid Water": {
+				"Mario": "12.90",
+				"Diamond": "13.50"
+			}
+		},
+		"ext": {
+			"Mid Water": { "kind": "approx" }
+		}
+	},
+	"wdw_2": {
+		"ext": {
+			"Direct TJ": { "kind": "benchmark", "strat": "Cage TJWK" }
+		}
+	},
+	"wdw_4": {
+		"mergeTable": [
+			["Cage TJWK", "Early Box Break"]
+		],
+		"force": {
+			"Elevator Clip": {
+				"Mario": "11.13",
+				"Platinum": "12.96"
+			}
+		},
+		"offset": [
+			["Purple Switch", "Gold", "0.6", "Slow wall kick start"],
+			["Purple Switch", "Silver", "6.4", "Elevator"]
+		],
+		"ext": {
+			"Elevator Clip": { "kind": "approx" }
+		}
+	},
+	"wdw_6": {
+		"mergeTable": [
+			["CCW", "CW"]
+		]
+	},
+
+	"ttm_1": {
+		"benchmark": "Log WK",
+		"beg": { "kind": "benchmarkDef" }
+	},
+	"ttm_2": {
+		"benchmark": "Log WK",
+		"beg": { "kind": "benchmarkDef" },
+		"offset": [
+			["No Log WK", "Silver", "2", "Slow clip"],
+			["No Log WK", "Bronze", "10", "Monkey"]
+		]
+	},
+	"ttm_3": {
+		"offset": [
+			["Standard", "Silver", "1", "Slow reds movement"]
+		]
+	},
+	"ttm_100c3": {
+		"offset": [
+			["Late Red", "Mario", "-0.80", "Even with normal route"]
+		],
+		"mergeTable": [
+			["Standard", "Late Red"]
+		]
+	},
+	"ttm_4": {
+		"mergeTable": [
+			["Slowturn Bless", "Breezeless"]
+		],
+		"beg": { "kind": "benchmark", "strat": "Breeze" }
+	},
+	"ttm_5": {
+		"benchmark": "Log WK",
+		"beg": { "kind": "benchmarkDef" }
+	},
+	"ttm_6": {
+		"beg": { "kind": "approx" },
+		"force": {
+			"Beginner": {
+				"Mario": "10.53",
+				"Gold": "10.93",
+				"Silver": "11.96"
+			}
+		},
+		"ext": {
+			"No Setup": { "kind": "benchmark", "strat": "Standard" }
+		}
+	},
+
+	"thi_1": {
+		"mergeTable": [
+			["CW", "CCW"]
+		]
+	},
+	"thi_2": {
+		"mergeTable": [
+			["Rightside Clip", "Leftside Clip"]
+		],
+		"offset": [
+			["No Clip", "Silver", "0.4", "Slow movement up hill"],
+			["No Clip", "Bronze", "0.8", "Slow pipe entry"]
+		],
+		"ext": {
+			"TJ Dive Start": { "kind": "benchmark", "strat": "Rightside Clip" }
+		}
+	},
+	"thi_3": {
+		"beg": { "kind": "benchmark", "strat": "Standard" },
+		"offset": [
+			["TJ Dive Start", "Mario", "-0.83", "-0.66 on Standard"]
+		],
+		"ext": {
+			"TJ Dive Start": { "kind": "benchmark", "strat": "Standard" },
+			"Open": { "kind": "benchmark", "strat": "Standard" }
+		}
+	},
+	"thi_100c3": {
+		"force": {
+			"Standard": {
+				"Mario": "1:40.40",
+				"Diamond": "1:52.70",
+				"Gold": "2:03.83" 
+			}
+		},
+		"ext": {
+			"Standard": { "kind": "approx" },
+			"Tiny Route": { "kind": "benchmark", "strat": "Standard" }
+		}
+	},
+	"thi_4": {
+		"beg": { "kind": "approx" },
+		"force": {
+			"Beginner": {
+				"Diamond": "24.96",
+				"Gold": "26.8"
+			}
+		},
+		"ext": {
+			"Slide Strat": { "kind": "benchmark", "strat": "Standard" }
+		}
+	},
+	"thi_100c5": {
+		"mergeTable": [
+			["13c Start + Pole", "16c Start"]
+		],
+		"ext": {
+			"11c Start + Pole": { "kind": "benchmark", "strat": "13c Start + Pole" }
+		}
+	},
+	"thi_6": {
+		"offset": [
+			["Standard", "Bronze", "12", "No clip"] 
+		],
+		"ext": {
+			"TJ Dive Start": { "kind": "benchmark", "strat": "Standard" }
+		}
+	},
+
+	"ttc_1": {
+		"benchmark": "Flippies",
+		"protect": ["Time Stop"],
+		"ext": {
+			"Side Flippies": { "kind": "benchmarkDef" }
+		}
+	},
+	"ttc_2": {
+		"benchmark": "Flippies",
+		"protect": ["Time Stop"]
+	},
+	"ttc_3": {
+		"force": {
+			"Time Stop": {
+				"Silver": "14.86",
+				"Bronze": "15.63"
+			}
+		}
+	},
+	"ttc_100c4": {
+		"mergeTable": [
+			["Safety Red", "Standard"]
+		],
+		"offset": [
+			["Safety Red", "Gold", "5", "Movement tax"],
+			["Safety Red", "Silver", "11", "Alternate movement for tjwks"],
+			["Standard", "Gold", "5", "Movement tax"],
+			["Standard", "Silver", "11", "Alternate movement for tjwks"]
+		]
+	},
+	"ttc_5": {
+		"force": {
+			"Moving Moving": {
+				"Mario": "16.96",
+				"Master": "17.83"
+			}
+		},
+		"offset": [
+			["Time Stop", "Bronze", "9", "Long way around"]
+		],
+		"ext": {
+			"Open": { "kind": "benchmark", "strat": "Moving Moving" }
+		}
+	},
+	"ttc_6": {
+		"mergeTable": [
+			["Hanoji Reds", "Moving Reds"]
+		]
+	},
+
+	"rr_1": {
+		"mergeTable": [
+			["Sideflip Bounce", "Lakitu Bounce"]
+		],
+		"beg": { "kind": "approx" },
+		"force": {
+			"No Bounce": {
+				"Master": "25.96",
+				"Platinum": "28.96"
+			}
+		}
+	},
+	"rr_2": {
+		"mergeTable": [
+			["Carpetless", "JD Ending"]
+		],
+		"benchmark": "Carpetless",
+		"force": {
+			"Carpetless": {
+				"Silver": "1:09.70",
+				"Bronze": "1:22.53"
+			}
+		},
+		"offset": [
+			["Carpetless", "Gold", "51", "Carpet"]
+		]
+	},
+	"rr_100c2": {
+		"cutscene": [
+			["Carpetful", "No Cutscene"],
+			["Carpetless", "Carpetless (NC)"]
+		],
+		"ext": {
+			"Carpetless": { "kind": "benchmark", "strat": "Carpetful" }
+		}
+	},
+	"rr_3": {
+		"mergeTable": [
+			["Kick Recoil End", "Kick Back End"]
+		]
+	},
+	"rr_4": {
+		"beg": { "kind": "approx" },
+		"force": {
+			"Flame TJ": {
+				"Platinum": "16.96",
+				"Silver": "18.53",
+				"Bronze": "19.63"
+			}
+		}
+	},
+	"rr_5": {
+		"benchmark": "Standard",
+		"beg": { "kind": "benchmarkDef" }
+	},
+	"rr_6": {
+		"mergeTable": [
+			["Sideflip Bounce", "Lakitu Bounce"]
+		],
+		"benchmark": "Sideflip Bounce",
+		"beg": { "kind": "approx" },
+		"force": {
+			"No Bounce": {
+				"Master": "39.53",
+				"Platinum": "42.83"
+			}
+		}
+	},
+	"rr_100c6": {
+		"cutscene": [
+			["Standard", "No Cutscene"]
+		],
+		"ext": {
+			"Carpetless": { "kind": "benchmark", "strat": "Carpetful" }
+		}
+	},
+
+	"sec_wc": {
+		"benchmark": "Standard",
+		"ext": {
+			"Wall Rollout": { "kind": "benchmarkDef" }
+		}
+	},
+	"sec_vc": {
+		"mergeTable": [
+			["No Slope Clip", "Standard"]
+		],
+		"benchmark": "No Slope Clip",
+		"offset": [
+			["No Slope Clip", "Bronze", "3", "No siglemic"]
+		]
+	},
+	"sec_mc": {
+		"mergeTable": [
+			["Left Side", "Right Side"]
+		],
+		"offset": [
+			["Left Side", "Bronze", "11", "Switch"]
+		]
+	},
+	"sec_wmotr": {
+		"mergeTable": [
+			["Standard", "Pole Red Early"]
+		],
+		"benchmark": "Standard",
+		"cutscene": [
+			["Standard", "No Cutscene"],
+			["Pole Red Early", "Pole Red Early (NC)"],
+			["Stored Angle", "Stored Angle (NC)"]
+		],
+		"ext": {
+			"Open": { "kind": "benchmarkDef" }
+		}
+	},
+
+	"bow_1n": {
+		"benchmark": "Standard"
+	},
+	"bow_1r": {
+		"benchmark": "Tsuki",
+		"protect": ["Xiah", "Shig"],
+		"offset": [
+			["Shig (Star)", "Gold", "0.5", "Slow ending"],
+			["Shig (Pipe)", "Gold", "0.5", "Slow ending"],
+			["Shig (Star)", "Silver", "2", "Normal cycle"],
+			["Shig (Pipe)", "Silver", "2", "Normal cycle"],
+			["Shig (Star)", "Bronze", "2.2", "Slower ending"],
+			["Shig (Pipe)", "Bronze", "2.2", "Slower ending"]
+		]
+	},
+	"bow_2n": {
+		"benchmark": "Ultimate",
+		"protect": ["Pole Glitch", "Zero Cycle"],
+		"offset": [
+			["Zero Cycle", "Bronze", "2", "Late cycle"]
+		]
+	},
+	"bow_2r": {
+		"offset": [
+			["Lavaboost (Star)", "Silver", "3", "No lavaboost"],
+			["Lavaboost (Star)", "Bronze", "0", "No early ellies"],
+			["Lavaboost (Pipe)", "Silver", "3", "No lavaboost"],
+			["Lavaboost (Pipe)", "Bronze", "0", "No early ellies"],
+			["No Early Ellies (Star)", "Silver", "2", "Slow ending"],
+			["No Early Ellies (Pipe)", "Silver", "2", "Slow ending"],
+			["No Early Ellies (Star)", "Bronze", "7", "Slow elevator exit"],
+			["No Early Ellies (Pipe)", "Bronze", "7", "Slow elevator exit"]
+		],
+		"beg": { "kind": "benchmark", "strat": "Lavaboost" }
+	},
+	"bow_3n": {
+		"benchmark": "Right TJWK",
+		"protect": ["Left TJWK"],
+		"beg": { "kind": "benchmark", "strat": "Left TJWK" },
+		"descale": [
+			["TAS LJ + Ult", "43.86", "Diamond"],
+			["Right TJWK", "49.36", "Grandmaster"],
+			["Left TJWK", "51.36", "Grandmaster"]
+		],
+		"offset": [
+			["TAS LJ + Ult", "Grandmaster", "0.5", "Slow pipe entry"],
+			["Pole", "Silver", "3", "Slow ending"]
+		],
+		"ban": [
+			["w/ Manamo", "Left TJWK", "Leftside Manamo", "Open"]
+		]
+	},
+	"bow_3r": {
+		"ext": {
+			"Early Cycle": { "kind": "benchmark", "strat": "Standard" },
+			"Ultimate Cycle": { "kind": "benchmark", "strat": "Standard" }
+		},
+		"descale": [
+			["Early Cycle (Star)", "1:13.20", "Mario"],
+			["Early Cycle (Pipe)", "1:18.60", "Mario"],
+			["Ultimate Cycle (Star)", "1:11.20", "Mario"],
+			["Ultimate Cycle (Pipe)", "1:16.60", "Mario"]
+		]
+	},
+	"bow_3x": {
+		"offset": [
+			["120 Star File", "Silver", "2", "Extra spins"],
+			["Normal File", "Silver", "2", "Extra spins"]
+		]
+	}
+}
