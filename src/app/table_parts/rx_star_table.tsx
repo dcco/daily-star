@@ -179,11 +179,20 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 		if (editObj !== null) editObj.updateTT(timeList, delList);
 	};
 
+	/* ----- WIDTH ------ */
+	var xdWidth = Math.floor(85 / stratTotal);
+	var tdWidth = "" + xdWidth + "%";
+	var colNodes: React.ReactNode[] = [<col key="a" width="15%"/>];
+	if (LB_NUM) colNodes.unshift(<col key="k" width="5%"/>);
+	/*for (let i = 0; i < stratTotal; i++) {
+		colNodes.push(<col width={ "" + (xdWidth * 0.55) + "%" }/>);
+		colNodes.push(<col width={ "" + (xdWidth * 0.45) + "%" }/>);
+	}*/
+
 	/* ----- TABLE HEADER ----- */
 
 	var sortActive = !editPos.active;
 	// -- was 77% with "extra"
-	var tdWidth = "" + Math.floor(85 / stratTotal) + "%";
 	var headerList = headerListColConfig(cfg);
 	var imgNodeFun = (active: boolean): React.ReactNode => (<div className="float-frame">
 		<img src="/icons/sort-icon.png" data-active={ active.toString() } className="float-icon" alt=""></img></div>);
@@ -314,7 +323,9 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 	return (
 		<div>
 		<div className="table-cont">
-			<table className="time-table"><tbody>
+			<table className="time-table">
+			<colgroup>{ colNodes }</colgroup>
+			<tbody>
 				<tr className="time-row" key="header">{ headerNodes }</tr>
 				<tr className="time-row" key="record">{ recordNodes }</tr>
 				{ timeTableNodes }

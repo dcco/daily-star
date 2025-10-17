@@ -1245,8 +1245,8 @@
           },
           "Half Cycle": {
             "name": "Half Cycle",
-            "diff": "easy",
-            "ver_diff": false,
+            "diff": "normal",
+            "ver_diff": true,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -1301,8 +1301,8 @@
           },
           "Half Cycle": {
             "name": "Half Cycle",
-            "diff": "easy",
-            "ver_diff": false,
+            "diff": "normal",
+            "ver_diff": true,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -6731,8 +6731,8 @@
           },
           "Poles": {
             "name": "Poles",
-            "diff": "easy",
-            "ver_diff": false,
+            "diff": "normal",
+            "ver_diff": true,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -6757,8 +6757,8 @@
           },
           "Poles": {
             "name": "Poles",
-            "diff": "easy",
-            "ver_diff": false,
+            "diff": "normal",
+            "ver_diff": true,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -13332,8 +13332,8 @@
           },
           "No Early Ellies (Pipe)": {
             "name": "No Early Ellies (Pipe)",
-            "diff": "easy",
-            "ver_diff": false,
+            "diff": "second",
+            "ver_diff": true,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -13341,7 +13341,7 @@
           },
           "No Early Ellies (Star)": {
             "name": "No Early Ellies (Star)",
-            "diff": "easy",
+            "diff": "normal",
             "ver_diff": false,
             "virtual": true,
             "variant_map": {},
@@ -13382,8 +13382,8 @@
           },
           "No Early Ellies (Pipe)": {
             "name": "No Early Ellies (Pipe)",
-            "diff": "easy",
-            "ver_diff": false,
+            "diff": "second",
+            "ver_diff": true,
             "virtual": true,
             "variant_map": {},
             "id_list": [],
@@ -13391,7 +13391,7 @@
           },
           "No Early Ellies (Star)": {
             "name": "No Early Ellies (Star)",
-            "diff": "easy",
+            "diff": "normal",
             "ver_diff": false,
             "virtual": true,
             "variant_map": {},

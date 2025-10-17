@@ -57,7 +57,11 @@ function navData(board: string, subId: string, slug: string): [string, number, n
 	} else if (board === "home" && subId === "news") {
 		return ["/home/news", 0, 5];
 	} else if (board === "home" && subId === "beta_xcam") {
-		return ["/home/beta_xcam", 0, 6];
+		if (slug === "") return ["/home/beta_xcam,", 0, 6];
+		return ["/home/beta_xcam?star=" + slug, 0, 6];
+	} else if (board === "home" && subId === "beta_player") {
+		if (slug === "") return ["/home/beta_player", 0, 7];
+		else return ["/home/beta_player?name=" + slug, 0, 7];
 	} else if (board === "home") {
 		return ["/home", 0, 5];
 	} else if (board === "xcam" && subId === "players") {

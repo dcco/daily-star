@@ -478,12 +478,43 @@ select {
 	width: 80%;
 }
 
+.med-table {
+	width: 90%;
+}
+
 .rank-cont {
-	display: flex;
+	display: inline-block;
+	color: #E0E0E0;
+	margin-left: 28px;
+	margin-right: 28px;
+	margin-bottom: 6px;
+	padding: 6px;
+	padding-left: 16px;
+	padding-right: 18px;
+	background-color: #282840;
+	border-radius: 6px;
+}
+
+.buffer-cont {
+	padding-left: 4px;
+	padding-right: 4px;
+}
+
+.rank-cont-toggle {
+	cursor: pointer;
+}
+
+.rank-cont-toggle:hover {
+	color: #FFE0E0;
+}
+
+.rank-table-cont {
+	margin-top: 6px;
+	display: inline-block;
 }
 
 .rank-table {
-	display: inline-block;
+	display: table;
 	margin-left: 6px;
 	border-spacing: 0px;
 	border: 1px solid;
@@ -512,6 +543,56 @@ select {
 
 .rank-table[data-method="error"] {
 	background-color: #EE0000;
+}
+
+.rank-bubble-ex {
+	position: relative;
+	display: inline-block;
+	font-size: 12px;
+	min-width: 60px;
+	margin-left: 2px;
+}
+
+.rank-bubble {
+	position: absolute;
+	top: 0px;
+	left: 0;
+	right: 0;
+	bottom: 1px;
+	border-radius: 8px;
+	z-index: 1;
+	opacity: 0.875;
+}
+
+.rank-bubble-text {
+	position: relative;
+	z-index: 2;
+	padding-left: 6px;
+	padding-right: 6px;
+	padding-bottom: 2px;
+	text-align: center;
+	background: transparent;
+	font-style: italic;
+}
+
+.time-bubble {
+	display: inline-block;
+	border-radius: 8px;
+	background-color: #B0B0D8;
+	font-size: 13px;
+	padding-left: 8px;
+	padding-right: 8px;
+	margin-right: 2px;
+	text-align: center;
+}
+
+.time-cell:has(+ .invis-rank-cell) {
+	border-right: 0px;
+	text-align: right;
+}
+
+.invis-rank-cell {
+	text-align: left;
 }
 
 	/* -- table row styles (mostly grid lines / separators) */
@@ -642,6 +723,36 @@ a:visited {
 	transform: scaleY(1);
 }
 
+/*.inner-rank-cont {
+	position: relative;
+	display: inline-block;
+	min-width: 40px;
+	padding-left: 16px;
+	padding-right: 16px;
+}
+
+.inner-rank {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	border-radius: 10px;
+	z-index: 1;
+	margin: 1px;
+}
+
+.inner-rank-text {
+	position: relative;
+	z-index: 2;
+	font-size: 13px;
+	padding-bottom: 1px;
+}
+
+.inner-rank-text a {
+	color: #FFFFFF;
+}*/
+
 .time-row td.time-rank {
 	position: relative;
 	border-left: 1px solid;
@@ -698,7 +809,7 @@ td:has(+ td.time-rank) {
 .note-text {
 	visibility: hidden;
 	position: absolute;
-	z-index: 2;
+	z-index: 3;
 	background-color: #C0C0E8;
 	border: 1px solid;
 	border-radius: 4px;
@@ -1587,6 +1698,14 @@ a.bright {
 	color: #404040;
 	font-style: italic;
 }
+
+.rank-bubble-text {
+	background: transparent;
+}
+
+/*.inner-rank-text {
+	background: transparent;
+}*/
 
 	/* star category colors */
 

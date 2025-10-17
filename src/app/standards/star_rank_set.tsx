@@ -10,7 +10,8 @@ import { RecordMap } from "../xcam_record_map"
 
 import { newRankObj } from "./rank_obj"
 import { RankMethods, RankList, zeroRankList, genTTRankList,
-	interpolateRankList, rewriteRankList, rescaleRankList, rescaleRankListBack,
+	interpolateRankList, rewriteRankList, rewriteSelfRankList,
+	rescaleRankList, rescaleRankListBack, killFromRankList,
 	forceTimesRankList, fillVerOffsetRankList } from "./rank_list"
 
 	/*
@@ -302,11 +303,21 @@ export function descaleStarRankSet(ss: StarRankSet, colConfig: ColConfig, rmOld:
 		var idName = idColConfig(colConfig, i);
 		var stratList = stratListColConfig(colConfig, i);
 		descaleList.push(idName);
-		// ignore un-merged columns + columns in exclusion list
-		if (stratList.length === 1 || (exclList && exclList.includes(idName))) {
+		// ignore columns in exclusion list
+		if (exclList && exclList.includes(idName)) {
 			ssNew[idName] = ss[idName];
 			continue;
 		}
+		// if a column is un-merged, we can still rewrite based on itself to fix version offsets
+		if (stratList.length === 1) {
+			if (rm[i].time !== rm[i].verTime) {
+				// may activate for open strats
+				if (ss[idName] !== undefined) rewriteSelfRankList(ss[idName], rm[i]);
+			}
+			ssNew[idName] = ss[idName];
+			continue;
+		}
+		// ignore un-merged columns + 
 		// rescale main strat
 		if (ss[idName] === undefined) {
 			if (idName === "Open") continue;
@@ -328,7 +339,7 @@ export function descaleStarRankSet(ss: StarRankSet, colConfig: ColConfig, rmOld:
 	return [ssNew, descaleList];
 }
 
-export function cleanStarRankSet(ss: StarRankSet, colConfig: ColConfig)
+export function cleanStarRankSet(starKey: string, ss: StarRankSet, colConfig: ColConfig)
 {
 	// get a list of all valid strat names
 	var headerSet: { [key: string]: number } = {};
@@ -342,6 +353,12 @@ export function cleanStarRankSet(ss: StarRankSet, colConfig: ColConfig)
 	for (const entry of Object.entries(ss)) {
 		var [stratName, rl] = entry;
 		if (headerSet[stratName] === undefined) delete ss[stratName];
+	}
+	// special case to delete open columns
+	var no_open = RS_DATA[starKey] && RS_DATA[starKey].no_open;
+	if (no_open) {
+		delete ss["Open"];
+		delete ss["Open#Alt"];
 	}
 }
 
@@ -391,7 +408,22 @@ export function offsetStarRankSet(starKey: string, ss: StarRankSet)
 }
 
 	/*
-		fills in version offsets / PHASE 5
+		removes ranks for certain strats / PHASE 5
+	*/
+
+export function killFromStarRankSet(starKey: string, ss: StarRankSet)
+{
+	if (RS_DATA[starKey] === undefined || RS_DATA[starKey].kill === undefined) return;
+	var killList = RS_DATA[starKey].kill;
+	for (const [stratName, rankName] of killList) {
+		var rankList = ss[stratName]; 
+		if (rankList === undefined) throw("BUG: star_rank_set.tsx - Attempted to remove ranks for unknown strat " + stratName + " for " + starKey);
+		killFromRankList(rankList, rankName);
+	}
+}
+
+	/*
+		fills in version offsets / PHASE 6
 	*/
 
 function _fillVerOffsetStratRanks(starDef: StarDef, source: StarRankSet, vs: VerOffset)
@@ -406,7 +438,7 @@ function _fillVerOffsetStratRanks(starDef: StarDef, source: StarRankSet, vs: Ver
 			throw("BUG: star_rank_set.tsx - Checking version status for non-existent strat " + stratName + " for star " + starDef.name);
 		}
 		// check if version diff actually matters
-		if (stratDef.vs.verInfo !== null || stratDef.virtId !== null) {
+		if (stratDef.vs.verInfo !== null || (stratDef.virtId !== null && stratDef.virtId.ver_diff)) {
 			fillVerOffsetRankList(st, stratName, vs);
 		}
 	}

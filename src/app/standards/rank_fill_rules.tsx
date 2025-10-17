@@ -61,17 +61,22 @@ type RankFillRules = {
 		// -- beg/ext: determines strategy for beginner/extension strat columns
 		// --- options are to use a benchmark, or to save for approximation phase
 		// - descales merged columns
+		// -- no_open: deletes the open column (generally cases where open does not improve on main strats)
 	"benchmark"?: string,
 	"protect"?: string[],
 	"beg"?: RankFillStrat,
 	"ext"?: { [key: string]: RankFillStrat },
+	"no_open"?: boolean,
 		// phase 4: offset / 2nd descale
 		// - applies offsets for specific columns (typically for hard strat offsets or beginner columns)
 		// - must be applied twice for merged columns
 		// - also allows for descaling (changing bronze rank and re-scaling other ranks accordingly)
 	"offset"?: string[][],
-	"descale"?: string[][]
-		// phase 5: versioning < NO EXTRA RULES >
+	"descale"?: string[][],
+		// phase 5: kill
+	"kill"?: string[][]
+		// - removes times from strats when they're unnecessary
+		// phase 6: versioning < NO EXTRA RULES >
 		// - fills out version difference times
 }
 

@@ -8,10 +8,13 @@ import { DEV } from '../rx_multi_board'
 import { IdService, Ident, newIdent, keyIdent, rawIdent } from '../time_table'
 import { PlayData, newPlayData } from '../play_data'
 import { orgStarId, orgStarDef } from '../org_star_def'
-import { StxStarMap, statKey, recordStxStarData } from './stats_star_map'
+import { StxStarMap, statKey, starOnlyKey, recordStxStarData } from './stats_star_map'
 import { UserStatMap, UserScore, IncScore, rankPts, fullScoreList, calcTopXStats } from './stats_user_map'
 import { TimeCell, NameCell } from '../table_parts/rx_star_cell'
 import { GenInput } from './rx_gen_input'
+
+import { getRankValue } from '../standards/strat_ranks'
+import { UserRankMap, UserRankStore } from '../standards/user_ranks'
 
 const PERM = ["bob", "wf", "jrb", "ccm", "bbh", "hmc", "lll", "ssl",
 	"ddd", "sl", "wdw", "ttm", "thi", "ttc", "rr", "sec", "bow"];
@@ -35,7 +38,9 @@ type DetailTableProps = {
 	cornerNode: React.ReactNode | null,
 	starMap: StxStarMap | null,
 	userMap: UserStatMap | null,
-	pd?: PlayData
+	userRankMap: UserRankMap | null,
+	pd?: PlayData,
+	showStd: boolean
 }
 
 export function DetailTable(props: DetailTableProps): React.ReactNode
@@ -59,8 +64,12 @@ export function DetailTable(props: DetailTableProps): React.ReactNode
 		return b.scorePts - a.scorePts;
 	});
 
+	// can sort by normal or by best rank
+	var initNum: number = 0;
+	const [sortId, setSortId] = useState(initNum);
+
 	// construct the board
-	var playTableNodes: React.ReactNode[] = [];
+	var playTableNodesEx: [number, React.ReactNode][] = [];
 	var kx = 0;
 	var ix = 0;
 	var fullList = fullScoreList(playStats.starList, altFlag);
@@ -147,15 +156,59 @@ export function DetailTable(props: DetailTableProps): React.ReactNode
 		}
 		playNodes.push(<TimeCell timeDat={ recordDat } verOffset={ starData.vs } hideStratOffset={ !showOffset }
 			complete={ (userScore.comp).toString() } active={ false } onClick={ () => {} } hiddenFlag={ false } key="best"/>);
-		playTableNodes.push(<tr className="time-row" key={ kx }>{ playNodes }</tr>);
+		// default sort by score
+		var sortIndex = 1;
+		if (userScore.comp) sortIndex = 1 - userScore.scorePts;
+		// best rank cells
+		if (props.showStd && props.userRankMap !== null) {
+			var rankName = "Unranked";
+			var userStarMap = props.userRankMap[userKey];
+			if (userStarMap !== undefined) {
+				var [starKey, alt] = starOnlyKey(userScore);
+				var rankData = userStarMap[starKey];
+				if (rankData !== undefined) {
+					if (alt.state === null && rankData.combRank) rankName = rankData.combRank;
+					else if (alt.state === "alt" && rankData.altRank) rankName = rankData.altRank;
+					else if (alt.state !== "alt") rankName = rankData.mainRank;
+				}
+			}
+			var dc = userScore.comp;
+			var style: any = { "opacity": "0.875" } ;
+			if (!dc) {
+				style.opacity = "0.7";
+				style["fontStyle"] = "italic";
+			}
+			playNodes.push(<td className="time-cell" style={ style } colSpan={ 2 } data-ps={ rankName } key="bestRank">{ rankName }</td>);
+			if (sortId === 2) sortIndex = getRankValue(rankName);
+		}
+		playTableNodesEx.push([sortIndex, <tr className="time-row" key={ kx }>{ playNodes }</tr>]);
 		if (userScore.comp || userScore.rank === null) ix = ix + 1;
 		kx = kx + 1;
 	}
+
+	// sort based on the stored sort index
+	playTableNodesEx.sort(function (a, b) {
+		return a[0] - b[0];
+	});
+	var playTableNodes = playTableNodesEx.map((a) => a[1]);
 
 	var pd = newPlayData();
 	if (props.pd !== undefined) pd = props.pd;
 	var playerId = props.id;
 	//<NameCell id={ playerId } pd={ pd } active={ true } onClick={ () => {} } href="/xcam/players"/>
+
+	var imgNodeFun = (active: boolean): React.ReactNode => (<div className="float-frame">
+		<img src="/icons/sort-icon.png" data-active={ active.toString() } className="float-icon" alt=""></img></div>);
+
+	var cellSpan = "25.5%";
+	var stdNode: React.ReactNode = "";
+	var tableClass = "time-table small-table";
+	if (props.showStd) {
+		cellSpan = "20%";
+		stdNode = (<td className="time-cell" data-active="true" onClick={ () => setSortId(2) }
+			width="15%" colSpan={ 2 }>Best Rank { imgNodeFun(sortId === 2) }</td>);
+		tableClass = "time-table med-table";
+	}
 	return (
 		<div>
 		<div className="row-wrap">
@@ -170,14 +223,16 @@ export function DetailTable(props: DetailTableProps): React.ReactNode
 			</div></div>
 		</div>
 		<div className="table-cont">
-			<table className="time-table small-table"><tbody>
+			<table className={ tableClass }><tbody>
 				<tr className="time-row" key="header">
 					<NameCell id={ playerId } pd={ pd } active={ true } onClick={ () => {} } href={ hrefMain }/>
 					<td className="time-cell" width="5%">#</td>
 					<td className="time-cell" width="10%">Rank</td>
-					<td className="time-cell" width="8%">Score</td>
-					<td className="time-cell" width="25.5%" colSpan={ 2 }>Time</td>
-					<td className="time-cell" width="25.5%" colSpan={ 2 }>Sheet Best</td>
+					<td className="time-cell" data-active="true" onClick={ () => setSortId(1) }
+						width="8%" >Score { imgNodeFun(sortId === 1) }</td>
+					<td className="time-cell" width={ cellSpan } colSpan={ 2 }>Time</td>
+					<td className="time-cell" width={ cellSpan } colSpan={ 2 }>Sheet Best</td>
+					{ stdNode }
 				</tr>
 				{ playTableNodes }
 			</tbody></table>
@@ -358,10 +413,12 @@ type PlayerBoardProps = {
 	aboutNode: React.ReactNode,
 	starMap: StxStarMap | null,
 	userMap: UserStatMap | null,
+	userRankStore: UserRankStore | null,
 	altStarMap?: StxStarMap | null,
 	altMap?: { [key: string]: UserStatMap },
 	idType?: IdService,
-	pd?: PlayData
+	pd?: PlayData,
+	showStd?: boolean
 };
 
 export function PlayerBoard(props: PlayerBoardProps): React.ReactNode
@@ -399,11 +456,20 @@ export function PlayerBoard(props: PlayerBoardProps): React.ReactNode
 	var idType: IdService = "xcam";
 	if (props.idType !== undefined) idType = props.idType;
 
+	var showStd = false;
+	if (props.showStd) showStd = props.showStd;
+
+	var userRankMap: UserRankMap | null = null;
+	if (props.userRankStore !== null) {
+		userRankMap = extFlag ? props.userRankStore.extMap : props.userRankStore.bestMap;
+	}
+
 	var board = null;
 	if (player === null) board = <PlayerTable hrefBase={ props.hrefBase } splitFlag={ splitFlag } cornerNode={ toggleNode }
 		lowNum={ props.lowNum } midNum={ props.midNum } userMap={ GS_userMap } idType={ idType } pd={ props.pd }/>;
 	else board = <DetailTable hrefBase={ props.hrefBase } id={ newIdent(idType, player) } splitFlag={ splitFlag }
-		cornerNode={ toggleNode } starMap={ starMap } userMap={ GS_userMap } pd={ props.pd }/>;
+		cornerNode={ toggleNode } starMap={ starMap } userMap={ GS_userMap } userRankMap={ userRankMap }
+		pd={ props.pd } showStd={ showStd }/>;
 
 	return (<div>
 		{ props.aboutNode }

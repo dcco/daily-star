@@ -13,6 +13,7 @@ import { StxStarMap } from './stats/stats_star_map'
 import { UserScoreMap, UserStatMap, calcUserScoreMap, calcUserStatMap } from './stats/stats_user_map'
 
 import { SRMap, genStarRankMap } from './standards/strat_ranks'
+import { UserRankStore, calcUserRankStore } from './standards/user_ranks'
 
 	/* 
 		permanent storage for xcam data
@@ -30,7 +31,8 @@ export type SheetData = {
 	"altMap": { [key: string]: UserStatMap },
 		// strat ranks
 	"secretMap": UserStatMap | null,
-	"srMap": SRMap
+	"srMap": SRMap,
+	"userRankStore": UserRankStore | null
 };
 
 export const G_SHEET: SheetData = {
@@ -42,7 +44,8 @@ export const G_SHEET: SheetData = {
 	"extStarMap": null,
 	"altMap": {},
 	"secretMap": null,
-	"srMap": {}
+	"srMap": {},
+	"userRankStore": null
 };
 
 export async function initGSheet(callback: () => void)
@@ -96,8 +99,10 @@ function calcStatData()
 
 function calcStratRankData()
 {
+	// will NOT generate new ranks unless DEV mode is turned on
 	var starSet: [StarDef, number][][] = orgData.map((stage, i) =>
 		stage.starList.map((starDef, j) => [orgStarDef(i, j), j]));
 	if (DEV) G_SHEET.srMap = genStarRankMap(starSet);
-	//console.log(G_SHEET.srMap);
+	G_SHEET.userRankStore = calcUserRankStore(starSet);
+	console.log(G_SHEET.srMap);
 }

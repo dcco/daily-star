@@ -55,6 +55,7 @@ export function genRankList(name: string, timeCol: RankTimeCol, rankPlayRate: nu
 		var adjConfidence = RANK_CONFIDENCE;
 		if (i === 0) adjConfidence = Math.ceil(adjConfidence * 0.6);
 		if ((notNearEnd || i === 0) && unusedTotal + curPlayRate >= adjConfidence) {
+			// constructed from adjusted time (instead of verTime) to ensure that star/pipe times are pulled homogenously
 			rankObj = newRankObj(timeCol[nextRankId][1].time, {
 				"m": "perc",
 				"rankId": nextRankId,
@@ -102,7 +103,7 @@ export function interpolateRankList(rl: RankList, record: TimeDat)
 		// extrapolate/interpolate if rank is empty
 		if (rl.times[rankName].sr !== "none") continue;
 		// get "previous" (known) time to use as reference, using record if none available
-		var prevTime = record.verTime;
+		var prevTime = record.time;
 		var prevAm = 0;
 		if (i !== 0) {
 			var prevRank = rl.times[RANK_NAME_LIST[i - 1][0]];
@@ -113,7 +114,7 @@ export function interpolateRankList(rl: RankList, record: TimeDat)
 		// if there is no "next rank" (trailing rank)
 		if (nextConfList[i] === -1) {
 			// calc record time info
-			var recordFrames = msToFrames(record.verTime);
+			var recordFrames = msToFrames(record.time);
 			var frameDiff = msToFrames(prevTime) - recordFrames;
 			if (frameDiff === 0) frameDiff = 1;
 			// extrapolate using previous rank time + record
@@ -137,60 +138,6 @@ export function interpolateRankList(rl: RankList, record: TimeDat)
 		}
 	}
 }
-
-/*
-function interpolateStratTimes(st: RankList, colId: number, recordList: TimeDat[])
-{
-	var nextConfList = Array(RANK_NAME_LIST.length - 1).fill(-1);
-	for (let i = 0; i < RANK_NAME_LIST.length - 2; i++) {
-		for (let j = i; j < RANK_NAME_LIST.length - 1; j++) {
-			var checkName = RANK_NAME_LIST[j][0];
-			if (st.times[checkName].sr !== "none") {
-				nextConfList[i] = j;
-				break;
-			}
-		}
-	}
-	for (let i = 0; i < RANK_NAME_LIST.length - 1; i++) {
-		var rankName = RANK_NAME_LIST[i][0];
-		// extrapolate/interpolate if rank is empty
-		if (st.times[rankName].sr !== "none") continue;
-		// get "previous" time to use as reference
-		var prevTime = rl[colId].verTime;
-		var prevAm = 0;
-		if (i !== 0) {
-			var prevRank = st.times[RANK_NAME_LIST[i - 1][0]];
-			if (prevRank.sr === "none") break;
-			prevTime = prevRank.time.time;
-			prevAm = 100 - RANK_NAME_LIST[i - 1][1];
-		}
-		// if there is no "next rank" (trailing rank)
-		if (nextConfList[i] === -1) {
-			// calc record time info
-			var recordFrames = msToFrames(rl[colId].verTime);
-			var frameDiff = msToFrames(prevTime) - recordFrames;
-			if (frameDiff === 0) frameDiff = 1;
-			// extrapolate using previous rank time + record
-			var extraFrames = recordFrames + Math.ceil(frameDiff * (100 - RANK_NAME_LIST[i][1]) / prevAm);
-			st.times[rankName] = newRankObj(framesToMS(extraFrames), { "m": "interpolate" });
-		// if there is a "next rank" (middle rank)
-		} else {
-			var nextConfId = nextConfList[i];
-			var nextConfRank = RANK_NAME_LIST[nextConfId][0];
-			var nr = st.times[nextConfRank];
-			if (nr.sr === "none") throw("BUG: strat_ranks.tsx - Invalid nextConfRank in use.")
-			var nextConfTime = nr.time;
-			// calculate relative multiplier
-			var nextAm = 100 - RANK_NAME_LIST[nextConfId][1];
-			var targetAm = 100 - RANK_NAME_LIST[i][1];
-			var relMul = (targetAm - prevAm) / (nextAm - prevAm);
-			// interpolate using previous rank + next valid rank
-			var frameDiff = msToFrames(nextConfTime.time) - msToFrames(prevTime);
-			var interFrames = msToFrames(prevTime) + Math.ceil(frameDiff * relMul);
-			st.times[rankName] = newRankObj(framesToMS(interFrames), { "m": "interpolate" });
-		}
-	}
-}*/
 
 	// rescales ranks if multiple strats were merged
 	// -- bottom rank will be offset by difference between src + scale strat
@@ -282,8 +229,12 @@ export function rewriteRankList(source: RankList, target: RankList,
 			continue;
 		}
 		// calculate TARGET time based on SOURCE time
-		var srcDiff = msToFrames(srcTime.time.time) - msToFrames(srcRecord.verTime);
-		var tarTime = framesToMS(msToFrames(tarRecord.verTime) + srcDiff);
+		var srcDiff = msToFrames(srcTime.time.time) - msToFrames(srcRecord.time);
+		// -- if descaling, we use the original un-modified time as a reference
+		var tarRecordTime = tarRecord.time;
+		if (rankMethod === "rescale") tarRecordTime = tarRecord.verTime;
+		//var tarRecordTime = tarRecord.verTime;
+		var tarTime = framesToMS(msToFrames(tarRecordTime) + srcDiff);
 		// if old ranking is simply being re-scaled, maintain percentiles
 		var srcMethod = srcTime.method;
 		if (rankMethod === "rescale") {
@@ -298,6 +249,38 @@ export function rewriteRankList(source: RankList, target: RankList,
 	return st;
 }
 
+	// rewrites a rank list using self as benchmark
+	// -- used to reverse a strat offset
+export function rewriteSelfRankList(source: RankList, srcRecord: TimeDat)
+{
+	var srcDiff = msToFrames(srcRecord.verTime) - msToFrames(srcRecord.time);
+	for (let i = 0; i < RANK_NAME_LIST.length; i++) {
+		var rankName = RANK_NAME_LIST[i][0];
+		// check if rank time exists
+		if (source.times[rankName] == undefined) continue;
+		var st = source.times[rankName];
+		if (st.sr === "none") continue;
+		// calculate new time
+		var newTime = framesToMS(msToFrames(st.time.time) + srcDiff);
+		source.times[rankName] = newRankObj(newTime, st.method);
+	}
+}
+
+	// removes ranks worse than a certain rank
+export function killFromRankList(source: RankList, rankName: string)
+{
+	var kFlag = false;
+
+	for (let i = 0; i < RANK_NAME_LIST.length; i++) {
+		var exName = RANK_NAME_LIST[i][0];
+		if (kFlag) {
+			source.times[exName] = { "sr": "none" };
+		} else if (exName === rankName) {
+			kFlag = true;
+		}
+	}
+}
+
 	// fills in the version offset for a rank list
 export function fillVerOffsetRankList(source: RankList, stratName: string, vs: VerOffset)
 {
@@ -308,16 +291,8 @@ export function fillVerOffsetRankList(source: RankList, stratName: string, vs: V
 		if (rankObj.sr === "none") continue;
 		var newTime = applyVerOffsetRaw(stratName, rankObj.time.time, vs);
 		if (newTime !== null && vs.focusVer !== null) fillAltRankObj(rankObj, [newTime, vs.focusVer]);
-		//rankInfo.time.alt = [newTime, vs.focusVer];
 	}
 }
-
-	// if a scale record is given, re-scale all SOURCE rank times relative to it
-	/*for (let i = 0; i < RANK_NAME_LIST.length; i++) {
-		var rankName = RANK_NAME_LIST[i][0];
-		if (source.times[rankName] === undefined) continue;
-		var srcTime = source.times[rankName];
-	*/
 
 	/*
 		rank-time map: a mapping of ranks to times
@@ -331,9 +306,6 @@ export type RankTimeMap = {
 export function forceTimesRankList(rl: RankList, fMap: RankTimeMap | undefined)
 {
 	if (fMap === undefined) return;
-	//var sMap = fm[stratName];
-	//if (sMap === undefined) return;
-	//var recTime = rl[colId];
 	for (const entry of Object.entries(fMap)) {
 		var [rankName, timeText] = entry;
 		var time = rawMS(timeText);
@@ -341,18 +313,3 @@ export function forceTimesRankList(rl: RankList, fMap: RankTimeMap | undefined)
 		rl.times[rankName] = newRankObj(time, { "m": "force" }); // recTime.rowDef
 	}
 }
-
-/*
-export function forceStratTimes(rl: RankList, fm: ForceMap, stratName: string, colId: number, rl: TimeDat[])
-{
-	var sMap = fm[stratName];
-	if (sMap === undefined) return;
-	var recTime = rl[colId];
-	for (const entry of Object.entries(sMap)) {
-		var [rankName, timeText] = entry;
-		var time = rawMS(timeText);
-		if (time == null) throw("BUG: strat_ranks.tsx - Invalid time text `" + timeText + "` in rank_struct.json");
-		st.times[rankName] = newRankObj(time, { "m": "force" }); // recTime.rowDef
-	}
-}
-*/

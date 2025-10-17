@@ -94,7 +94,8 @@ export type RawStratDef = {
 
 export type VirtId = {
 	'kind': string,
-	'id': string 
+	'id': string,
+	"ver_diff": boolean
 }
 
 	/*
@@ -119,7 +120,7 @@ export function buildStratDef(sDef: RawStratDef, virtKind: string, ver: Ver, vs:
 		addRefMap(rowMap, ref, rowDef);
 	}
 	var virtId: VirtId | null = null;
-	if (sDef.virtual && sDef.virtId) virtId = { 'kind': virtKind, 'id': sDef.virtId };
+	if (sDef.virtual && sDef.virtId) virtId = { 'kind': virtKind, 'id': sDef.virtId, 'ver_diff': sDef.ver_diff };
 	return {
 		"name": sDef.name,
 		"diff": sDef.diff,
@@ -134,7 +135,7 @@ export function openStratDef(virtId: string, second: boolean, vs: VarSpace): Str
 	return {
 		"name": second ? "Open#Alt" : "Open",
 		"diff": second ? "second" : "hard",
-		"virtId": { 'kind': 'open', 'id': virtId },
+		"virtId": { 'kind': 'open', 'id': virtId, 'ver_diff': vs.verInfo !== null },
 		"vs": vs,
 		"id_list": [],
 		"row_map": {}

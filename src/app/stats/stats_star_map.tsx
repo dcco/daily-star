@@ -54,6 +54,12 @@ export function statKey(ref: StarRef): string
 	return baseKey + "_alt";
 }
 
+export function starOnlyKey(ref: StarRef): [string, AltState]
+{
+	var baseKey = ref.stageId + "_" + ref.starId;
+	return [baseKey, ref.alt];
+}
+
 	/*
 		stats star data: structured storage for xcam data (stores all times + records for a star)
 	*/

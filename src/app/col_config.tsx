@@ -1,5 +1,5 @@
 
-import { StratDef, ColList } from './org_strat_def'
+import { StratDef, ColList, filterVarColList } from './org_strat_def'
 import { StarDef, FilterState } from './org_star_def'
 import { TimeDat, MultiDat, maxTimeDat } from './time_dat'
 import { TimeTable, filterTimeTable } from './time_table'
@@ -321,4 +321,19 @@ export function primaryColConfig(cfg: ColConfig, starDef: StarDef, fs: FilterSta
 			mergeTagsColConfig(cfg, "XXXXXX", "YYYYYY");
 		}
 	}
+}
+
+	/* similar to primary column config, but doesn't merge open columns
+		-- this is included here since it uses the same logic */
+
+export function lightColList(colList: ColList, starDef: StarDef, fs: FilterState): ColList {
+	// instead of merging alt columns, we simply remove non-special merges
+	if (fs.altState[0] && !fs.altState[1]) {
+		return filterVarColList(colList, null);
+	} else if (fs.altState[1] && !fs.altState[0]){
+		return filterVarColList(colList, 1);
+	} else if (starDef.alt !== null && fs.altState[0] && fs.altState[1]) {
+		if (starDef.alt.status === "mergeOffset" && starDef.alt.specMerge === undefined) return filterVarColList(colList, null);
+	}
+	return colList;
 }

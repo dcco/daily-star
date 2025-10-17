@@ -73,6 +73,10 @@
 			["Half Cycle", "Gold", "5", "Beginner cycle"],
 			["Half Cycle", "Silver", "7", "Piranha kill + slow ending"],
 			["Half Cycle", "Bronze", "2", "Slower ending"]
+		],
+		"kill": [
+			["Kanno Cycle", "Platinum"],
+			["Pro Cycle", "Gold"]	
 		]
 	},
 	"wf_5": {
@@ -91,7 +95,8 @@
 		],
 		"ext": {
 			"Open": { "kind": "benchmarkDef" }
-		}
+		},
+		"no_open": true
 	},
 
 	"jrb_1": {
@@ -155,7 +160,13 @@
 		],
 		"ext": {
 			"Open": { "kind": "benchmark", "strat": "Standard" }
-		}
+		},
+		"offset": [
+			["Standard", "Bronze", "4", "Safety blues"]
+		],
+		"descale": [
+			["Open", "1:26.30", "Grandmaster"]
+		]
 	},
 	"ccm_4": {
 		"offset": [
@@ -212,6 +223,11 @@
 		"ext": {
 			"Open": { "kind": "benchmark", "strat": "Standard" }
 		}
+	},
+	"bbh_100c4": {
+		"offset": [
+			["Standard", "Bronze", "10", "Outside the house"]
+		]
 	},
 	"bbh_5": {
 		"mergeTable": [
@@ -287,7 +303,8 @@
 		],
 		"ext": {
 			"Open": { "kind": "benchmarkDef" }
-		}
+		},
+		"no_open": true
 	},
 	"hmc_6": {
 		"mergeTable": [
@@ -323,8 +340,12 @@
 		"beg": { "kind": "benchmarkDef" }
 	},
 	"lll_2": {
-		"mergeTable": [
-		 	["Ledgegrab", "No Ledgegrab"]
+		"benchmark": "No Ledgegrab",
+		"protect": ["Rightside"], 
+		"descale": [
+			["Ledgegrab", "27.30", "Master"],
+			["No Ledgegrab", "26.73", "Master"],
+			["Rightside", "25.96", "Mario"]
 		]
 	},
 	"lll_3": {
@@ -342,7 +363,8 @@
 		"ext": {
 			"Open": { "kind": "benchmark", "strat": "Standard" },
 			"DJ Sidehop": { "kind": "benchmark", "strat": "2x LJ Sidehop" }
-		}
+		},
+		"no_open": true
 	},
 	"lll_5": {
 		"mergeTable": [
@@ -428,7 +450,8 @@
 		],
 		"ext": {
 			"Open": { "kind": "benchmark", "strat": "Front Sub" }
-		}
+		},
+		"no_open": true
 	},
 	"ddd_2": {
 		"offset": [
@@ -497,7 +520,8 @@
 		"ext": {
 			"Open": { "kind": "benchmark", "strat": "Standard" },
 			"Leftside": { "kind": "benchmark", "strat": "Standard" }
-		}
+		},
+		"no_open": true
 	},
 	"sl_5": {
 		"offset": [
@@ -551,6 +575,19 @@
 		"ext": {
 			"Elevator Clip": { "kind": "approx" }
 		}
+	},
+	"wdw_5": {
+		"force": {
+			"Solo Reds": {
+				"Mario": "56.76",
+				"Gold": "1:03.16",
+				"Silver": "1:08.60"
+			}
+		},
+		"offset": [
+			["Solo Reds", "Bronze", "2", "Slow swimming"]
+		],
+		"beg": { "kind": "approx" }	
 	},
 	"wdw_6": {
 		"mergeTable": [
@@ -632,7 +669,8 @@
 		"ext": {
 			"TJ Dive Start": { "kind": "benchmark", "strat": "Standard" },
 			"Open": { "kind": "benchmark", "strat": "Standard" }
-		}
+		},
+		"no_open": true
 	},
 	"thi_100c3": {
 		"force": {
@@ -760,7 +798,11 @@
 		],
 		"ext": {
 			"Carpetless": { "kind": "benchmark", "strat": "Carpetful" }
-		}
+		},
+		"offset": [
+			["Carpetful", "Bronze", "9", "Tricky coins"]
+		],
+		"no_open": true
 	},
 	"rr_3": {
 		"mergeTable": [
@@ -800,7 +842,8 @@
 		],
 		"ext": {
 			"Carpetless": { "kind": "benchmark", "strat": "Carpetful" }
-		}
+		},
+		"no_open": true
 	},
 
 	"sec_wc": {
@@ -836,9 +879,8 @@
 			["Pole Red Early", "Pole Red Early (NC)"],
 			["Stored Angle", "Stored Angle (NC)"]
 		],
-		"ext": {
-			"Open": { "kind": "benchmarkDef" }
-		}
+		"ext": {},
+		"no_open": true
 	},
 
 	"bow_1n": {
@@ -854,6 +896,12 @@
 			["Shig (Pipe)", "Silver", "2", "Normal cycle"],
 			["Shig (Star)", "Bronze", "2.2", "Slower ending"],
 			["Shig (Pipe)", "Bronze", "2.2", "Slower ending"]
+		],
+		"kill": [
+			["Salt Flip (Star)", "Platinum"],
+			["Salt Flip (Pipe)", "Platinum"],
+			["Tsuki (Star)", "Gold"],
+			["Tsuki (Pipe)", "Gold"]
 		]
 	},
 	"bow_2n": {
@@ -861,6 +909,9 @@
 		"protect": ["Pole Glitch", "Zero Cycle"],
 		"offset": [
 			["Zero Cycle", "Bronze", "2", "Late cycle"]
+		],
+		"kill": [
+			["BLJ", "Gold"]
 		]
 	},
 	"bow_2r": {
@@ -903,6 +954,12 @@
 			["Early Cycle (Pipe)", "1:18.60", "Mario"],
 			["Ultimate Cycle (Star)", "1:11.20", "Mario"],
 			["Ultimate Cycle (Pipe)", "1:16.60", "Mario"]
+		],
+		"kill": [
+			["Early Cycle (Star)", "Gold"],
+			["Early Cycle (Pipe)", "Gold"],
+			["Ultimate Cycle (Star)", "Platinum"],
+			["Ultimate Cycle (Pipe)", "Platinum"]
 		]
 	},
 	"bow_3x": {

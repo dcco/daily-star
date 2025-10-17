@@ -205,7 +205,7 @@ function adjustTime(timeDat: TimeDat, frames: number, adj: string) {
 	timeDat.adjustList = copyList;
 }
 
-function natAdjustTime(timeDat: TimeDat, frames: number, adj: string) {
+/*function natAdjustTime(timeDat: TimeDat, frames: number, adj: string) {
 	timeDat.time = addFrames(frames, timeDat.time);
 	timeDat.verTime = addFrames(frames, timeDat.verTime);
 	timeDat.rawTime = addFrames(frames, timeDat.rawTime);
@@ -213,7 +213,7 @@ function natAdjustTime(timeDat: TimeDat, frames: number, adj: string) {
 	var copyList = timeDat.adjustList.map((x) => x);
 	copyList.push(adj);
 	timeDat.adjustList = copyList;
-}
+}*/
 
 	/* 
 		multi_dat (time cell): an array of time_dats used to represent
@@ -344,5 +344,5 @@ export function applyStratOffset(timeDat: TimeDat, second: boolean, sOffset: Str
 
 export function applyManualOffset(timeDat: TimeDat, frames: number, offName: string)
 {
-	natAdjustTime(timeDat, frames, offName);
+	adjustTime(timeDat, frames, offName);
 }

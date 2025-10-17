@@ -10,7 +10,8 @@ import { StarDef, FilterState, newFilterState, copyFilterState, fullFilterState,
 	verOffsetStarDef, stratOffsetStarDef, hasExtStarDef, colListStarDef } from '../org_star_def'
 import { TimeTable } from '../time_table'
 import { PlayData, LocalPD, newPlayData } from '../play_data'
-import { ColConfig, newColConfig, primaryColConfig, mergeHeaderColConfig, splitVariantPosColConfig } from '../col_config'
+import { ColConfig, newColConfig, primaryColConfig, lightColList,
+	mergeHeaderColConfig, splitVariantPosColConfig } from '../col_config'
 import { xcamRecordMapBan, sortColList } from '../xcam_record_map'
 import { MenuOpt, MenuOptX } from './rx_menu_opt'
 import { PlayDB } from "../table_parts/rx_star_row"
@@ -19,6 +20,9 @@ import { LiveStarTable } from '../table_parts/rx_live_table'
 import { VerToggle } from './rx_ver_toggle'
 import { ExtToggle } from './rx_ext_toggle'
 import { VariantToggle } from './rx_variant_toggle'
+
+import { StratRankTable } from '../board_simple/rx_sr_table'
+import { StratRankTableRaw } from '../board_simple/rx_sr_table_raw'
 
 export type TimeTableFun = ((colList: ColList, vs: VerOffset, ss: StratOffset) => TimeTable);
 
@@ -201,6 +205,8 @@ export function ViewBoard(props: ViewBoardProps): React.ReactNode
 
 	// load time table from xcam data
 	var colList = colListStarDef(starDef, fs);
+	var fullFS = fullFilterState([true, true], varTotal);
+	var fullColList = colListStarDef(starDef, fullFS);
 
 	// add sort record + relevant records
 	var banList: string[][] = [];
@@ -209,9 +215,10 @@ export function ViewBoard(props: ViewBoardProps): React.ReactNode
 		var rs = RS_DATA[starKey];
 		if (rs.ban)	banList = rs.ban;
 	}*/
-	var sortRM = xcamRecordMapBan(colList, fullFilterState([true, true], varTotal), verOffset, sOffset, banList);
+	var sortRM = xcamRecordMapBan(fullColList, fullFS, verOffset, sOffset, banList);
 	var relRM = xcamRecordMapBan(colList, fs, verOffset, sOffset, banList);
 	sortColList(colList, sortRM);
+	sortColList(fullColList, sortRM);
 
 	// create tables
 	var tableList: React.ReactNode[] = [];
@@ -252,6 +259,31 @@ export function ViewBoard(props: ViewBoardProps): React.ReactNode
 		}
 	}
 
+	// standards board
+	var rankTableNode: React.ReactNode = <div></div>; 
+	if (props.showStd) {
+		// collect columns
+		/*var xFS = copyFilterState(fullFS);
+		xFS.altState = fs.altState;
+		cfgStore.push(filterConfig(stageId, starDef, xFS, fullColList));*/
+		/*if (props.mergeRaw && (!combFlag || !fs.altState[1])) {
+		xFS.altState = [false, true];
+			cfgStore.push(filterConfig(stageId, starDef, xFS, fullColList));
+		}*/
+		var stratList: string[][] = []; //cfgStore.map(pureStratListColConfig);
+		var rColList = lightColList(fullColList, starDef, fs);
+		stratList.push(rColList.map((colRef) => colRef[1].name));
+		// secondary strat rank table when necessary
+		if (props.mergeRaw && (!combFlag || !fs.altState[1])) {
+			var xFS = copyFilterState(fullFS);
+			xFS.altState = [false, true];
+			rColList = lightColList(fullColList, starDef, xFS);
+			stratList.push(rColList.map((colRef) => colRef[1].name));
+		}
+		rankTableNode = <StratRankTable stageId={ stageId } starDef={ starDef } stratList={ stratList }/>;
+		//rankTableNode  = <StratRankTableRaw stageId={ stageId } starDef={ starDef }/>;
+	}
+
 	return (<div>
 		<div className="row-wrap">
 			{ props.cornerNode }
@@ -260,7 +292,7 @@ export function ViewBoard(props: ViewBoardProps): React.ReactNode
 				{ verToggle }
 			</div>
 		</div>
-		{ props.headerNode }
+		<div>{ props.headerNode } { rankTableNode }</div>
 		{ altToggle }
 		<div className="row-wrap no-space variant-cont">{ stratNode } { varCont }</div>
 		{ tableList }

@@ -4,12 +4,13 @@ import Link from 'next/link'
 import React from 'react'
 
 import { G_SHEET } from '../api_xcam'
-import { RANK_NAME_LIST } from '../standards/rank_const'
 
 import { Ver } from '../variant_def'
 import { TimeDat, VerOffset, formatTime } from '../time_dat'
 import { Ident } from '../time_table'
 import { PlayData, strIdNickPD } from '../play_data'
+
+import { getRank } from '../standards/strat_ranks'
 
 	/* time display auxiliary functions */
 
@@ -80,36 +81,6 @@ export function timeDetail(timeDat: TimeDat | null, verOffset: VerOffset, hideSt
 	return [timeText, rawText];
 }
 
-function getRank(rankKey: string, stratName: string, timeDat: TimeDat): string
-{
-	// lookup strat ranks
-	var stratSet = G_SHEET.srMap[rankKey];
-	var ver = timeDat.rowDef.ver;
-	/*var altSet = G_SHEET.srMap[rankKey + "#" + ver];
-	if (altSet !== undefined) {
-		stratSet = altSet;
-		altFlag = true;
-	}*/
-	if (stratSet === undefined || stratSet[stratName] === undefined) return "Unranked";
-	var st = stratSet[stratName];
-	// iterate through strat ranks
-	for (let i = 0; i < RANK_NAME_LIST.length - 1; i++) {
-		var rankName = RANK_NAME_LIST[i][0];
-		var rankInfo = st.times[rankName];
-		if (rankInfo === undefined || rankInfo.sr === "none") continue;
-		var rankDat = rankInfo.time;
-		// lookup if alt strat should be used
-		var altFlag = false;
-		var rankTime = rankDat.time;
-		if (rankDat.alt !== null && rankDat.alt[1] === ver) rankTime = rankDat.alt[0];
-		// if using alt, compare raw time
-		//if (altFlag && timeDat.rawTime <= rankTime) return rankName;
-		//else if (!altFlag && timeDat.verTime <= rankTime) return rankName;
-		if (timeDat.rawTime <= rankTime) return rankName;
-	}
-	return "Iron";
-}
-
 	/* time cell: displays a time w/ version adjustment, variant info, video link, etc */
 
 type TimeCellProps = {
@@ -151,7 +122,43 @@ export function TimeCell(props: TimeCellProps): React.ReactNode {
 	if (rawText !== null) spanNodes.push(<em key="e">{ rawText }</em>);
 	if (hiddenFlag) spanNodes.push(<div className="na" key="a">*</div>);
 	// add rank node if necessary
-	var hasRankNode = props.rankKey && timeDat !== null && cellText !== "";
+	/*
+		-- oval bubble version
+	if (props.rankKey && timeDat !== null && cellText !== "") {
+		var rankName = getRank(props.rankKey, timeDat.rowDef.name, timeDat);
+		timeNode = <div className="inner-rank-cont">
+			<div className="inner-rank" data-ps={ rankName }></div>
+			<div className="inner-rank-text" data-ps={ rankName }>{ timeNode }</div>
+		</div>;
+	}*/
+	var hasRankNode = false;
+	var rankNode: React.ReactNode = "";
+	if (props.rankKey && timeDat !== null && cellText !== "") {
+		hasRankNode = true;
+		var rankName = getRank(G_SHEET.srMap, props.rankKey, timeDat);
+		var abName = rankName;
+		if (rankName === "Grandmaster") abName = "GM";
+		timeNode = <div className="time-bubble">{ timeNode } { spanNodes }</div>
+		rankNode = <div className="rank-bubble-ex">
+			<div className="rank-bubble" data-ps={ rankName }></div>
+			<div className="rank-bubble-text" data-ps={ rankName }>{ abName }</div>
+		</div>;
+	} else {
+		timeNode = <React.Fragment>
+			{ timeNode } { spanNodes }
+		</React.Fragment>;
+	}
+
+	timeNode = (<td className="time-cell tooltip" data-active={ active.toString() } data-complete={ props.complete }
+		colSpan={ hasRankNode ? 1 : 2 } onClick={ onClick }>{ timeNode } { hasRankNode ? "" : noteNodes }</td>);
+	if (hasRankNode) {
+		timeNode = <React.Fragment>
+			{ timeNode }
+			<td className="time-cell tooltip invis-rank-cell" data-active={ active.toString() } onClick={ onClick }
+				colSpan={ 1 }>{ rankNode } { noteNodes }</td>
+		</React.Fragment>;
+	}
+	/*const hasRankNode = props.rankKey && timeDat !== null && cellText !== "";
 	timeNode = (<td className="time-cell tooltip" data-active={ active.toString() } data-complete={ props.complete }
 		colSpan={ hasRankNode ? 1 : 2 } onClick={ onClick }>{ timeNode } { spanNodes } { noteNodes }</td>);
 	// -- do this again to appease typescript
@@ -164,7 +171,7 @@ export function TimeCell(props: TimeCellProps): React.ReactNode {
 				<div className="time-rank-hat"></div>
 			</td>
 		</React.Fragment>;
-	}
+	}*/
 	return timeNode;
 }
 
@@ -182,7 +189,8 @@ export function SimpleTimeCell(props: SimpleCellProps): React.ReactNode {
 		var sText = "(" + formatTime(props.altTime[0]) + " " + props.altTime[1].toUpperCase() + ")";
 		spanText = <em>{ sText }</em>;
 	}
-	return (<td className="time-cell tooltip" data-active={ "false" } data-alter={ alter.toString() }>{ timeText } { spanText }</td>);
+	return (<td className="time-cell tooltip" data-active={ "false" } data-alter={ alter.toString() }>
+		<div className="buffer-cont">{ timeText } { spanText }</div></td>);
 }
 
 	/* record cell: similar to time cell, but with no interactivity */

@@ -84,7 +84,8 @@ export const RANK_NAME_MAP: RankMap = {
 	"Platinum": 4,
 	"Gold": 5,
 	"Silver": 6,
-	"Bronze": 7
+	"Bronze": 7,
+	"Iron": 8
 };
 
 	/*
@@ -124,7 +125,10 @@ export function tallyRanksTimeCol(times: RankTimeCol, skillMetric: number): numb
 	// rank adjustments:
 	// - skip grandmaster, shift everything else
 	// - adjust based on skill metric
-	rankPlayRate[1] = rankPlayRate[1] + rankPlayRate[2];
+	var marioRate = rankPlayRate[0];
+	if (rankPlayRate[0] > 15) rankPlayRate[0] = 14 + Math.ceil((rankPlayRate[0] - 14) * 0.5);
+	//rankPlayRate[1] = rankPlayRate[1] + rankPlayRate[2];
+	rankPlayRate[1] = rankPlayRate[1] + rankPlayRate[2] + (marioRate - rankPlayRate[0]);
 	for (let i = 2; i <= 6; i++) {
 		rankPlayRate[i] = rankPlayRate[i + 1];
 		rankPlayRate[i] = Math.round(rankPlayRate[i] * skillEx);

@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
 
+// delete later
+import { G_SHEET } from '../api_xcam'
+
 import { PlayData, LocalPD } from '../play_data'
 import { G_DAILY, G_HISTORY, GlobNorm, mostRecentWeekly } from '../api_season'
 
@@ -66,6 +69,7 @@ export function DailyStar(props: DailyStarProps): React.ReactNode
 		else if (i === 4) navRM(props.rm, "home", "stats", "");
 		else if (i === 5) navRM(props.rm, "home", "news", "");
 		else if (i === 6) navRM(props.rm, "home", "beta_xcam", "");
+		else if (i === 7) navRM(props.rm, "home", "beta_player", "");
 	};
 
 	// calculate whether season has ended
@@ -114,11 +118,16 @@ export function DailyStar(props: DailyStarProps): React.ReactNode
 	} else if (menuId === 4) {
 		board = <PlayerBoard hrefBase={ ["/home/stats", "/home/history"] } slug={ props.rm.core.slug }
 			aboutNode={ <StatsAbout/> }	idType="remote" lowNum={ 30 } midNum={ 50 } pd={ playData }
-			starMap={ G_HISTORY.starMap } userMap={ G_HISTORY.userMap }/>;
+			starMap={ G_HISTORY.starMap } userMap={ G_HISTORY.userMap } userRankStore={ null }/>;
 	} else if (menuId === 5) {
 		board = <S3ComingSoon/>;
 	} else if (menuId === 6) {
-		board = <XcamBoard rm={ props.rm } showStd={ true } beta={ true }/>;
+		board = <XcamBoard rm={ props.rm } hrefBase={ ["home", "beta_xcam", "/home/beta_player"] } showStd={ true } beta={ true }/>;
+	} else if (menuId === 7) {
+		board = <PlayerBoard hrefBase={ ["/home/beta_player", "/home/beta_xcam"] } slug={ props.rm.core.slug }
+			starMap={ G_SHEET.starMap } userMap={ G_SHEET.userMap }
+			altStarMap={ G_SHEET.extStarMap } altMap={ G_SHEET.altMap } userRankStore={ G_SHEET.userRankStore }
+			aboutNode={ "" } lowNum={ 30 } midNum={ 50 } showStd={ true } key={ props.rm.core.slug }/>;
 	}
 
 	var dailyOptNode: React.ReactNode = <MenuOpt id={ 0 } selId={ menuId } setSelId={ updateMenuId }>Daily</MenuOpt>;
@@ -140,6 +149,7 @@ export function DailyStar(props: DailyStarProps): React.ReactNode
 			<MenuOpt id={ 1 } selId={ menuId } setSelId={ updateMenuId }>Archive</MenuOpt>
 			<MenuOpt id={ 4 } selId={ menuId } setSelId={ updateMenuId }>Stats</MenuOpt>
 			<MenuOpt id={ 6 } selId={ menuId } setSelId={ updateMenuId }>Xcam Ranks (BETA)</MenuOpt>
+			<MenuOpt id={ 7 } selId={ menuId } setSelId={ updateMenuId }>Players (BETA)</MenuOpt>
 		</div>
 		<div className="sep"><hr/></div>
 		{ board }

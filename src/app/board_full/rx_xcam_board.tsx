@@ -10,11 +10,18 @@ import { RawStarDef, orgStarDef } from '../org_star_def'
 import { xcamTimeTable } from '../xcam_time_table'
 import { PlayDB } from '../table_parts/rx_star_row'
 import { ViewBoard } from '../board_simple/rx_view_board'
-import { StratRankTable } from '../board_simple/rx_sr_table'
 import { procStarSlug, makeStarSlug } from '../router_slug'
 import { RouterMain, navRM } from '../router_main'
 
-export function XcamBoard(props: { rm: RouterMain, showStd: boolean, beta: boolean }): React.ReactNode {
+type XcamBoardProps = {
+	rm: RouterMain,
+	showStd: boolean,
+	// TO DELETE
+	beta: boolean,
+	hrefBase: [string, string, string]
+}
+
+export function XcamBoard(props: XcamBoardProps): React.ReactNode {
 	// process slug when relevant
 	const slug = props.rm.core.slug;
 	const [defStage, _starSlug, defStar] = procStarSlug(slug);
@@ -28,12 +35,13 @@ export function XcamBoard(props: { rm: RouterMain, showStd: boolean, beta: boole
 	var starDef = orgStarDef(stageId, starId);
 
 	// navigation handling
-	var baseDir = "xcam";
+	var [baseDir, subDir, playerDir] = props.hrefBase;
+	/*"xcam";
 	var subDir = "";
 	if (props.beta) {
 		baseDir = "home";
 		subDir = "beta_xcam";
-	}
+	}*/
 
 	// star functions
 	const changeStage = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -71,7 +79,7 @@ export function XcamBoard(props: { rm: RouterMain, showStd: boolean, beta: boole
 		var isVirtual = true;
 		Object.values(star.jp_set).map((row) => { if (!row.virtual) isVirtual = false; });
 		Object.values(star.us_set).map((row) => { if (!row.virtual) isVirtual = false; });
-		return !isVirtual;
+		return !isVirtual || props.beta;
 	});
 
 	// star select nodes
@@ -90,7 +98,7 @@ export function XcamBoard(props: { rm: RouterMain, showStd: boolean, beta: boole
 		playNameList = Object.entries(G_SHEET.userMap.stats).map(([k, v]) => v.id.name);
 	}
 	var playDB: PlayDB = {
-		"baseUrl": "/xcam/players",
+		"baseUrl": playerDir,//"/xcam/players",
 		"nameList": playNameList
 	};
 
@@ -103,13 +111,8 @@ export function XcamBoard(props: { rm: RouterMain, showStd: boolean, beta: boole
 			</select>
 		</div>);
 
-	var newNode: React.ReactNode = <div></div>; 
-	if (props.showStd) newNode = <StratRankTable stageId={ stageId } starDef={ starDef }/>
-		
-	var starSelNode = (<div>
-		<div className="star-select">
+	var starSelNode = (<div className="star-select">
 			{ starBtnNodes }
-		</div> { newNode }
 		</div>);
 
 	return <ViewBoard kind="view" stageId={ stageId } starDef={ starDef } ttFun={ xcamTimeTable }

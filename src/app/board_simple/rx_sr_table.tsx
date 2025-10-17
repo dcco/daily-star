@@ -6,70 +6,130 @@ import React from 'react'
 import { TimeDat, zeroVerOffset } from "../time_dat"
 import { StarDef } from "../org_star_def"
 import { SimpleTimeCell, TimeCell } from "../table_parts/rx_star_cell"
+import { RankList } from "../standards/rank_list"
+import { StarRankSet } from "../standards/star_rank_set"
 
-type SRTableProps = {
-	"stageId": number,
-	"starDef": StarDef
+type SingleRankProps = {
+	"stratSet": StarRankSet,
+	"stratList": string[]
 }
 
-export function StratRankTable(props: SRTableProps)
+export function SingleRankTable(props: SingleRankProps): React.ReactNode
 {
-	var starDef = props.starDef;
-	// lookup strat map for star
-	var starKey = props.stageId + "_" + starDef.id;
-	if (G_SHEET.srMap[starKey] === undefined) return <div></div>;
-	var stratSet = G_SHEET.srMap[starKey];
-	// check if there's an alt version
-	/*var altSet: StratTimeSet | null = null;
-	var altVer: string = "US";
-	if (G_SHEET.srMap[starKey + "#us"]) altSet = G_SHEET.srMap[starKey + "#us"];
-	else if (G_SHEET.srMap[starKey + "#jp"]) { altVer = "JP"; altSet = G_SHEET.srMap[starKey + "#jp"]; }*/
-	// build a standard table for each strat
-	var stNodeList: React.ReactNode[] = [];
-	Object.entries(stratSet).map((sx) => {
-		var [stratName, rankSet] = sx;
-		if (rankSet === undefined) return;
-		var rowNodeList: React.ReactNode[] = [];
-		for (const rankDef of RANK_NAME_LIST) {
-			var [rankName] = rankDef;
-			var rankObj = rankSet.times[rankName];
+	var stratSet = props.stratSet;
+	var stratList = props.stratList;
+	// build the spacing + header row
+	var tdWidth = 85 / stratList.length;
+	var sxNodeList: React.ReactNode[] = [];
+	var headerNodeList: React.ReactNode[] = [];
+	stratList.map((stratName, i) => {
+		sxNodeList.push(<col key={ i } width={ "" + tdWidth + "%" }/>);
+		headerNodeList.push(<td key={ i } className="time-cell"><div className="buffer-cont">{ stratName }</div></td>);
+	});
+	sxNodeList.unshift(<col key="s" width="15%"/>);
+	headerNodeList.unshift(<td key="s" className="time-cell">Strat</td>);
+	// for each rank
+	var rowNodeList: React.ReactNode[] = [];
+	for (const rankDef of RANK_NAME_LIST) {
+		// we start with the rank name node
+		var [rankName] = rankDef;
+		var rankNode = <td key="rank" className="rank-name" data-ps={ rankName }><div className="buffer-cont">{ rankName }</div></td>;
+		// for each strat, get a time node
+		var colNodeList: React.ReactNode[] = [];
+		stratList.map((stratName, i) => {
+			var rankList = stratSet[stratName];
+			var rankObj = rankList.times[rankName];
 			// get alt version when relevant
 			var altTime: [number, string] | undefined = undefined;
 			if (rankObj.sr !== "none" && rankObj.time.alt !== null) {
 				altTime = rankObj.time.alt;
-				/*var altInfo = altSet[stratName].times[rankName];
-				if (altInfo.sr !== "none") altTime = [altInfo.time.verTime, altVer];*/
 			}
-			// display time
+			// build column node
 			if (rankObj.sr === "none") {
-				rowNodeList.push(<tr key={ rankName }>
-					<td className="rank-name" data-ps={ rankName }>{ rankName }</td>
-					<td className="dark-cell"></td>
-				</tr>);
+				colNodeList.push(<td key={ i } className="dark-cell"></td>);
 			} else {
-				// extra time data
-				var rankEx = "";
-				var alter = false;
-				if (rankObj.method.m === "force") alter = true;
-				else if (rankObj.method.m === "interpolate") rankEx = "*";
-				else rankEx = "(" + rankObj.method.rankId + ")";
-				// show time cell
-				rowNodeList.push(<tr key={ rankName }>
-					<td className="rank-name" data-ps={ rankName }>{ rankName } { rankEx }</td>
-					<SimpleTimeCell time={ rankObj.time.time } alter={ alter } altTime={ altTime }></SimpleTimeCell>
-				</tr>);
+				colNodeList.push(<SimpleTimeCell key={ i } time={ rankObj.time.time } alter={ false } altTime={ altTime }/>);
 			}
-					/* <TimeCell timeDat={ rankInfo.time } verOffset={ zeroVerOffset() } active={ false }
-						onClick={ () => {} } hiddenFlag={ false } ></TimeCell> */
-		}
-		stNodeList.push(<div key={ stratName } data-method={ rankSet.rankMethod }
-			className="rank-table">
-			<div>{ rankSet.name }</div>
-			<div>Skill Metric: { rankSet.skillMetric.toFixed(3) }</div>
-			<table><tbody>{ rowNodeList }</tbody></table>
-		</div>);
+			//stNodeList.push(<SingleRankTable key={ i } stratName={ stratName } rankList={ rankList }/>);
+		});
+		// build full row node
+		rowNodeList.push(<tr key={ rankName } className="time-row">{ rankNode }{ colNodeList }</tr>);
+	}
+	var stratEx = 140;
+	if (stratList.length > 4) stratEx = 110;
+	var minWidth = (stratList.length * stratEx) + 80;
+	return <div className="rank-table-cont">
+		<table className="rank-table" style={{ minWidth: "" + minWidth + "px" }}>
+			<colgroup>{ sxNodeList }</colgroup><tbody>
+			<tr key="header" className="time-row">{ headerNodeList }</tr>
+			{ rowNodeList }
+		</tbody></table></div>;
+
+}
+
+type SRTableProps = {
+	"stageId": number,
+	"starDef": StarDef,
+	"stratList": string[][]
+}
+
+export function StratRankTable(props: SRTableProps): React.ReactNode
+{
+	const starDef = props.starDef;
+	var stratList = props.stratList;
+	// lookup strat map for star
+	var starKey = props.stageId + "_" + starDef.id;
+	if (G_SHEET.srMap[starKey] === undefined) return <div></div>;
+	var stratSet = G_SHEET.srMap[starKey];
+	// filter strats if necessary
+	stratList = stratList.map((sl) => sl.filter((name) => stratSet[name] !== undefined));
+	// build the spacing + header row
+	/*var tdWidth = 85 / stratList.length;
+	var sxNodeList: React.ReactNode[] = [];
+	var headerNodeList: React.ReactNode[] = [];
+	stratList[0].map((stratName, i) => {
+		sxNodeList.push(<col key={ i } width={ "" + tdWidth + "%" }/>);
+		headerNodeList.push(<td key={ i } className="time-cell"><div className="buffer-cont">{ stratName }</div></td>);
 	});
-	return <div className="rank-cont">Standards:
-		{ stNodeList }
+	sxNodeList.unshift(<col key="s" width="15%"/>);
+	headerNodeList.unshift(<td key="s" className="time-cell">Strat</td>);
+	// for each rank
+	var rowNodeList: React.ReactNode[] = [];
+	for (const rankDef of RANK_NAME_LIST) {
+		// we start with the rank name node
+		var [rankName] = rankDef;
+		var rankNode = <td key="rank" className="rank-name" data-ps={ rankName }><div className="buffer-cont">{ rankName }</div></td>;
+		// for each strat, get a time node
+		var colNodeList: React.ReactNode[] = [];
+		stratList[0].map((stratName, i) => {
+			var rankList = stratSet[stratName];
+			var rankObj = rankList.times[rankName];
+			// get alt version when relevant
+			var altTime: [number, string] | undefined = undefined;
+			if (rankObj.sr !== "none" && rankObj.time.alt !== null) {
+				altTime = rankObj.time.alt;
+			}
+			// build column node
+			if (rankObj.sr === "none") {
+				colNodeList.push(<td key={ i } className="dark-cell"></td>);
+			} else {
+				colNodeList.push(<SimpleTimeCell key={ i } time={ rankObj.time.time } alter={ false } altTime={ altTime }/>);
+			}
+			//stNodeList.push(<SingleRankTable key={ i } stratName={ stratName } rankList={ rankList }/>);
+		});
+		// build full row node
+		rowNodeList.push(<tr key={ rankName } className="time-row">{ rankNode }{ colNodeList }</tr>);
+	}
+	var stratEx = 140;
+	if (stratList[0].length > 4) stratEx = 110;
+	var minWidth = (stratList[0].length * stratEx) + 80;*/
+	var altTable: React.ReactNode = "";
+	if (stratList.length > 1) altTable = <SingleRankTable stratSet={ stratSet } stratList={ stratList[1] }/>;
+	return <div className="rank-cont">
+		<div className="rank-cont-toggle">[-] Rank Standards</div>
+		<SingleRankTable stratSet={ stratSet } stratList={ stratList[0] }/>
+		{ altTable }
 	</div>;
+	/*
+	*/
 }
