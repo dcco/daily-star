@@ -265,6 +265,30 @@ export function calcTopXStats(userSx: UserStats, x: number, descale: boolean): n
 	return (topX * 100) / x;
 }
 
+export function filterUserStats(userSx: UserStats, codeList: [number, string][]): UserStats
+{
+	var codeMap: { [key: string]: number } = {};
+	for (const [stageId, starId] of codeList) codeMap[stageId + "_" + starId] = 0;
+	
+	var newStarList = userSx.starList.filter((userScore) => {
+		return codeMap[userScore.stageId + "_" + userScore.starId] !== undefined;
+	});
+	newStarList.sort(function (a, b) { return rankPts(b.rank) - rankPts(a.rank) });
+
+	var newSx: UserStats = {
+		"id": userSx.id,
+		"starList": newStarList,
+		"complete": {},
+		"incomplete": {},
+		"standard": userSx.standard
+	};
+	for (const key of Object.keys(codeMap)) {
+		if (userSx.complete[key]) newSx.complete[key] = userSx.complete[key];
+		if (userSx.incomplete[key]) newSx.incomplete[key] = userSx.incomplete[key];
+	};
+	return newSx;
+}
+
 /*
 export function completeStatsList(starList: StarStats[], altFlag: boolean): (UserScore | IncScore)[]
 {
@@ -403,4 +427,17 @@ export function calcUserStatMap(starSet: [StarDef, number][][], scoreMap: UserSc
 	});
 	fillIncompleteStatMap(statMap, refList);
 	return statMap;
+}
+
+	/* filters a user stat map based on a list of star codes */
+export function filterUserStatMap(userMap: UserStatMap, codeList: [number, string][]): UserStatMap
+{
+	var newMap: UserStatMap = {
+		stats: {},
+		starTotal: codeList.length
+	};
+	for (const [userKey, userSx] of Object.entries(userMap.stats)) {
+		newMap.stats[userKey] = filterUserStats(userSx, codeList);
+	}
+	return newMap;
 }

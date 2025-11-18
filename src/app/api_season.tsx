@@ -242,6 +242,29 @@ export function mostRecentWeekly(): GlobObj | null {
 	return retGlob;
 }
 
+export function getLastDay(): number {
+	var lastDay = 0;
+	var starList = G_HISTORY.header.starList;
+	for (const glob of starList) {
+		var n = glob.day;
+		if (glob.weekly) n = n + 6;
+		if (n > lastDay) lastDay = n;
+	}
+	return lastDay;
+}
+
+export function getMonthStars(month: number): GlobObj[] {
+	var filterList = G_HISTORY.data.filter((entry) =>
+		entry.star.day >= month * 28 && entry.star.day < (month + 1) * 28);
+	return filterList.map((entry) => entry.star);
+}
+
+export function getWeekStars(week: number): GlobObj[] {
+	var filterList = G_HISTORY.data.filter((entry) =>
+		entry.star.day >= week * 7 && entry.star.day < (week + 1) * 7);
+	return filterList.map((entry) => entry.star);
+}
+
 	/*
 		glob functionality
 	*/

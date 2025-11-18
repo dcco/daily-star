@@ -131,8 +131,10 @@ function parseStrat(note: string): string | null
 	{
 		if (token.trim() === "") {
 		} else if (!useFlag && token.startsWith("use:{")) {
+			var nt = token.replace("use:{", "").trim();
+			if (nt.endsWith("}")) return nt.replace("}", "");
 			useFlag = true;
-			parseList = parseList + token.replace("use:{", "").trim();
+			parseList = nt;
 		} else if (useFlag) {
 			if (token.endsWith("}")) {
 				var nt = token.replace("}", "").trim();

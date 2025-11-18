@@ -226,7 +226,8 @@
 	},
 	"bbh_100c4": {
 		"offset": [
-			["Standard", "Bronze", "10", "Outside the house"]
+			["Standard", "Silver", "3", "RNG tax"],
+			["Standard", "Bronze", "8", "Outside the house"]
 		]
 	},
 	"bbh_5": {
@@ -295,23 +296,29 @@
 		]
 	},
 	"hmc_5": {
-		"benchmark": "Leftside",
-		"protect": ["Rightside"],
+		"ext": {
+			"SS": { "kind": "approx" }
+		},
+		"force": {
+			"SS": {
+				"Mario": "10.9",
+				"Master": "11.1",
+				"Gold": "11.7"
+			}
+		},
 		"offset": [
 			["Rightside", "Silver", "0.7", "Ledgegrab"],
 			["Rightside", "Bronze", "0.5", "Sideflip"]
 		],
-		"ext": {
-			"Open": { "kind": "benchmarkDef" }
-		},
+		"kill": [
+			["SS", "Gold"]	
+		],
 		"no_open": true
 	},
 	"hmc_6": {
-		"mergeTable": [
-			["Standard", "GTM Slide"]
-		],
 		"offset": [
-			["Standard", "Bronze", "1.5", "Slow ending"]
+			["Standard", "Silver", "0.3", "Slow ending"],
+			["Standard", "Bronze", "2", "Slower ending"]
 		]
 	},
 	"hmc_premc": {
@@ -695,7 +702,11 @@
 		},
 		"ext": {
 			"Slide Strat": { "kind": "benchmark", "strat": "Standard" }
-		}
+		},
+		"offset": [
+			["Standard", "Silver", "0.6", "Slow clip setup"],
+			["Standard", "Bronze", "1.4", "Hard"]
+		]
 	},
 	"thi_100c5": {
 		"mergeTable": [
@@ -752,7 +763,10 @@
 			}
 		},
 		"offset": [
-			["Time Stop", "Bronze", "9", "Long way around"]
+			["Time Stop", "Platinum", "0.4", "Slow ending"],
+			["Time Stop", "Gold", "1", "Slow triple"],
+			["Time Stop", "Silver", "1", "Slower ending"],
+			["Time Stop", "Bronze", "7.5", "Long way around (9s)"]
 		],
 		"ext": {
 			"Open": { "kind": "benchmark", "strat": "Moving Moving" }

@@ -4,7 +4,7 @@ import localXcamData from './json/xcam_dump.json'
 
 import rawSRData from './json/star_ranks.json'
 
-import { DEV } from './rx_multi_board'
+import { DEV, ALTER_RANKS } from './rx_multi_board'
 
 import { newIdent } from './time_table'
 import { StarDef, orgStarDef } from './org_star_def'
@@ -82,7 +82,7 @@ function calcStatData()
 	var [starMap, scoreMap] = calcUserScoreMap(starSet, xcamTTFun, false);
 	var [fullStarMap, scoreExtMap] = calcUserScoreMap(starSet, xcamTTFun, true);
 	// if in dev mode, we use the "cheater" ranks (dont care about fill rate)
-	var userMap = calcUserStatMap(starSet, scoreMap, false, newIdent("xcam", "Nobody"), DEV);
+	var userMap = calcUserStatMap(starSet, scoreMap, false, newIdent("xcam", "Nobody"), ALTER_RANKS);
 	var userMapSplit = calcUserStatMap(starSet, scoreMap, true, newIdent("xcam", "Nobody"), false);
 	var extMap = calcUserStatMap(starSet, scoreExtMap, false, newIdent("xcam", "Nobody"), false);
 	var extMapSplit = calcUserStatMap(starSet, scoreExtMap, true, newIdent("xcam", "Nobody"), false);
@@ -104,5 +104,5 @@ function calcStratRankData()
 		stage.starList.map((starDef, j) => [orgStarDef(i, j), j]));
 	if (DEV) G_SHEET.srMap = genStarRankMap(starSet);
 	G_SHEET.userRankStore = calcUserRankStore(starSet);
-	console.log(G_SHEET.srMap);
+	//console.log(G_SHEET.srMap);
 }

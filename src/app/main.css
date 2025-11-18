@@ -1,4 +1,18 @@
 
+@font-face {
+	font-family: selawik;
+	src: url("/fonts/selawk.ttf");
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: selawik;
+	src: url("/fonts/selawkb.ttf");
+	font-weight: bold;
+	font-style: normal;
+}
+
 body {
 	background-color: #202030;
 }
@@ -7,7 +21,7 @@ main {
 	justify-content: center;
 	margin: 0px auto;
 	margin-top: 50px;
-	font-family: "Segoe UI";
+	font-family: "Segoe UI", "Open Sans", "selawik", "Arial";
 	font-size: 14px;
 	color: #FFFFFF;
 }
@@ -207,6 +221,16 @@ select {
 	text-align: center;
 }
 
+.small-label {
+	min-width: 0px;
+	padding-left: 8px;
+	padding-right: 8px;
+}
+
+.label-cont[data-active="true"] {
+	cursor: pointer;
+}
+
 .alt-label {
 	background-color: #342024;
 	color: #E0A0A0;
@@ -227,6 +251,22 @@ select {
 	font-size: 11px;
 	font-style: italic;
 	color: #D0D0E0;
+}
+
+	/* label icons */
+
+.label-image {
+	margin-top: 4px;
+	opacity: 20%;
+}
+
+.label-cont[data-active="true"] .label-image {
+	margin-top: 4px;
+	opacity: 50%;
+}
+
+.label-cont[data-active="true"]:hover .label-image {
+	opacity: 100%;
 }
 
 	/* toggles */

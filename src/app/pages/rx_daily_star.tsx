@@ -12,6 +12,7 @@ import { DailyBoard } from '../board_full/rx_daily_board'
 import { HistoryBoard } from '../board_full/rx_history_board'
 import { HistoryTable } from './rx_history_table'
 import { PlayerBoard } from '../stats/rx_player_board'
+import { ScoreBoard } from '../stats/rx_score_board'
 import { S3NewsBoard } from '../news_pages/s3_news_board'
 import { S3ComingSoon } from '../news_pages/s3_coming_soon'
 
@@ -26,7 +27,7 @@ type DailyStarProps = {
 
 export function StatsAbout(props: {}): React.ReactNode
 {
-	const [about, setAbout] = useState(false);
+	/*const [about, setAbout] = useState(false);
 	if (!about) return (<div className="blurb-cont" onClick={ () => setAbout(true) }><div className="para">
 			<div className="h-em">[+] Notes on Season 3 Stats</div>
 		</div></div>);
@@ -49,7 +50,8 @@ export function StatsAbout(props: {}): React.ReactNode
 				(I'll run a survey to get people's input on this at some point).</p>
 			<p>Thanks for playing the Daily Star! - Twig</p>
 		</div>
-	</div>);
+	</div>);*/
+	return "";
 }
 
 export function DailyStar(props: DailyStarProps): React.ReactNode
@@ -116,9 +118,10 @@ export function DailyStar(props: DailyStarProps): React.ReactNode
 	} else if (menuId === 3 || ((menuId === 0 || menuId === 2) && seasonEnd)) {
 		board = <HistoryTable/>;
 	} else if (menuId === 4) {
-		board = <PlayerBoard hrefBase={ ["/home/stats", "/home/history"] } slug={ props.rm.core.slug }
+		board = <ScoreBoard rm={ props.rm } playData={ playData }></ScoreBoard>;
+		/*board = <PlayerBoard hrefBase={ ["/home/stats", "/home/history"] } slug={ props.rm.core.slug }
 			aboutNode={ <StatsAbout/> }	idType="remote" lowNum={ 30 } midNum={ 50 } pd={ playData }
-			starMap={ G_HISTORY.starMap } userMap={ G_HISTORY.userMap } userRankStore={ null }/>;
+			starMap={ G_HISTORY.starMap } userMap={ G_HISTORY.userMap } userRankStore={ null }/>;*/
 	} else if (menuId === 5) {
 		board = <S3ComingSoon/>;
 	} else if (menuId === 6) {

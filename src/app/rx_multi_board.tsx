@@ -17,6 +17,8 @@ import { About } from './pages/rx_about'
 import { EditBoard } from './board_full/rx_edit_all_board'
 
 export const DEV = false;
+	// for standards calculation
+export const ALTER_RANKS = false;
 
 type HeadTabProps = {
 	"id": number,

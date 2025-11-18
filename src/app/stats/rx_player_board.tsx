@@ -3,7 +3,7 @@ import playData from '../json/player_data.json'
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 
-import { DEV } from '../rx_multi_board'
+import { DEV, ALTER_RANKS } from '../rx_multi_board'
 
 import { IdService, Ident, newIdent, keyIdent, rawIdent } from '../time_table'
 import { PlayData, newPlayData } from '../play_data'
@@ -293,7 +293,7 @@ export function PlayerTable(props: PlayerTableProps): React.ReactNode
 			'id': player.id,
 			'total': total,
 			// CHANGE FOR THE LAUNCH
-			'top30': calcTopXStats(player, props.lowNum, DEV),
+			'top30': calcTopXStats(player, props.lowNum, ALTER_RANKS),
 			'topNum': calcTopXStats(player, number, false),
 			'topAll': calcTopXStats(player, starTotal, false)
 		};
