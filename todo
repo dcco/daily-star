@@ -1,13 +1,50 @@
 
+
+NEW TODO
+
+  [ FRI ]
+
+- hide open/extensions toggle
+
+* deal with new player auth
+* deal with de-authentication
+- {"level":"error","message":"Invalid authentication token for player jaehee1996.","service":"user-service"}
+
+
+  [ SAT ]
+
+* add support page
+
+- final cleanup on scoring
+~ add all the "hidden info"
+~ set default columns correctly
+
+~ colors toggle :)
+
+
+MID PRIO
+
+~ deal with "banned strat combos"
+~ need a slug for a specific month/week within a season
+
+~ more test on "auto updates"
+
+
+LOW PRIO
+
+* double-check how weeklys are generated....
+
+
+> view n2025/ds_scraps for extra rank notes
+
+-------------------
+
 STAR ORG
 * fix that one star in ttc/rr.... you know the one where the variant is completely mislabelled?
 * fix ssl bird variants being mislabelled
 
 REFACTORING
 * refactor playdb / how player data is sent to the star cell area
-
-DAILY STAR GENERATOR
-* test "multi-glob" stars
 
 FRONTEND
 -- mobile viewer
@@ -167,6 +204,46 @@ info/alt needs enough information to distinguish major secondary strats,
 - short codes for displaying star scores [visual]
 - major strat names for viewer toggle [visual]
 - a method for merging major strats when relevant [functional]
+
+-----------------------------------
+
+NEW URL STRUCTURE
+
+* /
+* /home - daily by default, news during off-season, weekly on weekly star days
+
+* /home/weekly - weekly by default, same as home if no weekly exists
+
+* /home/scores - main page for scoring, defaults to scores for 30-day period
+> /all - scores for entire season
+* > /weekly - scores for week-long period
+* > /monthly - exists for posterity
+
+* /home/scores?id=<slug> - player specific score breakdown
+> all?id=<slug>
+* > weekly?id=<slug>
+* > monthly?id=<slug>
+
+* > /home/history
+* > /home/history?season=<slug> - history page, with optional slug for season
+
+* > /home/history?star=<slug>
+* > /home/history?season=<slug>&star=<slug> - slug for specific stars
+
+
+* /xcam
+* /xcam?star=<slug> - xcam viewer
+
+* /xcam/players - xcam viewer "player scores"
+* /xcam/players?name=<slug> - player specific score breakdown
+
+* /beta
+* /beta?star=<slug>
+* /beta/players
+* /beta/players?name=<slug> - duplicates xcam viewer, but with ranks. accessible through about page
+
+/support - page on how to support
+* /about
 
 
 

@@ -40,6 +40,7 @@ export function dirtyDat(oldDat: TimeDat | null, draftDat: DraftDat): boolean {
 	if (draftDat.delFlag !== null) return true;
 	if (draftDat.text === "") return false;
 	if (oldDat === null) return true;
+	if (oldDat.verifFlag !== draftDat.verifFlag) return true;
 	return formatTime(oldDat.rawTime) !== draftDat.text || !sameNote(oldDat.note, draftDat.note) || !sameNote(oldDat.link, draftDat.link);
 }
 
@@ -56,7 +57,8 @@ function properDat(oldDat: TimeDat | null, draftDat: DraftDat, valid: boolean, d
 	if (newTime === null) return "na";
 	if (newTime < oldDat.rawTime) return "new";
 	if (newTime === oldDat.time && !strict &&
-		(!sameNote(oldDat.link, draftDat.link) || !sameNote(oldDat.note, draftDat.note))) return "fix";
+		(!sameNote(oldDat.link, draftDat.link) || !sameNote(oldDat.note, draftDat.note)
+			|| oldDat.verifFlag !== draftDat.verifFlag)) return "fix";
 	return "improper";
 }
 

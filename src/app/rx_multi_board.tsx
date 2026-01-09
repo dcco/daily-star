@@ -7,12 +7,14 @@ import { newIdent, dropIdent } from './time_table'
 import { PlayData, LocalPD, newPlayData, userKeyPD, setNickMapPD,
 	linkUserRemotePD, setLocalPD } from './play_data'
 import { initGSheet } from './api_xcam'
-import { initDailyStar, initHistory, calcHistoryStatData } from './api_season'
+import { initDailyStar } from './api_season'
+import { G_HISTORY, initCurrentHistory, initPastHistory, calcHistoryStatData } from './api_history'
 import { loadNickMap, loadUserId, postNick } from './api_live'
 
 import { RouterMain, newRouterCore, newRouterMain, navRM, reloadRM } from './router_main'
 import { DailyStar } from './pages/rx_daily_star'
 import { XcamFull } from './pages/rx_xcam_full'
+import { XcamBeta } from './pages/rx_xcam_beta'
 import { About } from './pages/rx_about'
 import { EditBoard } from './board_full/rx_edit_all_board'
 
@@ -63,11 +65,6 @@ function HeadTab(props: HeadTabProps): React.ReactNode
 export function MultiBoard(props: { boardId?: number, subId?: number, slug?: string }): React.ReactNode
 {
 	// router stuff
-	/*var boardId = 0;
-	var subId = 0;
-	if (props.boardId !== undefined) boardId = props.boardId;
-	if (props.subId !== undefined) subId = props.subId;
-	const router = useRouter();*/
 	var boardId = 0;
 	if (props.boardId !== undefined) boardId = props.boardId;
 	var subId = props.subId;
@@ -87,21 +84,12 @@ export function MultiBoard(props: { boardId?: number, subId?: number, slug?: str
 		window.addEventListener('popstate', () => reloadRM(rm));
 	};
 
-	/*const updateMainId = (i: number) => {
-		setMainId(i);
-		if (i === 1) router.push("/xcam");
-		else if (i === 2) router.push("/about");
-		else router.push("/home");
-	};*/
 	const updateMainId = (i: number) => {
 		if (i === 1) navRM(rm, "xcam", "", "");
 		else if (i === 2) navRM(rm, "about", "", "");
 		else if (i === 3 && DEV) navRM(rm, "editor", "", "");
+		else if (i === 4) navRM(rm, "beta", "", "");
 		else navRM(rm, "home", "", "");
-		/*setMainId(i);
-		if (i === 1) router.push("/xcam");
-		else if (i === 2) router.push("/about");
-		else router.push("/home");*/
 	};
 
 	// the concept with play/local data is that the user modifies local data,
@@ -138,9 +126,16 @@ export function MultiBoard(props: { boardId?: number, subId?: number, slug?: str
 	useEffect(() => {
 		initGSheet(() => setInitReload(1));
 		initDailyStar(() => setInitReload(2));
-		initHistory(() => {
+		// load current season history
+		initCurrentHistory(() => {
 			setInitReload(3);
-			calcHistoryStatData(() => setInitReload(4));
+			calcHistoryStatData(G_HISTORY.current, null, () => {
+				setInitReload(4);
+				// load past season history
+				initPastHistory(() => {
+					setInitReload(5);
+				});
+			});
 		});
 		reloadPlayData(null);
 	}, []);
@@ -162,24 +157,35 @@ export function MultiBoard(props: { boardId?: number, subId?: number, slug?: str
 		board = <XcamFull rm={ rm } key={ boardKey }/>;
 	} else if (mainId === 3 && DEV) {
 		board = <EditBoard playData={ playData } updatePlayData={ updatePlayData } reloadPlayData={ () => reloadPlayData(null) }/>;
+	} else if (mainId === 4) {
+		board = <XcamBeta rm={ rm } key={ boardKey }/>;
 	} else {
-		board = <About/>;
+		board = <About key={ boardKey }/>;
 	}
-	// <HeadTab id={ 3 } selId={ mainId } setSelId={ updateMainId }>Editor (ADMIN)</HeadTab>
 
-	var adminNode: React.ReactNode[] = [];
-	if (DEV) {
-		adminNode.push(
-			<HeadTab id={ 3 } key={ 3 } selId={ mainId } setSelId={ updateMainId }>Editor (ADMIN)</HeadTab>
-		);
+	var tabNodes: React.ReactNode = "";
+	if (mainId === 4) {
+		tabNodes = <React.Fragment>
+			<HeadTab id={ 4 } selId={ mainId } setSelId={ updateMainId } key={ 4 }>Ranked Xcam Viewer</HeadTab>
+		</React.Fragment>;
+	} else {
+		var adminNode: React.ReactNode[] = [];
+		if (DEV) {
+			adminNode.push(
+				<HeadTab id={ 3 } selId={ mainId } setSelId={ updateMainId } key={ 3 }>Editor (ADMIN)</HeadTab>
+			);
+		}
+		tabNodes = <React.Fragment>
+			<HeadTab id={ 0 } selId={ mainId } setSelId={ updateMainId } key={ 0 }>Daily Star</HeadTab>
+			<HeadTab id={ 1 } selId={ mainId } setSelId={ updateMainId } key={ 1 }>Xcam Viewer</HeadTab>
+			{ adminNode }
+			<HeadTab id={ 2 } selId={ mainId } setSelId={ updateMainId } key={ 2 }>About</HeadTab>
+		</React.Fragment>;
 	}
 	return (
 		<div className="content">
 		<div className="cont-head">
-			<HeadTab id={ 0 } selId={ mainId } setSelId={ updateMainId }>Daily Star</HeadTab>
-			<HeadTab id={ 1 } selId={ mainId } setSelId={ updateMainId }>Xcam Viewer</HeadTab>
-			{ adminNode }
-			<HeadTab id={ 2 } selId={ mainId } setSelId={ updateMainId }>About</HeadTab>
+			{ tabNodes }
 		</div>
 		<div className="cont-body headless">
 			{ board }

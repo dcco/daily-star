@@ -109,7 +109,8 @@ export function TimeCell(props: TimeCellProps): React.ReactNode {
 	var timeNode: React.ReactNode = cellText;
 	if (props.super) timeNode = <React.Fragment>{ timeNode }<sup data-k={ props.super }>{ props.super }</sup></React.Fragment>;
 	if (timeDat !== null && timeDat.link !== null && timeDat.link !== "") {
-		timeNode = (<a href={ timeDat.link } target="_blank">{ timeNode }</a>);
+		var verifFlag = timeDat.verifFlag !== 'no';
+		timeNode = (<a href={ timeDat.link } data-verif={ verifFlag.toString() } target="_blank">{ timeNode }</a>);
 	}
 	// note if note is relevant
 	var noteNodes: React.ReactNode[] = [];
@@ -133,6 +134,7 @@ export function TimeCell(props: TimeCellProps): React.ReactNode {
 	}*/
 	var hasRankNode = false;
 	var rankNode: React.ReactNode = "";
+	// add annotations / wrap time + rank info in bubbles when relevant
 	if (props.rankKey && timeDat !== null && cellText !== "") {
 		hasRankNode = true;
 		var rankName = getRank(G_SHEET.srMap, props.rankKey, timeDat);
@@ -149,6 +151,7 @@ export function TimeCell(props: TimeCellProps): React.ReactNode {
 		</React.Fragment>;
 	}
 
+	// re-wrap time in the actual time cell
 	timeNode = (<td className="time-cell tooltip" data-active={ active.toString() } data-complete={ props.complete }
 		colSpan={ hasRankNode ? 1 : 2 } onClick={ onClick }>{ timeNode } { hasRankNode ? "" : noteNodes }</td>);
 	if (hasRankNode) {
@@ -233,8 +236,9 @@ export function NameCell(props: NameCellProps): React.ReactNode {
 	if (UNSAFE_playDat !== undefined && UNSAFE_playDat.standard) {
 		playStd = UNSAFE_playDat.standard;
 	}*/
-	if (G_SHEET.userMap !== null) {
-		var playDat = G_SHEET.userMap.stats["xcam@" + name];
+	if (G_SHEET.scoreData !== null) {
+		const userMap = G_SHEET.scoreData.user[""];
+		var playDat = userMap.stats["xcam@" + name];
 		if (playDat !== undefined) playStd = playDat.standard;
 	}
 	// atmpas star

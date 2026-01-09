@@ -2,15 +2,16 @@
 import React, { useState, useEffect } from 'react'
 
 import { VarSpace } from '../variant_def'
-import { TimeDat, VerOffset, rawMS, formatTime } from '../time_dat'
+import { TimeDat, VerOffset, rawMS, formatTime, copyTimeDat } from '../time_dat'
 import { SGrid, lookupGrid, setGrid } from '../sparse_grid'
-import { TimeRow, UserDat, hasSubRows, lookupTimeRow } from '../time_table'
+import { Ident, TimeRow, UserDat, hasSubRows, lookupTimeRow } from '../time_table'
 import { PlayData, strIdNickPD } from '../play_data'
 import { ColConfig, defStratColConfig } from '../col_config'
 import { StarDef, varSpaceStarDef } from '../org_star_def'
 import { DraftDat, staticDraftDat, emptyDraftDat,
 	toTimeDat, changeStratDraftDat, stratNameDraftDat, isCompleteDraftDat } from './draft_dat'
-import { EditObj } from './edit_perm' 
+import { EditObj } from './edit_perm'
+import { ExColumn } from './ex_column'
 import { NameCell } from './rx_star_cell'
 import { CellAct } from './rx_star_row'
 import { ValidDat, EditCell, InputCell, dirtyDat, nullValidDat, newValidDat } from './rx_edit_cell'
@@ -244,10 +245,11 @@ export function validateDS(starDef: StarDef, timeRow: TimeRow, ds: DraftState): 
 	return [validMap, "valid", "Ready to submit."];
 }
 
-export function convertDS(timeRow: TimeRow, ds: DraftState, verOffset: VerOffset): [TimeDat[], TimeDat[]] {
+export function convertDS(timeRow: TimeRow, ds: DraftState, verOffset: VerOffset): [TimeDat[], TimeDat[], TimeDat[]] {
 	var ds = cleanupDS(timeRow, ds);
 	var timeList: TimeDat[] = [];
 	var delList: TimeDat[] = [];
+	var verifList: TimeDat[] = [];
 	for (const [k, _draftDat] of Object.entries(ds.grid)) {
 		var [draftDat, i, j] = _draftDat;
 		// delete case
@@ -257,13 +259,21 @@ export function convertDS(timeRow: TimeRow, ds: DraftState, verOffset: VerOffset
 		}
 		var timeDat = toTimeDat(draftDat, verOffset);
 		if (timeDat === null) continue;
-		// edit case
+		// verif case
 		var oldDat = lookupTimeRow(timeRow, i,  j);
-		if (oldDat !== null && oldDat.time === timeDat.time) delList.push(oldDat);
+		if (oldDat !== null && draftDat.verifFlag !== oldDat.verifFlag) {
+			var copyDat = copyTimeDat(oldDat);
+			copyDat.origin = oldDat.origin;
+			copyDat.verifFlag = draftDat.verifFlag;
+			verifList.push(copyDat);
+			// it's just a big headache if we allow verif change + new submission at the same time
+			continue;
+		// edit case
+		} else if (oldDat !== null && oldDat.time === timeDat.time) delList.push(oldDat);
 		// submit case
 		timeList.push(timeDat);
 	}
-	return [timeList, delList];
+	return [timeList, delList, verifList];
 }
 
 	/* edit row: displays
@@ -283,7 +293,8 @@ type EditRowProps = {
 	"editObj": EditObj,
 	"editPos": EditPos,
 	"cellClick": (a: CellAct, i: number | null, j: number, k: number) => void,
-	"submit": (timeList: TimeDat[], delList: TimeDat[]) => void
+	"submit": (id: Ident, timeList: TimeDat[], delList: TimeDat[], verifList: TimeDat[]) => void,
+	"extraColList": ExColumn[]
 }
 
 export function EditRow(props: EditRowProps): React.ReactNode {
@@ -298,6 +309,7 @@ export function EditRow(props: EditRowProps): React.ReactNode {
 	const starDef = editObj.starDef;
 	const editPos = props.editPos;
 	const cellClick = props.cellClick;
+	const exColList = props.extraColList;
 
 	const [ds, setDS] = useState(newDraftState());
 
@@ -361,12 +373,15 @@ export function EditRow(props: EditRowProps): React.ReactNode {
 		if (j === 0) rowNodes.unshift(<NameCell id={ userDat.id } pd={ pd } active={ nameAct !== "none" }
 			onClick={ () => cellClick(nameAct, rowId, -1, j) } key="name"/>);
 		else rowNodes.unshift(<td className="dark-cell" key="name"></td>);
-		editNodes.push(<tr className="time-row" key={ j }>{ rowNodes }</tr>);
-		// numeric cell
-		if (showRowId && rowId !== null) {
-			if (j === 0) rowNodes.unshift(<td className="time-cell" key="num">{ rowId + 1 }</td>);
-			else rowNodes.unshift(<td className="dark-cell" key="num"></td>);
+		// numeric cell + extra columns
+		if (showRowId) {
+			if (rowId !== null && j === 0) rowNodes.unshift(<td className="time-cell" key="num">{ rowId + 1 }</td>);
+			else rowNodes.unshift(<td className="dark-cell" key="num">-</td>);
 		}
+		for (const exCol of exColList) {
+			rowNodes.push(<td className="dark-cell" key="num"></td>);
+		}
+		editNodes.push(<tr className="time-row" key={ j }>{ rowNodes }</tr>);
 	}
 
 	var oldDat = lookupTimeRow(timeRow, editPos.colId, editPos.subRowId);
@@ -378,18 +393,21 @@ export function EditRow(props: EditRowProps): React.ReactNode {
 		});
 	};
 
+	var submitPrefix: React.ReactNode = <td></td>;
+	if (showRowId) submitPrefix = <React.Fragment><td></td><td></td></React.Fragment>;
+
 	// return final row
 	return <React.Fragment>
 		{ editNodes }
 		<tr className="time-row" key="edit-info-row">
-			<td></td>
-			<td className="submit-area" colSpan={ timeRow.length * 2 }>
+			{ submitPrefix }
+			<td className="submit-area" colSpan={ (timeRow.length * 2) + exColList.length }>
 				<EditSubmitArea starDef={ starDef } cfg={ cfg } colId={ editPos.colId } vs={ vs }
 					curDat={ draftDat } oldDat={ oldDat }
 					editDat={ (f) => editLoc(editPos.colId, editPos.subRowId, f) }
 					changeStrat={ changeStrat } submit={ () => {
-						var [timeList, delList] = convertDS(timeRow, ds, verOffset);
-						props.submit(timeList, delList);
+						var [timeList, delList, verifList] = convertDS(timeRow, ds, verOffset);
+						props.submit(userDat.id, timeList, delList, verifList);
 					} }
 					cancel={ () => cellClick("stop-edit", null, 0, 0) } delToggle={ delToggle }
 					style={ style } infoText={ infoText }/>

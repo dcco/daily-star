@@ -63,7 +63,7 @@ export function DropDownImgMenu(props: DropDownMenuProps): React.ReactNode
 
 	// add pic + absolutely positioned options
 	return (<div className="dropdown-cont" ref={ ref }>
-		<img className="login-pic" height="25px" src={ curSrc }
+		<img className="login-pic" height="25px" src={ curSrc !== '' ? curSrc : backupSrc }
 			onError={ (e: React.SyntheticEvent<HTMLImageElement>) => { e.currentTarget.onerror = null; setSrc(backupSrc); } }
 			onClick={ () => setActive(!active) }></img>
 		<div className="dropdown-menu">

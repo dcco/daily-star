@@ -4,6 +4,7 @@ import React from "react"
 import { VerOffset, hasSubTimes } from "../time_dat"
 import { TimeRow, UserDat, hasSubRows } from "../time_table"
 import { PlayData, strIdNickPD } from "../play_data"
+import { ExColumn } from "./ex_column"
 import { TimeCell, NameCell } from "./rx_star_cell"
 
 	/* data row: name cell + set of time cells */
@@ -33,7 +34,8 @@ type DataRowProps = {
 	"endRow": boolean,
 	"headerList": string[][],
 	"playDB"?: PlayDB,
-	"rankKey"?: string
+	"rankKey"?: string,
+	"extraColList": ExColumn[]
 };
 
 function heightColRow(timeRow: TimeRow, colId: number): number
@@ -67,6 +69,7 @@ export function DataRow(props: DataRowProps): React.ReactNode {
 	var onClick = props.onClick;
 	var endRow = props.endRow;
 	var playDB = props.playDB;
+	var exColList = props.extraColList;
 	// get text for initializing edit row
 	//var timeText = userDat.timeRow.map(formatMultiDat);
 	//timeText.unshift(strIdNick(userDat.id));
@@ -79,7 +82,7 @@ export function DataRow(props: DataRowProps): React.ReactNode {
 	var rowNodeList: React.ReactNode[] = [];
 	for (let i = 0; i < height; i++) {
 		// build time cells in row
-		var timeRowNodes = userDat.timeRow.map((multiDat, j) => {
+		var timeRowNodes: React.ReactNode[] = userDat.timeRow.map((multiDat, j) => {
 			var timeDat = null;
 			if (multiDat !== null && i < multiDat.length) timeDat = multiDat[i];
 			if (timeDat === null && i !== 0) return <td className="dark-cell" colSpan={ 2 } key={ j }></td>;
@@ -108,7 +111,11 @@ export function DataRow(props: DataRowProps): React.ReactNode {
 		if (i === 0) timeRowNodes.unshift(<NameCell id={ userDat.id } pd={ pd } active={ nameAct !== "none" }
 			onClick={ () => {} } href={ href } key="user"/>);
 		else timeRowNodes.unshift(<td className="dark-cell" key="user"></td>);
-		if (showRowId) timeRowNodes.unshift(<td className="time-cell" colSpan={ 2 } key="num">{ rowId + 1 }</td>);
+		if (showRowId) timeRowNodes.unshift(<td className="time-cell" colSpan={ 1 } key="num">{ rowId + 1 }</td>);
+		for (const exCol of exColList) {
+			const [node, sortObj] = exCol.dataFun(userDat.id);
+			timeRowNodes.push(node);
+		}
 		rowNodeList.push(<tr className="time-row" data-row-active={ rowActive.toString() } data-end-row={ endRow } key={ i }>
 			{ timeRowNodes }
 		</tr>);

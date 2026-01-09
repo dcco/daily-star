@@ -2,9 +2,11 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 
 import { orgStarId, orgStarDef } from '../org_star_def'
-import { G_DAILY, G_HISTORY, GlobNorm, dateAndOffset, dispDate, readCodeList } from '../api_season'
+import { G_DAILY, GlobNorm, readCodeList } from '../api_season'
+import { G_HISTORY, dateAndOffset, dispDate, findSeason } from '../api_history'
 import { stageShort, makeStarSlug } from '../router_slug'
-import { getStarColor } from '../stats/rx_player_board'
+import { getStarColor } from '../stats/rx_detail_table'
+import { SeasonSelProps, SeasonSel } from '../board_full/rx_season_sel'
 
 const PERM = ["bob", "wf", "jrb", "ccm", "bbh", "hmc", "lll", "ssl",
 	"ddd", "sl", "wdw", "ttm", "thi", "ttc", "rr", "sec", "bow"];
@@ -29,11 +31,25 @@ type SpecialData = {
 
 type ShortDataEx = ShortData | SpecialData;
 
-export function HistoryTable(props: {}): React.ReactNode
+export function HistoryTable(props: SeasonSelProps): React.ReactNode
 {
+	// Attempt to read history
+	var histObj = G_HISTORY.current;
+	if (props.seasonId !== null) {
+		var fObj = findSeason(props.seasonId);
+		if (fObj !== null) histObj = fObj;
+	}
+
 	// TODO: replace with real error messages, maybe even dont show a history tab
-	if (G_HISTORY.header.status !== 'active' || G_HISTORY.data.length === 0) {
+	var status = histObj.header.status;
+	if (status === 'null') {
 		return <div className="blurb-cont"><div className="para">Loading...</div></div>;
+	} else if (status === 'err') {
+		return <div className="blurb-cont"><div className="para">Error while loading season.</div></div>;
+	} else if (status === 'none') {
+		return <div className="blurb-cont"><div className="para">No active season.</div></div>;
+	} else if (histObj.data.length === 0) {
+		return <div className="blurb-cont"><div className="para">No stars for history.</div></div>;
 	}
 
 	// season message
@@ -41,10 +57,10 @@ export function HistoryTable(props: {}): React.ReactNode
 	var msgNode: React.ReactNode = null;
 	//if (seasonEnd) msgNode = <div className="msg-cont">Daily Star season has ended :)
 	//	Check back in March / in the Discord for news on when it will resume. Thanks for playing the Daily Star!</div>;
-	
+
 	const [sortId, setSortId] = useState(0);
 	// calculate star data
-	var playList: ShortDataEx[] = G_HISTORY.header.starList.map((glob, ix) => {
+	var playList: ShortDataEx[] = histObj.header.starList.map((glob, ix) => {
 		// short code
 		if (glob.special !== null) return { 'special': true, 'skey': glob.special,
 			'day': ix, 'weekly': glob.weekly };
@@ -65,8 +81,8 @@ export function HistoryTable(props: {}): React.ReactNode
 		if (starDef0.info.catInfo !== null) starColor = getStarColor(starDef0.info.catInfo);
 		// calculate player count
 		var playerList: number[] = [];
-		if (ix < G_HISTORY.data.length) {
-			for (const timeList of G_HISTORY.data[ix].times) {
+		if (ix < histObj.data.length) {
+			for (const timeList of histObj.data[ix].times) {
 				for (const timeObj of timeList) {
 					if (!playerList.includes(timeObj.p_id)) playerList.push(timeObj.p_id);
 				}
@@ -95,9 +111,12 @@ export function HistoryTable(props: {}): React.ReactNode
 		return a.day - b.day;
 	});
 
+	var histPrefix = "/home/history?";
+	if (props.seasonId !== null) histPrefix = histPrefix + "season=" + props.seasonId + "&";
+
 	// construct the board
 	var playTableNodes: React.ReactNode[] = playList.map((data) => {
-		var startDate = dateAndOffset(G_HISTORY.header.season.startdate, data.day);
+		var startDate = dateAndOffset(histObj.header.season.startdate, data.day);
 		if (data.special) {
 			return (<tr className="time-row" key={ data.day }>
 				<td className="time-cell">Skip</td>
@@ -116,7 +135,7 @@ export function HistoryTable(props: {}): React.ReactNode
 		var playNodes: React.ReactNode[] = [];
 		playNodes.push(<td className="time-cell link-cont" data-active={ true } data-complete={ true }
 			data-sc={ data.color } key="star">{ data.name }
-			<Link className="link-span" href={ "/home/history?star=" + makeStarSlug(data.stageId, data.starId) }></Link></td>);
+			<Link className="link-span" href={ histPrefix + "star=" + makeStarSlug(data.stageId, data.starId) }></Link></td>);
 		playNodes.push(<td className="time-cell" key="day">Day { data.day + 1 }</td>);
 		playNodes.push(<td className="time-cell" key="count">{ total }</td>);
 		playNodes.push(<td className="time-cell" key="date">{ dispDate(startDate) }</td>);
@@ -126,13 +145,17 @@ export function HistoryTable(props: {}): React.ReactNode
 
 	var imgNodeFun = (active: boolean): React.ReactNode => (<div className="float-frame">
 		<img src="/icons/sort-icon.png" data-active={ active.toString() } className="float-icon" alt=""></img></div>);
-	/*
-		<div className="msg-cont">Take the <a className="msg-link" href={ "https://forms.gle/BHpptf6or9hoYXDW9" }>Daily Star Survey</a>!
-			(Feedback will be used for scores next season)</div>
-	*/
+
+	// season selection node
+	const seasonSelNode = <div className="row-wrap">
+			<div></div>
+			<SeasonSel seasonId={ props.seasonId } setSeasonId={ props.setSeasonId }/>
+		</div>;
+
 	return (
 		<div className="super-cont">
 		{ msgNode }
+		{ seasonSelNode }
 		<div className="table-cont">
 			<table className="time-table small-table"><tbody>
 				<tr className="time-row" key="header">

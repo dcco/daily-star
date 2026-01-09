@@ -2,18 +2,25 @@ import React, { useState, useEffect } from 'react'
 
 import { RowDef } from '../row_def'
 import { TimeDat } from '../time_dat'
+import { liftIdent } from '../time_table'
 import { StratDef, filterVarColList, toSetColList } from '../org_strat_def'
 import { StarDef, FilterState, fullFilterState,
 	orgStarDef, verOffsetStarDef, stratOffsetStarDef, colListStarDef } from '../org_star_def'
-import { Ident, TimeTable, newIdent, dropIdent,
+import { AuthIdent, Ident, TimeTable, newIdent, dropIdent,
 	updateTimeTable, delTimeTable } from '../time_table'
 import { PlayData } from '../play_data'
-import { TTLoadType, loadTimeTable, postNewTimes } from '../api_live'
 import { newColConfig, primaryColConfig } from '../col_config'
-import { newEditObj, userEditPerm } from './edit_perm'
 import { xcamRecordMap, sortColList } from '../xcam_record_map'
+
+import { newEditObj, userEditPerm } from './edit_perm'
+import { ExColumn } from './ex_column'
 import { PlayDB } from './rx_star_row'
 import { StarTable } from './rx_star_table'
+
+import { ReadTimeObj } from '../api_types'
+import { TTLoadType, readObjTimeTable } from '../api_live'
+
+//import { TTLoadType, readObjTimeTable, loadTimes, postNewTimes } from '../api_live'
 
 	/*
 		###############
@@ -23,15 +30,24 @@ import { StarTable } from './rx_star_table'
 		is synced with our backend database.
 	*/
 
-type LiveStarTableProps = {
+export type LiveStarIface = {
+	"loadTimes": (stageId: number, starDef: StarDef, today: TTLoadType) => Promise<ReadTimeObj>,
+	"postNewTimes": (stageId: number, starDef: StarDef, myId: AuthIdent, userId: AuthIdent,
+		nick: string | null, timeList: TimeDat[], delList: TimeDat[], verifList: TimeDat[]) => void
+}
+
+export type LiveStarTableProps = {
 	"stageId": number,
 	"starDef": StarDef,
 	"today": TTLoadType,
+	"showStd": boolean,
 	"fs": FilterState,
+	"api": LiveStarIface,
 	"playData": PlayData,
 	"reloadPlayData": () => void,
 	"updatePlayCount"?: (a: Ident[]) => void,
-	"playDB"?: PlayDB
+	"playDB"?: PlayDB,
+	"extraColList"?: ExColumn[]
 };
 
 export function LiveStarTable(props: LiveStarTableProps): React.ReactNode
@@ -49,6 +65,10 @@ export function LiveStarTable(props: LiveStarTableProps): React.ReactNode
 	if (starDef.variants) varTotal = starDef.variants.length;
 	var colList = colListStarDef(starDef, fullFilterState([true, true], varTotal));
 
+	// rank key
+	var rankKey: string | undefined = undefined;
+	if (props.showStd) rankKey = stageId + "_" + starDef.id;
+
 	// time table
 	const [timeTable, setTimeTable] = useState([] as TimeTable);
 	const [firstInit, setFirstInit] = useState(true);
@@ -62,7 +82,9 @@ export function LiveStarTable(props: LiveStarTableProps): React.ReactNode
 		var dirty = (reload !== 0);
 		const f = async () => {
 			if (dirty) {
-				var newTable = await loadTimeTable(stageId, starDef, props.today, colList, fs, verOffset, sOffset);
+				var readObj = await props.api.loadTimes(stageId, starDef, props.today);
+				var newTable = readObjTimeTable(readObj, starDef, colList, verOffset, sOffset);
+				//var newTable = await loadTimeTable(stageId, starDef, props.today, colList, fs, verOffset, sOffset);
 				setTimeTable(newTable);
 				if (props.updatePlayCount !== undefined) props.updatePlayCount(newTable.map((table) => table.id));
 				// reloads the player data (if the previous table wasnt empty) since submitting a time
@@ -84,10 +106,9 @@ export function LiveStarTable(props: LiveStarTableProps): React.ReactNode
 	var colTotal = colList.length;
 	var [stratSet, indexSet] = toSetColList(colList);
 
-	const editTT = (timeList: TimeDat[], delList: TimeDat[]) => {
+	const editTT = (_id: Ident, timeList: TimeDat[], delList: TimeDat[], verifList: TimeDat[]) => {
 		if (userId === null) throw("Reached time submission with null user.");
-		var authId = userId;
-		console.log(authId);
+		var authId = liftIdent(_id);
 		// update time table
 		var newTable = timeTable.map((x) => x);
 		timeList.map((timeDat) => {
@@ -97,7 +118,8 @@ export function LiveStarTable(props: LiveStarTableProps): React.ReactNode
 		delList.map((delDat) => delTimeTable(newTable, authId, delDat));
 		setTimeTable(newTable);
 		// sync the times to the database
-		postNewTimes(stageId, starDef, authId, playData.local.nick, timeList, delList);
+		var myId = userId;
+		props.api.postNewTimes(stageId, starDef, myId, authId, playData.local.nick, timeList, delList, verifList);
 		setLastTime(Date.now());
 		setReload(2000); // slight offset so the database has time to actually update
 	};
@@ -115,8 +137,9 @@ export function LiveStarTable(props: LiveStarTableProps): React.ReactNode
 	var filterCFG = newColConfig(filterColList);
 	primaryColConfig(filterCFG, starDef, fs);
 	
-	var editObj = newEditObj(userEditPerm(userId), starDef, editTT);
+	var editObj = newEditObj(userEditPerm(userId, props.playData.local.perm), starDef, editTT);
 
 	return(<StarTable cfg={ filterCFG } playData={ playData } timeTable={ timeTable } verOffset={ verOffset }
-		recordMap={ relRM } editObj={ editObj } playDB={ props.playDB } key={ lastTime }></StarTable>);
+		recordMap={ relRM } rankKey={ rankKey } editObj={ editObj } playDB={ props.playDB }
+		extraColList={ props.extraColList } key={ lastTime }></StarTable>);
 }

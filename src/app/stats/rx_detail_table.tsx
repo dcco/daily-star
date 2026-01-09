@@ -1,20 +1,15 @@
-import playData from '../json/player_data.json'
-
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
 
-import { DEV, ALTER_RANKS } from '../rx_multi_board'
-
-import { IdService, Ident, newIdent, keyIdent, rawIdent } from '../time_table'
+import { Ident, keyIdent } from '../time_table'
 import { PlayData, newPlayData } from '../play_data'
 import { orgStarId, orgStarDef } from '../org_star_def'
-import { StxStarMap, statKey, starOnlyKey, recordStxStarData } from './stats_star_map'
-import { UserStatMap, UserScore, IncScore, rankPts, fullScoreList, calcTopXStats } from './stats_user_map'
-import { TimeCell, NameCell } from '../table_parts/rx_star_cell'
-import { GenInput } from './rx_gen_input'
+import { NameCell } from '../table_parts/rx_star_cell'
+import { ScoreFilter, ScoreCache, getUserDataScoreCache } from './score_cache'
+import { StxStarMap, StxStarData, statKey } from './stats_star_map'
+import { UserScore, IncScore, UserStatMap, fullScoreList } from './stats_user_map'
 
-import { getRankValue } from '../standards/strat_ranks'
-import { UserRankMap, UserRankStore } from '../standards/user_ranks'
+import { UserRankMap } from '../standards/user_ranks'
 
 const PERM = ["bob", "wf", "jrb", "ccm", "bbh", "hmc", "lll", "ssl",
 	"ddd", "sl", "wdw", "ttm", "thi", "ttc", "rr", "sec", "bow"];
@@ -31,34 +26,223 @@ export function getStarColor(cat: string | null): string
 	throw ("Unknown category: " + cat);
 }
 
-type DetailTableProps = {
+export type DetColumn =
+{
+	name: string,
+	key: string,
+	colSpan?: number,
+	widthRec?: number,
+	mainFun: (score: UserScore, i: number, starData: StxStarData) => [React.ReactNode, number[]],
+	incFun: (score: IncScore, i: number, starData: StxStarData) => [React.ReactNode, number[]]
+};
+
+	/*
+		a board that shows scores for every star for a specific player
+		- hrefBase / hrefEx: used to form links
+		- id: target player
+		- pd?: player data (used to know player ranks)
+	*/
+
+export type DetailBaseProps = {
 	hrefBase: [string, string],
+	hrefEx?: string,
 	id: Ident,
-	splitFlag: boolean,
-	cornerNode: React.ReactNode | null,
-	starMap: StxStarMap | null,
-	userMap: UserStatMap | null,
-	userRankMap: UserRankMap | null,
-	pd?: PlayData,
-	showStd: boolean
+	starFilter?: (userMap: UserStatMap) => UserStatMap,
+	scoreFilter: ScoreFilter,
+	altFlag: boolean,
+	scoreData: ScoreCache | null,
+	pd?: PlayData
+}
+
+export type DetailTableProps = DetailBaseProps & {
+	colList: DetColumn[],
+	wideFlag: boolean
+	//showStd: boolean
 }
 
 export function DetailTable(props: DetailTableProps): React.ReactNode
 {
 	const [hrefMain, hrefStar] = props.hrefBase;
-	const splitFlag = props.splitFlag;
-	var GS_userMap = props.userMap;
-	//var GS_userMap = splitFlag ? G_SHEET.userMapSplit : G_SHEET.userMap;
+	const playerId = props.id;
+	const scoreData = props.scoreData;
+	const scoreFilter = props.scoreFilter;
+	const splitFlag = scoreFilter.splitFlag;
+	const altFlag = props.altFlag;
+
+	var pd = newPlayData();
+	if (props.pd !== undefined) pd = props.pd;
+
+	if (scoreData === null) {
+		return <div className="blurb-cont"><div className="para">Loading...</div></div>;
+	}
+	
+	// sort functionality
+	const [sortId, setSortId] = useState(0);
+
+	var imgNodeFun = (active: boolean): React.ReactNode => (<div className="float-frame">
+		<img src="/icons/sort-icon.png" data-active={ active.toString() } className="float-icon" alt=""></img></div>);
+
+	/*
+		build table rows
+		- obtain list of stars for user
+	*/
+	const [starMap, _userMap] = getUserDataScoreCache(scoreData, scoreFilter);
+	const userMap = props.starFilter ? props.starFilter(_userMap) : _userMap;
 
 	var userKey = keyIdent(props.id);
-	if (GS_userMap === null || props.starMap === null
-		|| GS_userMap.stats[userKey] === undefined) {
+	var playStats = userMap.stats[userKey];
+	if (playStats === undefined) {
+		return <div className="blurb-cont"><div className="para">Player not found for this season</div></div>;
+	}
+
+	// - sort by score data (TODO: change to sort by full score)
+	playStats.starList.sort(function (a, b) {
+		if (b.scorePts === a.scorePts) return b.rank[1] - a.rank[1];
+		return b.scorePts - a.scorePts;
+	});
+
+	// - "complete" the list of stars (with the incomplete stars)
+	var fullList = fullScoreList(playStats.starList, altFlag);
+
+	var incompleteList = Object.entries(playStats.incomplete).map((x) => x[1]);
+	incompleteList.sort(function(a, b) { return b.playTotal - a.playTotal });
+	fullList = fullList.concat(incompleteList);
+
+	// - for every score in the completed list
+	var rx = 0;
+	var kx = 0;
+	const _playTableNodes: [React.ReactNode, number[]][] = [];
+	for (const userScore of fullList) {
+		var playNodes: React.ReactNode[] = [];
+		var sortObj: number[] = [];
+		/*
+			calculate star color / display name
+			- get star / strat data
+		*/
+		var starKey = statKey(userScore);
+		var starDef = orgStarDef(userScore.stageId, orgStarId(userScore.stageId, userScore.starId));
+		var starData = starMap[starKey];
+		// - alternate display info may be needed for
+		// 1. inherently different stars
+		// 2. combination comparison stars when we are showing alternates
+		// 3. offset stars if we are splitting offsets
+		var altDisp = starDef.alt !== null && (starDef.alt.status === "diff" || (altFlag && starDef.alt.status !== "offset")
+			|| (splitFlag && starDef.alt.status === "offset"));
+		// - star alt specific data
+		var short = starDef.info.short;
+		var catInfo = starDef.info.catInfo;
+		// - use alternate shortcodes when alt display is on
+		if (starDef.alt !== null) {
+			if (altDisp) {
+				if (userScore.alt.state === "alt") {
+					short = starDef.alt.info.short;
+					catInfo = starDef.alt.info.catInfo;
+				}
+			} else short = starDef.alt.globShort;
+		}
+		// - calculate star name
+		var starName = short;
+		if (userScore.stageId >= 0 && userScore.stageId <= 14) {
+			starName = PERM[userScore.stageId].toUpperCase() + " " + short;
+		}
+		// - calculate star color
+		var starColor = "default";
+		if (catInfo !== null) {
+			starColor = getStarColor(catInfo);
+			// if the color is "obsolete" use the other variant's color
+			if (starColor === "rare" && starDef.alt !== null && !altDisp) {
+				catInfo = starDef.alt.info.catInfo;
+				starColor = getStarColor(catInfo);
+			}
+		}
+		// build the star name + link
+		var hrefStarPrefix = props.hrefEx ? hrefStar + "?" + props.hrefEx + "&" : hrefStar + "?";
+		playNodes.push(<td className="time-cell link-cont" data-active={ true } data-complete={ (userScore.comp).toString() }
+			data-sc={ starColor } key="star">{ starName }
+			<Link className="link-span" href={ hrefStarPrefix + "star=" + PERM[userScore.stageId] + "_" + userScore.starId }></Link></td>);
+		// build the column nodes
+		if (userScore.comp) rx = rx + 1;
+		props.colList.map((col, i) => {
+			const [node, colSortObj] = userScore.comp ? col.mainFun(userScore, rx - 1, starData) : col.incFun(userScore, rx - 1, starData);
+			if (i === sortId) sortObj = colSortObj;
+			playNodes.push(node);
+		});
+		kx = kx + 1;
+		_playTableNodes.push([<tr className="time-row" key={ kx }>{ playNodes }</tr>, sortObj]);
+	}
+
+	// sort players based on activated column
+	_playTableNodes.sort(function (_a, _b) {
+		const [a, b] = [_a[1], _b[1]];
+		// we assume that they always have the same length
+		for (let i = 0; i < a.length; i++) {
+			if (a[i] === b[i]) continue;
+			return a[i] - b[i];
+		}
+		return 0;
+	})
+	const playTableNodes = _playTableNodes.map((v) => v[0]);
+
+	// build table header
+	var headerNodes: React.ReactNode[] = [];
+	props.colList.map((col, i) => {
+		var colSpan = 1;
+		if (col.colSpan) colSpan = col.colSpan
+		if (col.widthRec) {
+			headerNodes.push(<td className="time-cell" key={ col.key } onClick={ () => setSortId(i) }
+				colSpan={ colSpan } width={ col.widthRec + "%" } data-active="true">{ col.name } { imgNodeFun(sortId === i) }</td>);
+		} else {
+			headerNodes.push(<td className="time-cell" key={ col.key }
+				onClick={ () => setSortId(i) } colSpan={ colSpan } data-active="true">{ col.name } { imgNodeFun(sortId === i) }</td>);
+		}
+	});
+
+	// table class (wide vs thin)
+	var tableClass = "time-table small-table";
+	if (props.wideFlag) tableClass = "time-table med-table";
+
+	// - table back link
+	const hrefMainEx = props.hrefEx ? (hrefMain + "?" + props.hrefEx) : hrefMain;
+	
+	return (
+		<div>
+		<div className="table-cont">
+			<table className={ tableClass }><tbody>
+				<tr className="time-row" key="header">
+					<NameCell id={ playerId } key="player" pd={ pd } active={ true } onClick={ () => {} } href={ hrefMainEx }/>
+					{ headerNodes }
+				</tr>
+				{ playTableNodes }
+			</tbody></table>
+		</div>
+		</div>
+	);
+}
+
+/*
+export function DetailTable(props: DetailTableProps): React.ReactNode
+{
+	const [hrefMain, hrefStar] = props.hrefBase;
+	const scoreFilter = props.scoreFilter;
+	const splitFlag = scoreFilter.splitFlag;
+	const altFlag = props.altFlag;
+	const scoreData = props.scoreData;
+
+	// check for appropriate user map
+	if (scoreData === null) {
 		return <div className="blurb-cont"><div className="para">Loading...</div></div>;
 	}
 
-	const [altFlag, setAltFlag] = useState(false);
+	const [starMap, _userMap] = getUserDataScoreCache(scoreData, scoreFilter);
+	const userMap = props.starFilter ? props.starFilter(_userMap) : _userMap;
+	const userRankMap = getRankScoreCache(scoreData, scoreFilter);
 
-	var playStats = GS_userMap.stats[userKey];
+	var userKey = keyIdent(props.id);
+	var playStats = userMap.stats[userKey];
+	if (playStats === undefined) {
+		return <div className="blurb-cont"><div className="para">Player not found for this season</div></div>;
+	}
+
 	playStats.starList.sort(function (a, b) {
 		if (b.scorePts === a.scorePts) return b.rank[1] - a.rank[1];
 		return b.scorePts - a.scorePts;
@@ -82,7 +266,7 @@ export function DetailTable(props: DetailTableProps): React.ReactNode
 		// get star / strat data
 		var starKey = statKey(userScore);
 		var starDef = orgStarDef(userScore.stageId, orgStarId(userScore.stageId, userScore.starId));
-		var starData = props.starMap[starKey];
+		var starData = starMap[starKey];
 		// read record data
 		var recordDat = recordStxStarData(starData, userScore.alt);
 		// alternate display info may be needed for
@@ -124,9 +308,10 @@ export function DetailTable(props: DetailTableProps): React.ReactNode
 			(starDef.alt.status === "cutscene" || starDef.alt.status === "mergeOffset")) showOffset = false;
 		// build player row
 		var playNodes: React.ReactNode[] = [];
+		var hrefStarPrefix = props.hrefEx ? hrefStar + "?" + props.hrefEx + "&" : hrefStar + "?";
 		playNodes.push(<td className="time-cell link-cont" data-active={ true } data-complete={ (userScore.comp).toString() }
 			data-sc={ starColor } key="star">{ starName }
-			<Link className="link-span" href={ hrefStar + "?star=" + PERM[userScore.stageId] + "_" + userScore.starId }></Link></td>);
+			<Link className="link-span" href={ hrefStarPrefix + "star=" + PERM[userScore.stageId] + "_" + userScore.starId }></Link></td>);
 			//<Link className="link-span" href={ "/xcam?star=" + PERM[userScore.stageId] + "_" + userScore.starId }></Link></td>);
 		// incomplete case
 		if (!userScore.comp) {
@@ -160,9 +345,9 @@ export function DetailTable(props: DetailTableProps): React.ReactNode
 		var sortIndex = 1;
 		if (userScore.comp) sortIndex = 1 - userScore.scorePts;
 		// best rank cells
-		if (props.showStd && props.userRankMap !== null) {
+		if (props.showStd && userRankMap !== null) {
 			var rankName = "Unranked";
-			var userStarMap = props.userRankMap[userKey];
+			var userStarMap = userRankMap[userKey];
 			if (userStarMap !== undefined) {
 				var [starKey, alt] = starOnlyKey(userScore);
 				var rankData = userStarMap[starKey];
@@ -209,23 +394,14 @@ export function DetailTable(props: DetailTableProps): React.ReactNode
 			width="15%" colSpan={ 2 }>Best Rank { imgNodeFun(sortId === 2) }</td>);
 		tableClass = "time-table med-table";
 	}
+
+	const hrefMainEx = props.hrefEx ? (hrefMain + "?" + props.hrefEx) : hrefMain;
 	return (
 		<div>
-		<div className="row-wrap">
-			<div className="toggle-sidebar big-indent"><div className="ver-cont row-wrap">
-				{ props.cornerNode }
-				<div className="toggle-box">
-					<div className="toggle-button" data-plain="true"
-						data-active={ altFlag.toString() } onClick={ () => setAltFlag(!altFlag) }>
-						<div className="toggle-inner">Show Alternates</div>
-					</div>
-				</div>
-			</div></div>
-		</div>
 		<div className="table-cont">
 			<table className={ tableClass }><tbody>
 				<tr className="time-row" key="header">
-					<NameCell id={ playerId } pd={ pd } active={ true } onClick={ () => {} } href={ hrefMain }/>
+					<NameCell id={ playerId } pd={ pd } active={ true } onClick={ () => {} } href={ hrefMainEx }/>
 					<td className="time-cell" width="5%">#</td>
 					<td className="time-cell" width="10%">Rank</td>
 					<td className="time-cell" data-active="true" onClick={ () => setSortId(1) }
@@ -240,127 +416,7 @@ export function DetailTable(props: DetailTableProps): React.ReactNode
 		</div>
 	);
 }
-
-type PlayerTableProps = {
-	hrefBase: [string, string],
-	splitFlag: boolean,
-	lowNum: number,
-	midNum: number
-	cornerNode: React.ReactNode | null,
-	userMap: UserStatMap | null,
-	idType: IdService,
-	pd?: PlayData
-};
-
-export function PlayerTable(props: PlayerTableProps): React.ReactNode
-{
-	const [hrefMain, hrefStar] = props.hrefBase;
-	const splitFlag = props.splitFlag;
-	var GS_userMap = props.userMap;
-	//splitFlag ? G_SHEET.userMapSplit : G_SHEET.userMap;
-
-	if (GS_userMap === null) return <div></div>;
-	var starTotal = GS_userMap.starTotal;
-
-	const [sortId, setSortId] = useState(1);
-
-	// custom "best of" sort
-	const [number, setNumber] = useState(props.midNum);
-
-	const validNumber = (x: string) => {
-		var ii = parseInt(x);
-		if (isNaN(ii)) return false;
-		if (GS_userMap === null) return false;
-		if (ii > 0 && ii <= GS_userMap.starTotal) return true;
-		return false;
-	}
-
-	useEffect(() => {
-		if (GS_userMap !== null && number > GS_userMap.starTotal) setNumber(GS_userMap.starTotal);
-	}, [splitFlag]);
-
-	useEffect(() => {
-		if (number <= 0) setNumber(50);
-	}, [number]);
-
-	const updateNumber = (x: string) => { setNumber(parseInt(x)); }
-
-	// perform calcs for board
-	var playerList = Object.entries(GS_userMap.stats).map((_player) => {
-		var [userKey, player] = _player;
-		var total = player.starList.length;
-		return {
-			'id': player.id,
-			'total': total,
-			// CHANGE FOR THE LAUNCH
-			'top30': calcTopXStats(player, props.lowNum, ALTER_RANKS),
-			'topNum': calcTopXStats(player, number, false),
-			'topAll': calcTopXStats(player, starTotal, false)
-		};
-	});
-	playerList.sort(function (a, b) {
-		if (sortId === 0) return b.total - a.total;
-		else if (sortId === 2) return b.topNum - a.topNum;
-		else if (sortId === 3) return b.topAll - a.topAll;
-		else return b.top30 - a.top30;
-	});
-
-	// construct the board
-	var pd = newPlayData();
-	if (props.pd !== undefined) pd = props.pd;
-	var playTableNodes: React.ReactNode[] = [];
-	for (const data of playerList)
-	{
-		var playerId = data.id;
-		var playNodes: React.ReactNode[] = [];
-		var hrefX = "name";
-		if (props.idType === "remote") hrefX = "id";
-		playNodes.push(<NameCell id={ playerId } pd={ pd } active={ true } onClick={ () => {} }
-			href={ hrefMain + "?" + hrefX + "=" + encodeURIComponent(rawIdent(playerId)) } key="user"/>);
-		playNodes.push(<td className="time-cell" key="total">{ data.total }</td>);
-		playNodes.push(<td className="time-cell" key="perc">{ (data.total * 100 / starTotal).toFixed(1) }</td>);
-		playNodes.push(<td className="time-cell" key="0">{ data.top30.toFixed(2) }</td>);
-		playNodes.push(<td className="time-cell" key="1">{ data.topNum.toFixed(2) }</td>);
-		playNodes.push(<td className="time-cell" key="2">{ data.topAll.toFixed(2) }</td>);
-		playTableNodes.push(<tr className="time-row" key={ keyIdent(playerId) }>{ playNodes }</tr>);
-	}
-
-	var imgNodeFun = (active: boolean): React.ReactNode => (<div className="float-frame">
-		<img src="/icons/sort-icon.png" data-active={ active.toString() } className="float-icon" alt=""></img></div>);
-	return (
-		<div>
-		<div className="row-wrap">
-			<div className="big-indent ver-cont">
-				{ props.cornerNode }
-			</div>
-			<div className="right-indent ver-cont">
-			<div className="toggle-sidebar">
-				<div className="passive-box">
-					<div className="passive-button">Custom Best:</div>
-				</div>
-				<GenInput value={ "" + number } inputWidth="54px"
-					setValue={ updateNumber } validFun={ validNumber }></GenInput>
-			</div>
-			<div></div>
-		</div></div>
-		<div className="table-cont">
-			<table className="time-table small-table"><tbody>
-				<tr className="time-row" key="header">
-					<td className="time-cell" width="20%">Player</td>
-					<td className="time-cell" width="8%" data-active="true"
-						onClick={ () => setSortId(0) }>Fill { imgNodeFun(sortId === 0) }</td>
-					<td className="time-cell" width="8%">%</td>
-					<td className="time-cell" data-active="true" onClick={ () => setSortId(1) }>Best of { props.lowNum } { imgNodeFun(sortId === 1) }</td>
-					<td className="time-cell" data-active="true" onClick={ () => setSortId(2) }>Best of { number } { imgNodeFun(sortId === 2) }</td>
-					<td className="time-cell" data-active="true" onClick={ () => setSortId(3) }>Best of All ({ starTotal }) { imgNodeFun(sortId === 3) }</td>
-				</tr>
-				{ playTableNodes }
-			</tbody></table>
-		</div>
-		</div>
-	);
-}
-
+*/
 export function DetailAbout(props: {}): React.ReactNode
 {
 	const [about, setAbout] = useState(false);
@@ -404,87 +460,3 @@ export function DetailAbout(props: {}): React.ReactNode
 		</div>
 	</div>);
 }
-
-type PlayerBoardProps = {
-	slug?: string,
-	hrefBase: [string, string],
-	lowNum: number,
-	midNum: number,
-	aboutNode: React.ReactNode,
-	starMap: StxStarMap | null,
-	userMap: UserStatMap | null,
-	userRankStore: UserRankStore | null,
-	altStarMap?: StxStarMap | null,
-	altMap?: { [key: string]: UserStatMap },
-	idType?: IdService,
-	pd?: PlayData,
-	showStd?: boolean
-};
-
-export function PlayerBoard(props: PlayerBoardProps): React.ReactNode
-{
-	var initPlayer: string | null = null;
-	if (props.slug !== undefined && props.slug !== "") {
-		initPlayer = decodeURIComponent(props.slug); 
-	}
-
-	var altMap: { [key: string]: UserStatMap } = {};
-	if (props.altMap) altMap = props.altMap;
-
-	const [splitFlag, setSplitFlag] = useState(false);
-	const [extFlag, setExtFlag] = useState(false);
-	const [player, setPlayer] = useState(initPlayer);
-
-	var toggleNodeList: React.ReactNode[] = [];
-	if (altMap["split"] !== undefined) toggleNodeList.push(<div className="toggle-box slight-margin" key="split">
-		<div className="toggle-button" data-plain="true"
-			data-active={ splitFlag.toString() } onClick={ () => setSplitFlag(!splitFlag) }>
-			<div className="toggle-inner">Split Offset Stars</div>
-		</div></div>);
-	if (altMap["ext"] !== undefined) toggleNodeList.push(<div className="toggle-box slight-margin" key="ext">
-		<div className="toggle-button" data-plain="true"
-			data-active={ extFlag.toString() } onClick={ () => setExtFlag(!extFlag) }>
-			<div className="toggle-inner">Allow Extensions</div>
-		</div></div>);
-	var toggleNode = <div className="row-wrap no-space">{ toggleNodeList }</div>;
-
-	var starMap = extFlag && props.altStarMap && props.altStarMap !== null ? props.altStarMap : props.starMap;
-
-	var GS_userMap = splitFlag ? (extFlag ? altMap["ext_split"] : altMap["split"]) :
-		(extFlag ? altMap["ext"] : props.userMap);
-
-	var idType: IdService = "xcam";
-	if (props.idType !== undefined) idType = props.idType;
-
-	var showStd = false;
-	if (props.showStd) showStd = props.showStd;
-
-	var userRankMap: UserRankMap | null = null;
-	if (props.userRankStore !== null) {
-		userRankMap = extFlag ? props.userRankStore.extMap : props.userRankStore.bestMap;
-	}
-
-	var board = null;
-	if (player === null) board = <PlayerTable hrefBase={ props.hrefBase } splitFlag={ splitFlag } cornerNode={ toggleNode }
-		lowNum={ props.lowNum } midNum={ props.midNum } userMap={ GS_userMap } idType={ idType } pd={ props.pd }/>;
-	else board = <DetailTable hrefBase={ props.hrefBase } id={ newIdent(idType, player) } splitFlag={ splitFlag }
-		cornerNode={ toggleNode } starMap={ starMap } userMap={ GS_userMap } userRankMap={ userRankMap }
-		pd={ props.pd } showStd={ showStd }/>;
-
-	return (<div>
-		{ props.aboutNode }
-		{ board }
-	</div>);
-}
-
-//  <li>(Updated: Dec 8, 2024) The faster Toxic Maze BLJ Clip + Igloo Clip now count for score, reflecting changes to the Xcam sheet.</li>
-
-/*
-	var imgNodeFun = (active: boolean): React.ReactNode => (<div className="float-frame">
-		<img src="/icons/sort-icon.png" data-active={ active.toString() } className="float-icon" alt=""></img></div>);
-	var headerNodes: React.ReactNode[] = nameList.map((name, i) => {
-		return (<td className="time-cell" key={ name } data-active={ sortActive.toString() } width={ tdWidth }
-			onClick={ () => { if (sortActive) setSortId(i + 1) } }>{ name } { imgNodeFun(sortId === i + 1) }</td>);
-	});
-	headerNodes.unshift(<td className="time-cell" key="strat" data-active={ sortActive.toString() } width="15%"
-		onClick={ () => setSortId(0) }>Strat { imgNodeFun(sortId === 0) }</td>);*/

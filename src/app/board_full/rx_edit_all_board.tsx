@@ -5,8 +5,8 @@ import { StarDef, newExtFilterState, copyFilterState,
 	orgStarDef, verOffsetStarDef } from '../org_star_def'
 import { Ident } from '../time_table'
 import { PlayData, LocalPD } from '../play_data'
-import { postNick } from '../api_live'
-import { LiveStarTable } from '../table_parts/rx_live_table'
+import { loadTimes, postNewTimes, postNick } from '../api_live'
+import { LiveStarIface, LiveStarTable } from '../table_parts/rx_live_table'
 import { MenuOpt } from '../board_simple/rx_menu_opt'
 import { VerToggle } from '../board_simple/rx_ver_toggle'
 import { VariantToggle } from '../board_simple/rx_variant_toggle'
@@ -91,10 +91,14 @@ export function EditBoard(props: EditProps): React.ReactNode {
 			{ starBtnNodes }
 		</div>;
 
+	const liveAPI: LiveStarIface = {
+		"loadTimes": loadTimes,
+		"postNewTimes": postNewTimes
+	};
 	return (
 		<div>
-		<ViewBoard kind="edit" extAll={ true } edit={ props } stageId={ stageId } starDef={ starDef }
-			cornerNode={ stageSelNode } headerNode={ starSelNode } showStd={ false } mergeRaw={ true }></ViewBoard>
+		<ViewBoard kind="edit" extAll={ true } edit={ props } stageId={ stageId } starDef={ starDef } loadType={ ["all"] }
+			cornerNode={ stageSelNode } headerNode={ starSelNode } showStd={ false } mergeRaw={ true } api={ liveAPI }></ViewBoard>
 		<div className="sep"><hr/></div>
 		<AuthArea playData={ props.playData } setPlayData={ props.updatePlayData }/>
 		</div>

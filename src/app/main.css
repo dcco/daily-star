@@ -522,17 +522,31 @@ select {
 	width: 90%;
 }
 
-.rank-cont {
-	display: inline-block;
-	color: #E0E0E0;
-	margin-left: 28px;
-	margin-right: 28px;
+.rank-wrap {
+	display: flex;
+	margin-top: 6px;
 	margin-bottom: 6px;
+}
+
+.rank-cont {
+	color: #E0E0E0;
+	margin-left: 20px;
+	margin-right: 20px;
 	padding: 6px;
 	padding-left: 16px;
 	padding-right: 18px;
 	background-color: #282840;
 	border-radius: 6px;
+}
+
+.rank-cont[data-open="true"] {
+	width: 100%;
+}
+
+.center-cont {
+	display: flex;
+	justify-content: center;
+	width: 100%;
 }
 
 .buffer-cont {
@@ -542,6 +556,7 @@ select {
 
 .rank-cont-toggle {
 	cursor: pointer;
+	flex: 1;
 }
 
 .rank-cont-toggle:hover {
@@ -550,6 +565,7 @@ select {
 
 .rank-table-cont {
 	margin-top: 6px;
+	margin-bottom: 6px;
 	display: inline-block;
 }
 
@@ -718,6 +734,10 @@ a:visited {
 	color: #603030;
 }
 
+a[data-verif="false"] {
+	text-decoration: line-through;
+}
+
 .msg-link:visited {
 	color: #A04070;
 }
@@ -862,6 +882,13 @@ td:has(+ td.time-rank) {
 
 .tooltip:hover .note-text {
 	visibility: visible;
+}
+
+.time-special-note {
+	background-color: #9090B6;
+	color: #202050;
+	font-size: 14px;
+	font-style: italic;
 }
 
 	/* -- name cells */
@@ -1226,7 +1253,7 @@ td:hover .float-icon[data-active="false"] {
 	display: block;
 	text-align: left;
 	margin-left: 6px;
-	margin-rightt: 6px;
+	margin-right: 6px;
 }
 
 .opt-title {

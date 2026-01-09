@@ -1,15 +1,17 @@
 import React, { useState } from 'react'
 
-import { G_HISTORY, GlobObj, getMonthStars, getWeekStars, getLastDay,
-	readCodeList, dateAndOffset, dispDate } from '../api_season'
+import { GlobObj, readCodeList } from '../api_season'
+import { G_HISTORY, getMonthStars, getWeekStars, getLastDay,
+	dateAndOffset, dispDate, findSeason, noVerifSeason } from '../api_history'
 
 import { PlayData } from '../play_data'
-import { RouterMain } from '../router_main'
-import { StxStarMap } from './stats_star_map'
+import { RouterMain, navRM } from '../router_main'
+import { ScoreCache } from './score_cache'
 import { UserStatMap, filterUserStatMap } from './stats_user_map'
-import { PlayerBoard } from './rx_player_board'
+import { DSStatBoard } from './rx_ds_stat_board'
+import { SeasonSelProps, SeasonSel } from '../board_full/rx_season_sel'
 
-type ScoreBoardProps = {
+type ScoreBoardProps = SeasonSelProps & {
 	rm: RouterMain,
 	playData: PlayData
 };
@@ -20,17 +22,57 @@ const SCORE_MODES = [
 
 export function ScoreBoard(props: ScoreBoardProps): React.ReactNode
 {
+	// season selection
+	var histObj = G_HISTORY.current;
+	if (props.seasonId !== null) {
+		var fObj = findSeason(props.seasonId);
+		if (fObj !== null) histObj = fObj;
+	}
+
+	// obtain score data
+	if (histObj.scoreData === null) {
+		return <div className="blurb-cont"><div className="para">Loading...</div></div>;
+	}
+	const scoreData = histObj.scoreData;
 	const playData = props.playData;
 
-	// select state
-	const [selId, setSelId] = useState(0);
+	// slug interpretation (ignores season, because season is parsed earlier already)
+	const rawSlug = props.rm.core.slug;
+	var idSlug: string | null = null;
+	if (rawSlug !== undefined && rawSlug !== "") {
+		const sll = rawSlug.split(";");
+		if (sll[0] !== "null") idSlug = sll[0];
+	}
 
-	const dayTotal = getLastDay();
+	// reconstruction of slug (for links)
+	var defClickSlug = "";
+	if (props.seasonId !== null) {
+		if (idSlug === null) defClickSlug = "null;" + props.seasonId;
+		else defClickSlug = idSlug + ";" + props.seasonId;
+	}
+	else if (idSlug !== null) defClickSlug = idSlug;
+	else defClickSlug = "";
+
+	// timespan (all, monthly, weekly) menu
+	const menuId = props.rm.core.subId;
+	var selId = 0;
+	var hrefMain = "/home/scores";
+	if (menuId === 10) { selId = 1; hrefMain = "/home/scores/monthly"; }
+	else if (menuId === 11) { selId = 2; hrefMain = "/home/scores/weekly"; }
+
+	const updateMenuId = (i: number) => {
+		if (i === 1) navRM(props.rm, "home", "scores/monthly", defClickSlug);
+		else if (i === 2) navRM(props.rm, "home", "scores/weekly", defClickSlug);
+		else navRM(props.rm, "home", "scores", defClickSlug);
+	};
+
+	// per-month / per-week state
+	const dayTotal = getLastDay(props.seasonId);
 	const weekTotal = Math.ceil(dayTotal / 7);
 	const monthTotal = Math.ceil(dayTotal / 28);
 
-	const [monthId, setMonthId] = useState(monthTotal - 1);
-	const [weekId, setWeekId] = useState(weekTotal - 1);
+	const [monthId, setMonthId] = useState(props.seasonId === null ? monthTotal - 1 : 0);
+	const [weekId, setWeekId] = useState(props.seasonId === null ? weekTotal - 1 : 0);
 
 	const decFun = function() {
 		if (selId === 1 && monthId > 0) setMonthId(monthId - 1);
@@ -42,31 +84,51 @@ export function ScoreBoard(props: ScoreBoardProps): React.ReactNode
 		else if (selId === 2 && weekId < weekTotal - 1) setWeekId(weekId + 1);
 	};
 
-	// score-type (all, monthly, weekly) select nodes
+	// timespan select nodes
 	var scoreBtnNodes: React.ReactNode[] = SCORE_MODES.map((mode, i) => {
 		var flag = (selId === i) ? "true" : "false";
 		return <div key={ mode } className="star-name link-cont" data-sel={ flag }
-			onClick={ () => { setSelId(i) } }>{ mode }</div>;
+			onClick={ () => { updateMenuId(i) } }>{ mode }</div>;
 	});
 
 	var scoreSelNode = (<div className="star-select">
 			{ scoreBtnNodes }
 		</div>);
 
-	// score filtering
-	var starMap: StxStarMap = G_HISTORY.starMap;
-	var userMap: UserStatMap | null = G_HISTORY.userMap;
-	var lowNum = 30;
-	var midNum = 50;
-
-	if (selId !== 0 && userMap !== null) {
+	// timespan filter fun
+	var filterFun: ((userMap: UserStatMap) => UserStatMap) | undefined = undefined;
+	if (selId !== 0) {
+		// read stars from timespan
 		var subStars: GlobObj[] = [];
 		if (selId === 1) {
-			subStars = getMonthStars(monthId);
+			subStars = getMonthStars(histObj, monthId);
+		} else if (selId === 2) {
+			subStars = getWeekStars(histObj, weekId);
+		}
+		// generate code list
+		var codeList: [number, string][] = [];
+		for (const globObj of subStars) {
+			if (globObj.special === "skip") continue;
+			var starList = readCodeList(globObj.stageid, globObj.staridlist);
+			codeList = codeList.concat(starList);
+		}
+		filterFun = (userMap: UserStatMap) => {
+			return filterUserStatMap(userMap, codeList);
+		};
+	}
+
+	// score filtering
+	/*var lowNum = 30;
+	var midNum = 50;
+
+	if (selId !== 0 && scoreData !== null) {
+		var subStars: GlobObj[] = [];
+		if (selId === 1) {
+			subStars = getMonthStars(G_HISTORY.current, monthId);
 			lowNum = 14;
 			midNum = 20;
 		} else if (selId === 2) {
-			subStars = getWeekStars(weekId);
+			subStars = getWeekStars(G_HISTORY.current, weekId);
 			lowNum = 3;
 			midNum = 5;
 		}
@@ -78,17 +140,17 @@ export function ScoreBoard(props: ScoreBoardProps): React.ReactNode
 			codeList = codeList.concat(starList);
 			for (const [stageId, starId] of starList) {
 				var starKey = stageId + "_" + starId;
-				filterStarMap[starKey] = G_HISTORY.starMap[starKey];
-				filterStarMap[starKey + "_main"] = G_HISTORY.starMap[starKey + "_main"];
-				filterStarMap[starKey + "_alt"] = G_HISTORY.starMap[starKey + "_alt"];
+				filterStarMap[starKey] = G_HISTORY.current.starMap[starKey];
+				filterStarMap[starKey + "_main"] = G_HISTORY.current.starMap[starKey + "_main"];
+				filterStarMap[starKey + "_alt"] = G_HISTORY.current.starMap[starKey + "_alt"];
 			}
 		}
 		starMap = filterStarMap;
 		userMap = filterUserStatMap(userMap, codeList);
-	}
+	}*/
 
 	// date notes
-	var startText = G_HISTORY.header.season.startdate;
+	var startText = histObj.header.season.startdate;
 	var startNode: React.ReactNode = "";
 	if (startText !== "") {
 		// day calculation
@@ -126,10 +188,23 @@ export function ScoreBoard(props: ScoreBoardProps): React.ReactNode
 	}
 
 	// board selection
+	/*
+		old nums used
+		- season: 30, 50
+		- monthly: 14, 20
+		- weekly: 3, 5
+	*/
+	var defNum = 50;
+	var num100 = 6;
+	if (selId === 1) { defNum = 20; num100 = 2; }
+	else if (selId === 2) { defNum = 5; num100 = 1; }
 
-	var board = <PlayerBoard key={ selId } hrefBase={ ["/home/stats", "/home/history"] } slug={ props.rm.core.slug }
-			aboutNode={ "" } idType="remote" lowNum={ lowNum } midNum={ midNum } pd={ playData }
-			starMap={ starMap } userMap={ userMap } userRankStore={ null }/>;
+	var hrefEx: string | undefined = undefined;
+	if (props.seasonId !== null) hrefEx = "season=" + props.seasonId;
+
+	var board = <DSStatBoard key={ selId } hrefBase={ [hrefMain, "/home/history"] } hrefEx={ hrefEx } idSlug={ idSlug }
+			aboutNode={ "" } num={ defNum } num100={ num100 } pd={ playData } starFilter={ filterFun }
+			scoreData={ scoreData } defVerif={ !noVerifSeason(props.seasonId) }/>;
 	/*if (selId === 0 || G_HISTORY.userMap === null) {
 		board = <PlayerBoard hrefBase={ ["/home/stats", "/home/history"] } slug={ props.rm.core.slug }
 			aboutNode={ "" } idType="remote" lowNum={ 30 } midNum={ 50 } pd={ playData }
@@ -155,5 +230,12 @@ export function ScoreBoard(props: ScoreBoardProps): React.ReactNode
 			starMap={ filterStarMap } userMap={ filterUserMap } userRankStore={ null }/>;
 	}*/
 
-	return <div>{ scoreSelNode } { startNode } { board }</div>;
+	return <div>
+		<div className="row-wrap">
+			{ scoreSelNode }
+			<SeasonSel seasonId={ props.seasonId } setSeasonId={ props.setSeasonId }/>
+		</div>
+		{ startNode }
+		{ board }
+	</div>;
 }

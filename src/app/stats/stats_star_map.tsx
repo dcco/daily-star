@@ -1,8 +1,8 @@
 
-import { StarLoadFun } from '../api_season'
+import { StarLoadFun } from '../api_history'
 
 import { TimeDat, VerOffset, StratOffset } from '../time_dat'
-import { TimeTable, filterTimeTable } from '../time_table'
+import { TimeTable, filterTimeTable, filterTimeTableEx } from '../time_table'
 import { ColList, filterVarColList } from '../org_strat_def'
 import { FilterState, StarDef, newFilterState, copyFilterState,
 	orgStarDef, verOffsetStarDef, stratOffsetStarDef, colListStarDef } from '../org_star_def'
@@ -42,7 +42,8 @@ export function secondAlt(): AltState {
 export type StarRef = {
 	"stageId": number,
 	"starId": string,
-	"alt": AltState
+	"alt": AltState,
+	"100c": boolean
 };
 
 export function statKey(ref: StarRef): string
@@ -51,6 +52,14 @@ export function statKey(ref: StarRef): string
 	var alt = ref.alt;
 	if (alt.state === null || alt.source === "all") return baseKey;
 	if (alt.state === "main") return baseKey + "_main";
+	return baseKey + "_alt";
+}
+
+export function statKeyRaw(stageId: number, starId: string, alt: string | null): string
+{
+	var baseKey = stageId + "_" + starId;
+	if (alt === null) return baseKey;
+	if (alt === "main") return baseKey + "_main";
 	return baseKey + "_alt";
 }
 
@@ -71,12 +80,13 @@ export type StxStarData = StarRef & {
 	"timeTable": TimeTable
 };
 
-function getStxStarData(f: StarLoadFun, stageId: number, starDef: StarDef, colList: ColList, fs: FilterState): StxStarData
+function getStxStarData(f: StarLoadFun, stageId: number, starDef: StarDef, colList: ColList, fs: FilterState, verifFlag: boolean): StxStarData
 {
 	// read raw data
 	var verOffset = verOffsetStarDef(starDef, fs);
 	var sOffset = stratOffsetStarDef(starDef, fs);
 	var timeTable = f(stageId, starDef, colList, verOffset, sOffset);
+	if (verifFlag) timeTable = filterTimeTableEx(timeTable, (dat) => { return dat.verifFlag === 'yes' || dat.verifFlag === 'maybe' });
 	// transform into filtered data
 	var relRM = xcamRecordMap(colList, fs, verOffset, sOffset, 1);
 	// has alts
@@ -86,6 +96,8 @@ function getStxStarData(f: StarLoadFun, stageId: number, starDef: StarDef, colLi
 		"stageId": stageId,
 		"starId": starDef.id,
 		"alt": nullAlt(secondFlag ? "all" : "self"),
+			// TODO: replace with actual 100c flag from org_data
+		"100c": starDef.id.includes("100c"),
 		"vs": verOffset,
 		"colList": colList,
 		"recordMap": relRM,
@@ -101,6 +113,7 @@ export function filterStxStarData(base: StxStarData, colList: ColList, alt: numb
 		"stageId": base.stageId,
 		"starId": base.starId,
 		"alt": alt === null ? mainAlt() : secondAlt(),
+		"100c": base["100c"],
 		"vs": base.vs,
 		"colList": filterColList,
 		"recordMap": base.recordMap,
@@ -129,7 +142,7 @@ export type StxStarMap = {
 	[key: string]: StxStarData
 };
 
-export function getStarTimeMap(f: StarLoadFun, starSet: [StarDef, number][][], extFlag: boolean): StxStarMap {
+export function getStarTimeMap(f: StarLoadFun, starSet: [StarDef, number][][], extFlag: boolean, verifFlag: boolean): StxStarMap {
 	var starMap: StxStarMap = {};
 	// for every stage + star
 	for (let i = 0; i < starSet.length; i++) {
@@ -147,7 +160,7 @@ export function getStarTimeMap(f: StarLoadFun, starSet: [StarDef, number][][], e
 			// get un-split time data
 			var colList = colListStarDef(starDef, fs);
 			if (colList.length === 0) continue;
-			var timeData = getStxStarData(f, i, starDef, colList, fs);
+			var timeData = getStxStarData(f, i, starDef, colList, fs, verifFlag);
 			// add the "all" comparison for regular stars + offset stars
 			if (starDef.alt === null || starDef.alt.status === "offset") starMap[key] = timeData;
 			// for any other alternates, add the variant comparison

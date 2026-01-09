@@ -1,7 +1,7 @@
 
 import { VerF, VarSpace } from '../variant_def'
 import { TimeDat } from '../time_dat'
-import { DraftDat, stratNameDraftDat, verDraftDat, getVarDraftDat, setVerDraftDat, setVarDraftDat } from './draft_dat'
+import { DraftDat, stratNameDraftDat, verDraftDat, getVarDraftDat, setVerDraftDat, setVarDraftDat, setVerifDraftDat } from './draft_dat'
 import { StarDef } from '../org_star_def' 
 import { ColConfig, stratListColConfig } from '../col_config'
 
@@ -117,13 +117,22 @@ export function EditSubmitArea(props: ESAProps): React.ReactNode
 		if (selVar !== null) selId = "" + selVar[0];
 		// title for first group
 		var title = "";
-		if (i === 0) title = "Variants";
+		if (i === 0) title = "Variants:";
 		// create the option nodes, using selVar to highlight
 		return <OptionGroup title={ title } connected={ true } active={ dynFlag }
 			textList={ nameList } selList={ selList.map((i) => i.toString()) } curSel={ selId }
 			actFun={ (i) => editDat((dat) => { setVarDraftDat(dat, varGroup.name, selList[i]); return dat; }) }
 			key={ i }/>;
 	});
+
+	// verification (if relevant)
+	var verifNode: React.ReactNode = "";
+	if (oldDat !== null) {
+		var selList = ["yes", "maybe", "no"];
+		verifNode = <OptionGroup title="Verified:" connected={ true } active={ true }
+			textList={ ["Y", "M", "N"] } selList={ selList } curSel={ curDat.verifFlag }
+			actFun={ (i) => editDat((dat) => { setVerifDraftDat(dat, selList[i]); return dat; }) } key="_verif"/>;
+	}
 
 	// delete button (if relevant)
 	var delNode: React.ReactNode = "";
@@ -138,7 +147,7 @@ export function EditSubmitArea(props: ESAProps): React.ReactNode
 		<div className="submit-ex">
 			<div className="submit-ex-inner">
 				{ altNode } { verNode }
-				{ varNodeList }
+				{ varNodeList } { verifNode }
 			</div>
 			<div className="submit-ex-form">
 				<div className="form-title">Video:</div>

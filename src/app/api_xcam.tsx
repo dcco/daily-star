@@ -4,16 +4,19 @@ import localXcamData from './json/xcam_dump.json'
 
 import rawSRData from './json/star_ranks.json'
 
-import { DEV, ALTER_RANKS } from './rx_multi_board'
+import { DEV } from './rx_multi_board'
 
 import { newIdent } from './time_table'
 import { StarDef, orgStarDef } from './org_star_def'
 import { xcamTTFun } from './xcam_time_table'
-import { StxStarMap } from './stats/stats_star_map'
+import { SRMap, genStarRankMap } from './standards/strat_ranks'
+import { UserStatMap, calcUserScoreMap, calcUserStatMap } from './stats/stats_user_map'
+import { ScoreCache, initScoreCache } from './stats/score_cache'
+
+/*import { StxStarMap } from './stats/stats_star_map'
 import { UserScoreMap, UserStatMap, calcUserScoreMap, calcUserStatMap } from './stats/stats_user_map'
 
-import { SRMap, genStarRankMap } from './standards/strat_ranks'
-import { UserRankStore, calcUserRankStore } from './standards/user_ranks'
+import { UserRankStore, calcUserRankStore } from './standards/user_ranks'*/
 
 	/* 
 		permanent storage for xcam data
@@ -23,36 +26,40 @@ import { UserRankStore, calcUserRankStore } from './standards/user_ranks'
 export type SheetData = {
 	"rowData": any,
 	"xcamData": any,
+	"srMap": SRMap,
+	"scoreData": ScoreCache | null,
+	"secretMap": UserStatMap | null
 		// stats
-	"starMap": StxStarMap | null,
+	/*"starMap": StxStarMap | null,
 	"scoreMap": UserScoreMap | null,
 	"userMap": UserStatMap | null,
 	"extStarMap": StxStarMap | null,
 	"altMap": { [key: string]: UserStatMap },
 		// strat ranks
 	"secretMap": UserStatMap | null,
-	"srMap": SRMap,
-	"userRankStore": UserRankStore | null
+	"userRankStore": UserRankStore | null*/
 };
 
 export const G_SHEET: SheetData = {
 	"rowData": localRowData,
 	"xcamData": localXcamData,
-	"starMap": null,
+	"srMap": {},
+	"scoreData": null,
+	"secretMap": null
+	/*"starMap": null,
 	"scoreMap": null,
 	"userMap": null,
 	"extStarMap": null,
 	"altMap": {},
-	"secretMap": null,
 	"srMap": {},
-	"userRankStore": null
+	"userRankStore": null*/
 };
 
 export async function initGSheet(callback: () => void)
 {
 	// initial calc
+	if (DEV) remakeSRMap();
 	calcStatData();
-	calcStratRankData();
 	G_SHEET.srMap = rawSRData as SRMap;
 	//const getReq = await fetch("http://ec2-52-15-55-53.us-east-2.compute.amazonaws.com:5505/dump_xcams");
 	const getReq = await fetch("https://g6u2bjvfoh.execute-api.us-east-2.amazonaws.com/dump_xcams");
@@ -79,6 +86,14 @@ function calcStatData()
 {
 	var starSet: [StarDef, number][][] = orgData.map((stage, i) =>
 		stage.starList.map((starDef, j) => [orgStarDef(i, j), j]));
+	G_SHEET.scoreData = initScoreCache(starSet, xcamTTFun, false);
+	// this map only exists to give player ranks for rank creation
+	if (DEV) {
+		var [starMap, scoreMap] = calcUserScoreMap(starSet, xcamTTFun, false, false);
+		G_SHEET.secretMap = calcUserStatMap(starSet, scoreMap, false, newIdent("xcam", "Nobody"), true);
+	}
+	/*var starSet: [StarDef, number][][] = orgData.map((stage, i) =>
+		stage.starList.map((starDef, j) => [orgStarDef(i, j), j]));
 	var [starMap, scoreMap] = calcUserScoreMap(starSet, xcamTTFun, false);
 	var [fullStarMap, scoreExtMap] = calcUserScoreMap(starSet, xcamTTFun, true);
 	// if in dev mode, we use the "cheater" ranks (dont care about fill rate)
@@ -94,15 +109,23 @@ function calcStatData()
 		"ext": extMap,
 		"ext_split": extMapSplit
 	};
-	if (DEV) G_SHEET.secretMap = calcUserStatMap(starSet, scoreMap, false, newIdent("xcam", "Nobody"), true);
+	*/
 }
 
 function calcStratRankData()
 {
 	// will NOT generate new ranks unless DEV mode is turned on
-	var starSet: [StarDef, number][][] = orgData.map((stage, i) =>
+	/*var starSet: [StarDef, number][][] = orgData.map((stage, i) =>
 		stage.starList.map((starDef, j) => [orgStarDef(i, j), j]));
 	if (DEV) G_SHEET.srMap = genStarRankMap(starSet);
-	G_SHEET.userRankStore = calcUserRankStore(starSet);
+	G_SHEET.userRankStore = calcUserRankStore(starSet);*/
 	//console.log(G_SHEET.srMap);
+}
+
+function remakeSRMap()
+{
+	var starSet: [StarDef, number][][] = orgData.map((stage, i) =>
+		stage.starList.map((starDef, j) => [orgStarDef(i, j), j]));
+	G_SHEET.srMap = genStarRankMap(starSet);
+	console.log(G_SHEET.srMap);
 }

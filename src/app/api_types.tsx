@@ -16,7 +16,8 @@ export type ReadTimeUnit = {
 	"ver": Ver,
 	"variants": string,
 	"link": string,
-	"note": string
+	"note": string,
+	"verifflag": string
 };
 
 export type ReadTimeObj = ReadTimeUnit[];
@@ -48,14 +49,17 @@ export type SubmitTimeObj = {
 	"nick": string | null,
 	"accessToken": number,
 	"submitList": SubmitTimeUnit[],
-	"delList": number[]
+	"delList": number[],
+	"verifList"?: [number, string][]
 }
 
 	// read_nick_unit / read_nick_obj: object returned from a nickname query
 
 export type ReadNickUnit = {
 	"p_id": number,
-	"nick": string | null
+	"nick": string | null,
+	"perm": string | null,
+	"favcolor": string | null
 };
 
 export type ReadNickObj = ReadNickUnit[];
@@ -65,5 +69,6 @@ export type ReadNickObj = ReadNickUnit[];
 export type SubmitNickObj = {
 	"player": AuthIdent,
 	"accessToken": number,
-	"nick": string
+	"nick": string,
+	"favColor"?: string
 };

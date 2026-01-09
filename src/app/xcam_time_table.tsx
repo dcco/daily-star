@@ -2,7 +2,7 @@
 //import xcamData from './json/xcam_dump.json'
 //import rowData from './json/row_data.json'
 import { G_SHEET } from './api_xcam'
-import { StarLoadFun } from './api_season'
+import { StarLoadFun } from './api_history'
 
 import { VerOffset, StratOffset, rawMS, newTimeDat, applyVerOffset, applyStratOffset } from "./time_dat"
 import { ColList, readRefMap } from "./org_strat_def"
@@ -26,7 +26,7 @@ export function xcamTimeTable(colList: ColList, verOffset: VerOffset, stratOffse
 			var timeList = xcamData[xs][xcamId].times;
 			// iterate through every time for the xcam row
 			for (const data of timeList) {
-				var timeDat = newTimeDat(data.ms, data.link, data.note,
+				var timeDat = newTimeDat(data.ms, data.link, data.note, null,
 					readRefMap(stratDef.row_map, xcamRef, "tt:" + stratDef.name));
 				applyVerOffset(timeDat, verOffset);
 				applyStratOffset(timeDat, stratDef.diff.includes("second"), stratOffset, forceAdjust);
@@ -49,4 +49,8 @@ export function xcamTimeTable(colList: ColList, verOffset: VerOffset, stratOffse
 
 export const xcamTTFun: StarLoadFun = (stageId, starDef, colList, verOffset, stratOffset) => {
 	return xcamTimeTable(colList, verOffset, stratOffset, 1);
+}
+
+export const xcamTTFunNF: StarLoadFun = (stageId, starDef, colList, verOffset, stratOffset) => {
+	return xcamTimeTable(colList, verOffset, stratOffset);
 }

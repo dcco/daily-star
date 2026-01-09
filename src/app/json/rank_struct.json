@@ -397,7 +397,10 @@
 	"lll_6": {
 		"offset": [
 			["Standard", "Silver", "1", "Slow ending"]
-		]
+		],
+		"ext": {
+			"Open": { "kind": "benchmark", "strat": "Standard" }
+		}
 	},
 
 	"ssl_1": {

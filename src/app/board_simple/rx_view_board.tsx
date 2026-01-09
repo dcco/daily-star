@@ -14,15 +14,21 @@ import { ColConfig, newColConfig, primaryColConfig, lightColList,
 	mergeHeaderColConfig, splitVariantPosColConfig } from '../col_config'
 import { xcamRecordMapBan, sortColList } from '../xcam_record_map'
 import { MenuOpt, MenuOptX } from './rx_menu_opt'
+import { ExColumn } from '../table_parts/ex_column'
 import { PlayDB } from "../table_parts/rx_star_row"
 import { StarTable } from '../table_parts/rx_star_table'
-import { LiveStarTable } from '../table_parts/rx_live_table'
+import { LiveStarIface, LiveStarTable } from '../table_parts/rx_live_table'
 import { VerToggle } from './rx_ver_toggle'
 import { ExtToggle } from './rx_ext_toggle'
 import { VariantToggle } from './rx_variant_toggle'
 
 import { StratRankTable } from '../board_simple/rx_sr_table'
 import { StratRankTableRaw } from '../board_simple/rx_sr_table_raw'
+
+import { scoreColumn } from "../stats/stat_columns"
+
+import { TTLoadType } from '../api_live'
+import { G_SHEET } from "../api_xcam"
 
 export type TimeTableFun = ((colList: ColList, vs: VerOffset, ss: StratOffset) => TimeTable);
 
@@ -34,9 +40,13 @@ export type EditProps = {
 
 type EditBoardType = {
 	kind: "edit",
-	edit: EditProps
+	edit: EditProps,
+	loadType: TTLoadType,
+	api: LiveStarIface
 }
 
+	// loads are drawn from a cached ttFun (usually with caching)
+	// and so do not need a "load type"
 type ViewBoardType = {
 	kind: "view",
 	ttFun: TimeTableFun
@@ -49,11 +59,13 @@ type ViewBoardProps = BoardType & {
 	starDef: StarDef,
 	cornerNode: React.ReactNode,
 	headerNode: React.ReactNode,
+	toggleNode?: React.ReactNode,
 	showStd: boolean,
 	mergeRaw?: boolean,
+	emptyWarn?: boolean,
 	playData?: PlayData,
 	extAll?: boolean,
-	playDB?: PlayDB,
+	playDB?: PlayDB
 }
 
 function filterConfig(stageId: number, starDef: StarDef, fs: FilterState, colList: ColList): ColConfig
@@ -230,7 +242,7 @@ export function ViewBoard(props: ViewBoardProps): React.ReactNode
 		var edit = props.edit;
 		// -- main table
 		tableList.push(
-			<LiveStarTable stageId={ stageId } starDef={ starDef } today={ ["def"] } fs={ fs }
+			<LiveStarTable stageId={ stageId } starDef={ starDef } today={ props.loadType } fs={ fs } showStd={ props.showStd } api={ props.api } 
 				playData={ edit.playData } reloadPlayData={ edit.reloadPlayData } key={ stageId + "_" + starDef.name + "_0" }/>
 		);
 		// -- alt table
@@ -238,7 +250,7 @@ export function ViewBoard(props: ViewBoardProps): React.ReactNode
 			var altFS = copyFilterState(fs);
 			altFS.altState = [false, true];
 			tableList.push(
-				<LiveStarTable stageId={ stageId } starDef={ starDef } today={ ["def"] } fs={ altFS }
+				<LiveStarTable stageId={ stageId } starDef={ starDef } today={ props.loadType } fs={ altFS } showStd={ props.showStd } api={ props.api }
 					playData={ edit.playData } reloadPlayData={ edit.reloadPlayData } key={ stageId + "_" + starDef.name + "_1" }/>
 			);
 		}
@@ -246,16 +258,33 @@ export function ViewBoard(props: ViewBoardProps): React.ReactNode
 	} else {
 		var timeTable = props.ttFun(colList, verOffset, sOffset);
 		var cfg = filterConfig(stageId, starDef, fs, colList);
-		// -- main table
-		tableList.push(<StarTable cfg={ cfg } playData={ playData } timeTable={ timeTable } verOffset={ verOffset }
-			recordMap={ relRM } playDB={ props.playDB } rankKey={ rankKey } key={ stageId + "_" + starDef.name + "_0" }></StarTable>);
-		// -- alt table
+
+		// scoring columns (for debug purposes)
+		var exColList: ExColumn[] = [];
+		if (DEV) {
+			if (starDef.alt !== null && !combFlag) {
+				var exAlt = fs.altState[1] ? "alt" : "main";
+				exColList = [scoreColumn(G_SHEET.scoreData, stageId, starDef.id, fs.extFlag, false, exAlt)];
+			}
+			else exColList = [scoreColumn(G_SHEET.scoreData, stageId, starDef.id, fs.extFlag, false, null)];
+		}
+
+		// -- main table < can be either main / alt >
+		tableList.push(<StarTable cfg={ cfg } playData={ playData } timeTable={ timeTable }
+			verOffset={ verOffset } recordMap={ relRM } emptyWarn={ props.emptyWarn }
+			playDB={ props.playDB } rankKey={ rankKey } extraColList={ exColList } key={ stageId + "_" + starDef.name + "_0" }></StarTable>);
+		// -- alt table < this version only shows up on combination >
 		if (props.mergeRaw && (!combFlag || !fs.altState[1])) {
 			var altFS = copyFilterState(fs);
 			altFS.altState = [false, true];
 			var altCFG = filterConfig(stageId, starDef, altFS, colList);
-			tableList.push(<StarTable cfg={ altCFG } playData={ playData } timeTable={ timeTable } verOffset={ verOffset }
-				recordMap={ relRM } playDB={ props.playDB } rankKey={ rankKey } key={ stageId + "_" + starDef.name + "_1" }></StarTable>);
+
+			var exAltList: ExColumn[] = [];
+			if (DEV) exAltList = [scoreColumn(G_SHEET.scoreData, stageId, starDef.id, fs.extFlag, false, "alt")];
+
+			tableList.push(<StarTable cfg={ altCFG } playData={ playData } timeTable={ timeTable }
+				verOffset={ verOffset } recordMap={ relRM } emptyWarn={ props.emptyWarn }
+				playDB={ props.playDB } rankKey={ rankKey } extraColList={ exAltList } key={ stageId + "_" + starDef.name + "_1" }></StarTable>);
 		}
 	}
 
@@ -284,10 +313,14 @@ export function ViewBoard(props: ViewBoardProps): React.ReactNode
 		//rankTableNode  = <StratRankTableRaw stageId={ stageId } starDef={ starDef }/>;
 	}
 
+	var extraToggle: React.ReactNode = "";
+	if (props.toggleNode) extraToggle = props.toggleNode;
+
 	return (<div>
 		<div className="row-wrap">
 			{ props.cornerNode }
 			<div className="toggle-sidebar">
+				{ extraToggle }
 				{ extToggle }
 				{ verToggle }
 			</div>

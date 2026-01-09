@@ -4,6 +4,6 @@ import { MultiBoard } from '../../app/rx_multi_board'
 export default function() {
 	return (<main>
 		<div className="header">Daily Star</div>
-		<MultiBoard boardId={ 0 } subId={ 5 }/>
+		<MultiBoard boardId={ 0 } subId={ 0 }/>
 	</main>);
 }

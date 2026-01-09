@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { initializeApp } from 'firebase/app'
-import { GoogleAuthProvider, getAuth, onIdTokenChanged, signInWithPopup } from 'firebase/auth'
+import { GoogleAuthProvider, getAuth, onAuthStateChanged, onIdTokenChanged, signInWithPopup } from 'firebase/auth'
 
 import { AuthIdent, newAuthIdent, dropIdent } from '../time_table'
 import { PlayData, LocalPD, setUserLD, setUserNickLD, strIdNickPD } from '../play_data'
@@ -95,6 +95,7 @@ export function NickInput(props: NickInputProps): React.ReactNode
 			nick = nDat;
 			nState = "display";
 		}
+		if (playData.local.perm !== 'user') nick = nick + "*";
 		dispNode = <div className="nick-disp" data-state={ nState }>{ nick }</div>;
 	} else {
 		dispNode = <input className="nick-disp" data-state="edit" value={ eState.nick } onChange={ nickEdit }/>;
@@ -134,6 +135,8 @@ export function AuthArea(props: AuthAreaProps): React.ReactNode
 /*	var setUserId = props.setUserId;
 	var setNick = props.setNick;*/
 
+	const [photoURL, setPhotoURL] = useState<string>("");
+
 	// when authorization state changes, save token
 	useEffect(() => {
 		onIdTokenChanged(auth, (_user) => {
@@ -149,6 +152,9 @@ export function AuthArea(props: AuthAreaProps): React.ReactNode
 				//setUserId(null);
 			}
 		});
+		onAuthStateChanged(auth, (_user) => {
+			if (_user && _user.photoURL !== null) setPhotoURL(_user.photoURL);
+		});
 	}, []);
 
 	// display authorization state
@@ -163,7 +169,7 @@ export function AuthArea(props: AuthAreaProps): React.ReactNode
 		var nonFun = () => {};
 		var actList = [null, _signIn, _signOut];
 		authNode = (<div className="login-cont">
-			<DropDownImgMenu src={ userId.token.photoURL } backupSrc="/icons/def-propic.png"
+			<DropDownImgMenu src={ photoURL } backupSrc="/icons/def-propic.png"
 				textList={ [ "@" + userId.name , "Switch User", "Logout"] } actList={ actList }/>
 			<NickInput userId={ userId } playData={ playData } setPlayData={ setPlayData }/>
 		</div>);

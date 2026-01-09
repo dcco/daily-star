@@ -1,17 +1,18 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 // delete later
 import { G_SHEET } from '../api_xcam'
 
 import { PlayData, LocalPD } from '../play_data'
-import { G_DAILY, G_HISTORY, GlobNorm, mostRecentWeekly } from '../api_season'
+import { G_DAILY, GlobNorm } from '../api_season'
+import { mostRecentWeekly } from '../api_history'
 
+import { splitSlug, prependSeasonSlug } from '../router_slug'
 import { RouterMain, navRM } from '../router_main'
 import { MenuOpt } from '../board_simple/rx_menu_opt'
 import { DailyBoard } from '../board_full/rx_daily_board'
 import { HistoryBoard } from '../board_full/rx_history_board'
 import { HistoryTable } from './rx_history_table'
-import { PlayerBoard } from '../stats/rx_player_board'
 import { ScoreBoard } from '../stats/rx_score_board'
 import { S3NewsBoard } from '../news_pages/s3_news_board'
 import { S3ComingSoon } from '../news_pages/s3_coming_soon'
@@ -62,27 +63,38 @@ export function DailyStar(props: DailyStarProps): React.ReactNode
 
 	const menuId = props.rm.core.subId;
 
+	// season state
+	// - initStarSlug is only used to determine which history board to use
+	// 		full contents are used elsewhere
+	const [initStarSlug, curSeason] = splitSlug(props.rm.core.slug); 
+	//const [curSeason, setSeason] = useState<number | null>(initSeason);
+	var defHistSlug = "";
+	if (curSeason !== null) defHistSlug = "null;" + curSeason;
+
+	const setSeasonId = (subId: string, i: number | null) => {
+		var fullSlug = prependSeasonSlug(i, initStarSlug);
+		navRM(props.rm, "home", subId, fullSlug);
+	}
+
 	// menu update
 	const updateMenuId = (i: number) => {
 		if (i === 0) navRM(props.rm, "home", "", "");
-		else if (i === 1) navRM(props.rm, "home", "history", "def")
+		//else if (i === 1) navRM(props.rm, "home", "history", "def")
 		else if (i === 2) navRM(props.rm, "home", "weekly", "");
-		else if (i === 3) navRM(props.rm, "home", "history", "");
-		else if (i === 4) navRM(props.rm, "home", "stats", "");
+		else if (i === 3) navRM(props.rm, "home", "history", defHistSlug);
+		else if (i === 4) navRM(props.rm, "home", "scores", defHistSlug);
 		else if (i === 5) navRM(props.rm, "home", "news", "");
-		else if (i === 6) navRM(props.rm, "home", "beta_xcam", "");
-		else if (i === 7) navRM(props.rm, "home", "beta_player", "");
 	};
 
-	// calculate whether season has ended
-	var seasonEnd = G_DAILY.status === "none" ||
-		(G_DAILY.starGlob !== undefined && G_DAILY.starGlob.day === null);
+	// calculate whether season has ended (only matters for "current" season)
+	var seasonEnd = curSeason === null && (G_DAILY.status === "none" ||
+		(G_DAILY.starGlob !== undefined && G_DAILY.starGlob.day === null));
 
 	// calculate whether the weekly exists
 	var weeklyFlag = false;
 	var weeklyOptNode: React.ReactNode[] = [];
 
-	var weeklyGlob = mostRecentWeekly();
+	var weeklyGlob = mostRecentWeekly(null);
 	if (weeklyGlob !== null && weeklyGlob.day !== G_DAILY.dayOffset) {
 		weeklyFlag = true;
 		weeklyOptNode.push(<MenuOpt id={ 2 } selId={ menuId }
@@ -110,30 +122,32 @@ export function DailyStar(props: DailyStarProps): React.ReactNode
 			board = <DailyBoard playData={ playData } weekly={ null }
 				reloadPlayData={ () => reloadPlayData(null) } setPlayData={ updatePlayData }/>;
 		}
-	} else if (menuId === 1) {
+	} else if ((seasonEnd && menuId == 0) || menuId === 5) {
+		board = <S3ComingSoon/>;
+	} /*else if (menuId === 1) {
 		board = <HistoryBoard rm={ props.rm } playData={ playData }/>;
-	} else if (!seasonEnd && menuId === 2 && (weeklyGlob === null || weeklyGlob.special === null)) {
+	}*/ else if (!seasonEnd && menuId === 2 && (weeklyGlob === null || weeklyGlob.special === null)) {
 		board = <DailyBoard playData={ playData } weekly={ weeklyGlob }
 			reloadPlayData={ () => reloadPlayData(null) } setPlayData={ updatePlayData }/>;
 	} else if (menuId === 3 || ((menuId === 0 || menuId === 2) && seasonEnd)) {
-		board = <HistoryTable/>;
-	} else if (menuId === 4) {
-		board = <ScoreBoard rm={ props.rm } playData={ playData }></ScoreBoard>;
+		// build history board
+		if (initStarSlug === "") board = <HistoryTable seasonId={ curSeason }
+			setSeasonId={ (i) => setSeasonId("history", i) }/>;
+		else board = <HistoryBoard seasonId={ curSeason }
+			setSeasonId={ (i) => setSeasonId("history", i) } rm={ props.rm } playData={ playData }/>;
+	} else if (menuId === 4 || menuId === 10 || menuId === 11) {
+		var subId = "scores";
+		if (menuId === 10) subId = "scores/monthly";
+		else if (menuId === 11) subId = "scores/weekly";
+		board = <ScoreBoard seasonId={ curSeason }
+			setSeasonId={ (i) => setSeasonId(subId, i) } rm={ props.rm } playData={ playData }></ScoreBoard>;
 		/*board = <PlayerBoard hrefBase={ ["/home/stats", "/home/history"] } slug={ props.rm.core.slug }
 			aboutNode={ <StatsAbout/> }	idType="remote" lowNum={ 30 } midNum={ 50 } pd={ playData }
 			starMap={ G_HISTORY.starMap } userMap={ G_HISTORY.userMap } userRankStore={ null }/>;*/
-	} else if (menuId === 5) {
-		board = <S3ComingSoon/>;
-	} else if (menuId === 6) {
-		board = <XcamBoard rm={ props.rm } hrefBase={ ["home", "beta_xcam", "/home/beta_player"] } showStd={ true } beta={ true }/>;
-	} else if (menuId === 7) {
-		board = <PlayerBoard hrefBase={ ["/home/beta_player", "/home/beta_xcam"] } slug={ props.rm.core.slug }
-			starMap={ G_SHEET.starMap } userMap={ G_SHEET.userMap }
-			altStarMap={ G_SHEET.extStarMap } altMap={ G_SHEET.altMap } userRankStore={ G_SHEET.userRankStore }
-			aboutNode={ "" } lowNum={ 30 } midNum={ 50 } showStd={ true } key={ props.rm.core.slug }/>;
 	}
 
 	var dailyOptNode: React.ReactNode = <MenuOpt id={ 0 } selId={ menuId } setSelId={ updateMenuId }>Daily</MenuOpt>;
+	var newsOptNode: React.ReactNode = null;
 	if (noDaily && weeklyFlag) {
 		dailyOptNode = <MenuOpt id={ 0 } selId={ menuId } setSelId={ updateMenuId }>Weekly</MenuOpt>;
 		weeklyOptNode = [];
@@ -141,18 +155,18 @@ export function DailyStar(props: DailyStarProps): React.ReactNode
 	if (seasonEnd) {
 		dailyOptNode = null;
 		weeklyOptNode = [];
+		newsOptNode = <MenuOpt id={ 0 } selId={ menuId } setSelId={ updateMenuId }>News</MenuOpt>;
 	}
 	
+	// <MenuOpt id={ 1 } selId={ menuId } setSelId={ updateMenuId }>Archive</MenuOpt>
+
 	return (<React.Fragment>
 		<div className="menu-cont">
 			{ dailyOptNode }
 			{ weeklyOptNode }
-			<MenuOpt id={ 5 } selId={ menuId } setSelId={ updateMenuId }>News</MenuOpt>	
+			{ newsOptNode }
 			<MenuOpt id={ 3 } selId={ menuId } setSelId={ updateMenuId }>History</MenuOpt>
-			<MenuOpt id={ 1 } selId={ menuId } setSelId={ updateMenuId }>Archive</MenuOpt>
-			<MenuOpt id={ 4 } selId={ menuId } setSelId={ updateMenuId }>Stats</MenuOpt>
-			<MenuOpt id={ 6 } selId={ menuId } setSelId={ updateMenuId }>Xcam Ranks (BETA)</MenuOpt>
-			<MenuOpt id={ 7 } selId={ menuId } setSelId={ updateMenuId }>Players (BETA)</MenuOpt>
+			<MenuOpt id={ 4 } exId={ [10, 11] } selId={ menuId } setSelId={ updateMenuId }>Scores</MenuOpt>
 		</div>
 		<div className="sep"><hr/></div>
 		{ board }

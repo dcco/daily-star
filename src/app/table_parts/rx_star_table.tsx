@@ -5,7 +5,8 @@ import { Ident, AuthIdent, TimeTable, keyIdent, dropIdent,
 	freshUserDat, hasSubRows, sortTimeTable } from '../time_table'
 import { PlayData, strIdNickPD } from '../play_data'
 import { ColConfig, headerListColConfig, recordListColConfig, filterTableColConfig } from '../col_config'
-import { EditObj, hasWritePerm, checkNewPerm } from './edit_perm'
+import { ExColumn } from './ex_column'
+import { EditObj, selfWritePerm, hasWritePerm, checkNewPerm } from './edit_perm'
 import { RecordMap } from '../xcam_record_map'
 import { TimeCell, RecordCell, NameCell } from './rx_star_cell'
 import { CellAct, PlayDB, DataRow } from './rx_star_row'
@@ -24,61 +25,6 @@ import { EditRow, nullEditPos } from './rx_edit_row'
 function validName(s: string): boolean {
 	return s.match(/^[a-zA-Z0-9 _]+$/) !== null;
 }
-/*
-function validEdit(cellText) {
-	// valid player name
-	if (!validName(cellText[0])) return false;
-	// all times are valid, and at least one change has been made
-	var isDirty = false;
-	for (let i = 1; i < cellText.length; i++) {
-		if (cellText[i] !== "") {
-			if (!validTime(cellText[i])) return false;
-			isDirty = true;
-		}
-	}
-	return isDirty;
-}
-
-function FullDataRow(userDat, verOffset, rowId, onClick) {
-	// get total rows needed
-	var dispTotal = 1;
-	userDat.timeRow.map((multiDat) => {
-		if (multiDat !== null && multiDat.length > 1) {
-			if (multiDat.length > dispTotal) dispTotal = multiDat.length;
-		}
-	});
-	var rowNodeList = [];
-	// print out each row one by one
-	for (let i = 0; i < dispTotal; i++) {
-		var timeRowNodes = userDat.timeRow.map((multiDat, j) => {
-			var timeDat = null;
-			if (multiDat !== null && i < multiDat.length) {
-				timeDat = multiDat[i];
-			}
-			if (timeDat === null) {
-				return <td className="dark-cell" key={ j }></td>; 
-			}
-			return <TimeCell timeDat={ timeDat } verOffset={ verOffset } active="true"
-				onClick={ () => onClick("view-toggle", rowId, j, [""]) } multiFlag={ false } key={ j }/>;
-		})
-		if (i === 0) timeRowNodes.unshift(<NameCell id={ userDat.id } key="user"/>);
-		else timeRowNodes.unshift(<td className="dark-cell" key="empty"></td>);*/
-		/*rowNodeList.push(<tr className="time-row" key={ rowId + "#" + i }>
-			<td onClick={ () => onClick("view-toggle", rowId, 0, [""]) }>Test</td></tr>);
-*//*
-		rowNodeList.push(<tr className="time-row" key={ rowId + "#" + i} datarow="yes">{ timeRowNodes }</tr>);
-	}
-	// draw separators
-	var sepList1 = [];
-	var sepList2 = [];
-	for (let i = 0; i < userDat.timeRow.length + 1; i++) {
-		sepList1.push(<td className="sep-cell" key={ i }></td>);
-		sepList2.push(<td className="sep-cell" key={ i }></td>);
-	};
-	rowNodeList.unshift(<tr className="sep-row" key={ rowId + "#A" }>{ sepList1 }</tr>);
-	rowNodeList.push(<tr className="sep-row" key={ rowId + "#B" }>{ sepList2 }</tr>);
-	return rowNodeList;
-}*/
 
 type ViewState = {
 	"rowId": number | null	
@@ -89,18 +35,6 @@ function nullViewState(): ViewState {
 		"rowId": null
 	};
 }
-/*
-function diffText(oldText, editText) {
-	var dText = [];
-	for (let i = 1; i < editText.length; i++) {
-		if (editText[i] !== "" && oldText[i] !== editText[i]) {
-			dText.push(editText[i]);
-		} else {
-			dText.push(null);
-		}
-	}
-	return dText;
-}*/
 
 	/*
 		star table: displays times from a time table
@@ -108,7 +42,12 @@ function diffText(oldText, editText) {
 		* recordMap - record data for the time table
 		* timeTable - time table
 		* verOffset - version offset for time display
+		* emptyWarn - warn if all rows are empty (outside of editing mode)
 		* editObj - params for editable tables
+		
+		* playData - player viewing the table
+		* playDB - information about players
+		* rankKey - key used for assigning ranks to times
 	*/
 
 type StarTableProps = {
@@ -117,9 +56,11 @@ type StarTableProps = {
 	"recordMap": RecordMap,
 	"timeTable": TimeTable,
 	"playData": PlayData,
+	"emptyWarn"?: boolean,
 	"editObj"?: EditObj,
 	"playDB"?: PlayDB,
-	"rankKey"?: string
+	"rankKey"?: string,
+	"extraColList"?: ExColumn[]
 }
 
 const LB_NUM = false;
@@ -136,6 +77,10 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 
 	var verOffset = zeroVerOffset();
 	if (props.verOffset !== undefined) verOffset = props.verOffset;
+
+	var exColList: ExColumn[] = [];
+	if (props.extraColList !== undefined) exColList = props.extraColList;
+	const exTotal = exColList.length;
 
 	// sort state
 	const [sortId, setSortId] = useState(0);
@@ -173,18 +118,29 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 		else if (action === "view-toggle" && row !== null) viewClick(row);
 	}
 
-	const editSubmit = (timeList: TimeDat[], delList: TimeDat[]) => {
+	const editSubmit = (id: Ident, timeList: TimeDat[], delList: TimeDat[], verifList: TimeDat[]) => {
 		setEditPos(nullEditPos());
 		//editTT(editText[0], diffText(eState.oldText, editText), colList);
-		if (editObj !== null) editObj.updateTT(timeList, delList);
+		if (editObj !== null) editObj.updateTT(id, timeList, delList, verifList);
 	};
 
-	/* ----- WIDTH ------ */
+	/* ----- WIDTH ------
+		right now, colNodes isnt doing anything, but left as a stub for future use
+	*/
+	const STRAT_WEIGHT = 15;
+	const EX_WEIGHT = 6;
+	var unitWidth = 85 / ((STRAT_WEIGHT * stratTotal) + (EX_WEIGHT * exTotal));
+	var stratWidth = "" + Math.floor(STRAT_WEIGHT * unitWidth) + "%";
+	var exWidth = "" + Math.floor(EX_WEIGHT * unitWidth) + "%";
+	var colNodes: React.ReactNode[] = [<col key="a" width="15%"/>];
+	/*
 	var xdWidth = Math.floor(85 / stratTotal);
 	var tdWidth = "" + xdWidth + "%";
-	var colNodes: React.ReactNode[] = [<col key="a" width="15%"/>];
-	if (LB_NUM) colNodes.unshift(<col key="k" width="5%"/>);
-	/*for (let i = 0; i < stratTotal; i++) {
+	if (LB_NUM) colNodes.unshift(<col key="k" width="4%"/>);
+	for (const exCol of exColList) {
+		colNodes.push(<col key={ exCol.key }/>);
+	}*/
+	/* for (let i = 0; i < stratTotal; i++) {
 		colNodes.push(<col width={ "" + (xdWidth * 0.55) + "%" }/>);
 		colNodes.push(<col width={ "" + (xdWidth * 0.45) + "%" }/>);
 	}*/
@@ -196,6 +152,7 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 	var headerList = headerListColConfig(cfg);
 	var imgNodeFun = (active: boolean): React.ReactNode => (<div className="float-frame">
 		<img src="/icons/sort-icon.png" data-active={ active.toString() } className="float-icon" alt=""></img></div>);
+
 	var headerNodes: React.ReactNode[] = headerList.map((header, i) => {
 		var hNew: React.ReactNode[] = header.map((h) => h);
 		if (hNew.length > 1) hNew = hNew.map((h, i) => {
@@ -203,12 +160,15 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 			if (i !== 0) return <React.Fragment key={ i }>/{ h }<sup data-k={ c }>{ c }</sup></React.Fragment>;
 			return <React.Fragment key={ i }>{ h }<sup data-k={ c }>{ c }</sup></React.Fragment>;
 		});
-		return (<td className="time-cell" key={ header[0] + "_" + i } colSpan={ 2 } data-active={ sortActive.toString() } width={ tdWidth }
+		return (<td className="time-cell" key={ header[0] + "_" + i } colSpan={ 2 } data-active={ sortActive.toString() } width={ stratWidth }
 			onClick={ () => { if (sortActive) setSortId(i + 1) } }>{ hNew } { imgNodeFun(sortId === i + 1) }</td>);
 	});
 	headerNodes.unshift(<td className="time-cell" key="strat"  data-active={ sortActive.toString() } width="15%"
 		onClick={ () => setSortId(0) }>Strat { imgNodeFun(sortId === 0) }</td>);
 	if (LB_NUM) headerNodes.unshift(<td className="time-cell" key="#" width="5%">#</td>)
+	for (const exCol of exColList) {
+		headerNodes.push(<td className="time-cell" width={ exWidth } key={ exCol.key }>{ exCol.name }</td>);
+	}
 
 	/* ----- RECORD ROW ----- */
 
@@ -218,6 +178,9 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 	});
 	recordNodes.unshift(<td className="record-cell" key="wr">Sheet Best</td>);
 	if (LB_NUM) recordNodes.unshift(<td className="time-cell" key="#"></td>);
+	for (const exCol of exColList) {
+		recordNodes.push(<td className="time-cell" key={ exCol.key }></td>);
+	}
 
 	/* ----- TIME TABLE ROWS ----- */
 	// filter table by colums + sort table data
@@ -233,7 +196,7 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 			if (hasWritePerm(editObj.perm, userDat.id)) {
 				timeTableNodes.push(<EditRow cfg={ cfg } userDat={ userDat } pd={ playData } verOffset={ verOffset }
 					rowId={ i } editObj={ editObj } editPos={ editPos } cellClick={ cellClick }
-					submit={ editSubmit } showRowId={ LB_NUM } key="edit"></EditRow>);
+					submit={ editSubmit } showRowId={ LB_NUM } extraColList={ exColList } key="edit"></EditRow>);
 				// if we lost editing permissions, exit immediately
 			} else { setEditPos(nullEditPos()); }
 			return;
@@ -248,36 +211,14 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 		// add row
 		timeTableNodes.push(<DataRow userDat={ userDat } pd={ playData } verOffset={ verOffset } rowId={ i } showRowId={ LB_NUM }
 			expand={ vState.rowId === i } action={ action } onClick={ cellClick } endRow={ endRow } headerList={ headerList }
-			key={ keyIdent(userDat.id) } playDB={ props.playDB } rankKey={ props.rankKey }/>);
+			key={ keyIdent(userDat.id) } playDB={ props.playDB } rankKey={ props.rankKey } extraColList={ exColList }/>);
 	});
-	/*filterTable.map((userDat, i) => {
-		// -- edit case
-		if (editPos.active && editPos.rowId === i) {
-			timeTableNodes.push(<EditRow userDat={ userDat } rowId={ i } editPos={ editPos }
-				cellClick={ cellClick } key={ i }></EditRow>);
-			return;
-		}
-		// checks if ROW has data to expand
-		var canExpandRow = false;
-		userDat.timeRow.map((multiDat) => {
-			if (multiDat !== null && multiDat.length > 1) canExpandRow = true;
-		});
-		// determine click action
-		var action = "none"
-		if (editPerm.canEdit && hasWritePerm(editPerm, userDat.id)) action = "edit";
-		else if (canExpandRow) action = "view-toggle";
-		// special CSS for last row [TODO: refactor] 
-		var datarow = "yes";
-		if (i === timeTable.length - 1) datarow = "no";
-		// -- expanded view case
-		if (vState.rowId === i) {
-			timeTableNodes = timeTableNodes.concat(FullDataRow(userDat, verOffset, i, cellClick));
-		// -- normal case
-		} else {
-			timeTableNodes.push(<DataRow userDat={ userDat } verOffset={ verOffset } rowId={ i }
-				action={ action } onClick={ cellClick } datarow={ datarow } key={ keyIdent(userDat.id) }/>);
-		}
-	});*/
+
+	if (props.emptyWarn && editObj === null && timeTableNodes.length === 0) {
+		timeTableNodes.push(<tr key="ext-special"><td className="time-special-note" colSpan={ headerNodes.length }>
+			Extensions-Only Star (Toggle Extensions On)
+		</td></tr>);
+	}
 
 	/* ----- INITIAL SUBMIT ROW ----- */
 	
@@ -287,7 +228,7 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 	if (editObj !== null) {
 		if (editObj.perm.newId !== null) newPerm = editObj.perm.newId;
 		for (const userDat of filterTable) {
-			if (hasWritePerm(editObj.perm, userDat.id)) {
+			if (selfWritePerm(editObj.perm, userDat.id)) {
 				canSubmitNew = false;
 				break;
 			}
@@ -300,12 +241,16 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 		var exRowNodes: React.ReactNode[] = [];
 		for (let i = 0; i < stratTotal; i++) {
 			exRowNodes.push(<td className="init-cell" key={ i } colSpan={ 2 } 
-				onClick={ () => editClick(null, i, /*Array(stratTotal + 1).fill(""),*/ 0) }></td>);
+				onClick={ () => editClick(null, i, 0) }></td>);
 		}
 		var nText = strIdNickPD(playData, dropIdent(newPerm));
 		//if (nText === "@me") nText = "New";
 		exRowNodes.unshift(<td className="init-cell" key="name"
-			onClick={ () => editClick(null, 0, /*Array(stratTotal + 1).fill(""),*/ 0) }><i>{ nText }</i></td>);
+			onClick={ () => editClick(null, 0, 0) }><i>{ nText }</i></td>);
+		if (LB_NUM) exRowNodes.unshift(<td className="init-cell" key="num" onClick={ () => editClick(null, 0, 0) }>-</td>);
+		for (const exCol of exColList) {
+			exRowNodes.push(<td className="init-cell" key={ exCol.key } onClick={ () => editClick(null, 0, 0) }></td>);
+		}
 		//exRowNodes.push(<td className="misc-cell" key="act"></td>);
 		timeTableNodes.push(<tr className="time-row" key="init-submit">{ exRowNodes }</tr>);
 	// -- edit case
@@ -314,8 +259,8 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 			if (editObj === null) throw ("BUG: Entered edit state without edit mode object.");
 			var newDat = freshUserDat(stratTotal, dropIdent(newPerm));
 			timeTableNodes.push(<EditRow cfg={ cfg } userDat={ newDat } pd={ playData } verOffset={ verOffset }
-				rowId={ null } showRowId={ false } editObj={ editObj } editPos={ editPos } cellClick={ cellClick }
-				submit={ editSubmit } key="edit"></EditRow>);
+				rowId={ null } showRowId={ LB_NUM } editObj={ editObj } editPos={ editPos } cellClick={ cellClick }
+				submit={ editSubmit } extraColList={ exColList } key="edit"></EditRow>);
 			// if we lost editing permission, exit immediately
 		} else { setEditPos(nullEditPos()); }
 	}

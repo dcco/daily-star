@@ -116,6 +116,7 @@ export type StarDesc = {
 	"id": string,
 	"info": StarInfo,
 	"alt": null | StarAltDef,
+	"100c": boolean,
 	"def": "na" | "jp" | "us" | "offset" | "spec" | null,
 	"variants": string[] | undefined
 };
@@ -302,6 +303,7 @@ function buildStarDef(stageId: number, starDef: RawStarDef): StarDef
 		"id": starDef.id,
 		"info": starDef.info,
 		"alt": starDef.alt,
+		"100c": starDef["100c"],
 		"def": starDef.def,
 		"offset": buildOffsetDat(starDef.offset),
 		"secondFlag": secondFlag,

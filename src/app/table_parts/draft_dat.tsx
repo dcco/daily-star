@@ -49,6 +49,7 @@ function toRowDef(rowInfo: RowInfo): RowDef {
 		  * link: current link URL input (if any)
 		  * note: current note (if any)
 		  * row: stores row information
+		  * verifFlag: verification status
 		  * delFlag: cell scheduled for deletion
 	*/
 
@@ -57,6 +58,7 @@ export type DraftDat = {
 	"link": string,
 	"note": string,
 	"rowInfo": RowInfo,
+	"verifFlag": string,
 	"delFlag": TimeDat | null
 };
 
@@ -65,7 +67,7 @@ export function toTimeDat(draftDat: DraftDat, verOffset: VerOffset): TimeDat | n
 	var time = rawMS(draftDat.text);
 	if (draftDat.text === "" || time === null) return null;
 	var rowDef = toRowDef(draftDat.rowInfo);
-	var timeDat = newTimeDat(time, draftDat.link, draftDat.note, rowDef);
+	var timeDat = newTimeDat(time, draftDat.link, draftDat.note, draftDat.verifFlag, rowDef);
 	applyVerOffset(timeDat, verOffset);
 	return timeDat;
 }
@@ -73,12 +75,14 @@ export function toTimeDat(draftDat: DraftDat, verOffset: VerOffset): TimeDat | n
 export function staticDraftDat(timeDat: TimeDat): DraftDat {
 	var link = (timeDat.link === null ? "" : timeDat.link);
 	var note = (timeDat.note === null ? "" : timeDat.note);
+	var verifFlag = (timeDat.verifFlag === null ? "no" : timeDat.verifFlag);
 	var rowDef = timeDat.rowDef;
 	return {
 		"text": formatTime(timeDat.rawTime),
 		"link": link,
 		"note": note,
 		"rowInfo": staticRow(timeDat.rowDef),
+		"verifFlag": verifFlag,
 		"delFlag": null
 	};
 }
@@ -89,6 +93,7 @@ export function emptyDraftDat(vs: VarSpace): DraftDat {
 		"link": "",
 		"note": "",
 		"rowInfo": dynRow(vs.stratName, "none", defVerVarSpace(vs), {}),
+		"verifFlag": "no",
 		"delFlag": null
 	};
 }
@@ -143,6 +148,10 @@ export function setVerDraftDat(dat: DraftDat, ver: VerF) {
 export function setVarDraftDat(dat: DraftDat, group: string, i: number) {
 	if (!dat.rowInfo.dyn) throw("Attempted to set variant on static draft datum.");
 	dat.rowInfo.variantSel[group] = [i, group];
+}
+
+export function setVerifDraftDat(dat: DraftDat, verifFlag: string) {
+	dat.verifFlag = verifFlag;
 }
 
 export function isCompleteDraftDat(vs: VarSpace, dat: DraftDat): boolean {

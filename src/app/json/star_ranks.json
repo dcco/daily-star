@@ -12428,6 +12428,109 @@
       "skillMetric": 0.04884300462798148,
       "confidence": 6,
       "rankMethod": "normal"
+    },
+    "Open": {
+      "name": "Open",
+      "times": {
+        "Mario": {
+          "sr": "time",
+          "time": {
+            "time": 1886,
+            "alt": null
+          },
+          "method": {
+            "m": "perc",
+            "rankId": 19,
+            "total": 211
+          }
+        },
+        "Grandmaster": {
+          "sr": "time",
+          "time": {
+            "time": 1903,
+            "alt": null
+          },
+          "method": {
+            "m": "perc",
+            "rankId": 51,
+            "total": 211
+          }
+        },
+        "Master": {
+          "sr": "time",
+          "time": {
+            "time": 1926,
+            "alt": null
+          },
+          "method": {
+            "m": "perc",
+            "rankId": 91,
+            "total": 211
+          }
+        },
+        "Diamond": {
+          "sr": "time",
+          "time": {
+            "time": 1950,
+            "alt": null
+          },
+          "method": {
+            "m": "perc",
+            "rankId": 130,
+            "total": 211
+          }
+        },
+        "Platinum": {
+          "sr": "time",
+          "time": {
+            "time": 1976,
+            "alt": null
+          },
+          "method": {
+            "m": "perc",
+            "rankId": 154,
+            "total": 211
+          }
+        },
+        "Gold": {
+          "sr": "time",
+          "time": {
+            "time": 2036,
+            "alt": null
+          },
+          "method": {
+            "m": "perc",
+            "rankId": 177,
+            "total": 211
+          }
+        },
+        "Silver": {
+          "sr": "time",
+          "time": {
+            "time": 2176,
+            "alt": null
+          },
+          "method": {
+            "m": "force"
+          }
+        },
+        "Bronze": {
+          "sr": "time",
+          "time": {
+            "time": 2316,
+            "alt": null
+          },
+          "method": {
+            "m": "force"
+          }
+        },
+        "Iron": {
+          "sr": "none"
+        }
+      },
+      "skillMetric": 0,
+      "confidence": 0,
+      "rankMethod": "manual"
     }
   },
   "7_1": {

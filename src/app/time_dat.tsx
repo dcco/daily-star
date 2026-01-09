@@ -109,6 +109,10 @@ export function formatFrames(frames: number): string {
 		* adjustList: string[] - list of adjustments made from the raw time
 		* link: string | null
 		* note: string | null
+		* verifFlag : string | null -
+			> null : verification is irrelevant
+			> 'yes' | 'maybe' | 'no' : are the main possibilities.
+				most cells are marked "maybe" to indicate that they are assumed valid, but un-confirmed
 		* rowDef: row_def - xcam row represented by the time cell
 		* origin: number | null - unique submission identifier (used for deletion)
 	*/
@@ -120,11 +124,12 @@ export type TimeDat = {
 	"adjustList": string[],
 	"link": string | null,
 	"note": string | null,
+	"verifFlag": string | null,
 	"rowDef": RowDef,
 	"origin": number | null
 }
 
-export function newTimeDat(time: number, link: string | null, note: string | null, rowDef: RowDef): TimeDat
+export function newTimeDat(time: number, link: string | null, note: string | null, verifFlag: string | null, rowDef: RowDef): TimeDat
 {
 	if (link === undefined || link === "") link = null;
 	if (note === undefined || note === "") note = null;
@@ -136,6 +141,7 @@ export function newTimeDat(time: number, link: string | null, note: string | nul
 		"adjustList": [],
 		"link": link,
 		"note": note,
+		"verifFlag": verifFlag,
 		"rowDef": rowDef,
 		"origin": null
 	};
@@ -151,6 +157,7 @@ export function adjustTimeDat(time: number, source: TimeDat): TimeDat
 		"adjustList": source.adjustList.map((a) => a),
 		"link": null,
 		"note": null,
+		"verifFlag": null,
 		"rowDef": source.rowDef,
 		"origin": null
 	}
@@ -170,6 +177,7 @@ export function resetTimeDat(source: TimeDat): TimeDat
 		"adjustList": [],
 		"link": null,
 		"note": null,
+		"verifFlag": null,
 		"rowDef": source.rowDef,
 		"origin": null
 	}
@@ -177,7 +185,7 @@ export function resetTimeDat(source: TimeDat): TimeDat
 
 export function maxTimeDat(rowDef: RowDef): TimeDat
 {
-	return newTimeDat(999900, null, null, rowDef);
+	return newTimeDat(999900, null, null, null, rowDef);
 }
 
 export function formatTimeDat(timeDat: TimeDat): string {

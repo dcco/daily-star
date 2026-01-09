@@ -1,5 +1,5 @@
 
-import { StarLoadFun } from '../api_season'
+import { StarLoadFun } from '../api_history'
 
 import { zeroRowDef } from '../row_def'
 import { TimeDat, maxTimeDat } from '../time_dat'
@@ -32,6 +32,7 @@ export function newUserScore(ref: StarRef, id: Ident, timeDat: TimeDat): UserSco
 		"stageId": ref.stageId,
 		"starId": ref.starId,
 		"alt": ref.alt,
+		"100c": ref["100c"],
 		"id": id,
 		"timeDat": timeDat,
 		"rank": [-1, 0],
@@ -46,19 +47,87 @@ export function rankPts(rank: [number, number]): number
 	return (rank[1] - rank[0]) / rank[1];
 }
 
+function getUserRankSet(data: StxStarData, stratName: string | null): [Ident, StratScore][]
+{
+	// find best time for all users (either globally, or for given strat)
+	var bestList: [Ident, StratScore][] = [];
+	data.timeTable.map((userDat) => {
+		var bestDat: TimeDat | null = null;
+		for (const multiDat of userDat.timeRow) {
+			if (multiDat === null) continue;
+			for (const timeDat of multiDat) {
+				if (bestDat === null || timeDat.time < bestDat.time) {
+					if (stratName === null || timeDat.rowDef.name === stratName) bestDat = timeDat;
+				}
+			}
+		}
+		if (bestDat !== null) bestList.push([userDat.id, {
+			"timeDat": bestDat,
+			"rank": [-1, 0],
+			"scorePts": 0
+		}]);
+	})
+	// sort by time, generate score
+	bestList.sort(function (a, b) { return a[1].timeDat.time - b[1].timeDat.time; });
+	// assign ranks
+	var rank = 0;
+	var lastTime = 999900;
+	bestList.map((bestScore, ix) => {
+		const bestDat = bestScore[1];
+		if (bestDat.timeDat.time !== lastTime) {
+			lastTime = bestDat.timeDat.time;
+			rank = ix;
+		}
+		var rankTotal = bestList.length;
+		//if (rankTotal < 100) rankTotal = 100;
+		bestDat.rank = [rank, rankTotal];
+		bestDat.scorePts = rankPts(bestDat.rank);
+	});
+	return bestList;
+}
+
+function getUserScoreList(data: StxStarData): UserScore[]
+{
+	// calculate scores for each player + each strat
+	var [stratSet, indexSet] = toSetColList(data.colList);
+	var bestList = getUserRankSet(data, null);
+	var stratBestTable: [string, [Ident, StratScore][]][] = Object.entries(stratSet).map(function (_strat) {
+		return [_strat[0], getUserRankSet(data, _strat[0])];
+	})
+	// initialize user scores
+	var uMap: { [key: string]: UserScore } = {};
+	for (const [id, tempScore] of bestList) {
+		var newScore = newUserScore(data, id, tempScore.timeDat);
+		newScore.rank = tempScore.rank;
+		newScore.scorePts = tempScore.scorePts;
+		uMap[keyIdent(id)] = newScore;
+	}
+	// fill in strat map with remainder of strats
+	for (const [stratName, stratBestList] of stratBestTable) {
+		for (const [id, tempScore] of stratBestList) {
+			var score = uMap[keyIdent(id)];
+			score.stratMap[stratName] = tempScore;
+		}
+	}
+	// flatten and return
+	var finalList = Object.entries(uMap).map((entry) => entry[1]);
+	finalList.sort(function (a, b) { return a.timeDat.time - b.timeDat.time; });
+	return finalList;
+}
+/*
 function getUserScoreList(data: StxStarData): UserScore[]
 {
 	// calculate best time for each player
 	var [stratSet, indexSet] = toSetColList(data.colList);
 	var bestList: UserScore[] = data.timeTable.map((userDat) => {
-		var stratMap: { [key: string]: StratScore } = {};
+		//var stratMap: { [key: string]: StratScore } = {};
 		var bestDat = maxTimeDat(zeroRowDef("Open"));
 		for (const multiDat of userDat.timeRow) {
 			if (multiDat === null) continue;
-			var bestStrat: TimeDat | null = null;
+			//var bestStrat: TimeDat | null = null;
 			for (const timeDat of multiDat) {
 				if (timeDat.time < bestDat.time) bestDat = timeDat;
-				if (bestStrat === null || timeDat.time < bestStrat.time) bestStrat = timeDat;
+				//if (bestStrat === null || timeDat.time < bestStrat.time) bestStrat = timeDat;
 			}
 			if (bestStrat !== null) stratMap[bestStrat.rowDef.name] = {
 				"timeDat": bestStrat,
@@ -75,9 +144,10 @@ function getUserScoreList(data: StxStarData): UserScore[]
 		}
 		// fill out best scores + per strat scores
 		var score = newUserScore(data, userDat.id, bestDat);
-		score.stratMap = stratMap;
+		score.stratMap = {};
 		return score;
 	});
+	// calculate rank per individual strat
 	// filter + sort
 	bestList = bestList.filter(function (a) { return a.timeDat.time < 999900; });
 	bestList.sort(function (a, b) { return a.timeDat.time - b.timeDat.time; });
@@ -95,7 +165,7 @@ function getUserScoreList(data: StxStarData): UserScore[]
 		bestDat.scorePts = rankPts(bestDat.rank);
 	});
 	return bestList;
-}
+}*/
 
 function mergeUserScoreList(l1: UserScore[], l2: UserScore[]): UserScore[]
 {
@@ -206,6 +276,7 @@ export function newIncScore(ref: StarRef, total: number): IncScore
 		"stageId": ref.stageId,
 		"starId": ref.starId,
 		"alt": ref.alt,
+		"100c": ref["100c"],
 		"timeDat": null,
 		"rank": null,
 		"playTotal": total
@@ -234,7 +305,7 @@ export function fullScoreList(scoreList: UserScore[], altFlag: boolean): (IncSco
 		user stats: user score/stats for a pool of stars
 	*/
 
-type UserStats = {
+export type UserStats = {
 	id: Ident,
 	starList: UserScore[],
 	complete: { [key: string]: number },
@@ -265,6 +336,21 @@ export function calcTopXStats(userSx: UserStats, x: number, descale: boolean): n
 	return (topX * 100) / x;
 }
 
+export function calcTop100cStats(userSx: UserStats, x: number): number
+{
+	// assumes that user stats are already sorted during the standards function
+	var ix = 0;
+	var topX = 0;
+	for (const star of userSx.starList) {
+		if (ix >= x) break;
+		if (star["100c"]) {
+			topX = topX + star.scorePts;
+			ix = ix + 1;
+		}
+	}
+	return (topX * 100) / x;
+}
+
 export function filterUserStats(userSx: UserStats, codeList: [number, string][]): UserStats
 {
 	var codeMap: { [key: string]: number } = {};
@@ -287,6 +373,20 @@ export function filterUserStats(userSx: UserStats, codeList: [number, string][])
 		if (userSx.incomplete[key]) newSx.incomplete[key] = userSx.incomplete[key];
 	};
 	return newSx;
+}
+
+export function getStarUserStats(userSx: UserStats, stageId: number, starId: string, alt: string | null): UserScore | null
+{
+	var code = stageId + "_" + starId;
+	//if (alt !== null) code = code + "_" + alt;
+	if (userSx.complete[code] !== undefined) {
+		for (const star of userSx.starList) {
+			if (star.stageId === stageId && star.starId === starId) {
+				if (alt === null || star.alt.state === alt) return star;
+			}
+		}
+	}
+	return null;
 }
 
 /*
@@ -389,10 +489,10 @@ export function fillStandardsStatMap(statMap: UserStatMap, descale: boolean)
 		main user stat map calc function
 	*/
 
-export function calcUserScoreMap(starSet: [StarDef, number][][], f: StarLoadFun, extFlag: boolean): [StxStarMap, UserScoreMap]
+export function calcUserScoreMap(starSet: [StarDef, number][][], f: StarLoadFun, extFlag: boolean, verifFlag: boolean): [StxStarMap, UserScoreMap]
 {
 	// for every stage/star, collect records + times
-	var starMap = getStarTimeMap(f, starSet, extFlag);
+	var starMap = getStarTimeMap(f, starSet, extFlag, verifFlag);
 	// calc user scores from star map data
 	var scoreMap = _calcUserScoreMap(starSet, starMap);
 	return [starMap, scoreMap];

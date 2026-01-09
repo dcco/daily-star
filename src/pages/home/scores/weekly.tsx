@@ -4,8 +4,8 @@ import { MultiBoard } from '../../../app/rx_multi_board'
 
 export default function() {
 	const router = useRouter();
-	var slug1 = "";
-	if (typeof router.query.star === "string") slug1 = router.query.star;
+	var slug1: string = "";
+	if (typeof router.query.id === "string") slug1 = router.query.id;
 	var slug2 = "";
 	if (typeof router.query.season === "string") slug2 = router.query.season;
 	// slug combination
@@ -14,9 +14,8 @@ export default function() {
 		if (slug1 === "") slug = "null;" + slug2;
 		else slug = slug1 + ";" + slug2; 
 	}
-	var subId = 3;
 	return (<main>
 		<div className="header">Daily Star</div>
-		<MultiBoard boardId={ 0 } subId={ subId } slug={ slug } key={ slug }/>
+		<MultiBoard boardId={ 0 } subId={ 11 } slug={ slug } key={ slug }/>
 	</main>);
 }

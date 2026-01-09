@@ -4,12 +4,13 @@ export function S3ComingSoon(props: {}): React.ReactNode
 	return <div className="about-cont">
 		<div className="para">
 			<div className="h-em">Update:</div>
-			Daily Star is returning Soon™. Am actively working on it again,
-			will update with more details soon.
-
-			Permanent news archive can be found	<a
-				href="https://docs.google.com/document/d/1vbOHjkexW9vo1kW3MSxH8EZGoMxq4FULfNoyYQcOLHI/edit?usp=sharing">here</a>.
-			I will also use this for quicker (minor) updates because it's more convenient than editing the website.
+			Daily Star will resume January 11, 2026.
+			Permanent news archive can be found	<a href="https://docs.google.com/document/d/1vbOHjkexW9vo1kW3MSxH8EZGoMxq4FULfNoyYQcOLHI/edit?usp=sharing">here</a>.
+		</div>
+		<div className="para">
+			"Beta ranks" have been moved <a className="bright" href="/beta">here</a>.
+			(They will remain accessible through the URL and eventually through an "Extras" section.
+				I have no plans to integrate them into the main viewer.)
 		</div>
 	</div>
 }

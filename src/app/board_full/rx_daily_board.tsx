@@ -1,8 +1,12 @@
 
 import React, { useState, useEffect } from 'react'
 
-import { PlayData, LocalPD } from '../play_data'
+import { loadTimes, postNewTimes } from '../api_live'
 import { G_DAILY, GlobNorm, readCodeList } from '../api_season'
+import { updateCurrentHistory } from '../api_history'
+
+import { PlayData, LocalPD } from '../play_data'
+import { LiveStarIface } from "../table_parts/rx_live_table"
 import { AuthArea } from './rx_auth_area'
 import { DSEditBoard } from './rx_ds_edit_board'
 
@@ -27,19 +31,18 @@ export function DailyBoard(props: DailyBoardProps): React.ReactNode {
 	const setPlayData = props.setPlayData;
 	const reloadPlayData = props.reloadPlayData;
 	const ds = G_DAILY;
-	//const [ds, setDSObj] = useState(null as DailyStarObj | null);
-	//const [okFlag, setOkFlag] = useState(true);
 
-	// initialize daily star data once
-	/*useEffect(() => {
-		const f = async () => {
-			var newDS = await loadToday();
-			if (newDS === null) setOkFlag(false);
-			else setDSObj(newDS);
-		};
-		f();
-	}, []);*/
-
+	// daily star API function
+	// - this should really be at top-level, but for now we're doing it here
+	// - since G_HISTORY is a global anyway
+	const liveAPI: LiveStarIface = {
+		"loadTimes": async function (stageId, starDef, today) {
+			const newTimeObj = await loadTimes(stageId, starDef, today);
+			updateCurrentHistory(stageId, starDef, newTimeObj);
+			return newTimeObj;
+		},
+		"postNewTimes": postNewTimes
+	};
 
 	// main display content toggle
 	var failCode = 0;
@@ -67,7 +70,7 @@ export function DailyBoard(props: DailyBoardProps): React.ReactNode {
 				//var starIdList = starGlob.staridlist.split(',');
 				mainNode = <DSEditBoard startDate={ ds.season.startdate }
 					day={ dayOffset } weekly={ starGlob.weekly }
-					starCodeList={ starCodeList }
+					starCodeList={ starCodeList } api={ liveAPI }
 					//stageId={ starGlob.stageid } starIdList={ starIdList }
 					playData={ playData } reloadPlayData={ reloadPlayData }/>;
 			} else if (starGlob.special === "skip") {
@@ -88,12 +91,15 @@ export function DailyBoard(props: DailyBoardProps): React.ReactNode {
 	}
 
 	var msgNode: React.ReactNode = null;
-	if (message !== null) msgNode = <div className="msg-cont">{ message }</div>;
+	if (message !== null && message !== "") msgNode = <div className="msg-cont">{ message }</div>;
+
+	/*
+		<div className="msg-cont">Take the <a className="msg-link" href={ "https://forms.gle/BHpptf6or9hoYXDW9" }>Daily Star Survey</a>!
+			(Feedback will be used for scores next season)</div><br/>
+	*/
 
 	return (
 		<div className="super-cont">
-			<div className="msg-cont">Take the <a className="msg-link" href={ "https://forms.gle/BHpptf6or9hoYXDW9" }>Daily Star Survey</a>!
-				(Feedback will be used for scores next season)</div><br/>
 			{ msgNode }
 			{ mainNode }
 			<div className="sep"><hr/></div>

@@ -1,8 +1,13 @@
 
 import { Ident, AuthIdent, keyIdent } from './time_table'
 
-export type NickMap = {
-	[key: string]: string
+export type PlayDat = {
+	"nick": string,
+	"perm": string | null
+}
+
+export type PlayDatMap = {
+	[key: string]: PlayDat 
 };
 
 	/*
@@ -25,6 +30,7 @@ export type NickMap = {
 			* userId: also stores the remote id. in cases where the user is changed, the
 				remote id is simply invalidated
 			* nick: current nickname - null if not set by user (can be replaced by remote result)
+			* perm: personal mod status
 			* dirtyFlag: flag indicating whether nickname is out of date with the remote DB
 		> remote
 			[remoteId]: stored in the userId for convenience sake
@@ -32,15 +38,18 @@ export type NickMap = {
 				in case other nickname cases are ever required
 	*/
 
+export type DSPerm = "admin" | "mod" | "user"
+
 export type LocalPD = {
 	"userId": AuthIdent | null,
 	"nick": string | null,
+	"perm": DSPerm
 	"dirtyFlag": boolean
 }
 
 export type PlayData = {
 	"local": LocalPD,
-	"nickMap": NickMap
+	"nickMap": PlayDatMap
 };
 
 export function newPlayData(): PlayData
@@ -49,6 +58,7 @@ export function newPlayData(): PlayData
 		"local": { 
 			"userId": null,
 			"nick": null,
+			"perm": "user",
 			"dirtyFlag": false
 		},
 		"nickMap": {}
@@ -66,20 +76,25 @@ export function setUserLD(ld: LocalPD, userId: AuthIdent | null): LocalPD
 	return {
 		"userId": userId,
 		"nick": null,
+		"perm": "user",
 		"dirtyFlag": false
 	};
 }
 
 export function setUserNickLD(ld: LocalPD, nick: string, dirty: boolean): LocalPD
 {
+/*	var perm: DSPerm = "user";
+	if (perm === "mod") perm = "mod";
+	else if (perm === "admin") perm = "admin";*/
 	return {
 		"userId": ld.userId,
 		"nick": nick,
+		"perm": ld.perm,
 		"dirtyFlag": dirty
 	};
 }
 
-export function setNickMapPD(pd: PlayData, nickMap: NickMap): PlayData
+export function setNickMapPD(pd: PlayData, nickMap: PlayDatMap): PlayData
 {
 	return {
 		"local": pd.local,
@@ -96,14 +111,19 @@ export function setDirtyPD(ld: LocalPD): LocalPD
 	};
 }*/
 
-function canonNickPD(pd: PlayData, userId: AuthIdent, remoteId: string): string | null
+function canonNickPD(pd: PlayData, userId: AuthIdent, remoteId: string): PlayDat | null
 {
-	if (pd.local.nick !== null) return pd.local.nick;
-/*	var localNick = pd.nickMap["google@" + userId.name];
-	if (localNick !== undefined) return localNick;*/
-	var remoteNick = pd.nickMap["remote@" + remoteId];
-	if (remoteNick !== undefined) return remoteNick;
+	if (pd.local.nick !== null) return { "nick": pd.local.nick, "perm": pd.local.perm };
+	var remotePX = pd.nickMap["remote@" + remoteId];
+	if (remotePX !== undefined) return remotePX;
 	return null;
+}
+
+function readPerm(perm: string | null): DSPerm
+{
+	if (perm === 'mod') return "mod";
+	else if (perm === 'admin') return "admin";
+	return "user";
 }
 
 export function linkUserRemotePD(pd: PlayData, remoteId: string): PlayData
@@ -111,11 +131,12 @@ export function linkUserRemotePD(pd: PlayData, remoteId: string): PlayData
 	// synchronize nicknames
 	if (pd.local.userId !== null) {
 		pd.local.userId.remoteId = remoteId;
-		var canonNick = canonNickPD(pd, pd.local.userId, remoteId);
-		if (canonNick !== null) {
-			pd.local.nick = canonNick;
-			pd.nickMap["google@" + pd.local.userId.name] = canonNick;
-			pd.nickMap["remote@" + remoteId] = canonNick;
+		var canonPX = canonNickPD(pd, pd.local.userId, remoteId);
+		if (canonPX !== null) {
+			pd.local.nick = canonPX.nick;
+			pd.local.perm = readPerm(canonPX.perm);
+			pd.nickMap["google@" + pd.local.userId.name] = canonPX;
+			pd.nickMap["remote@" + remoteId] = canonPX;
 		}
 	}
 	// return new player data obj
@@ -144,7 +165,7 @@ export function setLocalPD(pd: PlayData, local: LocalPD): PlayData
 function lookupNickPD(pd: PlayData, id: Ident): string | null
 {
 	var key = keyIdent(id);
-	if (pd.nickMap[key]) return pd.nickMap[key];
+	if (pd.nickMap[key]) return pd.nickMap[key].nick;
 	return null;
 }
 

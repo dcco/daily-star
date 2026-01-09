@@ -1,10 +1,10 @@
 import { G_SHEET } from '../api_xcam'
 
+import { StarLoadFun } from '../api_history'
 import { TimeDat } from '../time_dat'
 import { keyIdent } from '../time_table'
 import { StarDef, newFilterState, colListStarDef,
 	verOffsetStarDef, stratOffsetStarDef } from '../org_star_def'
-import { xcamTimeTable } from '../xcam_time_table'
 
 import { getRank, betterRank } from '../standards/strat_ranks'
 
@@ -21,25 +21,27 @@ export type UserStarRankMap = {
 export type UserRankMap = {
 	[key: string]: UserStarRankMap
 };
-
+/*
 export type UserRankStore = {
 	bestMap: UserRankMap,
 	extMap: UserRankMap
-};
+};*/
 
-function addStarUserRankMap(starKey: string, starDef: StarDef, rankMap: UserRankMap, extFlag: boolean, altState: [boolean, boolean])
+function addStarUserRankMap(f: StarLoadFun, stageId: number, starDef: StarDef,
+	rankMap: UserRankMap, virtFlag: boolean, extFlag: boolean, altState: [boolean, boolean])
 {
+	const starKey = stageId + "_" + starDef.id;
 	// build filter state
 	var varTotal = 0;
 	if (starDef.variants) varTotal = starDef.variants.length;
-	var fs = newFilterState(altState, false, varTotal);
+	var fs = newFilterState(altState, virtFlag, varTotal);
 	fs.verState = [true, true];
 	fs.extFlag = extFlag;
 	// build time table
 	var colList = colListStarDef(starDef, fs);
 	var verOffset = verOffsetStarDef(starDef, fs);
 	var stratOffset = stratOffsetStarDef(starDef, fs);
-	var timeTable = xcamTimeTable(colList, verOffset, stratOffset);
+	var timeTable = f(stageId, starDef, colList, verOffset, stratOffset);
 	// iterate through time table
 	for (const userDat of timeTable)
 	{
@@ -78,7 +80,7 @@ function combStarUserRankMap(starKey: string, rankMap: UserRankMap)
 	}
 }
 
-export function calcUserRankMap(starSet: [StarDef, number][][], extFlag: boolean): UserRankMap
+export function calcUserRankMap(f: StarLoadFun, starSet: [StarDef, number][][], virtFlag: boolean, extFlag: boolean): UserRankMap
 {
 	var rankMap: UserRankMap = {};
 	// for each star
@@ -99,19 +101,19 @@ export function calcUserRankMap(starSet: [StarDef, number][][], extFlag: boolean
 			// add rank stats
 			var mainAlt: [boolean, boolean] = [true, true];
 			if (hasAlt) mainAlt = [true, false];
-			addStarUserRankMap(baseKey, starDef, rankMap, extFlag, mainAlt);
-			if (hasAlt) addStarUserRankMap(baseKey, starDef, rankMap, extFlag, [false, true]);
+			addStarUserRankMap(f, i, starDef, rankMap, virtFlag, extFlag, mainAlt);
+			if (hasAlt) addStarUserRankMap(f, i, starDef, rankMap, virtFlag, extFlag, [false, true]);
 			// complete the user rank map
 			if (canComb) combStarUserRankMap(baseKey, rankMap);
 		}
 	}
 	return rankMap;
 }
-
+/*
 export function calcUserRankStore(starSet: [StarDef, number][][]): UserRankStore
 {
 	return {
 		"bestMap": calcUserRankMap(starSet, false),
 		"extMap": calcUserRankMap(starSet, true)
 	};
-}
+}*/

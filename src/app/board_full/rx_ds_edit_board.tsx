@@ -2,20 +2,23 @@
 import React, { useState, useEffect, useRef } from 'react'
 import orgData from '../json/org_data.json'
 
-import { TTLoadType } from '../api_live'
-import { GlobObj, dateRawEST, dateAndOffset, dispDate } from '../api_season'
+import { getLoadType, loadTimes, postNewTimes } from '../api_live'
+import { G_HISTORY, dateRawEST, dateAndOffset, dispDate } from '../api_history'
 import { G_SHEET } from '../api_xcam'
 
 import { Ident, keyIdent } from '../time_table'
 import { PlayData } from '../play_data'
 import { newExtFilterState, copyFilterState,
 	orgStarId, orgStarDef, verOffsetStarDef } from '../org_star_def'
+import { ExColumn } from '../table_parts/ex_column'
 import { PlayDB } from '../table_parts/rx_star_row'
-import { LiveStarTable } from '../table_parts/rx_live_table'
+import { LiveStarIface } from '../table_parts/rx_live_table'
 import { MenuOpt } from '../board_simple/rx_menu_opt'
 import { VerToggle } from '../board_simple/rx_ver_toggle'
-import { VariantToggle } from '../board_simple/rx_variant_toggle'
+import { VerifToggle } from '../board_simple/rx_verif_toggle'
+import { scoreColumn } from '../stats/stat_columns'
 import { Countdown } from './rx_countdown'
+import { DSSubBoard } from './rx_ds_sub_board'
 
 type CountMap = {
 	[key: string]: Ident[]
@@ -44,6 +47,8 @@ function totalCountMap(cm: CountMap): number {
 	return Object.entries(nm).length;
 }
 
+
+
 	/*
 		######################
 		DAILY STAR LEADERBOARD
@@ -56,6 +61,7 @@ type DSEditBoardProps = {
 	"startDate": string,
 	"day": number,
 	"weekly": boolean,
+	"api": LiveStarIface,
 	"starCodeList": [number, string][],
 	//"stageId": number,
 	//"starIdList": string[],
@@ -121,6 +127,10 @@ export function DSEditBoard(props: DSEditBoardProps): React.ReactNode {
 		setFS(ns);
 	}
 
+	// verification toggle
+	var [verifFlag, setVerifFlag] = useState(false);
+	var verifNode = <VerifToggle state={ verifFlag } toggle={ () => { setVerifFlag(!verifFlag) } }/>;
+
 	// version toggle node (enable when relevant)
 	/*var verToggle = <div></div>;
 	if (starDef0.def !== "na") {
@@ -138,7 +148,7 @@ export function DSEditBoard(props: DSEditBoardProps): React.ReactNode {
 	}
 
 	// variant information
-	var varContList = starDefList.map((starDef, i) => {
+	//var varContList = starDefList.map((starDef, i) => {
 		/*var varContNode: React.ReactNode = <div></div>;
 		if (starDef.variants && starDef.variants.length > 0) {
 			var vstr: React.ReactNode[] = ["Variants: "];
@@ -152,9 +162,9 @@ export function DSEditBoard(props: DSEditBoardProps): React.ReactNode {
 			</div>);
 		}
 		return varContNode;*/
-		return <VariantToggle variants={ starDef.variants }
+	/*	return <VariantToggle variants={ starDef.variants }
 			state={ fs.varFlagList } toggle={ function() {} }></VariantToggle>;
-	});
+	});*/
 
 	/*var varTotal = 0;
 	if (starDef.variants) varTotal = starDef.variants.length;*/
@@ -172,13 +182,12 @@ export function DSEditBoard(props: DSEditBoardProps): React.ReactNode {
 	};
 
 	// week data (changes the countdown for the weekly 100c)
-	var loadType: TTLoadType = ["today"];
+	var loadType = getLoadType(props.startDate, props.day, props.weekly);
 	var dateNode1: React.ReactNode = <div className='label-cont'>
 		{ dispDate(dateAndOffset(props.startDate, props.day)) }</div>;
 	var dateNode2: React.ReactNode = <Countdown endTime={ dateRawEST(props.startDate, props.day, 1) }/>;
 	if (props.weekly) {
 		var rawDate = dateAndOffset(props.startDate, props.day);
-		loadType = ["week", rawDate.toISOString().split('T')[0]];
 		var dt1 = dispDate(rawDate);
 		var dt2 = dispDate(dateAndOffset(props.startDate, props.day + 6));
 		dateNode1 = <div className="row-wrap ds-cont">
@@ -190,8 +199,8 @@ export function DSEditBoard(props: DSEditBoardProps): React.ReactNode {
 
 	// daily star player list (currently we are just using xcam data)
 	var playNameList: string[] = [];
-	if (G_SHEET.userMap !== null) {
-		playNameList = Object.entries(G_SHEET.userMap.stats).map(([k, v]) => v.id.name);
+	if (G_SHEET.scoreData !== null) {
+		playNameList = Object.entries(G_SHEET.scoreData.user["ext$"].stats).map(([k, v]) => v.id.name);
 	}
 	var playDB: PlayDB = {
 		"baseUrl": "/xcam/players",
@@ -209,6 +218,7 @@ export function DSEditBoard(props: DSEditBoardProps): React.ReactNode {
 			mainFS = copyFilterState(fs);
 			mainFS.altState = [true, false];
 		}
+		const exColList = [scoreColumn(G_HISTORY.current.scoreData, stageIdX, starCodeList[i][1], true, verifFlag, null)];
 		// -- separator if not the first node
 		var sepNode: React.ReactNode = <div></div>;
 		if (i !== 0) {
@@ -219,18 +229,21 @@ export function DSEditBoard(props: DSEditBoardProps): React.ReactNode {
 				</div></React.Fragment>;
 		}
 		tableList.push(<React.Fragment key={ stageIdX + "_" + starIdX + "_" + i }>
-			{ sepNode } { varContList[i] }
-			<LiveStarTable stageId={ stageIdX } starDef={ starDef } today={ ["def"] } fs={ mainFS }
-				updatePlayCount={ updatePlayCount("" + i) } playData={ playData } reloadPlayData={ reloadPlayDataEx } playDB={ playDB }/>
+			{ sepNode }
+			<DSSubBoard stageId={ stageIdX } starDef={ starDef } today={ loadType } fs={ mainFS }
+				showStd={ true } showVar={ true } combFlag={ combFlagList[i] && showComb }
+				api={ props.api } updatePlayCount={ updatePlayCount("" + i) } playData={ playData }
+				reloadPlayData={ reloadPlayDataEx } playDB={ playDB } extraColList={ exColList }/>
 		</React.Fragment>);
 		// variant tables
 		if (starDefList[i].alt !== null && (!combFlagList[i] || !showComb)) {
 			var altFS = copyFilterState(fs);
 			altFS.altState = [false, true];
 			tableList.push(
-				<LiveStarTable stageId={ stageIdX } starDef={ starDef } today={ ["def"] } fs={ altFS }
+				<DSSubBoard stageId={ stageIdX } starDef={ starDef } today={ loadType } fs={ altFS }
+					showStd={ true } showVar={ false } combFlag={ false } api={ props.api }
 					updatePlayCount={ updatePlayCount("" + i) } playData={ playData } reloadPlayData={ reloadPlayDataEx }
-					playDB={ playDB } key={ stageIdX + "_" + starIdX + "_" + i + "_alt" }/>
+					playDB={ playDB } extraColList={ exColList } key={ stageIdX + "_" + starIdX + "_" + i + "_alt" }/>
 			);
 		}
 	});
@@ -250,6 +263,7 @@ export function DSEditBoard(props: DSEditBoardProps): React.ReactNode {
 				<div className="row-wrap no-space">{ dateNode1 } { dateNode2 } </div>
 				<div className='label-cont alt-label'>Players: { playCount }</div>
 			</div>
+			{ verifNode }
 		</div>	
 		{ combToggle }
 		{ tableList }

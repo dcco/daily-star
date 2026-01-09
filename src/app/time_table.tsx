@@ -58,6 +58,21 @@ export function newAuthIdent(name: string): AuthIdent {
 	}
 }
 
+export function liftIdent(id: Ident): AuthIdent {
+	if (id.service === "google") {
+		return {
+			"name": id.name,
+			"remoteId": null,
+			"token": null
+		};
+	}
+	return {
+		"name": "@unknown",
+		"remoteId": id.name,
+		"token": null
+	};
+}
+
 export function dropIdent(id: AuthIdent): Ident {
 	return {
 		"service": "google",
@@ -285,6 +300,30 @@ export function filterTimeTable(timeTable: TimeTable, colList: ColList): TimeTab
 		if (!empty) filterTable.push({
 			"id": userDat.id,
 			"timeRow": timeRow
+		});
+	}
+	return filterTable;
+}
+
+	/* -- filter_ex: filter table based on other condition */
+
+export function filterTimeTableEx(timeTable: TimeTable, f: (timeDat: TimeDat) => boolean): TimeTable {
+	var filterTable: TimeTable = [];
+	for (let i = 0; i < timeTable.length; i++) {
+		var userDat = timeTable[i];
+		var empty = true;
+		var newTimeRow = userDat.timeRow.map((mDat) => {
+			if (mDat === null) return null;
+			var nDat = mDat.filter(f);
+			if (nDat.length !== 0) {
+				empty = false;
+				return nDat;
+			}
+			return null;
+		});
+		if (!empty) filterTable.push({
+			"id": userDat.id,
+			"timeRow": newTimeRow
 		});
 	}
 	return filterTable;

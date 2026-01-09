@@ -71,7 +71,7 @@ export function xcamRecordMapBan(colList: ColList, fs: FilterState,
 				var rawTime = rawMS(cellDat.record);
 				if (rawTime === null) continue;
 				// apply version offset
-				var timeDat = newTimeDat(rawTime, cellDat.link, cellDat.note,
+				var timeDat = newTimeDat(rawTime, cellDat.link, cellDat.note, null,
 					readRefMap(stratDef.row_map, xcamRef, "rm:" + stratDef.name));
 				applyVerOffset(timeDat, verOffset);
 				applyStratOffset(timeDat, secondFlag, stratOffset, forceAdjust);
@@ -91,7 +91,7 @@ export function xcamRecordMapBan(colList: ColList, fs: FilterState,
 			}
 			var rawTime = rawMS(rowData.beg[stratDef.virtId.id][0]);
 			if (rawTime === null) throw ("Bad beginner time listed for " + stratDef.name);
-			var timeDat = newTimeDat(rawTime, null, null, begRowDef(stratDef.name));
+			var timeDat = newTimeDat(rawTime, null, null, null, begRowDef(stratDef.name));
 			applyVerOffset(timeDat, verOffset);
 			applyStratOffset(timeDat, secondFlag, stratOffset, forceAdjust);
 			if (timeDat.time < record.time) record = timeDat;

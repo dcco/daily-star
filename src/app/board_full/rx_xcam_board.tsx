@@ -94,8 +94,8 @@ export function XcamBoard(props: XcamBoardProps): React.ReactNode {
 
 	// standard xcam player list
 	var playNameList: string[] = [];
-	if (G_SHEET.userMap !== null) {
-		playNameList = Object.entries(G_SHEET.userMap.stats).map(([k, v]) => v.id.name);
+	if (G_SHEET.scoreData !== null) {
+		playNameList = Object.entries(G_SHEET.scoreData.user["ext$"].stats).map(([k, v]) => k);
 	}
 	var playDB: PlayDB = {
 		"baseUrl": playerDir,//"/xcam/players",
@@ -115,6 +115,6 @@ export function XcamBoard(props: XcamBoardProps): React.ReactNode {
 			{ starBtnNodes }
 		</div>);
 
-	return <ViewBoard kind="view" stageId={ stageId } starDef={ starDef } ttFun={ xcamTimeTable }
+	return <ViewBoard kind="view" stageId={ stageId } starDef={ starDef } ttFun={ xcamTimeTable } emptyWarn={ true }
 		cornerNode={ stageSelNode } headerNode={ starSelNode } showStd={ props.showStd } playDB={ playDB }/>;
 }
