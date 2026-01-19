@@ -59,7 +59,8 @@ type ESAProps = {
 	"cancel": () => void,
 	"delToggle": () => void,
 	"style": ValidStyle,
-	"infoText": string | null
+	"infoText": string | null,
+	"modFlag"?: boolean
 };
 
 function cleanNameList(starDef: StarDef, nameList: string[]): string[] {
@@ -127,7 +128,7 @@ export function EditSubmitArea(props: ESAProps): React.ReactNode
 
 	// verification (if relevant)
 	var verifNode: React.ReactNode = "";
-	if (oldDat !== null) {
+	if (oldDat !== null && props.modFlag === true) {
 		var selList = ["yes", "maybe", "no"];
 		verifNode = <OptionGroup title="Verified:" connected={ true } active={ true }
 			textList={ ["Y", "M", "N"] } selList={ selList } curSel={ curDat.verifFlag }

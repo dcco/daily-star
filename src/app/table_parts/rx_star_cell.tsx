@@ -8,9 +8,10 @@ import { G_SHEET } from '../api_xcam'
 import { Ver } from '../variant_def'
 import { TimeDat, VerOffset, formatTime } from '../time_dat'
 import { Ident } from '../time_table'
-import { PlayData, strIdNickPD } from '../play_data'
+import { PlayData, strIdNickPD, lookupDatPD } from '../play_data'
 
 import { getRank } from '../standards/strat_ranks'
+import { DS_COLOR_LIST } from '../board_full/rx_color_pick'
 
 	/* time display auxiliary functions */
 
@@ -123,15 +124,6 @@ export function TimeCell(props: TimeCellProps): React.ReactNode {
 	if (rawText !== null) spanNodes.push(<em key="e">{ rawText }</em>);
 	if (hiddenFlag) spanNodes.push(<div className="na" key="a">*</div>);
 	// add rank node if necessary
-	/*
-		-- oval bubble version
-	if (props.rankKey && timeDat !== null && cellText !== "") {
-		var rankName = getRank(props.rankKey, timeDat.rowDef.name, timeDat);
-		timeNode = <div className="inner-rank-cont">
-			<div className="inner-rank" data-ps={ rankName }></div>
-			<div className="inner-rank-text" data-ps={ rankName }>{ timeNode }</div>
-		</div>;
-	}*/
 	var hasRankNode = false;
 	var rankNode: React.ReactNode = "";
 	// add annotations / wrap time + rank info in bubbles when relevant
@@ -161,20 +153,6 @@ export function TimeCell(props: TimeCellProps): React.ReactNode {
 				colSpan={ 1 }>{ rankNode } { noteNodes }</td>
 		</React.Fragment>;
 	}
-	/*const hasRankNode = props.rankKey && timeDat !== null && cellText !== "";
-	timeNode = (<td className="time-cell tooltip" data-active={ active.toString() } data-complete={ props.complete }
-		colSpan={ hasRankNode ? 1 : 2 } onClick={ onClick }>{ timeNode } { spanNodes } { noteNodes }</td>);
-	// -- do this again to appease typescript
-	if (props.rankKey && timeDat !== null && cellText !== "") {
-		var rankName = getRank(props.rankKey, timeDat.rowDef.name, timeDat);
-		return <React.Fragment>
-			{ timeNode }
-			<td className="time-rank" data-ps={ rankName }>
-				<div className="time-rank-inner">{ rankName }</div>
-				<div className="time-rank-hat"></div>
-			</td>
-		</React.Fragment>;
-	}*/
 	return timeNode;
 }
 
@@ -232,10 +210,6 @@ export function NameCell(props: NameCellProps): React.ReactNode {
 	// get play standard when applicable
 	var playStd = "Unranked";
 	var name = strIdNickPD(props.pd, props.id);
-	/*var UNSAFE_playDat = (playData as any)[name];
-	if (UNSAFE_playDat !== undefined && UNSAFE_playDat.standard) {
-		playStd = UNSAFE_playDat.standard;
-	}*/
 	if (G_SHEET.scoreData !== null) {
 		const userMap = G_SHEET.scoreData.user[""];
 		var playDat = userMap.stats["xcam@" + name];
@@ -247,12 +221,67 @@ export function NameCell(props: NameCellProps): React.ReactNode {
 		playStd = "Mario";
 		imgNode = <img src="/icons/star.png" width="10px"></img>;
 	}
+	// custom color when applicable
+	var style: any = {};
+	var myDat = lookupDatPD(props.pd, props.id);
+	if (myDat !== null && myDat.favColor !== null) {
+		// -- for typescript
+		var _myDat = myDat;
+		var i = DS_COLOR_LIST.findIndex((elem) => elem[0] === _myDat.favColor);
+		if (i !== -1) {
+			const colorDef = DS_COLOR_LIST[i];
+			style = {
+				"backgroundColor": "#" + colorDef[1],
+				"color": "#" + colorDef[2],
+				"fontStyle": "normal"
+			};
+		}
+	}
 	// name + ending cell
 	if (props.href !== undefined) {
 		return (<td className="name-cell link-cont" data-active={ "true" }
-			onClick={ props.onClick } data-ps={ playStd }>{ name } { imgNode }
+			onClick={ props.onClick } style={ style } data-ps={ playStd }>{ name } { imgNode }
 				<Link className="link-span" href={ props.href }></Link></td>);
 	}
 	return (<td className="name-cell" data-active={ props.active.toString() }
-		onClick={ props.onClick } data-ps={ playStd }>{ name } { imgNode }</td>);
+		onClick={ props.onClick } style={ style } data-ps={ playStd }>{ name } { imgNode }</td>);
+}
+
+type InfoCellProps = {
+	text: string,
+	note: string[],
+	subText?: string,
+	super?: [string, string]
+}
+
+export function InfoCell(props: InfoCellProps): React.ReactNode {
+	var text = props.text;
+	var subText = props.subText;
+	var note = props.note;
+
+	var timeNode: React.ReactNode = text;
+	// superscript node when relevant
+	if (props.super) {
+		var [_super, sKind] = props.super;
+		timeNode = <React.Fragment>{ timeNode }<sup data-k={ sKind }>{ _super }</sup></React.Fragment>;
+	}
+	// sub text node when relevant
+	var spanNode: React.ReactNode = "";
+	if (props.subText) spanNode = <em>{ props.subText }</em>
+	// note node when relevant
+	var noteNodes: React.ReactNode[] = [];
+	if (props.note.length === 1) {
+		noteNodes = [<div className="triangle" key="tri"></div>,
+			<span className="note-text" key="note">{ props.note[0] }</span>];
+	} else if (props.note.length > 0) {
+		var itemNodes = props.note.map((n, i) =>
+				<li className="note-item" key={ i }>{ n }</li>
+			);
+		noteNodes = [<div className="triangle" key="tri"></div>,
+			<span className="note-text note-expand" key="note"><ul className="note-list">{ itemNodes }</ul></span>];
+	}
+	// wrap together
+	return <td className="time-cell tooltip">
+		{ timeNode } { spanNode } { noteNodes }
+	</td>;
 }

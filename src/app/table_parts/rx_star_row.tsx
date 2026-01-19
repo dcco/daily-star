@@ -9,7 +9,7 @@ import { TimeCell, NameCell } from "./rx_star_cell"
 
 	/* data row: name cell + set of time cells */
 
-export type CellAct = "none" | "edit" | "stop-edit" | "view-toggle";
+export type CellAct = "none" | "edit" | "stop-edit" | "view-toggle" | "link";
 
 export type PlayDB = {
 	"baseUrl": string,
@@ -29,13 +29,13 @@ type DataRowProps = {
 	"expand": boolean,
 	"action": CellAct,
 	"rowId": number,
-	"showRowId": boolean,
+	"showRowId"?: number | null,
 	"onClick": (a: CellAct, i: number, j: number, k: number) => void,
 	"endRow": boolean,
 	"headerList": string[][],
 	"playDB"?: PlayDB,
 	"rankKey"?: string,
-	"extraColList": ExColumn[]
+	"extraCellList"?: React.ReactNode[]
 };
 
 function heightColRow(timeRow: TimeRow, colId: number): number
@@ -69,7 +69,7 @@ export function DataRow(props: DataRowProps): React.ReactNode {
 	var onClick = props.onClick;
 	var endRow = props.endRow;
 	var playDB = props.playDB;
-	var exColList = props.extraColList;
+	var exCellList = props.extraCellList;
 	// get text for initializing edit row
 	//var timeText = userDat.timeRow.map(formatMultiDat);
 	//timeText.unshift(strIdNick(userDat.id));
@@ -100,7 +100,13 @@ export function DataRow(props: DataRowProps): React.ReactNode {
 				rankKey={ props.rankKey } hiddenFlag={ !expand && hasSubTimes(multiDat) } key={ j }/>; 
 		})
 		var nameAct: CellAct = "none";
-		if (hasSubRows(userDat.timeRow)) nameAct="view-toggle";
+		if (playDB !== undefined) nameAct = "link";
+		//if (hasSubRows(userDat.timeRow)) nameAct="view-toggle";
+		// numeric id
+		if (showRowId !== undefined) timeRowNodes.unshift(
+			<td className="time-cell" colSpan={ 1 } key="num">{ showRowId === null ? "-" : showRowId + 1 }</td>);
+		// extra cells
+		if (exCellList) timeRowNodes = timeRowNodes.concat(exCellList);
 		// get player link when applicable
 		var href: string | undefined = undefined;
 		if (playDB !== undefined) {
@@ -108,14 +114,10 @@ export function DataRow(props: DataRowProps): React.ReactNode {
 			var url = getPlayUrl(playDB, name);
 			if (url !== null) href = url;
 		} 
+		// player name
 		if (i === 0) timeRowNodes.unshift(<NameCell id={ userDat.id } pd={ pd } active={ nameAct !== "none" }
 			onClick={ () => {} } href={ href } key="user"/>);
 		else timeRowNodes.unshift(<td className="dark-cell" key="user"></td>);
-		if (showRowId) timeRowNodes.unshift(<td className="time-cell" colSpan={ 1 } key="num">{ rowId + 1 }</td>);
-		for (const exCol of exColList) {
-			const [node, sortObj] = exCol.dataFun(userDat.id);
-			timeRowNodes.push(node);
-		}
 		rowNodeList.push(<tr className="time-row" data-row-active={ rowActive.toString() } data-end-row={ endRow } key={ i }>
 			{ timeRowNodes }
 		</tr>);

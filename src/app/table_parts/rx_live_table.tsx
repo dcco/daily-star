@@ -4,7 +4,7 @@ import { RowDef } from '../row_def'
 import { TimeDat } from '../time_dat'
 import { liftIdent } from '../time_table'
 import { StratDef, filterVarColList, toSetColList } from '../org_strat_def'
-import { StarDef, FilterState, fullFilterState,
+import { StarDef, FilterState, fullFilterState, copyFilterState,
 	orgStarDef, verOffsetStarDef, stratOffsetStarDef, colListStarDef } from '../org_star_def'
 import { AuthIdent, Ident, TimeTable, newIdent, dropIdent,
 	updateTimeTable, delTimeTable } from '../time_table'
@@ -17,7 +17,7 @@ import { ExColumn } from './ex_column'
 import { PlayDB } from './rx_star_row'
 import { StarTable } from './rx_star_table'
 
-import { ReadTimeObj } from '../api_types'
+import { ReadTimeObj, addTimeObj, delTimeObj } from '../api_types'
 import { TTLoadType, readObjTimeTable } from '../api_live'
 
 //import { TTLoadType, readObjTimeTable, loadTimes, postNewTimes } from '../api_live'
@@ -47,6 +47,7 @@ export type LiveStarTableProps = {
 	"reloadPlayData": () => void,
 	"updatePlayCount"?: (a: Ident[]) => void,
 	"playDB"?: PlayDB,
+	"showRowId"?: boolean,
 	"extraColList"?: ExColumn[]
 };
 
@@ -61,16 +62,27 @@ export function LiveStarTable(props: LiveStarTableProps): React.ReactNode
 
 	var verOffset = verOffsetStarDef(starDef, fs);
 	var sOffset = stratOffsetStarDef(starDef, fs);
+
+	// build filter state (fill in variant total)
 	var varTotal = 0;
 	if (starDef.variants) varTotal = starDef.variants.length;
-	var colList = colListStarDef(starDef, fullFilterState([true, true], varTotal));
+	var ns = copyFilterState(fs);
+	ns.varFlagList = new Array(varTotal).fill(true);
+	
+	// build column lists
+	//var colList = colListStarDef(starDef, fullFilterState([true, true], varTotal));
+	var colList = colListStarDef(starDef, ns);
+	var fullColList = colListStarDef(starDef, fullFilterState([true, true], varTotal));
 
 	// rank key
 	var rankKey: string | undefined = undefined;
 	if (props.showStd) rankKey = stageId + "_" + starDef.id;
 
+	// raw time data
+	const [readObj, setReadObj] = useState([] as ReadTimeObj);
+
 	// time table
-	const [timeTable, setTimeTable] = useState([] as TimeTable);
+	const timeTable = readObjTimeTable(readObj, starDef, colList, verOffset, sOffset);
 	const [firstInit, setFirstInit] = useState(true);
 	const [reload, setReload] = useState(1);
 
@@ -83,19 +95,14 @@ export function LiveStarTable(props: LiveStarTableProps): React.ReactNode
 		const f = async () => {
 			if (dirty) {
 				var readObj = await props.api.loadTimes(stageId, starDef, props.today);
-				var newTable = readObjTimeTable(readObj, starDef, colList, verOffset, sOffset);
-				//var newTable = await loadTimeTable(stageId, starDef, props.today, colList, fs, verOffset, sOffset);
-				setTimeTable(newTable);
+				setReadObj(readObj)
+				// update the player count
+				var newTable = readObjTimeTable(readObj, starDef, fullColList, verOffset, sOffset);
 				if (props.updatePlayCount !== undefined) props.updatePlayCount(newTable.map((table) => table.id));
 				// reloads the player data (if the previous table wasnt empty) since submitting a time
 				// may have created a new user
 				if (!firstInit) reloadPlayData();
 				setFirstInit(false);
-				// if the user has changed, triggers a nickname data reload
-				// since submitting a time may have created a new user
-				/*if (playData.newUserSync === "unsync") {
-					setPlayData(syncUserPD(playData));
-				}*/
 			}
 		}
 		setTimeout(f, reload);
@@ -109,14 +116,22 @@ export function LiveStarTable(props: LiveStarTableProps): React.ReactNode
 	const editTT = (_id: Ident, timeList: TimeDat[], delList: TimeDat[], verifList: TimeDat[]) => {
 		if (userId === null) throw("Reached time submission with null user.");
 		var authId = liftIdent(_id);
+		// TODO: undo this hotfix
+		if (_id.service === "remote" && userId.remoteId !== null && userId.remoteId.toString() === _id.name) authId = userId;
 		// update time table
-		var newTable = timeTable.map((x) => x);
+		var newTimeObj = readObj.map((x) => x);
+		timeList.map((timeDat) => {
+			addTimeObj(newTimeObj, _id, starDef, timeDat);
+		})
+		delList.map((delDat) => delTimeObj(newTimeObj, delDat));
+		setReadObj(newTimeObj);
+		/*var newTable = timeTable.map((x) => x);
 		timeList.map((timeDat) => {
 			var colId = indexSet[timeDat.rowDef.name];
 			updateTimeTable(newTable, colTotal, authId, colId, timeDat);
 		})
 		delList.map((delDat) => delTimeTable(newTable, authId, delDat));
-		setTimeTable(newTable);
+		setTimeTable(newTable);*/
 		// sync the times to the database
 		var myId = userId;
 		props.api.postNewTimes(stageId, starDef, myId, authId, playData.local.nick, timeList, delList, verifList);
@@ -140,6 +155,6 @@ export function LiveStarTable(props: LiveStarTableProps): React.ReactNode
 	var editObj = newEditObj(userEditPerm(userId, props.playData.local.perm), starDef, editTT);
 
 	return(<StarTable cfg={ filterCFG } playData={ playData } timeTable={ timeTable } verOffset={ verOffset }
-		recordMap={ relRM } rankKey={ rankKey } editObj={ editObj } playDB={ props.playDB }
+		recordMap={ relRM } showRowId={ props.showRowId } rankKey={ rankKey } editObj={ editObj } playDB={ props.playDB }
 		extraColList={ props.extraColList } key={ lastTime }></StarTable>);
 }

@@ -7736,13 +7736,13 @@
             "virtual": false,
             "variant_map": {
               "main_327": [],
-              "ext_193": [
+              "main_328": [
                 "0"
               ],
-              "ext_194": [
+              "ext_193": [
                 "1"
               ],
-              "ext_195": [
+              "ext_194": [
                 "1",
                 "0"
               ]
@@ -7753,16 +7753,16 @@
                 327
               ],
               [
+                "main",
+                328
+              ],
+              [
                 "ext",
                 193
               ],
               [
                 "ext",
                 194
-              ],
-              [
-                "ext",
-                195
               ]
             ]
           },
@@ -7772,19 +7772,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_329": [],
-              "main_330": [
+              "main_330": [],
+              "main_331": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                329
+                330
               ],
               [
                 "main",
-                330
+                331
               ]
             ]
           }
@@ -7797,13 +7797,13 @@
             "virtual": false,
             "variant_map": {
               "main_327": [],
-              "ext_193": [
+              "main_328": [
                 "0"
               ],
-              "ext_194": [
+              "ext_193": [
                 "1"
               ],
-              "ext_195": [
+              "ext_194": [
                 "1",
                 "0"
               ]
@@ -7814,16 +7814,16 @@
                 327
               ],
               [
+                "main",
+                328
+              ],
+              [
                 "ext",
                 193
               ],
               [
                 "ext",
                 194
-              ],
-              [
-                "ext",
-                195
               ]
             ]
           },
@@ -7833,19 +7833,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_329": [],
-              "main_330": [
+              "main_330": [],
+              "main_331": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                329
+                330
               ],
               [
                 "main",
-                330
+                331
               ]
             ]
           }
@@ -7867,7 +7867,7 @@
   },
   {
     "name": "Wet-Dry World",
-    "checkId": 335,
+    "checkId": 337,
     "ext": false,
     "color": "lb-gray",
     "starList": [
@@ -7883,19 +7883,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_340": [],
-              "ext_201": [
+              "main_342": [],
+              "ext_200": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                340
+                342
               ],
               [
                 "ext",
-                201
+                200
               ]
             ]
           },
@@ -7905,12 +7905,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_200": []
+              "ext_199": []
             },
             "id_list": [
               [
                 "ext",
-                200
+                199
               ]
             ]
           }
@@ -7922,19 +7922,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_340": [],
-              "ext_201": [
+              "main_342": [],
+              "ext_200": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                340
+                342
               ],
               [
                 "ext",
-                201
+                200
               ]
             ]
           },
@@ -7944,12 +7944,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_200": []
+              "ext_199": []
             },
             "id_list": [
               [
                 "ext",
-                200
+                199
               ]
             ]
           }
@@ -7979,19 +7979,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_341": [],
-              "ext_202": [
+              "main_343": [],
+              "ext_201": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                341
+                343
               ],
               [
                 "ext",
-                202
+                201
               ]
             ]
           },
@@ -8001,19 +8001,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_342": [],
-              "ext_204": [
+              "main_344": [],
+              "ext_203": [
                 "1"
               ]
             },
             "id_list": [
               [
                 "main",
-                342
+                344
               ],
               [
                 "ext",
-                204
+                203
               ]
             ]
           },
@@ -8023,12 +8023,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_203": []
+              "ext_202": []
             },
             "id_list": [
               [
                 "ext",
-                203
+                202
               ]
             ]
           }
@@ -8040,19 +8040,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_341": [],
-              "ext_202": [
+              "main_343": [],
+              "ext_201": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                341
+                343
               ],
               [
                 "ext",
-                202
+                201
               ]
             ]
           },
@@ -8062,19 +8062,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_342": [],
-              "ext_204": [
+              "main_344": [],
+              "ext_203": [
                 "1"
               ]
             },
             "id_list": [
               [
                 "main",
-                342
+                344
               ],
               [
                 "ext",
-                204
+                203
               ]
             ]
           },
@@ -8084,12 +8084,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_203": []
+              "ext_202": []
             },
             "id_list": [
               [
                 "ext",
-                203
+                202
               ]
             ]
           }
@@ -8120,19 +8120,19 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_343": [],
-              "ext_205": [
+              "main_345": [],
+              "ext_204": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                343
+                345
               ],
               [
                 "ext",
-                205
+                204
               ]
             ]
           }
@@ -8144,19 +8144,19 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_344": [],
-              "ext_206": [
+              "main_346": [],
+              "ext_205": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                344
+                346
               ],
               [
                 "ext",
-                206
+                205
               ]
             ]
           }
@@ -8184,12 +8184,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_346": []
+              "main_348": []
             },
             "id_list": [
               [
                 "main",
-                346
+                348
               ]
             ]
           }
@@ -8201,12 +8201,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_347": []
+              "main_349": []
             },
             "id_list": [
               [
                 "main",
-                347
+                349
               ]
             ]
           }
@@ -8231,43 +8231,6 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_349": []
-            },
-            "id_list": [
-              [
-                "main",
-                349
-              ]
-            ]
-          },
-          "Early Box Break": {
-            "name": "Early Box Break",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "main_350": [],
-              "ext_207": [
-                "0"
-              ]
-            },
-            "id_list": [
-              [
-                "main",
-                350
-              ],
-              [
-                "ext",
-                207
-              ]
-            ]
-          },
-          "Purple Switch": {
-            "name": "Purple Switch",
-            "diff": "easy",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
               "main_351": []
             },
             "id_list": [
@@ -8277,18 +8240,55 @@
               ]
             ]
           },
+          "Early Box Break": {
+            "name": "Early Box Break",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_352": [],
+              "ext_206": [
+                "0"
+              ]
+            },
+            "id_list": [
+              [
+                "main",
+                352
+              ],
+              [
+                "ext",
+                206
+              ]
+            ]
+          },
+          "Purple Switch": {
+            "name": "Purple Switch",
+            "diff": "easy",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_353": []
+            },
+            "id_list": [
+              [
+                "main",
+                353
+              ]
+            ]
+          },
           "Elevator Clip": {
             "name": "Elevator Clip",
             "diff": "normal",
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_208": []
+              "ext_207": []
             },
             "id_list": [
               [
                 "ext",
-                208
+                207
               ]
             ]
           }
@@ -8300,43 +8300,6 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_349": []
-            },
-            "id_list": [
-              [
-                "main",
-                349
-              ]
-            ]
-          },
-          "Early Box Break": {
-            "name": "Early Box Break",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "main_350": [],
-              "ext_207": [
-                "0"
-              ]
-            },
-            "id_list": [
-              [
-                "main",
-                350
-              ],
-              [
-                "ext",
-                207
-              ]
-            ]
-          },
-          "Purple Switch": {
-            "name": "Purple Switch",
-            "diff": "easy",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
               "main_351": []
             },
             "id_list": [
@@ -8346,18 +8309,55 @@
               ]
             ]
           },
+          "Early Box Break": {
+            "name": "Early Box Break",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_352": [],
+              "ext_206": [
+                "0"
+              ]
+            },
+            "id_list": [
+              [
+                "main",
+                352
+              ],
+              [
+                "ext",
+                206
+              ]
+            ]
+          },
+          "Purple Switch": {
+            "name": "Purple Switch",
+            "diff": "easy",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_353": []
+            },
+            "id_list": [
+              [
+                "main",
+                353
+              ]
+            ]
+          },
           "Elevator Clip": {
             "name": "Elevator Clip",
             "diff": "normal",
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_208": []
+              "ext_207": []
             },
             "id_list": [
               [
                 "ext",
-                208
+                207
               ]
             ]
           }
@@ -8387,12 +8387,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_209": []
+              "ext_208": []
             },
             "id_list": [
               [
                 "ext",
-                209
+                208
               ]
             ]
           }
@@ -8404,12 +8404,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_209": []
+              "ext_208": []
             },
             "id_list": [
               [
                 "ext",
-                209
+                208
               ]
             ]
           }
@@ -8434,12 +8434,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_352": []
+              "main_354": []
             },
             "id_list": [
               [
                 "main",
-                352
+                354
               ]
             ]
           }
@@ -8451,12 +8451,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_353": []
+              "main_355": []
             },
             "id_list": [
               [
                 "main",
-                353
+                355
               ]
             ]
           }
@@ -8481,12 +8481,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_356": []
+              "main_358": []
             },
             "id_list": [
               [
                 "main",
-                356
+                358
               ]
             ]
           },
@@ -8496,12 +8496,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_358": []
+              "main_360": []
             },
             "id_list": [
               [
                 "main",
-                358
+                360
               ]
             ]
           }
@@ -8513,12 +8513,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_356": []
+              "main_358": []
             },
             "id_list": [
               [
                 "main",
-                356
+                358
               ]
             ]
           },
@@ -8528,12 +8528,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_358": []
+              "main_360": []
             },
             "id_list": [
               [
                 "main",
-                358
+                360
               ]
             ]
           }
@@ -8547,11 +8547,11 @@
         "alt": null
       }
     ],
-    "extCheckId": 198
+    "extCheckId": 197
   },
   {
     "name": "Tall, Tall Mountain",
-    "checkId": 361,
+    "checkId": 363,
     "ext": false,
     "color": "lb-red",
     "starList": [
@@ -8563,28 +8563,6 @@
         "jp_set": {
           "Log WK": {
             "name": "Log WK",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "main_366": [
-                "0"
-              ],
-              "main_367": []
-            },
-            "id_list": [
-              [
-                "main",
-                366
-              ],
-              [
-                "main",
-                367
-              ]
-            ]
-          },
-          "Log Firsty": {
-            "name": "Log Firsty",
             "diff": "normal",
             "ver_diff": false,
             "virtual": false,
@@ -8602,6 +8580,28 @@
               [
                 "main",
                 369
+              ]
+            ]
+          },
+          "Log Firsty": {
+            "name": "Log Firsty",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_370": [
+                "0"
+              ],
+              "main_371": []
+            },
+            "id_list": [
+              [
+                "main",
+                370
+              ],
+              [
+                "main",
+                371
               ]
             ]
           },
@@ -8622,28 +8622,6 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_366": [
-                "0"
-              ],
-              "main_367": []
-            },
-            "id_list": [
-              [
-                "main",
-                366
-              ],
-              [
-                "main",
-                367
-              ]
-            ]
-          },
-          "Log Firsty": {
-            "name": "Log Firsty",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
               "main_368": [
                 "0"
               ],
@@ -8657,6 +8635,28 @@
               [
                 "main",
                 369
+              ]
+            ]
+          },
+          "Log Firsty": {
+            "name": "Log Firsty",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_370": [
+                "0"
+              ],
+              "main_371": []
+            },
+            "id_list": [
+              [
+                "main",
+                370
+              ],
+              [
+                "main",
+                371
               ]
             ]
           },
@@ -8693,52 +8693,15 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_370": [
-                "1"
-              ],
-              "main_371": [],
-              "ext_213": [
-                "0",
-                "1"
-              ],
-              "ext_214": [
-                "0"
-              ]
-            },
-            "id_list": [
-              [
-                "main",
-                370
-              ],
-              [
-                "main",
-                371
-              ],
-              [
-                "ext",
-                213
-              ],
-              [
-                "ext",
-                214
-              ]
-            ]
-          },
-          "Log Firsty": {
-            "name": "Log Firsty",
-            "diff": "normal",
-            "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
               "main_372": [
                 "1"
               ],
               "main_373": [],
-              "ext_215": [
+              "ext_212": [
                 "0",
                 "1"
               ],
-              "ext_216": [
+              "ext_213": [
                 "0"
               ]
             },
@@ -8753,11 +8716,48 @@
               ],
               [
                 "ext",
-                215
+                212
               ],
               [
                 "ext",
-                216
+                213
+              ]
+            ]
+          },
+          "Log Firsty": {
+            "name": "Log Firsty",
+            "diff": "normal",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "main_374": [
+                "1"
+              ],
+              "main_375": [],
+              "ext_214": [
+                "0",
+                "1"
+              ],
+              "ext_215": [
+                "0"
+              ]
+            },
+            "id_list": [
+              [
+                "main",
+                374
+              ],
+              [
+                "main",
+                375
+              ],
+              [
+                "ext",
+                214
+              ],
+              [
+                "ext",
+                215
               ]
             ]
           },
@@ -8778,52 +8778,15 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_374": [
-                "1"
-              ],
-              "main_375": [],
-              "ext_217": [
-                "0",
-                "1"
-              ],
-              "ext_218": [
-                "0"
-              ]
-            },
-            "id_list": [
-              [
-                "main",
-                374
-              ],
-              [
-                "main",
-                375
-              ],
-              [
-                "ext",
-                217
-              ],
-              [
-                "ext",
-                218
-              ]
-            ]
-          },
-          "Log Firsty": {
-            "name": "Log Firsty",
-            "diff": "normal",
-            "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
               "main_376": [
                 "1"
               ],
               "main_377": [],
-              "ext_219": [
+              "ext_216": [
                 "0",
                 "1"
               ],
-              "ext_220": [
+              "ext_217": [
                 "0"
               ]
             },
@@ -8838,11 +8801,48 @@
               ],
               [
                 "ext",
-                219
+                216
               ],
               [
                 "ext",
-                220
+                217
+              ]
+            ]
+          },
+          "Log Firsty": {
+            "name": "Log Firsty",
+            "diff": "normal",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "main_378": [
+                "1"
+              ],
+              "main_379": [],
+              "ext_218": [
+                "0",
+                "1"
+              ],
+              "ext_219": [
+                "0"
+              ]
+            },
+            "id_list": [
+              [
+                "main",
+                378
+              ],
+              [
+                "main",
+                379
+              ],
+              [
+                "ext",
+                218
+              ],
+              [
+                "ext",
+                219
               ]
             ]
           },
@@ -8880,19 +8880,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_378": [],
-              "main_379": [
+              "main_380": [],
+              "main_381": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                378
+                380
               ],
               [
                 "main",
-                379
+                381
               ]
             ]
           }
@@ -8904,19 +8904,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_378": [],
-              "main_379": [
+              "main_380": [],
+              "main_381": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                378
+                380
               ],
               [
                 "main",
-                379
+                381
               ]
             ]
           }
@@ -8938,38 +8938,6 @@
         "def": "jp",
         "offset": 11,
         "jp_set": {
-          "Standard": {
-            "name": "Standard",
-            "diff": "normal",
-            "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
-              "main_380": []
-            },
-            "id_list": [
-              [
-                "main",
-                380
-              ]
-            ]
-          },
-          "Late Red": {
-            "name": "Late Red",
-            "diff": "normal",
-            "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
-              "main_386": []
-            },
-            "id_list": [
-              [
-                "main",
-                386
-              ]
-            ]
-          }
-        },
-        "us_set": {
           "Standard": {
             "name": "Standard",
             "diff": "normal",
@@ -9001,6 +8969,38 @@
             ]
           }
         },
+        "us_set": {
+          "Standard": {
+            "name": "Standard",
+            "diff": "normal",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "main_384": []
+            },
+            "id_list": [
+              [
+                "main",
+                384
+              ]
+            ]
+          },
+          "Late Red": {
+            "name": "Late Red",
+            "diff": "normal",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "main_390": []
+            },
+            "id_list": [
+              [
+                "main",
+                390
+              ]
+            ]
+          }
+        },
         "open": [],
         "info": {
           "short": "100c + Reds",
@@ -9021,12 +9021,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_393": []
+              "main_395": []
             },
             "id_list": [
               [
                 "main",
-                393
+                395
               ]
             ]
           },
@@ -9036,12 +9036,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_394": []
+              "main_396": []
             },
             "id_list": [
               [
                 "main",
-                394
+                396
               ]
             ]
           },
@@ -9051,12 +9051,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_395": []
+              "main_397": []
             },
             "id_list": [
               [
                 "main",
-                395
+                397
               ]
             ]
           },
@@ -9077,12 +9077,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_393": []
+              "main_395": []
             },
             "id_list": [
               [
                 "main",
-                393
+                395
               ]
             ]
           },
@@ -9092,12 +9092,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_394": []
+              "main_396": []
             },
             "id_list": [
               [
                 "main",
-                394
+                396
               ]
             ]
           },
@@ -9107,12 +9107,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_395": []
+              "main_397": []
             },
             "id_list": [
               [
                 "main",
-                395
+                397
               ]
             ]
           },
@@ -9146,28 +9146,6 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_396": [
-                "0"
-              ],
-              "main_397": []
-            },
-            "id_list": [
-              [
-                "main",
-                396
-              ],
-              [
-                "main",
-                397
-              ]
-            ]
-          },
-          "Log Firsty": {
-            "name": "Log Firsty",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
               "main_398": [
                 "0"
               ],
@@ -9181,6 +9159,28 @@
               [
                 "main",
                 399
+              ]
+            ]
+          },
+          "Log Firsty": {
+            "name": "Log Firsty",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_400": [
+                "0"
+              ],
+              "main_401": []
+            },
+            "id_list": [
+              [
+                "main",
+                400
+              ],
+              [
+                "main",
+                401
               ]
             ]
           },
@@ -9210,28 +9210,6 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_396": [
-                "0"
-              ],
-              "main_397": []
-            },
-            "id_list": [
-              [
-                "main",
-                396
-              ],
-              [
-                "main",
-                397
-              ]
-            ]
-          },
-          "Log Firsty": {
-            "name": "Log Firsty",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
               "main_398": [
                 "0"
               ],
@@ -9245,6 +9223,28 @@
               [
                 "main",
                 399
+              ]
+            ]
+          },
+          "Log Firsty": {
+            "name": "Log Firsty",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_400": [
+                "0"
+              ],
+              "main_401": []
+            },
+            "id_list": [
+              [
+                "main",
+                400
+              ],
+              [
+                "main",
+                401
               ]
             ]
           },
@@ -9290,12 +9290,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_400": []
+              "main_402": []
             },
             "id_list": [
               [
                 "main",
-                400
+                402
               ]
             ]
           },
@@ -9314,12 +9314,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_221": []
+              "ext_220": []
             },
             "id_list": [
               [
                 "ext",
-                221
+                220
               ]
             ]
           }
@@ -9331,12 +9331,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_400": []
+              "main_402": []
             },
             "id_list": [
               [
                 "main",
-                400
+                402
               ]
             ]
           },
@@ -9355,12 +9355,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_221": []
+              "ext_220": []
             },
             "id_list": [
               [
                 "ext",
-                221
+                220
               ]
             ]
           }
@@ -9376,11 +9376,11 @@
         "alt": null
       }
     ],
-    "extCheckId": 211
+    "extCheckId": 210
   },
   {
     "name": "Tiny-Huge Island",
-    "checkId": 402,
+    "checkId": 404,
     "ext": false,
     "color": "lb-green",
     "starList": [
@@ -9396,12 +9396,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_407": []
+              "main_409": []
             },
             "id_list": [
               [
                 "main",
-                407
+                409
               ]
             ]
           },
@@ -9411,12 +9411,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_408": []
+              "main_410": []
             },
             "id_list": [
               [
                 "main",
-                408
+                410
               ]
             ]
           }
@@ -9428,12 +9428,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_407": []
+              "main_409": []
             },
             "id_list": [
               [
                 "main",
-                407
+                409
               ]
             ]
           },
@@ -9443,12 +9443,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_408": []
+              "main_410": []
             },
             "id_list": [
               [
                 "main",
-                408
+                410
               ]
             ]
           }
@@ -9473,12 +9473,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_410": []
+              "main_412": []
             },
             "id_list": [
               [
                 "main",
-                410
+                412
               ]
             ]
           },
@@ -9488,19 +9488,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_412": [],
-              "ext_225": [
+              "main_414": [],
+              "ext_224": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                412
+                414
               ],
               [
                 "ext",
-                225
+                224
               ]
             ]
           },
@@ -9510,12 +9510,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_414": []
+              "main_416": []
             },
             "id_list": [
               [
                 "main",
-                414
+                416
               ]
             ]
           },
@@ -9525,12 +9525,36 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_227": []
+              "ext_226": [],
+              "ext_229": [
+                "1"
+              ]
             },
             "id_list": [
               [
                 "ext",
-                227
+                226
+              ],
+              [
+                "ext",
+                229
+              ]
+            ]
+          },
+          "Standard": {
+            "name": "Standard",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "ext_228": [
+                "1"
+              ]
+            },
+            "id_list": [
+              [
+                "ext",
+                228
               ]
             ]
           }
@@ -9542,12 +9566,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_410": []
+              "main_412": []
             },
             "id_list": [
               [
                 "main",
-                410
+                412
               ]
             ]
           },
@@ -9557,19 +9581,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_412": [],
-              "ext_225": [
+              "main_414": [],
+              "ext_224": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                412
+                414
               ],
               [
                 "ext",
-                225
+                224
               ]
             ]
           },
@@ -9579,12 +9603,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_414": []
+              "main_416": []
             },
             "id_list": [
               [
                 "main",
-                414
+                416
               ]
             ]
           },
@@ -9594,18 +9618,43 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_227": []
+              "ext_226": [],
+              "ext_229": [
+                "1"
+              ]
             },
             "id_list": [
               [
                 "ext",
-                227
+                226
+              ],
+              [
+                "ext",
+                229
+              ]
+            ]
+          },
+          "Standard": {
+            "name": "Standard",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "ext_228": [
+                "1"
+              ]
+            },
+            "id_list": [
+              [
+                "ext",
+                228
               ]
             ]
           }
         },
         "variants": [
-          "Ledgegrab Cancel"
+          "Ledgegrab Cancel",
+          "Goomba Bounce"
         ],
         "open": [],
         "info": {
@@ -9621,71 +9670,6 @@
         "def": "jp",
         "offset": 8,
         "jp_set": {
-          "Standard": {
-            "name": "Standard",
-            "diff": "normal",
-            "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
-              "main_417": [],
-              "main_421": [
-                "0"
-              ]
-            },
-            "id_list": [
-              [
-                "main",
-                417
-              ],
-              [
-                "main",
-                421
-              ]
-            ]
-          },
-          "Intended": {
-            "name": "Intended",
-            "diff": "easy",
-            "ver_diff": false,
-            "virtual": true,
-            "variant_map": {},
-            "id_list": [],
-            "virtId": "12_3_Intended"
-          },
-          "Open": {
-            "name": "Open",
-            "diff": "normal",
-            "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
-              "ext_229": [
-                "1"
-              ]
-            },
-            "id_list": [
-              [
-                "ext",
-                229
-              ]
-            ]
-          },
-          "TJ Dive Start": {
-            "name": "TJ Dive Start",
-            "diff": "normal",
-            "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
-              "ext_233": []
-            },
-            "id_list": [
-              [
-                "ext",
-                233
-              ]
-            ]
-          }
-        },
-        "us_set": {
           "Standard": {
             "name": "Standard",
             "diff": "normal",
@@ -9740,12 +9724,77 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "ext_234": []
+              "ext_235": []
             },
             "id_list": [
               [
                 "ext",
-                234
+                235
+              ]
+            ]
+          }
+        },
+        "us_set": {
+          "Standard": {
+            "name": "Standard",
+            "diff": "normal",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "main_421": [],
+              "main_425": [
+                "0"
+              ]
+            },
+            "id_list": [
+              [
+                "main",
+                421
+              ],
+              [
+                "main",
+                425
+              ]
+            ]
+          },
+          "Intended": {
+            "name": "Intended",
+            "diff": "easy",
+            "ver_diff": false,
+            "virtual": true,
+            "variant_map": {},
+            "id_list": [],
+            "virtId": "12_3_Intended"
+          },
+          "Open": {
+            "name": "Open",
+            "diff": "normal",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "ext_233": [
+                "1"
+              ]
+            },
+            "id_list": [
+              [
+                "ext",
+                233
+              ]
+            ]
+          },
+          "TJ Dive Start": {
+            "name": "TJ Dive Start",
+            "diff": "normal",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "ext_236": []
+            },
+            "id_list": [
+              [
+                "ext",
+                236
               ]
             ]
           }
@@ -9774,12 +9823,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "ext_235": []
+              "ext_237": []
             },
             "id_list": [
               [
                 "ext",
-                235
+                237
               ]
             ]
           },
@@ -9789,12 +9838,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "ext_237": []
+              "ext_239": []
             },
             "id_list": [
               [
                 "ext",
-                237
+                239
               ]
             ]
           }
@@ -9806,12 +9855,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "ext_236": []
+              "ext_238": []
             },
             "id_list": [
               [
                 "ext",
-                236
+                238
               ]
             ]
           },
@@ -9821,12 +9870,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "ext_238": []
+              "ext_240": []
             },
             "id_list": [
               [
                 "ext",
-                238
+                240
               ]
             ]
           }
@@ -9860,12 +9909,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_425": []
+              "main_427": []
             },
             "id_list": [
               [
                 "main",
-                425
+                427
               ]
             ]
           },
@@ -9884,12 +9933,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_239": []
+              "ext_241": []
             },
             "id_list": [
               [
                 "ext",
-                239
+                241
               ]
             ]
           }
@@ -9901,12 +9950,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_425": []
+              "main_427": []
             },
             "id_list": [
               [
                 "main",
-                425
+                427
               ]
             ]
           },
@@ -9925,12 +9974,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_239": []
+              "ext_241": []
             },
             "id_list": [
               [
                 "ext",
-                239
+                241
               ]
             ]
           }
@@ -9955,12 +10004,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_426": []
+              "main_428": []
             },
             "id_list": [
               [
                 "main",
-                426
+                428
               ]
             ]
           }
@@ -9972,12 +10021,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_426": []
+              "main_428": []
             },
             "id_list": [
               [
                 "main",
-                426
+                428
               ]
             ]
           }
@@ -10002,53 +10051,6 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_429": []
-            },
-            "id_list": [
-              [
-                "main",
-                429
-              ]
-            ]
-          },
-          "13c Start + Pole": {
-            "name": "13c Start + Pole",
-            "diff": "easy",
-            "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
-              "main_437": []
-            },
-            "id_list": [
-              [
-                "main",
-                437
-              ]
-            ]
-          },
-          "11c Start + Pole": {
-            "name": "11c Start + Pole",
-            "diff": "easy",
-            "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
-              "ext_241": []
-            },
-            "id_list": [
-              [
-                "ext",
-                241
-              ]
-            ]
-          }
-        },
-        "us_set": {
-          "16c Start": {
-            "name": "16c Start",
-            "diff": "normal",
-            "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
               "main_431": []
             },
             "id_list": [
@@ -10064,12 +10066,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_438": []
+              "main_439": []
             },
             "id_list": [
               [
                 "main",
-                438
+                439
               ]
             ]
           },
@@ -10079,12 +10081,59 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "ext_242": []
+              "ext_243": []
             },
             "id_list": [
               [
                 "ext",
-                242
+                243
+              ]
+            ]
+          }
+        },
+        "us_set": {
+          "16c Start": {
+            "name": "16c Start",
+            "diff": "normal",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "main_433": []
+            },
+            "id_list": [
+              [
+                "main",
+                433
+              ]
+            ]
+          },
+          "13c Start + Pole": {
+            "name": "13c Start + Pole",
+            "diff": "easy",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "main_440": []
+            },
+            "id_list": [
+              [
+                "main",
+                440
+              ]
+            ]
+          },
+          "11c Start + Pole": {
+            "name": "11c Start + Pole",
+            "diff": "easy",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "ext_244": []
+            },
+            "id_list": [
+              [
+                "ext",
+                244
               ]
             ]
           }
@@ -10109,38 +10158,6 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_442": []
-            },
-            "id_list": [
-              [
-                "main",
-                442
-              ]
-            ]
-          },
-          "TJ Dive Start": {
-            "name": "TJ Dive Start",
-            "diff": "normal",
-            "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
-              "ext_246": []
-            },
-            "id_list": [
-              [
-                "ext",
-                246
-              ]
-            ]
-          }
-        },
-        "us_set": {
-          "Standard": {
-            "name": "Standard",
-            "diff": "normal",
-            "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
               "main_444": []
             },
             "id_list": [
@@ -10156,12 +10173,44 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "ext_247": []
+              "ext_248": []
             },
             "id_list": [
               [
                 "ext",
-                247
+                248
+              ]
+            ]
+          }
+        },
+        "us_set": {
+          "Standard": {
+            "name": "Standard",
+            "diff": "normal",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "main_446": []
+            },
+            "id_list": [
+              [
+                "main",
+                446
+              ]
+            ]
+          },
+          "TJ Dive Start": {
+            "name": "TJ Dive Start",
+            "diff": "normal",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "ext_249": []
+            },
+            "id_list": [
+              [
+                "ext",
+                249
               ]
             ]
           }
@@ -10175,11 +10224,11 @@
         "alt": null
       }
     ],
-    "extCheckId": 223
+    "extCheckId": 222
   },
   {
     "name": "Tick Tock Clock",
-    "checkId": 448,
+    "checkId": 450,
     "ext": false,
     "color": "lb-yellow",
     "starList": [
@@ -10195,36 +10244,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_452": [],
-              "ext_251": [
-                "0"
-              ],
-              "ext_252": [
-                "1"
-              ]
-            },
-            "id_list": [
-              [
-                "main",
-                452
-              ],
-              [
-                "ext",
-                251
-              ],
-              [
-                "ext",
-                252
-              ]
-            ]
-          },
-          "Cog Rollout": {
-            "name": "Cog Rollout",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "main_453": [],
+              "main_454": [],
               "ext_253": [
                 "0"
               ],
@@ -10235,7 +10255,7 @@
             "id_list": [
               [
                 "main",
-                453
+                454
               ],
               [
                 "ext",
@@ -10247,18 +10267,47 @@
               ]
             ]
           },
+          "Cog Rollout": {
+            "name": "Cog Rollout",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_455": [],
+              "ext_255": [
+                "0"
+              ],
+              "ext_256": [
+                "1"
+              ]
+            },
+            "id_list": [
+              [
+                "main",
+                455
+              ],
+              [
+                "ext",
+                255
+              ],
+              [
+                "ext",
+                256
+              ]
+            ]
+          },
           "Time Stop": {
             "name": "Time Stop",
             "diff": "second",
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_454": []
+              "main_456": []
             },
             "id_list": [
               [
                 "main",
-                454
+                456
               ]
             ]
           },
@@ -10268,12 +10317,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_255": []
+              "ext_257": []
             },
             "id_list": [
               [
                 "ext",
-                255
+                257
               ]
             ]
           }
@@ -10285,36 +10334,7 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_452": [],
-              "ext_251": [
-                "0"
-              ],
-              "ext_252": [
-                "1"
-              ]
-            },
-            "id_list": [
-              [
-                "main",
-                452
-              ],
-              [
-                "ext",
-                251
-              ],
-              [
-                "ext",
-                252
-              ]
-            ]
-          },
-          "Cog Rollout": {
-            "name": "Cog Rollout",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "main_453": [],
+              "main_454": [],
               "ext_253": [
                 "0"
               ],
@@ -10325,7 +10345,7 @@
             "id_list": [
               [
                 "main",
-                453
+                454
               ],
               [
                 "ext",
@@ -10337,18 +10357,47 @@
               ]
             ]
           },
+          "Cog Rollout": {
+            "name": "Cog Rollout",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_455": [],
+              "ext_255": [
+                "0"
+              ],
+              "ext_256": [
+                "1"
+              ]
+            },
+            "id_list": [
+              [
+                "main",
+                455
+              ],
+              [
+                "ext",
+                255
+              ],
+              [
+                "ext",
+                256
+              ]
+            ]
+          },
           "Time Stop": {
             "name": "Time Stop",
             "diff": "second",
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_454": []
+              "main_456": []
             },
             "id_list": [
               [
                 "main",
-                454
+                456
               ]
             ]
           },
@@ -10358,12 +10407,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_255": []
+              "ext_257": []
             },
             "id_list": [
               [
                 "ext",
-                255
+                257
               ]
             ]
           }
@@ -10410,12 +10459,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_455": []
+              "main_457": []
             },
             "id_list": [
               [
                 "main",
-                455
+                457
               ]
             ]
           },
@@ -10425,12 +10474,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_456": []
+              "main_458": []
             },
             "id_list": [
               [
                 "main",
-                456
+                458
               ]
             ]
           },
@@ -10440,12 +10489,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_457": []
+              "main_459": []
             },
             "id_list": [
               [
                 "main",
-                457
+                459
               ]
             ]
           }
@@ -10457,12 +10506,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_455": []
+              "main_457": []
             },
             "id_list": [
               [
                 "main",
-                455
+                457
               ]
             ]
           },
@@ -10472,12 +10521,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_456": []
+              "main_458": []
             },
             "id_list": [
               [
                 "main",
-                456
+                458
               ]
             ]
           },
@@ -10487,12 +10536,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_457": []
+              "main_459": []
             },
             "id_list": [
               [
                 "main",
-                457
+                459
               ]
             ]
           }
@@ -10526,19 +10575,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_458": [],
-              "ext_256": [
+              "main_460": [],
+              "ext_258": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                458
+                460
               ],
               [
                 "ext",
-                256
+                258
               ]
             ]
           },
@@ -10548,12 +10597,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_459": []
+              "main_461": []
             },
             "id_list": [
               [
                 "main",
-                459
+                461
               ]
             ]
           }
@@ -10565,19 +10614,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_458": [],
-              "ext_256": [
+              "main_460": [],
+              "ext_258": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                458
+                460
               ],
               [
                 "ext",
-                256
+                258
               ]
             ]
           },
@@ -10587,12 +10636,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_459": []
+              "main_461": []
             },
             "id_list": [
               [
                 "main",
-                459
+                461
               ]
             ]
           }
@@ -10629,12 +10678,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_460": []
+              "main_462": []
             },
             "id_list": [
               [
                 "main",
-                460
+                462
               ]
             ]
           }
@@ -10646,12 +10695,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_460": []
+              "main_462": []
             },
             "id_list": [
               [
                 "main",
-                460
+                462
               ]
             ]
           }
@@ -10676,12 +10725,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_461": []
+              "main_463": []
             },
             "id_list": [
               [
                 "main",
-                461
+                463
               ]
             ]
           },
@@ -10691,12 +10740,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_465": []
+              "main_467": []
             },
             "id_list": [
               [
                 "main",
-                465
+                467
               ]
             ]
           }
@@ -10708,12 +10757,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_462": []
+              "main_464": []
             },
             "id_list": [
               [
                 "main",
-                462
+                464
               ]
             ]
           },
@@ -10723,12 +10772,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_466": []
+              "main_468": []
             },
             "id_list": [
               [
                 "main",
-                466
+                468
               ]
             ]
           }
@@ -10753,12 +10802,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_469": []
+              "main_471": []
             },
             "id_list": [
               [
                 "main",
-                469
+                471
               ]
             ]
           },
@@ -10768,19 +10817,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_470": [
+              "main_472": [
                 "0"
               ],
-              "ext_258": []
+              "ext_260": []
             },
             "id_list": [
               [
                 "main",
-                470
+                472
               ],
               [
                 "ext",
-                258
+                260
               ]
             ]
           },
@@ -10790,12 +10839,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_257": []
+              "ext_259": []
             },
             "id_list": [
               [
                 "ext",
-                257
+                259
               ]
             ]
           }
@@ -10807,12 +10856,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_469": []
+              "main_471": []
             },
             "id_list": [
               [
                 "main",
-                469
+                471
               ]
             ]
           },
@@ -10822,19 +10871,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_470": [
+              "main_472": [
                 "0"
               ],
-              "ext_258": []
+              "ext_260": []
             },
             "id_list": [
               [
                 "main",
-                470
+                472
               ],
               [
                 "ext",
-                258
+                260
               ]
             ]
           },
@@ -10844,12 +10893,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_257": []
+              "ext_259": []
             },
             "id_list": [
               [
                 "ext",
-                257
+                259
               ]
             ]
           }
@@ -10886,34 +10935,26 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_471": [],
-              "main_472": [
+              "main_473": [],
+              "main_474": [
                 "0"
               ],
-              "main_473": [
+              "main_475": [
                 "1"
               ],
-              "main_474": [
+              "main_476": [
                 "0",
                 "1"
               ],
-              "ext_259": [
+              "ext_261": [
                 "2"
               ],
-              "ext_260": [
+              "ext_262": [
                 "1",
                 "2"
               ]
             },
             "id_list": [
-              [
-                "main",
-                471
-              ],
-              [
-                "main",
-                472
-              ],
               [
                 "main",
                 473
@@ -10923,12 +10964,20 @@
                 474
               ],
               [
-                "ext",
-                259
+                "main",
+                475
+              ],
+              [
+                "main",
+                476
               ],
               [
                 "ext",
-                260
+                261
+              ],
+              [
+                "ext",
+                262
               ]
             ]
           },
@@ -10938,19 +10987,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_475": [],
-              "ext_261": [
+              "main_477": [],
+              "ext_263": [
                 "3"
               ]
             },
             "id_list": [
               [
                 "main",
-                475
+                477
               ],
               [
                 "ext",
-                261
+                263
               ]
             ]
           },
@@ -10960,12 +11009,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_476": []
+              "main_478": []
             },
             "id_list": [
               [
                 "main",
-                476
+                478
               ]
             ]
           }
@@ -10977,34 +11026,26 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_471": [],
-              "main_472": [
+              "main_473": [],
+              "main_474": [
                 "0"
               ],
-              "main_473": [
+              "main_475": [
                 "1"
               ],
-              "main_474": [
+              "main_476": [
                 "0",
                 "1"
               ],
-              "ext_259": [
+              "ext_261": [
                 "2"
               ],
-              "ext_260": [
+              "ext_262": [
                 "1",
                 "2"
               ]
             },
             "id_list": [
-              [
-                "main",
-                471
-              ],
-              [
-                "main",
-                472
-              ],
               [
                 "main",
                 473
@@ -11014,12 +11055,20 @@
                 474
               ],
               [
-                "ext",
-                259
+                "main",
+                475
+              ],
+              [
+                "main",
+                476
               ],
               [
                 "ext",
-                260
+                261
+              ],
+              [
+                "ext",
+                262
               ]
             ]
           },
@@ -11029,19 +11078,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_475": [],
-              "ext_261": [
+              "main_477": [],
+              "ext_263": [
                 "3"
               ]
             },
             "id_list": [
               [
                 "main",
-                475
+                477
               ],
               [
                 "ext",
-                261
+                263
               ]
             ]
           },
@@ -11051,12 +11100,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_476": []
+              "main_478": []
             },
             "id_list": [
               [
                 "main",
-                476
+                478
               ]
             ]
           }
@@ -11092,11 +11141,11 @@
         }
       }
     ],
-    "extCheckId": 249
+    "extCheckId": 251
   },
   {
     "name": "Rainbow Ride",
-    "checkId": 478,
+    "checkId": 480,
     "ext": false,
     "color": "lb-red",
     "starList": [
@@ -11112,19 +11161,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_484": [],
-              "main_486": [
+              "main_486": [],
+              "main_488": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                484
+                486
               ],
               [
                 "main",
-                486
+                488
               ]
             ]
           },
@@ -11134,12 +11183,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_488": []
+              "main_490": []
             },
             "id_list": [
               [
                 "main",
-                488
+                490
               ]
             ]
           },
@@ -11149,19 +11198,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_490": [],
-              "ext_265": [
+              "main_492": [],
+              "ext_267": [
                 "1"
               ]
             },
             "id_list": [
               [
                 "main",
-                490
+                492
               ],
               [
                 "ext",
-                265
+                267
               ]
             ]
           },
@@ -11182,19 +11231,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_484": [],
-              "main_486": [
+              "main_486": [],
+              "main_488": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                484
+                486
               ],
               [
                 "main",
-                486
+                488
               ]
             ]
           },
@@ -11204,12 +11253,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_488": []
+              "main_490": []
             },
             "id_list": [
               [
                 "main",
-                488
+                490
               ]
             ]
           },
@@ -11219,19 +11268,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_490": [],
-              "ext_265": [
+              "main_492": [],
+              "ext_267": [
                 "1"
               ]
             },
             "id_list": [
               [
                 "main",
-                490
+                492
               ],
               [
                 "ext",
-                265
+                267
               ]
             ]
           },
@@ -11269,21 +11318,6 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_492": []
-            },
-            "id_list": [
-              [
-                "main",
-                492
-              ]
-            ]
-          },
-          "JD Ending": {
-            "name": "JD Ending",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
               "main_494": []
             },
             "id_list": [
@@ -11293,8 +11327,8 @@
               ]
             ]
           },
-          "Usamune (Dezanig)": {
-            "name": "Usamune (Dezanig)",
+          "JD Ending": {
+            "name": "JD Ending",
             "diff": "normal",
             "ver_diff": false,
             "virtual": false,
@@ -11305,6 +11339,21 @@
               [
                 "main",
                 496
+              ]
+            ]
+          },
+          "Usamune (Dezanig)": {
+            "name": "Usamune (Dezanig)",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_498": []
+            },
+            "id_list": [
+              [
+                "main",
+                498
               ]
             ]
           }
@@ -11316,21 +11365,6 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_492": []
-            },
-            "id_list": [
-              [
-                "main",
-                492
-              ]
-            ]
-          },
-          "JD Ending": {
-            "name": "JD Ending",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
               "main_494": []
             },
             "id_list": [
@@ -11340,8 +11374,8 @@
               ]
             ]
           },
-          "Usamune (Dezanig)": {
-            "name": "Usamune (Dezanig)",
+          "JD Ending": {
+            "name": "JD Ending",
             "diff": "normal",
             "ver_diff": false,
             "virtual": false,
@@ -11352,6 +11386,21 @@
               [
                 "main",
                 496
+              ]
+            ]
+          },
+          "Usamune (Dezanig)": {
+            "name": "Usamune (Dezanig)",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_498": []
+            },
+            "id_list": [
+              [
+                "main",
+                498
               ]
             ]
           }
@@ -11376,33 +11425,18 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_499": []
+              "main_501": []
             },
             "id_list": [
               [
                 "main",
-                499
+                501
               ]
             ]
           },
           "No Cutscene": {
             "name": "No Cutscene",
             "diff": "second",
-            "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
-              "ext_266": []
-            },
-            "id_list": [
-              [
-                "ext",
-                266
-              ]
-            ]
-          },
-          "Carpetless": {
-            "name": "Carpetless",
-            "diff": "normal",
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
@@ -11415,9 +11449,9 @@
               ]
             ]
           },
-          "Carpetless (NC)": {
-            "name": "Carpetless (NC)",
-            "diff": "second",
+          "Carpetless": {
+            "name": "Carpetless",
+            "diff": "normal",
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
@@ -11429,6 +11463,21 @@
                 270
               ]
             ]
+          },
+          "Carpetless (NC)": {
+            "name": "Carpetless (NC)",
+            "diff": "second",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "ext_272": []
+            },
+            "id_list": [
+              [
+                "ext",
+                272
+              ]
+            ]
           }
         },
         "us_set": {
@@ -11438,33 +11487,18 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_500": []
+              "main_502": []
             },
             "id_list": [
               [
                 "main",
-                500
+                502
               ]
             ]
           },
           "No Cutscene": {
             "name": "No Cutscene",
             "diff": "second",
-            "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
-              "ext_267": []
-            },
-            "id_list": [
-              [
-                "ext",
-                267
-              ]
-            ]
-          },
-          "Carpetless": {
-            "name": "Carpetless",
-            "diff": "normal",
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
@@ -11477,9 +11511,9 @@
               ]
             ]
           },
-          "Carpetless (NC)": {
-            "name": "Carpetless (NC)",
-            "diff": "second",
+          "Carpetless": {
+            "name": "Carpetless",
+            "diff": "normal",
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
@@ -11489,6 +11523,21 @@
               [
                 "ext",
                 271
+              ]
+            ]
+          },
+          "Carpetless (NC)": {
+            "name": "Carpetless (NC)",
+            "diff": "second",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "ext_273": []
+            },
+            "id_list": [
+              [
+                "ext",
+                273
               ]
             ]
           }
@@ -11521,19 +11570,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_501": [],
-              "ext_272": [
+              "main_503": [],
+              "ext_274": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                501
+                503
               ],
               [
                 "ext",
-                272
+                274
               ]
             ]
           },
@@ -11543,19 +11592,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_502": [],
-              "ext_273": [
+              "main_504": [],
+              "ext_275": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                502
+                504
               ],
               [
                 "ext",
-                273
+                275
               ]
             ]
           }
@@ -11567,19 +11616,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_501": [],
-              "ext_272": [
+              "main_503": [],
+              "ext_274": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                501
+                503
               ],
               [
                 "ext",
-                272
+                274
               ]
             ]
           },
@@ -11589,19 +11638,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_502": [],
-              "ext_273": [
+              "main_504": [],
+              "ext_275": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                502
+                504
               ],
               [
                 "ext",
-                273
+                275
               ]
             ]
           }
@@ -11629,26 +11678,26 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_503": [],
-              "ext_274": [
+              "main_505": [],
+              "ext_276": [
                 "0"
               ],
-              "ext_275": [
+              "ext_277": [
                 "1"
               ]
             },
             "id_list": [
               [
                 "main",
-                503
+                505
               ],
               [
                 "ext",
-                274
+                276
               ],
               [
                 "ext",
-                275
+                277
               ]
             ]
           },
@@ -11658,12 +11707,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_504": []
+              "main_506": []
             },
             "id_list": [
               [
                 "main",
-                504
+                506
               ]
             ]
           },
@@ -11684,26 +11733,26 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_503": [],
-              "ext_274": [
+              "main_505": [],
+              "ext_276": [
                 "0"
               ],
-              "ext_275": [
+              "ext_277": [
                 "1"
               ]
             },
             "id_list": [
               [
                 "main",
-                503
+                505
               ],
               [
                 "ext",
-                274
+                276
               ],
               [
                 "ext",
-                275
+                277
               ]
             ]
           },
@@ -11713,12 +11762,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_504": []
+              "main_506": []
             },
             "id_list": [
               [
                 "main",
-                504
+                506
               ]
             ]
           },
@@ -11756,12 +11805,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_505": []
+              "main_507": []
             },
             "id_list": [
               [
                 "main",
-                505
+                507
               ]
             ]
           },
@@ -11771,12 +11820,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_506": []
+              "main_508": []
             },
             "id_list": [
               [
                 "main",
-                506
+                508
               ]
             ]
           },
@@ -11797,12 +11846,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_505": []
+              "main_507": []
             },
             "id_list": [
               [
                 "main",
-                505
+                507
               ]
             ]
           },
@@ -11812,12 +11861,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_506": []
+              "main_508": []
             },
             "id_list": [
               [
                 "main",
-                506
+                508
               ]
             ]
           },
@@ -11851,14 +11900,14 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_507": [],
-              "main_508": [
+              "main_509": [],
+              "main_510": [
                 "0"
               ],
-              "main_509": [
+              "main_511": [
                 "1"
               ],
-              "main_510": [
+              "main_512": [
                 "1",
                 "0"
               ]
@@ -11866,34 +11915,12 @@
             "id_list": [
               [
                 "main",
-                507
-              ],
-              [
-                "main",
-                508
-              ],
-              [
-                "main",
                 509
               ],
               [
                 "main",
                 510
-              ]
-            ]
-          },
-          "Sideflip Bounce": {
-            "name": "Sideflip Bounce",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "main_511": [],
-              "main_512": [
-                "0"
-              ]
-            },
-            "id_list": [
+              ],
               [
                 "main",
                 511
@@ -11904,8 +11931,8 @@
               ]
             ]
           },
-          "Assless": {
-            "name": "Assless",
+          "Sideflip Bounce": {
+            "name": "Sideflip Bounce",
             "diff": "normal",
             "ver_diff": false,
             "virtual": false,
@@ -11913,9 +11940,6 @@
               "main_513": [],
               "main_514": [
                 "0"
-              ],
-              "ext_276": [
-                "2"
               ]
             },
             "id_list": [
@@ -11926,10 +11950,35 @@
               [
                 "main",
                 514
+              ]
+            ]
+          },
+          "Assless": {
+            "name": "Assless",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_515": [],
+              "main_516": [
+                "0"
+              ],
+              "ext_278": [
+                "2"
+              ]
+            },
+            "id_list": [
+              [
+                "main",
+                515
+              ],
+              [
+                "main",
+                516
               ],
               [
                 "ext",
-                276
+                278
               ]
             ]
           },
@@ -11950,14 +11999,14 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_507": [],
-              "main_508": [
+              "main_509": [],
+              "main_510": [
                 "0"
               ],
-              "main_509": [
+              "main_511": [
                 "1"
               ],
-              "main_510": [
+              "main_512": [
                 "1",
                 "0"
               ]
@@ -11965,34 +12014,12 @@
             "id_list": [
               [
                 "main",
-                507
-              ],
-              [
-                "main",
-                508
-              ],
-              [
-                "main",
                 509
               ],
               [
                 "main",
                 510
-              ]
-            ]
-          },
-          "Sideflip Bounce": {
-            "name": "Sideflip Bounce",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "main_511": [],
-              "main_512": [
-                "0"
-              ]
-            },
-            "id_list": [
+              ],
               [
                 "main",
                 511
@@ -12003,8 +12030,8 @@
               ]
             ]
           },
-          "Assless": {
-            "name": "Assless",
+          "Sideflip Bounce": {
+            "name": "Sideflip Bounce",
             "diff": "normal",
             "ver_diff": false,
             "virtual": false,
@@ -12012,9 +12039,6 @@
               "main_513": [],
               "main_514": [
                 "0"
-              ],
-              "ext_276": [
-                "2"
               ]
             },
             "id_list": [
@@ -12025,10 +12049,35 @@
               [
                 "main",
                 514
+              ]
+            ]
+          },
+          "Assless": {
+            "name": "Assless",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_515": [],
+              "main_516": [
+                "0"
+              ],
+              "ext_278": [
+                "2"
+              ]
+            },
+            "id_list": [
+              [
+                "main",
+                515
+              ],
+              [
+                "main",
+                516
               ],
               [
                 "ext",
-                276
+                278
               ]
             ]
           },
@@ -12067,12 +12116,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_515": []
+              "main_517": []
             },
             "id_list": [
               [
                 "main",
-                515
+                517
               ]
             ]
           },
@@ -12082,12 +12131,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "ext_277": []
+              "ext_279": []
             },
             "id_list": [
               [
                 "ext",
-                277
+                279
               ]
             ]
           }
@@ -12099,12 +12148,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_516": []
+              "main_518": []
             },
             "id_list": [
               [
                 "main",
-                516
+                518
               ]
             ]
           },
@@ -12114,12 +12163,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "ext_278": []
+              "ext_280": []
             },
             "id_list": [
               [
                 "ext",
-                278
+                280
               ]
             ]
           }
@@ -12141,11 +12190,11 @@
         }
       }
     ],
-    "extCheckId": 263
+    "extCheckId": 265
   },
   {
     "name": "Castle Secret Stars",
-    "checkId": 518,
+    "checkId": 520,
     "ext": false,
     "color": "lb-red",
     "starList": [
@@ -12161,14 +12210,14 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_520": [],
-              "main_522": [
+              "main_522": [],
+              "main_524": [
                 "0"
               ],
-              "ext_282": [
+              "ext_284": [
                 "1"
               ],
-              "ext_284": [
+              "ext_286": [
                 "0",
                 "1"
               ]
@@ -12176,19 +12225,19 @@
             "id_list": [
               [
                 "main",
-                520
-              ],
-              [
-                "main",
                 522
               ],
               [
-                "ext",
-                282
+                "main",
+                524
               ],
               [
                 "ext",
                 284
+              ],
+              [
+                "ext",
+                286
               ]
             ]
           },
@@ -12198,19 +12247,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_521": [],
-              "main_523": [
+              "main_523": [],
+              "main_525": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                521
+                523
               ],
               [
                 "main",
-                523
+                525
               ]
             ]
           },
@@ -12220,19 +12269,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_283": [],
-              "ext_285": [
+              "ext_285": [],
+              "ext_287": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "ext",
-                283
+                285
               ],
               [
                 "ext",
-                285
+                287
               ]
             ]
           }
@@ -12244,14 +12293,14 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_520": [],
-              "main_522": [
+              "main_522": [],
+              "main_524": [
                 "0"
               ],
-              "ext_282": [
+              "ext_284": [
                 "1"
               ],
-              "ext_284": [
+              "ext_286": [
                 "0",
                 "1"
               ]
@@ -12259,19 +12308,19 @@
             "id_list": [
               [
                 "main",
-                520
-              ],
-              [
-                "main",
                 522
               ],
               [
-                "ext",
-                282
+                "main",
+                524
               ],
               [
                 "ext",
                 284
+              ],
+              [
+                "ext",
+                286
               ]
             ]
           },
@@ -12281,19 +12330,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_521": [],
-              "main_523": [
+              "main_523": [],
+              "main_525": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                521
+                523
               ],
               [
                 "main",
-                523
+                525
               ]
             ]
           },
@@ -12303,19 +12352,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_283": [],
-              "ext_285": [
+              "ext_285": [],
+              "ext_287": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "ext",
-                283
+                285
               ],
               [
                 "ext",
-                285
+                287
               ]
             ]
           }
@@ -12344,12 +12393,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_524": []
+              "main_526": []
             },
             "id_list": [
               [
                 "main",
-                524
+                526
               ]
             ]
           },
@@ -12359,12 +12408,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_525": []
+              "main_527": []
             },
             "id_list": [
               [
                 "main",
-                525
+                527
               ]
             ]
           },
@@ -12374,12 +12423,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_526": []
+              "main_528": []
             },
             "id_list": [
               [
                 "main",
-                526
+                528
               ]
             ]
           }
@@ -12391,12 +12440,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_524": []
+              "main_526": []
             },
             "id_list": [
               [
                 "main",
-                524
+                526
               ]
             ]
           },
@@ -12406,12 +12455,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_525": []
+              "main_527": []
             },
             "id_list": [
               [
                 "main",
-                525
+                527
               ]
             ]
           },
@@ -12421,12 +12470,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_526": []
+              "main_528": []
             },
             "id_list": [
               [
                 "main",
-                526
+                528
               ]
             ]
           }
@@ -12452,12 +12501,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_527": []
+              "main_529": []
             },
             "id_list": [
               [
                 "main",
-                527
+                529
               ]
             ]
           },
@@ -12467,19 +12516,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_528": [],
-              "main_529": [
+              "main_530": [],
+              "main_531": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                528
+                530
               ],
               [
                 "main",
-                529
+                531
               ]
             ]
           }
@@ -12491,12 +12540,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_527": []
+              "main_529": []
             },
             "id_list": [
               [
                 "main",
-                527
+                529
               ]
             ]
           },
@@ -12506,19 +12555,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_528": [],
-              "main_529": [
+              "main_530": [],
+              "main_531": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                528
+                530
               ],
               [
                 "main",
-                529
+                531
               ]
             ]
           }
@@ -12546,12 +12595,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_530": []
+              "main_532": []
             },
             "id_list": [
               [
                 "main",
-                530
+                532
               ]
             ]
           }
@@ -12563,12 +12612,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_530": []
+              "main_532": []
             },
             "id_list": [
               [
                 "main",
-                530
+                532
               ]
             ]
           }
@@ -12594,36 +12643,6 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_531": []
-            },
-            "id_list": [
-              [
-                "main",
-                531
-              ]
-            ]
-          },
-          "Pole Red Early": {
-            "name": "Pole Red Early",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "main_532": []
-            },
-            "id_list": [
-              [
-                "main",
-                532
-              ]
-            ]
-          },
-          "Stored Angle": {
-            "name": "Stored Angle",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
               "main_533": []
             },
             "id_list": [
@@ -12633,38 +12652,38 @@
               ]
             ]
           },
+          "Pole Red Early": {
+            "name": "Pole Red Early",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_534": []
+            },
+            "id_list": [
+              [
+                "main",
+                534
+              ]
+            ]
+          },
+          "Stored Angle": {
+            "name": "Stored Angle",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_535": []
+            },
+            "id_list": [
+              [
+                "main",
+                535
+              ]
+            ]
+          },
           "No Cutscene": {
             "name": "No Cutscene",
-            "diff": "second",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "ext_286": []
-            },
-            "id_list": [
-              [
-                "ext",
-                286
-              ]
-            ]
-          },
-          "Pole Red Early (NC)": {
-            "name": "Pole Red Early (NC)",
-            "diff": "second",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "ext_287": []
-            },
-            "id_list": [
-              [
-                "ext",
-                287
-              ]
-            ]
-          },
-          "Stored Angle (NC)": {
-            "name": "Stored Angle (NC)",
             "diff": "second",
             "ver_diff": false,
             "virtual": false,
@@ -12678,20 +12697,50 @@
               ]
             ]
           },
+          "Pole Red Early (NC)": {
+            "name": "Pole Red Early (NC)",
+            "diff": "second",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "ext_289": []
+            },
+            "id_list": [
+              [
+                "ext",
+                289
+              ]
+            ]
+          },
+          "Stored Angle (NC)": {
+            "name": "Stored Angle (NC)",
+            "diff": "second",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "ext_290": []
+            },
+            "id_list": [
+              [
+                "ext",
+                290
+              ]
+            ]
+          },
           "Open": {
             "name": "Open",
             "diff": "normal",
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_289": [
+              "ext_291": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "ext",
-                289
+                291
               ]
             ]
           },
@@ -12701,14 +12750,14 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_290": [
+              "ext_292": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "ext",
-                290
+                292
               ]
             ]
           }
@@ -12720,36 +12769,6 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_531": []
-            },
-            "id_list": [
-              [
-                "main",
-                531
-              ]
-            ]
-          },
-          "Pole Red Early": {
-            "name": "Pole Red Early",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "main_532": []
-            },
-            "id_list": [
-              [
-                "main",
-                532
-              ]
-            ]
-          },
-          "Stored Angle": {
-            "name": "Stored Angle",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
               "main_533": []
             },
             "id_list": [
@@ -12759,38 +12778,38 @@
               ]
             ]
           },
+          "Pole Red Early": {
+            "name": "Pole Red Early",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_534": []
+            },
+            "id_list": [
+              [
+                "main",
+                534
+              ]
+            ]
+          },
+          "Stored Angle": {
+            "name": "Stored Angle",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_535": []
+            },
+            "id_list": [
+              [
+                "main",
+                535
+              ]
+            ]
+          },
           "No Cutscene": {
             "name": "No Cutscene",
-            "diff": "second",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "ext_286": []
-            },
-            "id_list": [
-              [
-                "ext",
-                286
-              ]
-            ]
-          },
-          "Pole Red Early (NC)": {
-            "name": "Pole Red Early (NC)",
-            "diff": "second",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "ext_287": []
-            },
-            "id_list": [
-              [
-                "ext",
-                287
-              ]
-            ]
-          },
-          "Stored Angle (NC)": {
-            "name": "Stored Angle (NC)",
             "diff": "second",
             "ver_diff": false,
             "virtual": false,
@@ -12804,20 +12823,50 @@
               ]
             ]
           },
+          "Pole Red Early (NC)": {
+            "name": "Pole Red Early (NC)",
+            "diff": "second",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "ext_289": []
+            },
+            "id_list": [
+              [
+                "ext",
+                289
+              ]
+            ]
+          },
+          "Stored Angle (NC)": {
+            "name": "Stored Angle (NC)",
+            "diff": "second",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "ext_290": []
+            },
+            "id_list": [
+              [
+                "ext",
+                290
+              ]
+            ]
+          },
           "Open": {
             "name": "Open",
             "diff": "normal",
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_289": [
+              "ext_291": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "ext",
-                289
+                291
               ]
             ]
           },
@@ -12827,14 +12876,14 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_290": [
+              "ext_292": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "ext",
-                290
+                292
               ]
             ]
           }
@@ -12870,19 +12919,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_534": [],
-              "ext_291": [
+              "main_536": [],
+              "ext_293": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                534
+                536
               ],
               [
                 "ext",
-                291
+                293
               ]
             ]
           },
@@ -12892,19 +12941,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_535": [],
-              "ext_292": [
+              "main_537": [],
+              "ext_294": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                535
+                537
               ],
               [
                 "ext",
-                292
+                294
               ]
             ]
           }
@@ -12916,19 +12965,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_534": [],
-              "ext_291": [
+              "main_536": [],
+              "ext_293": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                534
+                536
               ],
               [
                 "ext",
-                291
+                293
               ]
             ]
           },
@@ -12938,19 +12987,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_535": [],
-              "ext_292": [
+              "main_537": [],
+              "ext_294": [
                 "0"
               ]
             },
             "id_list": [
               [
                 "main",
-                535
+                537
               ],
               [
                 "ext",
-                292
+                294
               ]
             ]
           }
@@ -12975,11 +13024,11 @@
         }
       }
     ],
-    "extCheckId": 280
+    "extCheckId": 282
   },
   {
     "name": "Bowser Courses",
-    "checkId": 538,
+    "checkId": 540,
     "ext": false,
     "color": "lb-green",
     "starList": [
@@ -12995,12 +13044,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_540": []
+              "main_542": []
             },
             "id_list": [
               [
                 "main",
-                540
+                542
               ]
             ]
           },
@@ -13010,12 +13059,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_541": []
+              "main_543": []
             },
             "id_list": [
               [
                 "main",
-                541
+                543
               ]
             ]
           }
@@ -13027,12 +13076,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_540": []
+              "main_542": []
             },
             "id_list": [
               [
                 "main",
-                540
+                542
               ]
             ]
           },
@@ -13042,12 +13091,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_541": []
+              "main_543": []
             },
             "id_list": [
               [
                 "main",
-                541
+                543
               ]
             ]
           }
@@ -13075,21 +13124,6 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_542": []
-            },
-            "id_list": [
-              [
-                "main",
-                542
-              ]
-            ]
-          },
-          "Shig (Star)": {
-            "name": "Shig (Star)",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
               "main_544": []
             },
             "id_list": [
@@ -13099,8 +13133,115 @@
               ]
             ]
           },
+          "Shig (Star)": {
+            "name": "Shig (Star)",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_546": []
+            },
+            "id_list": [
+              [
+                "main",
+                546
+              ]
+            ]
+          },
           "Xiah (Pipe)": {
             "name": "Xiah (Pipe)",
+            "diff": "second",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "main_547": []
+            },
+            "id_list": [
+              [
+                "main",
+                547
+              ]
+            ]
+          },
+          "Xiah (Star)": {
+            "name": "Xiah (Star)",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_549": []
+            },
+            "id_list": [
+              [
+                "main",
+                549
+              ]
+            ]
+          },
+          "Tsuki (Pipe)": {
+            "name": "Tsuki (Pipe)",
+            "diff": "second",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "main_550": []
+            },
+            "id_list": [
+              [
+                "main",
+                550
+              ]
+            ]
+          },
+          "Tsuki (Star)": {
+            "name": "Tsuki (Star)",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_552": []
+            },
+            "id_list": [
+              [
+                "main",
+                552
+              ]
+            ]
+          },
+          "Salt Flip (Pipe)": {
+            "name": "Salt Flip (Pipe)",
+            "diff": "second",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "main_553": []
+            },
+            "id_list": [
+              [
+                "main",
+                553
+              ]
+            ]
+          },
+          "Salt Flip (Star)": {
+            "name": "Salt Flip (Star)",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_555": []
+            },
+            "id_list": [
+              [
+                "main",
+                555
+              ]
+            ]
+          }
+        },
+        "us_set": {
+          "Shig (Pipe)": {
+            "name": "Shig (Pipe)",
             "diff": "second",
             "ver_diff": true,
             "virtual": false,
@@ -13114,23 +13255,23 @@
               ]
             ]
           },
-          "Xiah (Star)": {
-            "name": "Xiah (Star)",
+          "Shig (Star)": {
+            "name": "Shig (Star)",
             "diff": "normal",
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_547": []
+              "main_546": []
             },
             "id_list": [
               [
                 "main",
-                547
+                546
               ]
             ]
           },
-          "Tsuki (Pipe)": {
-            "name": "Tsuki (Pipe)",
+          "Xiah (Pipe)": {
+            "name": "Xiah (Pipe)",
             "diff": "second",
             "ver_diff": true,
             "virtual": false,
@@ -13144,23 +13285,23 @@
               ]
             ]
           },
-          "Tsuki (Star)": {
-            "name": "Tsuki (Star)",
+          "Xiah (Star)": {
+            "name": "Xiah (Star)",
             "diff": "normal",
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_550": []
+              "main_549": []
             },
             "id_list": [
               [
                 "main",
-                550
+                549
               ]
             ]
           },
-          "Salt Flip (Pipe)": {
-            "name": "Salt Flip (Pipe)",
+          "Tsuki (Pipe)": {
+            "name": "Tsuki (Pipe)",
             "diff": "second",
             "ver_diff": true,
             "virtual": false,
@@ -13174,117 +13315,10 @@
               ]
             ]
           },
-          "Salt Flip (Star)": {
-            "name": "Salt Flip (Star)",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "main_553": []
-            },
-            "id_list": [
-              [
-                "main",
-                553
-              ]
-            ]
-          }
-        },
-        "us_set": {
-          "Shig (Pipe)": {
-            "name": "Shig (Pipe)",
-            "diff": "second",
-            "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
-              "main_543": []
-            },
-            "id_list": [
-              [
-                "main",
-                543
-              ]
-            ]
-          },
-          "Shig (Star)": {
-            "name": "Shig (Star)",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "main_544": []
-            },
-            "id_list": [
-              [
-                "main",
-                544
-              ]
-            ]
-          },
-          "Xiah (Pipe)": {
-            "name": "Xiah (Pipe)",
-            "diff": "second",
-            "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
-              "main_546": []
-            },
-            "id_list": [
-              [
-                "main",
-                546
-              ]
-            ]
-          },
-          "Xiah (Star)": {
-            "name": "Xiah (Star)",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "main_547": []
-            },
-            "id_list": [
-              [
-                "main",
-                547
-              ]
-            ]
-          },
-          "Tsuki (Pipe)": {
-            "name": "Tsuki (Pipe)",
-            "diff": "second",
-            "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
-              "main_549": []
-            },
-            "id_list": [
-              [
-                "main",
-                549
-              ]
-            ]
-          },
           "Tsuki (Star)": {
             "name": "Tsuki (Star)",
             "diff": "normal",
             "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "main_550": []
-            },
-            "id_list": [
-              [
-                "main",
-                550
-              ]
-            ]
-          },
-          "Salt Flip (Pipe)": {
-            "name": "Salt Flip (Pipe)",
-            "diff": "second",
-            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "main_552": []
@@ -13296,18 +13330,33 @@
               ]
             ]
           },
+          "Salt Flip (Pipe)": {
+            "name": "Salt Flip (Pipe)",
+            "diff": "second",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "main_554": []
+            },
+            "id_list": [
+              [
+                "main",
+                554
+              ]
+            ]
+          },
           "Salt Flip (Star)": {
             "name": "Salt Flip (Star)",
             "diff": "normal",
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_553": []
+              "main_555": []
             },
             "id_list": [
               [
                 "main",
-                553
+                555
               ]
             ]
           }
@@ -13345,27 +13394,19 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_554": [],
-              "main_555": [
+              "main_556": [],
+              "main_557": [
                 "0"
               ],
-              "main_556": [
+              "main_558": [
                 "1",
                 "2"
               ],
-              "main_557": [
+              "main_559": [
                 "1"
               ]
             },
             "id_list": [
-              [
-                "main",
-                554
-              ],
-              [
-                "main",
-                555
-              ],
               [
                 "main",
                 556
@@ -13373,6 +13414,14 @@
               [
                 "main",
                 557
+              ],
+              [
+                "main",
+                558
+              ],
+              [
+                "main",
+                559
               ]
             ]
           }
@@ -13384,27 +13433,19 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_558": [],
-              "main_559": [
+              "main_560": [],
+              "main_561": [
                 "0"
               ],
-              "main_560": [
+              "main_562": [
                 "1",
                 "2"
               ],
-              "main_561": [
+              "main_563": [
                 "1"
               ]
             },
             "id_list": [
-              [
-                "main",
-                558
-              ],
-              [
-                "main",
-                559
-              ],
               [
                 "main",
                 560
@@ -13412,6 +13453,14 @@
               [
                 "main",
                 561
+              ],
+              [
+                "main",
+                562
+              ],
+              [
+                "main",
+                563
               ]
             ]
           }
@@ -13441,12 +13490,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_562": []
+              "main_564": []
             },
             "id_list": [
               [
                 "main",
-                562
+                564
               ]
             ]
           },
@@ -13456,12 +13505,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_563": []
+              "main_565": []
             },
             "id_list": [
               [
                 "main",
-                563
+                565
               ]
             ]
           },
@@ -13471,39 +13520,10 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_564": [
+              "main_566": [
                 "0"
               ],
-              "main_565": []
-            },
-            "id_list": [
-              [
-                "main",
-                564
-              ],
-              [
-                "main",
-                565
-              ]
-            ]
-          },
-          "BLJ": {
-            "name": "BLJ",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "main_566": [],
-              "main_567": [
-                "1"
-              ],
-              "ext_297": [
-                "2"
-              ],
-              "ext_298": [
-                "1",
-                "2"
-              ]
+              "main_567": []
             },
             "id_list": [
               [
@@ -13513,14 +13533,43 @@
               [
                 "main",
                 567
+              ]
+            ]
+          },
+          "BLJ": {
+            "name": "BLJ",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_568": [],
+              "main_569": [
+                "1"
+              ],
+              "ext_299": [
+                "2"
+              ],
+              "ext_300": [
+                "1",
+                "2"
+              ]
+            },
+            "id_list": [
+              [
+                "main",
+                568
+              ],
+              [
+                "main",
+                569
               ],
               [
                 "ext",
-                297
+                299
               ],
               [
                 "ext",
-                298
+                300
               ]
             ]
           }
@@ -13532,12 +13581,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_562": []
+              "main_564": []
             },
             "id_list": [
               [
                 "main",
-                562
+                564
               ]
             ]
           },
@@ -13547,12 +13596,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_563": []
+              "main_565": []
             },
             "id_list": [
               [
                 "main",
-                563
+                565
               ]
             ]
           },
@@ -13562,39 +13611,10 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_564": [
+              "main_566": [
                 "0"
               ],
-              "main_565": []
-            },
-            "id_list": [
-              [
-                "main",
-                564
-              ],
-              [
-                "main",
-                565
-              ]
-            ]
-          },
-          "BLJ": {
-            "name": "BLJ",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "main_566": [],
-              "main_567": [
-                "1"
-              ],
-              "ext_297": [
-                "2"
-              ],
-              "ext_298": [
-                "1",
-                "2"
-              ]
+              "main_567": []
             },
             "id_list": [
               [
@@ -13604,14 +13624,43 @@
               [
                 "main",
                 567
+              ]
+            ]
+          },
+          "BLJ": {
+            "name": "BLJ",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_568": [],
+              "main_569": [
+                "1"
+              ],
+              "ext_299": [
+                "2"
+              ],
+              "ext_300": [
+                "1",
+                "2"
+              ]
+            },
+            "id_list": [
+              [
+                "main",
+                568
+              ],
+              [
+                "main",
+                569
               ],
               [
                 "ext",
-                297
+                299
               ],
               [
                 "ext",
-                298
+                300
               ]
             ]
           }
@@ -13641,12 +13690,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_568": []
+              "main_570": []
             },
             "id_list": [
               [
                 "main",
-                568
+                570
               ]
             ]
           },
@@ -13656,12 +13705,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_570": []
+              "main_572": []
             },
             "id_list": [
               [
                 "main",
-                570
+                572
               ]
             ]
           },
@@ -13691,12 +13740,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_569": []
+              "main_571": []
             },
             "id_list": [
               [
                 "main",
-                569
+                571
               ]
             ]
           },
@@ -13706,12 +13755,12 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_570": []
+              "main_572": []
             },
             "id_list": [
               [
                 "main",
-                570
+                572
               ]
             ]
           },
@@ -13764,30 +13813,6 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_571": [],
-              "main_572": [
-                "0"
-              ]
-            },
-            "id_list": [
-              [
-                "main",
-                571
-              ],
-              [
-                "main",
-                572
-              ]
-            ]
-          }
-        },
-        "us_set": {
-          "Standard": {
-            "name": "Standard",
-            "diff": "normal",
-            "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
               "main_573": [],
               "main_574": [
                 "0"
@@ -13801,6 +13826,30 @@
               [
                 "main",
                 574
+              ]
+            ]
+          }
+        },
+        "us_set": {
+          "Standard": {
+            "name": "Standard",
+            "diff": "normal",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "main_575": [],
+              "main_576": [
+                "0"
+              ]
+            },
+            "id_list": [
+              [
+                "main",
+                575
+              ],
+              [
+                "main",
+                576
               ]
             ]
           }
@@ -13828,19 +13877,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_575": [
+              "main_577": [
                 "0"
               ],
-              "main_577": []
+              "main_579": []
             },
             "id_list": [
               [
                 "main",
-                575
+                577
               ],
               [
                 "main",
-                577
+                579
               ]
             ]
           },
@@ -13850,19 +13899,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_576": [
+              "main_578": [
                 "0"
               ],
-              "main_578": []
+              "main_580": []
             },
             "id_list": [
               [
                 "main",
-                576
+                578
               ],
               [
                 "main",
-                578
+                580
               ]
             ]
           },
@@ -13872,19 +13921,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_579": [
+              "main_581": [
                 "0"
               ],
-              "main_580": []
+              "main_582": []
             },
             "id_list": [
               [
                 "main",
-                579
+                581
               ],
               [
                 "main",
-                580
+                582
               ]
             ]
           },
@@ -13905,19 +13954,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_575": [
+              "main_577": [
                 "0"
               ],
-              "main_577": []
+              "main_579": []
             },
             "id_list": [
               [
                 "main",
-                575
+                577
               ],
               [
                 "main",
-                577
+                579
               ]
             ]
           },
@@ -13927,19 +13976,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_576": [
+              "main_578": [
                 "0"
               ],
-              "main_578": []
+              "main_580": []
             },
             "id_list": [
               [
                 "main",
-                576
+                578
               ],
               [
                 "main",
-                578
+                580
               ]
             ]
           },
@@ -13949,19 +13998,19 @@
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "main_579": [
+              "main_581": [
                 "0"
               ],
-              "main_580": []
+              "main_582": []
             },
             "id_list": [
               [
                 "main",
-                579
+                581
               ],
               [
                 "main",
-                580
+                582
               ]
             ]
           },
@@ -14000,21 +14049,6 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_581": []
-            },
-            "id_list": [
-              [
-                "main",
-                581
-              ]
-            ]
-          },
-          "Standard (Star)": {
-            "name": "Standard (Star)",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
               "main_583": []
             },
             "id_list": [
@@ -14024,25 +14058,25 @@
               ]
             ]
           },
+          "Standard (Star)": {
+            "name": "Standard (Star)",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_585": []
+            },
+            "id_list": [
+              [
+                "main",
+                585
+              ]
+            ]
+          },
           "Early Cycle (Pipe)": {
             "name": "Early Cycle (Pipe)",
             "diff": "second",
             "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
-              "ext_299": []
-            },
-            "id_list": [
-              [
-                "ext",
-                299
-              ]
-            ]
-          },
-          "Early Cycle (Star)": {
-            "name": "Early Cycle (Star)",
-            "diff": "normal",
-            "ver_diff": false,
             "virtual": false,
             "variant_map": {
               "ext_301": []
@@ -14054,8 +14088,85 @@
               ]
             ]
           },
+          "Early Cycle (Star)": {
+            "name": "Early Cycle (Star)",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "ext_303": []
+            },
+            "id_list": [
+              [
+                "ext",
+                303
+              ]
+            ]
+          },
           "Ultimate Cycle (Pipe)": {
             "name": "Ultimate Cycle (Pipe)",
+            "diff": "second",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "ext_304": []
+            },
+            "id_list": [
+              [
+                "ext",
+                304
+              ]
+            ]
+          },
+          "Ultimate Cycle (Star)": {
+            "name": "Ultimate Cycle (Star)",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "ext_306": []
+            },
+            "id_list": [
+              [
+                "ext",
+                306
+              ]
+            ]
+          }
+        },
+        "us_set": {
+          "Standard (Pipe)": {
+            "name": "Standard (Pipe)",
+            "diff": "second",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "main_584": []
+            },
+            "id_list": [
+              [
+                "main",
+                584
+              ]
+            ]
+          },
+          "Standard (Star)": {
+            "name": "Standard (Star)",
+            "diff": "normal",
+            "ver_diff": false,
+            "virtual": false,
+            "variant_map": {
+              "main_585": []
+            },
+            "id_list": [
+              [
+                "main",
+                585
+              ]
+            ]
+          },
+          "Early Cycle (Pipe)": {
+            "name": "Early Cycle (Pipe)",
             "diff": "second",
             "ver_diff": true,
             "virtual": false,
@@ -14069,87 +14180,10 @@
               ]
             ]
           },
-          "Ultimate Cycle (Star)": {
-            "name": "Ultimate Cycle (Star)",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "ext_304": []
-            },
-            "id_list": [
-              [
-                "ext",
-                304
-              ]
-            ]
-          }
-        },
-        "us_set": {
-          "Standard (Pipe)": {
-            "name": "Standard (Pipe)",
-            "diff": "second",
-            "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
-              "main_582": []
-            },
-            "id_list": [
-              [
-                "main",
-                582
-              ]
-            ]
-          },
-          "Standard (Star)": {
-            "name": "Standard (Star)",
-            "diff": "normal",
-            "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "main_583": []
-            },
-            "id_list": [
-              [
-                "main",
-                583
-              ]
-            ]
-          },
-          "Early Cycle (Pipe)": {
-            "name": "Early Cycle (Pipe)",
-            "diff": "second",
-            "ver_diff": true,
-            "virtual": false,
-            "variant_map": {
-              "ext_300": []
-            },
-            "id_list": [
-              [
-                "ext",
-                300
-              ]
-            ]
-          },
           "Early Cycle (Star)": {
             "name": "Early Cycle (Star)",
             "diff": "normal",
             "ver_diff": false,
-            "virtual": false,
-            "variant_map": {
-              "ext_301": []
-            },
-            "id_list": [
-              [
-                "ext",
-                301
-              ]
-            ]
-          },
-          "Ultimate Cycle (Pipe)": {
-            "name": "Ultimate Cycle (Pipe)",
-            "diff": "second",
-            "ver_diff": true,
             "virtual": false,
             "variant_map": {
               "ext_303": []
@@ -14161,18 +14195,33 @@
               ]
             ]
           },
+          "Ultimate Cycle (Pipe)": {
+            "name": "Ultimate Cycle (Pipe)",
+            "diff": "second",
+            "ver_diff": true,
+            "virtual": false,
+            "variant_map": {
+              "ext_305": []
+            },
+            "id_list": [
+              [
+                "ext",
+                305
+              ]
+            ]
+          },
           "Ultimate Cycle (Star)": {
             "name": "Ultimate Cycle (Star)",
             "diff": "normal",
             "ver_diff": false,
             "virtual": false,
             "variant_map": {
-              "ext_304": []
+              "ext_306": []
             },
             "id_list": [
               [
                 "ext",
-                304
+                306
               ]
             ]
           }
@@ -14213,12 +14262,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_584": []
+              "main_586": []
             },
             "id_list": [
               [
                 "main",
-                584
+                586
               ]
             ]
           },
@@ -14228,12 +14277,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_586": []
+              "main_588": []
             },
             "id_list": [
               [
                 "main",
-                586
+                588
               ]
             ]
           }
@@ -14245,12 +14294,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_585": []
+              "main_587": []
             },
             "id_list": [
               [
                 "main",
-                585
+                587
               ]
             ]
           },
@@ -14260,12 +14309,12 @@
             "ver_diff": true,
             "virtual": false,
             "variant_map": {
-              "main_587": []
+              "main_589": []
             },
             "id_list": [
               [
                 "main",
-                587
+                589
               ]
             ]
           }
@@ -14294,6 +14343,6 @@
         }
       }
     ],
-    "extCheckId": 295
+    "extCheckId": 297
   }
 ]

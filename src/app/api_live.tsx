@@ -14,8 +14,8 @@ import { dateAndOffset } from './api_history'
 //const API_endpoint = "http://ec2-3-14-80-190.us-east-2.compute.amazonaws.com:5500";
 //const API_endpoint = "https://0lcnm5wjck.execute-api.us-east-2.amazonaws.com/Main";
 
-const API_endpoint = "https://4rxry866a4.execute-api.us-east-2.amazonaws.com/Main";
-//const API_endpoint = "https://kjcjfyxwwa.execute-api.us-east-2.amazonaws.com/Main";
+//const API_endpoint = "https://4rxry866a4.execute-api.us-east-2.amazonaws.com/Main";
+const API_endpoint = "https://kjcjfyxwwa.execute-api.us-east-2.amazonaws.com/Main";
 
 	/*
 		xcam time API functions
@@ -163,6 +163,7 @@ export async function loadNickMap(): Promise<PlayDatMap> {
 	for (const data of nickList) {
 		if (data.nick !== null) nickMap["remote@" + data.p_id] = {
 			"nick": data.nick,
+			"favColor": data.favcolor,
 			"perm": data.perm
 		};
 	}
@@ -186,12 +187,13 @@ export async function loadUserId(userId: AuthIdent): Promise<string | null> {
 	return "" + res.res;
 }
 
-export function postNick(userId: AuthIdent, nick: string) {
+export function postNick(userId: AuthIdent, nick: string, favColor: string | null) {
 	// api request - submit new nickname
 	var submitObj: SubmitNickObj = {
 		"player": userId,
 		"accessToken": userId.token.accessToken,
-		"nick": nick
+		"nick": nick,
+		"favColor": favColor
 	};
 	fetch(API_endpoint + "/players/nicks", {
 		method: "POST",

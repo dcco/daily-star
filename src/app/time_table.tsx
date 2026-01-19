@@ -378,29 +378,58 @@ function sortCopy(table: ExTimeTable, fun: (a: ExUserDat, b: ExUserDat) => numbe
 	return table.map((x) => x).sort(fun);
 }
 
-export function sortTimeTable(timeTable: TimeTable, sortId: number): TimeTable {
+export function sortTimeTable(timeTable: TimeTable, sortId: number): [TimeTable, (number | null)[]] {
 	// do an initial sort of all times
 	var exTable: ExTimeTable = timeTable.map(function (v) {
 		return { "id": v.id, "timeRow": v.timeRow, "_sort": sortTimeRow(v.timeRow) };
 	});
 	// use these time arrays to sort
+	var newTable: ExTimeTable = [];
 	if (sortId === 0) {
-		return sortCopy(exTable, function (a, b) {
+		newTable = sortCopy(exTable, function (a, b) {
 			return compTimeRow(a._sort, b._sort);
 		});
 	} else {
-		return sortCopy(exTable, function (a, b) {
+		newTable = sortCopy(exTable, function (a, b) {
+			// - failsafe sort
 			var si = sortId - 1;
 			if (si >= a.timeRow.length) return compTimeRow(a._sort, b._sort);
+			// - fallback if one is null. if both are null, sort by best overall times
 			var ai = a.timeRow[si];
 			var bi = b.timeRow[si];
 			if (ai === null) {
 				if (bi === null) return compTimeRow(a._sort, b._sort);
 				else return 1;
 			} else if (bi === null) return -1;
+			// - sort by best time in column
 			var diff = ai[0].time - bi[0].time;
 			if (diff !== 0) return diff;
 			return compTimeRow(a._sort, b._sort);
 		});
 	}
+	// construct new table's index
+	var lastTime = -1;
+	var num = -1;
+	var idList = newTable.map((exDat, i) => {
+		var time = exDat._sort[0][0].time;
+		const si = sortId - 1;
+		if (sortId !== 0) {
+			var timeRow = exDat.timeRow;
+			if (si >= timeRow.length) return null;
+			if (timeRow[si] === null) return null;
+			time = timeRow[si][0].time;
+		}
+		if (time !== lastTime) num = i;
+		lastTime = time;
+		return num;
+	})
+	return [newTable, idList];
+}
+
+export function sortTimeTableEx(timeTable: TimeTable, exList: number[]): TimeTable {
+	var newTable: TimeTable = [];
+	for (const i of exList) {
+		newTable.push(timeTable[i]);
+	}
+	return newTable;
 }

@@ -132,7 +132,7 @@ export function DailyStar(props: DailyStarProps): React.ReactNode
 	} else if (menuId === 3 || ((menuId === 0 || menuId === 2) && seasonEnd)) {
 		// build history board
 		if (initStarSlug === "") board = <HistoryTable seasonId={ curSeason }
-			setSeasonId={ (i) => setSeasonId("history", i) }/>;
+			setSeasonId={ (i) => setSeasonId("history", i) } playData={ playData }/>;
 		else board = <HistoryBoard seasonId={ curSeason }
 			setSeasonId={ (i) => setSeasonId("history", i) } rm={ props.rm } playData={ playData }/>;
 	} else if (menuId === 4 || menuId === 10 || menuId === 11) {

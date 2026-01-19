@@ -41,9 +41,6 @@ type ForceMap = {
 	*/
 
 type RankFillRules = {
-		// RULES: special requirements that affect daily star scoring
-		// -- bans: removes certain strat combinations for scoring purpose
-	"ban"?: string[][],
 		// phase 1: initial column merges
 		// - used to make better time distributions for columns with low fill rates
 		// -- cutscene: used to merge cutscene columns which would otherwise not be merged

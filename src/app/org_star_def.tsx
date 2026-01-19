@@ -5,9 +5,26 @@ import { VerF, Ver, VerInfo, VarSet, VarSpace,
 	buildVarGroups, filterVarGroups } from './variant_def'
 import { RawStratDef, StratSet, ColList,
 	buildStratDef, openStratDef,
-	mergeStratSet, hasExtStratSet, hasExtOnlyStratSet, filterExtStratSet,
+	mergeStratSet, hasExtStratSet, hasExtOnlyStratSet, filterExtStratSet, filterRulesStratSet,
 	filterVirtStratSet, filterVariantStratSet, toListStratSet } from './org_strat_def'
 import { OffsetDat, VerOffset, StratOffset, newVerOffset, newStratOffset } from './time_dat'
+
+	/*
+		star codes
+	*/
+
+export const PERM = ["bob", "wf", "jrb", "ccm", "bbh", "hmc", "lll", "ssl",
+	"ddd", "sl", "wdw", "ttm", "thi", "ttc", "rr", "sec", "bow"];
+
+export function starCode(stageId: number, starDef: StarDef): string
+{
+	return PERM[stageId] + "_" + starDef.id;
+}
+
+export function starCodeX(stageId: number, starId: string): string
+{
+	return PERM[stageId] + "_" + starId;
+}
 
 	/*
 		filter_state: filter settings for the xcam viewer
@@ -18,9 +35,11 @@ import { OffsetDat, VerOffset, StratOffset, newVerOffset, newStratOffset } from 
 		* varFlagList: which variants to display
 	*/
 
+export type ExtState = null | "ext" | "rules"
+
 export type FilterState = {
 	"verState": [boolean, boolean],
-	"extFlag": boolean,
+	"extFlag": ExtState,
 	"altState": [boolean, boolean],
 	"virtFlag": boolean,
 	"varFlagList": boolean[]
@@ -29,8 +48,8 @@ export type FilterState = {
 export function newFilterState(alt: [boolean, boolean], virt: boolean, varTotal: number): FilterState
 {
 	return {
-		"verState": [true, false],
-		"extFlag": false,
+		"verState": [true, true],
+		"extFlag": null,
 		"altState": alt,
 		"virtFlag": virt,
 		"varFlagList": new Array(varTotal).fill(true)
@@ -40,8 +59,19 @@ export function newFilterState(alt: [boolean, boolean], virt: boolean, varTotal:
 export function newExtFilterState(alt: [boolean, boolean], virt: boolean, varTotal: number): FilterState
 {
 	return {
-		"verState": [true, false],
-		"extFlag": true,
+		"verState": [true, true],
+		"extFlag": "ext",
+		"altState": alt,
+		"virtFlag": virt,
+		"varFlagList": new Array(varTotal).fill(true)
+	};
+}
+
+export function newRulesFilterState(alt: [boolean, boolean], rules: boolean, virt: boolean, varTotal: number): FilterState
+{
+	return {
+		"verState": [true, true],
+		"extFlag": rules ? "ext" : "rules",
 		"altState": alt,
 		"virtFlag": virt,
 		"varFlagList": new Array(varTotal).fill(true)
@@ -52,7 +82,7 @@ export function fullFilterState(alt: [boolean, boolean], varTotal: number): Filt
 {
 	return {
 		"verState": [true, true],
-		"extFlag": true,
+		"extFlag": "ext",
 		"altState": alt,
 		"virtFlag": true,
 		"varFlagList": new Array(varTotal).fill(true)
@@ -118,7 +148,8 @@ export type StarDesc = {
 	"alt": null | StarAltDef,
 	"100c": boolean,
 	"def": "na" | "jp" | "us" | "offset" | "spec" | null,
-	"variants": string[] | undefined
+	"variants": string[] | undefined,
+	"stageId": number
 };
 
 export type RawStarDef = StarDesc & {
@@ -310,7 +341,8 @@ function buildStarDef(stageId: number, starDef: RawStarDef): StarDef
 		"variants": starDef.variants,
 		"jp_set": jp_set,
 		"us_set": us_set,
-		"open": open
+		"open": open,
+		"stageId": stageId
 	};
 }
 
@@ -360,7 +392,8 @@ export function stratSetStarDef(starDef: StarDef, fs: FilterState): StratSet
 	else if (verState[1]) verSet = starDef.us_set;
 	else verSet = starDef.jp_set;
 	// extension filter
-	if (fs.extFlag === false) verSet = filterExtStratSet(verSet);
+	if (fs.extFlag === null) verSet = filterExtStratSet(verSet);
+	else if (fs.extFlag === "rules") verSet = filterRulesStratSet(starCode(starDef.stageId, starDef), verSet);
 	// virtual filter
 	if (fs.virtFlag === false) verSet = filterVirtStratSet(verSet);
 	// variant filter

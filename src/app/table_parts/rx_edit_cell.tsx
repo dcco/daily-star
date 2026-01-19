@@ -56,7 +56,7 @@ function properDat(oldDat: TimeDat | null, draftDat: DraftDat, valid: boolean, d
 	var newTime = rawMS(draftDat.text);
 	if (newTime === null) return "na";
 	if (newTime < oldDat.rawTime) return "new";
-	if (newTime === oldDat.time && !strict &&
+	if (newTime === oldDat.rawTime && !strict &&
 		(!sameNote(oldDat.link, draftDat.link) || !sameNote(oldDat.note, draftDat.note)
 			|| oldDat.verifFlag !== draftDat.verifFlag)) return "fix";
 	return "improper";

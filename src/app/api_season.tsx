@@ -3,8 +3,8 @@
 //export const API_endpoint = "http://ec2-3-14-80-190.us-east-2.compute.amazonaws.com:5500";
 //export const API_endpoint = "https://0lcnm5wjck.execute-api.us-east-2.amazonaws.com/Main";
 
-export const API_endpoint = "https://4rxry866a4.execute-api.us-east-2.amazonaws.com/Main";
-//export const API_endpoint = "https://kjcjfyxwwa.execute-api.us-east-2.amazonaws.com/Main";
+//export const API_endpoint = "https://4rxry866a4.execute-api.us-east-2.amazonaws.com/Main";
+export const API_endpoint = "https://kjcjfyxwwa.execute-api.us-east-2.amazonaws.com/Main";
 
 	/*
 		glob: a collection of day information + a list of stars (the glob)

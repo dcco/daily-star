@@ -1,33 +1,22 @@
 
+MID PRIO
 
-NEW TODO
+~ re add "custom best"
 
-  [ FRI ]
+~ need a slug for a specific month/week within a season
 
-- hide open/extensions toggle
+~ deal with "banned strat combos"
+
 
 * deal with new player auth
 * deal with de-authentication
 - {"level":"error","message":"Invalid authentication token for player jaehee1996.","service":"user-service"}
 
-
-  [ SAT ]
-
-* add support page
-
-- final cleanup on scoring
-~ add all the "hidden info"
-~ set default columns correctly
-
-~ colors toggle :)
+~ fix ranks for "require video"
+~ probably see if regular users can change their verif flag
 
 
-MID PRIO
-
-~ deal with "banned strat combos"
-~ need a slug for a specific month/week within a season
-
-~ more test on "auto updates"
+OLD  "14_1_No Bounce": ["25.13", "Abood", "RR Cruiser"],
 
 
 LOW PRIO
@@ -36,6 +25,7 @@ LOW PRIO
 
 
 > view n2025/ds_scraps for extra rank notes
+
 
 -------------------
 
@@ -247,4 +237,15 @@ NEW URL STRUCTURE
 
 
 
+to mess with rules
+- filterRulesStratSet : org_strat_def.tsx
+
+
+
+
+POST SEASON
+
+notes from daily star
+-- vanish cap slope clip / no slope clip is very unclear
+-- mario rank for igloo clip is fracked
 

@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { lightColList } from '../col_config'
-import { colListStarDef, fullFilterState, copyFilterState,
+import { FilterState, colListStarDef, fullFilterState, copyFilterState,
 	verOffsetStarDef, stratOffsetStarDef } from '../org_star_def'
 import { xcamRecordMapBan, sortColList } from '../xcam_record_map'
 import { LiveStarTableProps } from '../table_parts/rx_live_table'
@@ -41,22 +41,22 @@ export function DSSubBoard(props: LiveStarTableProps &
 			rColList = lightColList(fullColList, starDef, xFS);
 			stratList.push(rColList.map((colRef) => colRef[1].name));
 		}
-		rankTableNode = <StratRankTable stageId={ stageId } starDef={ starDef } stratList={ stratList }/>;
+		rankTableNode = <StratRankTable stageId={ stageId } starDef={ starDef } stratList={ stratList } showPts={ true }/>;
 	}
 
 		// variant display
 	var varNode: React.ReactNode = <div></div>;
 	if (props.showVar) {
-		<VariantToggle variants={ starDef.variants }
-			state={ fs.varFlagList } toggle={ function() {} }></VariantToggle>
+		varNode = <VariantToggle variants={ starDef.variants } extAll={ true }
+			state={ fs.varFlagList } toggle={ function () {} }></VariantToggle>;
 	}
 
 	return <React.Fragment>
 		{ rankTableNode }
-		
+		<div className="row-wrap no-space variant-cont">{ varNode }</div>
 		<LiveStarTable stageId={ stageId } starDef={ starDef } today={ props.today }
 			showStd={ props.showStd } fs={ fs } api={ props.api } playData={ props.playData }
 			reloadPlayData={ props.reloadPlayData } updatePlayCount={ props.updatePlayCount }
-			playDB={ props.playDB } extraColList={ props.extraColList }/>
+			playDB={ props.playDB } showRowId={ props.showRowId } extraColList={ props.extraColList }/>
 	</React.Fragment>;
 }

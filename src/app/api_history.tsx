@@ -153,15 +153,17 @@ async function initSeasonHistory(hist: SeasonHistory, canonId: number | null)
 	var desc = res.res as SeasonObj;
 	desc.starList.sort(function (a, b) { return a.day - b.day });
 	hist.header = desc;
-	// load history data in general
+	// filter "future" stars
 	var today = new Date(Date.now());
 	var dayTotal = daysSinceStart(desc.season.startdate, today);
-	var unsortTimes = await loadAllStar(desc.season.startdate, dayTotal + 2);
+	desc.starList = desc.starList.filter((a) => a.day <= dayTotal);
+	// load history data in general
+	var unsortTimes = await loadAllStar(desc.season.startdate, dayTotal + 1);
 	// go through the star list and load the times
 	var data: SeasonEntry[] = [];
 	for (const glob of desc.starList)
 	{
-		//if (glob.day >= dayTotal + 1) continue;
+		if (glob.day >= dayTotal + 1) continue;
 		if (glob.special !== null) {
 			data.push({ "star": glob, "times": [] });
 			continue;
@@ -400,17 +402,19 @@ function historyTTFun(histObj: SeasonHistory): StarLoadFun {
 	}
 };
 
-function historyStarSet(id: number | null): [StarDef, number][][]
+function historyStarSet(id: number | null): StarDef[] //[StarDef, number][][]
 {
 	const histObj = getHistObj(id);
-	var starSet: [StarDef, number][][] = Array(orgStageTotal()).fill(0).map(() => { return []; });
+	//var starSet: [StarDef, number][][] = Array(orgStageTotal()).fill(0).map(() => { return []; });
+	var starSet: StarDef[] = []
 	for (let i = 0; i < histObj.data.length; i++) {
 		var starGlob = histObj.data[i].star;
 		if (starGlob.special !== null) continue;
 		var starCodeList = readCodeList(starGlob.stageid, starGlob.staridlist);
 		for (const [stageId, starCode] of starCodeList) {
 			var starId = orgStarId(stageId, starCode);
-			starSet[stageId].push([orgStarDef(stageId, starId), starId]);
+			//starSet[stageId].push([orgStarDef(stageId, starId), starId]);
+			starSet.push(orgStarDef(stageId, starId));
 		}
 	}
 	return starSet;

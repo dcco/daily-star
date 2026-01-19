@@ -142,6 +142,12 @@ sup[data-k='c'] {
 	justify-content: start;
 }
 
+.right-cont {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+}
+
 .row-fill {
 	max-width: fit-content;
 	margin-left: auto;
@@ -199,6 +205,15 @@ select {
 	font-style: italic;
 	font-size: 12px;
 	color: #E4D8D8;
+}
+
+.small-msg {
+	max-width: 245px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-top: 4px;
 }
 
 .label-em {
@@ -519,7 +534,7 @@ select {
 }
 
 .med-table {
-	width: 90%;
+	width: 94%;
 }
 
 .rank-wrap {
@@ -698,6 +713,10 @@ select {
 
 	/* -- time cells */
 
+.time-cell[data-ps="Off-White"] {
+	background-color: #A8A8D8;
+}
+
 .time-cell:first-child {
 	color: #000000;
 	font-weight: bold;
@@ -726,6 +745,10 @@ em {
 	color: #5050A0;
 }
 
+.em-alert {
+	color: #A0A0F0;
+}
+
 a {
 	color: #C04070;
 }
@@ -736,6 +759,10 @@ a:visited {
 
 a[data-verif="false"] {
 	text-decoration: line-through;
+}
+
+a.light-link {
+	color: #F0F0F0;
 }
 
 .msg-link:visited {
@@ -880,8 +907,16 @@ td:has(+ td.time-rank) {
 	box-shadow: 1px 1px 2px 1px #181820;
 }
 
+.note-expand {
+	width: max-content;
+}
+
 .tooltip:hover .note-text {
 	visibility: visible;
+}
+
+.tooltip .note-expand:hover {
+	visibility: hidden;
 }
 
 .time-special-note {
@@ -889,6 +924,12 @@ td:has(+ td.time-rank) {
 	color: #202050;
 	font-size: 14px;
 	font-style: italic;
+}
+
+.note-list {
+	list-style: none;
+	padding-left: 0px;
+	/* padding-left: 16px; */
 }
 
 	/* -- name cells */
@@ -1382,6 +1423,7 @@ td:hover .float-icon[data-active="false"] {
 .dropdown-cont {
 	position: relative;
 	cursor: pointer;
+	margin-right: 4px;
 }
 
 .dropdown-menu {
@@ -1398,12 +1440,15 @@ td:hover .float-icon[data-active="false"] {
 	border-radius: 4px;
 	font-size: 12px;
 	box-shadow: 1px 1px 4px 1px #181820;
+	/* */
+	padding-left: 2px;
+	padding-right: 2px;
 }
 
 .dropdown-opt {
 	padding-top: 1px;
 	padding-bottom: 4px;
-	padding-left: 4px;
+	/*padding-left: 4px;*/
 	width: 100%;
 }
 
@@ -1542,7 +1587,6 @@ td:hover .float-icon[data-active="false"] {
 	width: 100px;
 	height: 21px;
 	
-	margin-left: 10px;
 	padding-top: 2px;
 	font-weight: bold;
 	text-align: center;
@@ -1766,8 +1810,56 @@ a.bright {
 	font-style: italic;
 }
 
+*[data-ps="Multiple"] {
+	background-color: #504484;
+	color: #FFFFFF;
+}
+
 .rank-bubble-text {
 	background: transparent;
+}
+
+	/* colors */
+
+.dropcolor-menu {
+	position: absolute;
+	left: -2px;
+	top: 30px;
+	width: 102px;
+}
+
+.color-box {
+	display: flex;
+	flex-wrap: wrap;
+	height: 100%;
+	padding: 6px;
+	column-gap: 6px;
+	row-gap: 6px;
+}
+
+.color-bubble {
+	cursor: pointer;
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	margin-top: 4px;
+	margin-left: 6px;
+	margin-right: 3px;
+}
+
+.color-bubble-small {
+	cursor: pointer;
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+}
+
+.color-bubble-empty {
+	cursor: pointer;
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	border: 1px solid #A0A0C0;
 }
 
 /*.inner-rank-text {

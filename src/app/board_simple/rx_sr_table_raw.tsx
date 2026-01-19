@@ -1,4 +1,4 @@
-import { RANK_NAME_LIST } from "../standards/rank_const"
+/*import { RANK_NAME_LIST } from "../standards/rank_const"
 import { G_SHEET } from "../api_xcam"
 
 import React from 'react'
@@ -19,11 +19,6 @@ export function StratRankTableRaw(props: SRTableProps)
 	var starKey = props.stageId + "_" + starDef.id;
 	if (G_SHEET.srMap[starKey] === undefined) return <div></div>;
 	var stratSet = G_SHEET.srMap[starKey];
-	// check if there's an alt version
-	/*var altSet: StratTimeSet | null = null;
-	var altVer: string = "US";
-	if (G_SHEET.srMap[starKey + "#us"]) altSet = G_SHEET.srMap[starKey + "#us"];
-	else if (G_SHEET.srMap[starKey + "#jp"]) { altVer = "JP"; altSet = G_SHEET.srMap[starKey + "#jp"]; }*/
 	// build a standard table for each strat
 	var stNodeList: React.ReactNode[] = [];
 	Object.entries(stratSet).map((sx) => {
@@ -37,8 +32,6 @@ export function StratRankTableRaw(props: SRTableProps)
 			var altTime: [number, string] | undefined = undefined;
 			if (rankObj.sr !== "none" && rankObj.time.alt !== null) {
 				altTime = rankObj.time.alt;
-				/*var altInfo = altSet[stratName].times[rankName];
-				if (altInfo.sr !== "none") altTime = [altInfo.time.verTime, altVer];*/
 			}
 			// display time
 			if (rankObj.sr === "none") {
@@ -59,8 +52,6 @@ export function StratRankTableRaw(props: SRTableProps)
 					<SimpleTimeCell time={ rankObj.time.time } alter={ alter } altTime={ altTime }></SimpleTimeCell>
 				</tr>);
 			}
-					/* <TimeCell timeDat={ rankInfo.time } verOffset={ zeroVerOffset() } active={ false }
-						onClick={ () => {} } hiddenFlag={ false } ></TimeCell> */
 		}
 		stNodeList.push(<div key={ stratName } className="rank-table-cont"><div data-method={ rankSet.rankMethod }
 			className="rank-table">
@@ -73,3 +64,4 @@ export function StratRankTableRaw(props: SRTableProps)
 		{ stNodeList }
 	</div>;
 }
+*/

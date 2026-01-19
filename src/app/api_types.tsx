@@ -1,6 +1,8 @@
 
-import { Ver } from './variant_def'
-import { AuthIdent } from './time_table'
+import { Ver, serialVarList } from './variant_def'
+import { TimeDat } from './time_dat'
+import { AuthIdent, Ident } from './time_table'
+import { StarDef } from './org_star_def'
 
 	/*
 		@ api_live object types
@@ -21,6 +23,32 @@ export type ReadTimeUnit = {
 };
 
 export type ReadTimeObj = ReadTimeUnit[];
+
+export function addTimeObj(readObj: ReadTimeObj, id: Ident, starDef: StarDef, timeDat: TimeDat) {
+	var p_id = 0;
+	if (/^\d+$/.test(id.name)) {
+		p_id = parseInt(id.name);
+	}
+	var variants = starDef.variants ? starDef.variants : [];
+	readObj.push({
+		"submit_id": -1,
+		"p_id": p_id,
+		"time": timeDat.rawTime,
+		"stratname": timeDat.rowDef.name,
+		"ver": timeDat.rowDef.ver,
+		"variants": serialVarList(variants, timeDat.rowDef.variant_list),
+		"link": timeDat.link === null ? "" : timeDat.link,
+		"note": timeDat.note === null ? "" : timeDat.note,
+		"verifflag": "maybe"
+	});
+}
+
+export function delTimeObj(readObj: ReadTimeObj, timeDat: TimeDat) {
+	if (timeDat.origin === null) return;
+	var d_id = timeDat.origin;
+	const i = readObj.findIndex((obj) => { console.log(obj.submit_id); return obj.submit_id === d_id });
+	if (i !== -1) readObj.splice(i, 1);
+}
 
 export type ReadAnyTimeUnit = ReadTimeUnit & {
 	"stageid": number,
@@ -70,5 +98,5 @@ export type SubmitNickObj = {
 	"player": AuthIdent,
 	"accessToken": number,
 	"nick": string,
-	"favColor"?: string
+	"favColor"?: string | null
 };

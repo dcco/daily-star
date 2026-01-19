@@ -16,6 +16,7 @@ import { DailyStar } from './pages/rx_daily_star'
 import { XcamFull } from './pages/rx_xcam_full'
 import { XcamBeta } from './pages/rx_xcam_beta'
 import { About } from './pages/rx_about'
+import { Support } from './pages/rx_support'
 import { EditBoard } from './board_full/rx_edit_all_board'
 
 export const DEV = false;
@@ -68,7 +69,7 @@ export function MultiBoard(props: { boardId?: number, subId?: number, slug?: str
 	var boardId = 0;
 	if (props.boardId !== undefined) boardId = props.boardId;
 	var subId = props.subId;
-	if (boardId === 0 && props.subId === undefined) subId = 5;
+	if (boardId === 0 && props.subId === undefined) subId = 0;
 	const _core = newRouterCore(boardId, subId, props.slug);
 	const [core, setCore] = useState(_core);
 	const rm = newRouterMain(core, setCore);
@@ -89,6 +90,7 @@ export function MultiBoard(props: { boardId?: number, subId?: number, slug?: str
 		else if (i === 2) navRM(rm, "about", "", "");
 		else if (i === 3 && DEV) navRM(rm, "editor", "", "");
 		else if (i === 4) navRM(rm, "beta", "", "");
+		else if (i === 5) navRM(rm, "support", "", "");
 		else navRM(rm, "home", "", "");
 	};
 
@@ -105,7 +107,9 @@ export function MultiBoard(props: { boardId?: number, subId?: number, slug?: str
 		// if dirty flag is set, post local changes (only relevant to new nickname)
 		if (ld.dirtyFlag && ld.userId !== null) {
 			var nick = ld.nick;
-			if (nick !== null) postNick(ld.userId, nick);
+			if (nick !== null) {
+				postNick(ld.userId, nick, ld.favColor);
+			}
 		}
 	};
 
@@ -159,6 +163,8 @@ export function MultiBoard(props: { boardId?: number, subId?: number, slug?: str
 		board = <EditBoard playData={ playData } updatePlayData={ updatePlayData } reloadPlayData={ () => reloadPlayData(null) }/>;
 	} else if (mainId === 4) {
 		board = <XcamBeta rm={ rm } key={ boardKey }/>;
+	} else if (mainId === 5) {
+		board = <Support key={ boardKey }/>;
 	} else {
 		board = <About key={ boardKey }/>;
 	}
@@ -179,6 +185,7 @@ export function MultiBoard(props: { boardId?: number, subId?: number, slug?: str
 			<HeadTab id={ 0 } selId={ mainId } setSelId={ updateMainId } key={ 0 }>Daily Star</HeadTab>
 			<HeadTab id={ 1 } selId={ mainId } setSelId={ updateMainId } key={ 1 }>Xcam Viewer</HeadTab>
 			{ adminNode }
+			<HeadTab id={ 5 } selId={ mainId } setSelId={ updateMainId } key={ 5 }>Support</HeadTab>
 			<HeadTab id={ 2 } selId={ mainId } setSelId={ updateMainId } key={ 2 }>About</HeadTab>
 		</React.Fragment>;
 	}

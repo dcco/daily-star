@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 
 	/* special function for detecting clicks outside an element */
 
-const useOutsideClick = (ref: any, f: () => void) =>
+export const useOutsideClick = (ref: any, f: () => void) =>
 {
 	const onClick = (e: any) => {
 		if (ref.current && !ref.current.contains(e.target)) f();

@@ -5,6 +5,7 @@ import { GoogleAuthProvider, getAuth, onAuthStateChanged, onIdTokenChanged, sign
 import { AuthIdent, newAuthIdent, dropIdent } from '../time_table'
 import { PlayData, LocalPD, setUserLD, setUserNickLD, strIdNickPD } from '../play_data'
 import { DropDownImgMenu } from './rx_dropdown_menu'
+import { ColorPick } from './rx_color_pick'
 
 	// firebase initialization
 
@@ -40,8 +41,6 @@ function _signOut()
 
 type NickInputProps = {
 	"userId": AuthIdent,
-	/*"setNick": (a: string) => void,
-	"nickMap": NickMap*/
 	"playData": PlayData,
 	"setPlayData": (a: LocalPD) => void
 };
@@ -82,12 +81,6 @@ export function NickInput(props: NickInputProps): React.ReactNode
 	// display node
 	var dispNode: React.ReactNode = "";
 	if (!eState.active) {
-		/*var nick = strIdNickPD(playData, dropIdent(userId));
-		var nState = "display";
-		if (nick === "") {
-			nick = '---';
-			nState = "none";
-		}*/
 		var nick = "---";
 		var nState = "none";
 		var nDat = playData.local.nick;
@@ -118,10 +111,6 @@ export function NickInput(props: NickInputProps): React.ReactNode
 	/* authorization area */
 
 type AuthAreaProps = {
-	/*"userId": Ident | null,
-	"nickMap": NickMap,
-	"setUserId": (a: any) => void,
-	"setNick": (a: string) => void*/
 	"playData": PlayData,
 	"setPlayData": (a: LocalPD) => void
 };
@@ -132,8 +121,6 @@ export function AuthArea(props: AuthAreaProps): React.ReactNode
 	var userId = playData.local.userId;
 	var nickMap = playData.nickMap;
 	var setPlayData = props.setPlayData;
-/*	var setUserId = props.setUserId;
-	var setNick = props.setNick;*/
 
 	const [photoURL, setPhotoURL] = useState<string>("");
 
@@ -157,7 +144,7 @@ export function AuthArea(props: AuthAreaProps): React.ReactNode
 		});
 	}, []);
 
-	// display authorization state
+	// display authorization state -- logged out
 	var authNode: React.ReactNode = (<div className="login-cont">
 		<div className="row-wrap">
 			<div className="login-button" onClick={ _signIn }>Log in</div>
@@ -165,32 +152,18 @@ export function AuthArea(props: AuthAreaProps): React.ReactNode
 		</div>
 	</div>);
 
+	// -- logged in
 	if (userId !== null) {
 		var nonFun = () => {};
 		var actList = [null, _signIn, _signOut];
 		authNode = (<div className="login-cont">
 			<DropDownImgMenu src={ photoURL } backupSrc="/icons/def-propic.png"
 				textList={ [ "@" + userId.name , "Switch User", "Logout"] } actList={ actList }/>
+			<ColorPick userId={ userId } playData={ playData } setPlayData={ setPlayData }/>
 			<NickInput userId={ userId } playData={ playData } setPlayData={ setPlayData }/>
 		</div>);
 	}
-	/*var logoutNode = "";
-	if (user !== null) {
-		loginNode = (
-			<div className="login-button" image="true" onClick={ _signIn }>
-				<img className="login-pic" src={ user.photoURL }></img>
-				<div className="login-text"> { user.email.split('@')[0] } </div>
-			</div>);
-		logoutNode = (<div className="logout-button" onClick={ _signOut }>Logout</div>);
-	}
 
-	return (<div className="ident-cont">
-		<div>Nick: <div className="nick-box">Twig</div></div>
-		<div className="login-cont">
-			{ loginNode }
-			{ logoutNode }
-		</div>
-	</div>);*/
 	return (<div className="ident-cont">
 		{ authNode }
 	</div>);

@@ -1,4 +1,6 @@
 
+import Link from 'next/link'
+
 import React, { useState, useEffect, useRef } from 'react'
 import orgData from '../json/org_data.json'
 
@@ -8,14 +10,15 @@ import { G_SHEET } from '../api_xcam'
 
 import { Ident, keyIdent } from '../time_table'
 import { PlayData } from '../play_data'
-import { newExtFilterState, copyFilterState,
+import { newRulesFilterState, copyFilterState, starCode,
 	orgStarId, orgStarDef, verOffsetStarDef } from '../org_star_def'
+import { specStarRef } from '../star_map'
 import { ExColumn } from '../table_parts/ex_column'
 import { PlayDB } from '../table_parts/rx_star_row'
 import { LiveStarIface } from '../table_parts/rx_live_table'
 import { MenuOpt } from '../board_simple/rx_menu_opt'
 import { VerToggle } from '../board_simple/rx_ver_toggle'
-import { VerifToggle } from '../board_simple/rx_verif_toggle'
+import { SimpToggle } from '../board_simple/rx_simp_toggle'
 import { scoreColumn } from '../stats/stat_columns'
 import { Countdown } from './rx_countdown'
 import { DSSubBoard } from './rx_ds_sub_board'
@@ -95,7 +98,8 @@ export function DSEditBoard(props: DSEditBoardProps): React.ReactNode {
 	// filter state
 	// unlike viewboard, extensions always on
 	// WARNING: versions always on (too much of a pain to change), may want to fix eventually but idk
-	var initFS = newExtFilterState([true, true], true, 0);
+	// - variants set to 0 because we arent going to have variant toggles (because of the multi-star display)
+	var initFS = newRulesFilterState([true, true], false, true, 0);
 	initFS.verState = [true, true];
 	const [fs, setFS] = useState(initFS);
 	
@@ -119,17 +123,25 @@ export function DSEditBoard(props: DSEditBoardProps): React.ReactNode {
 		ns.verState[i] = !ns.verState[i];
 		if (!ns.verState[i] && !ns.verState[1 - i]) ns.verState[1 - i] = true;
 		setFS(ns);
-	}*/
-
+	}
 	const toggleAlt = (a: [boolean, boolean]) => {
 		var ns = copyFilterState(fs);
 		ns.altState = a;
 		setFS(ns);
+	}*/
+
+	// rules filter
+	const toggleRules = () => {
+		var ns = copyFilterState(fs);
+		ns.extFlag = fs.extFlag === "ext" ? "rules" : "ext";
+		setFS(ns);
 	}
+
+	var rulesNode = <SimpToggle name={ "Show Extensions*" } state={ fs.extFlag === "ext" } toggle={ () => toggleRules() }/>;
 
 	// verification toggle
 	var [verifFlag, setVerifFlag] = useState(false);
-	var verifNode = <VerifToggle state={ verifFlag } toggle={ () => { setVerifFlag(!verifFlag) } }/>;
+	var verifNode = <SimpToggle name={ "Require Video" } state={ verifFlag } toggle={ () => { setVerifFlag(!verifFlag) } }/>;
 
 	// version toggle node (enable when relevant)
 	/*var verToggle = <div></div>;
@@ -218,7 +230,8 @@ export function DSEditBoard(props: DSEditBoardProps): React.ReactNode {
 			mainFS = copyFilterState(fs);
 			mainFS.altState = [true, false];
 		}
-		const exColList = [scoreColumn(G_HISTORY.current.scoreData, stageIdX, starCodeList[i][1], true, verifFlag, null)];
+		const exColList = [scoreColumn(G_HISTORY.current.scoreData, specStarRef(starDef, null), fs.extFlag, verifFlag)];
+		//const exColList = [scoreColumn(G_HISTORY.current.scoreData, stageIdX, starCodeList[i][1], fs.extFlag, verifFlag, null)];
 		// -- separator if not the first node
 		var sepNode: React.ReactNode = <div></div>;
 		if (i !== 0) {
@@ -231,7 +244,7 @@ export function DSEditBoard(props: DSEditBoardProps): React.ReactNode {
 		tableList.push(<React.Fragment key={ stageIdX + "_" + starIdX + "_" + i }>
 			{ sepNode }
 			<DSSubBoard stageId={ stageIdX } starDef={ starDef } today={ loadType } fs={ mainFS }
-				showStd={ true } showVar={ true } combFlag={ combFlagList[i] && showComb }
+				showStd={ true } showRowId={ true } showVar={ true } combFlag={ combFlagList[i] && showComb }
 				api={ props.api } updatePlayCount={ updatePlayCount("" + i) } playData={ playData }
 				reloadPlayData={ reloadPlayDataEx } playDB={ playDB } extraColList={ exColList }/>
 		</React.Fragment>);
@@ -241,7 +254,7 @@ export function DSEditBoard(props: DSEditBoardProps): React.ReactNode {
 			altFS.altState = [false, true];
 			tableList.push(
 				<DSSubBoard stageId={ stageIdX } starDef={ starDef } today={ loadType } fs={ altFS }
-					showStd={ true } showVar={ false } combFlag={ false } api={ props.api }
+					showStd={ true } showRowId={ true } showVar={ false } combFlag={ false } api={ props.api }
 					updatePlayCount={ updatePlayCount("" + i) } playData={ playData } reloadPlayData={ reloadPlayDataEx }
 					playDB={ playDB } extraColList={ exColList } key={ stageIdX + "_" + starIdX + "_" + i + "_alt" }/>
 			);
@@ -251,6 +264,11 @@ export function DSEditBoard(props: DSEditBoardProps): React.ReactNode {
 	var starName = starDefList[0].name;
 	if (starIdList.length > 1) starName = starDefList[0].name + "+";
 
+	var remindNode: React.ReactNode = "";
+	if (!verifFlag) remindNode = <div className="msg-cont small-msg">
+		Reminder to submit a video / discord link for final submission.
+	</div>;
+
 	return (
 		<div className="ds-cont">
 		<div className="row-wrap">
@@ -258,12 +276,18 @@ export function DSEditBoard(props: DSEditBoardProps): React.ReactNode {
 				<div className="row-wrap no-space">
 					<div className='label-cont'>Day { props.day + 1 }</div>
 					<div className='label-cont'>{ orgData[starIdList[0][0]].name }</div>
-					<div className='label-cont'>{ starName }</div>
+					<div className='label-cont'>
+						<Link className="light-link" href={ "/xcam?star=" +
+							starCode(starDefList[0].stageId, starDefList[0])  }>{ starName }</Link>
+					</div>
 				</div>
 				<div className="row-wrap no-space">{ dateNode1 } { dateNode2 } </div>
 				<div className='label-cont alt-label'>Players: { playCount }</div>
 			</div>
-			{ verifNode }
+			<div className="right-cont">
+				<div className="toggle-sidebar">{ rulesNode } { verifNode }</div>
+				{ remindNode }
+			</div>
 		</div>	
 		{ combToggle }
 		{ tableList }

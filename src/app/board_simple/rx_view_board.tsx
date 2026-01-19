@@ -1,5 +1,4 @@
 
-import { getStarKey } from '../standards/strat_ranks'
 import { DEV } from '../rx_multi_board'
 
 import React, { useState, useEffect } from 'react'
@@ -8,6 +7,7 @@ import { VerOffset, StratOffset, formatFrames } from '../time_dat'
 import { ColList, filterVarColList } from '../org_strat_def'
 import { StarDef, FilterState, newFilterState, copyFilterState, fullFilterState,
 	verOffsetStarDef, stratOffsetStarDef, hasExtStarDef, colListStarDef } from '../org_star_def'
+import { AltType, starKeyExtern } from '../star_map'
 import { TimeTable } from '../time_table'
 import { PlayData, LocalPD, newPlayData } from '../play_data'
 import { ColConfig, newColConfig, primaryColConfig, lightColList,
@@ -23,9 +23,7 @@ import { ExtToggle } from './rx_ext_toggle'
 import { VariantToggle } from './rx_variant_toggle'
 
 import { StratRankTable } from '../board_simple/rx_sr_table'
-import { StratRankTableRaw } from '../board_simple/rx_sr_table_raw'
-
-import { scoreColumn } from "../stats/stat_columns"
+//import { StratRankTableRaw } from '../board_simple/rx_sr_table_raw'
 
 import { TTLoadType } from '../api_live'
 import { G_SHEET } from "../api_xcam"
@@ -54,6 +52,32 @@ type ViewBoardType = {
 
 type BoardType = ViewBoardType | EditBoardType
 
+	/*
+		-- data parameters
+		stageId - stage to display
+		starDef - star to display
+		-- extra react elements
+		cornerNode - top left corner (used for star name display, stage select dropdown, etc)
+		headerNode - directly above table (used for star select, etc)
+		? toggleNode - top right corner (used for toggles)
+		-- rank / standard table
+		showStd - whether to show rank table
+		? showPts - show strat rank table pts
+		-- alt star settings
+		? mergeRaw - whether alt stars should be combined, or get their own page
+		-- filter settings
+		? extAll - disable version / extension toggles
+		? rulesFlag - use rules filters
+		-- extra columns
+		? showRowId - show the # col
+		? extraColFun - extra columns
+		-- name cell settings
+		? playData - ids to nicknames, names to colors, etc
+		? playDB - player name external links
+		-- misc settings
+		? emptyWarn - whether to warn for empty tables
+	*/
+
 type ViewBoardProps = BoardType & {
 	stageId: number,
 	starDef: StarDef,
@@ -63,8 +87,12 @@ type ViewBoardProps = BoardType & {
 	showStd: boolean,
 	mergeRaw?: boolean,
 	emptyWarn?: boolean,
-	playData?: PlayData,
 	extAll?: boolean,
+	rulesFlag?: boolean,
+	showRowId?: boolean,
+	showPts?: boolean,
+	extraColFun?: (alt: AltType) => ExColumn[],
+	playData?: PlayData,
 	playDB?: PlayDB
 }
 
@@ -97,8 +125,7 @@ function filterConfig(stageId: number, starDef: StarDef, fs: FilterState, colLis
 export function ViewBoard(props: ViewBoardProps): React.ReactNode
 {
 	var stageId = props.stageId;
-	var starDef = props.starDef;
-
+	var starDef = props.starDef;	
 	var playData = newPlayData();
 	if (props.playData !== undefined) playData = props.playData;
 
@@ -109,21 +136,33 @@ export function ViewBoard(props: ViewBoardProps): React.ReactNode
 	if (starDef.alt !== null && starDef.alt.status !== "offset" &&
 		starDef.alt.status !== "mergeOffset") combFlag = false;
 	if (!combFlag) initAlt = [true, false];
+	/*
+		typing a bunch of stuff here to stave off sublime text crash
+	*/
 
 	// init filter state
 	var varTotal = 0;
 	if (starDef.variants) varTotal = starDef.variants.length;
 	var initFS = newFilterState(initAlt, false, varTotal);
-	if (props.extAll !== undefined) {
+	if (props.rulesFlag !== undefined) {
 		initFS.virtFlag = true;
 		initFS.verState = [true, true];
-		initFS.extFlag = true;
+		initFS.extFlag = "ext";
+		if (!props.rulesFlag) initFS.extFlag = "rules";
+	} else if (props.extAll !== undefined) {
+		initFS.virtFlag = true;
+		initFS.verState = [true, true];
+		initFS.extFlag = "ext";
 	}
 	
 	// filter state
 	const [fs, setFS] = useState(initFS);
 	var verOffset = verOffsetStarDef(starDef, fs);
 	var sOffset = stratOffsetStarDef(starDef, fs);
+
+	useEffect(() => {
+		setFS(initFS);
+	}, [props.rulesFlag])
 
 	const toggleVer = (i: number) => {
 		var ns = copyFilterState(fs);
@@ -135,7 +174,7 @@ export function ViewBoard(props: ViewBoardProps): React.ReactNode
 	// extension state
 	const toggleExt = () => {
 		var ns = copyFilterState(fs);
-		ns.extFlag = !ns.extFlag;
+		ns.extFlag = ns.extFlag === null ? "ext" : null;
 		setFS(ns);
 	}
 
@@ -170,7 +209,7 @@ export function ViewBoard(props: ViewBoardProps): React.ReactNode
 	// extension toggle node (enable when relevant)
 	var extToggle: React.ReactNode = <div></div>;
 	if (!props.extAll && hasExtStarDef(starDef)) {
-		extToggle = <ExtToggle state={ fs.extFlag } toggle={ toggleExt }/>;
+		extToggle = <ExtToggle state={ fs.extFlag === "ext" } toggle={ toggleExt }/>;
 	}
 
 	// strat offset display
@@ -222,7 +261,7 @@ export function ViewBoard(props: ViewBoardProps): React.ReactNode
 
 	// add sort record + relevant records
 	var banList: string[][] = [];
-	var starKey = getStarKey(stageId, starDef);
+	var starKey = starKeyExtern(stageId, starDef);
 	/*if (DEV && RS_DATA[starKey]) {
 		var rs = RS_DATA[starKey];
 		if (rs.ban)	banList = rs.ban;
@@ -243,7 +282,7 @@ export function ViewBoard(props: ViewBoardProps): React.ReactNode
 		// -- main table
 		tableList.push(
 			<LiveStarTable stageId={ stageId } starDef={ starDef } today={ props.loadType } fs={ fs } showStd={ props.showStd } api={ props.api } 
-				playData={ edit.playData } reloadPlayData={ edit.reloadPlayData } key={ stageId + "_" + starDef.name + "_0" }/>
+				playData={ edit.playData } reloadPlayData={ edit.reloadPlayData } showRowId={ props.showRowId } key={ stageId + "_" + starDef.name + "_0" }/>
 		);
 		// -- alt table
 		if (props.mergeRaw && (!combFlag || !fs.altState[1])) {
@@ -251,40 +290,42 @@ export function ViewBoard(props: ViewBoardProps): React.ReactNode
 			altFS.altState = [false, true];
 			tableList.push(
 				<LiveStarTable stageId={ stageId } starDef={ starDef } today={ props.loadType } fs={ altFS } showStd={ props.showStd } api={ props.api }
-					playData={ edit.playData } reloadPlayData={ edit.reloadPlayData } key={ stageId + "_" + starDef.name + "_1" }/>
+					playData={ edit.playData } reloadPlayData={ edit.reloadPlayData } showRowId={ props.showRowId } key={ stageId + "_" + starDef.name + "_1" }/>
 			);
 		}
 	// -- view mode
 	} else {
 		var timeTable = props.ttFun(colList, verOffset, sOffset);
 		var cfg = filterConfig(stageId, starDef, fs, colList);
-
-		// scoring columns (for debug purposes)
-		var exColList: ExColumn[] = [];
-		if (DEV) {
-			if (starDef.alt !== null && !combFlag) {
-				var exAlt = fs.altState[1] ? "alt" : "main";
-				exColList = [scoreColumn(G_SHEET.scoreData, stageId, starDef.id, fs.extFlag, false, exAlt)];
+		// scoring columns
+		var exColList: ExColumn[] | undefined = undefined;
+		if (props.extraColFun) {
+			if (starDef.alt !== null && !fs.altState[1]) {
+				//var exAlt: AltType = fs.altState[1] ? "alt" : "main";
+				//exColList = props.extraColFun(exAlt);
+				exColList = props.extraColFun("main");
 			}
-			else exColList = [scoreColumn(G_SHEET.scoreData, stageId, starDef.id, fs.extFlag, false, null)];
+			else exColList = props.extraColFun(null);
 		}
 
 		// -- main table < can be either main / alt >
 		tableList.push(<StarTable cfg={ cfg } playData={ playData } timeTable={ timeTable }
 			verOffset={ verOffset } recordMap={ relRM } emptyWarn={ props.emptyWarn }
-			playDB={ props.playDB } rankKey={ rankKey } extraColList={ exColList } key={ stageId + "_" + starDef.name + "_0" }></StarTable>);
+			playDB={ props.playDB } rankKey={ rankKey }
+			showRowId={ props.showRowId } extraColList={ exColList } key={ stageId + "_" + starDef.name + "_0" }></StarTable>);
 		// -- alt table < this version only shows up on combination >
 		if (props.mergeRaw && (!combFlag || !fs.altState[1])) {
 			var altFS = copyFilterState(fs);
 			altFS.altState = [false, true];
 			var altCFG = filterConfig(stageId, starDef, altFS, colList);
 
-			var exAltList: ExColumn[] = [];
-			if (DEV) exAltList = [scoreColumn(G_SHEET.scoreData, stageId, starDef.id, fs.extFlag, false, "alt")];
+			var exAltList: ExColumn[] | undefined = undefined;
+			if (props.extraColFun) exAltList = props.extraColFun("alt");
 
 			tableList.push(<StarTable cfg={ altCFG } playData={ playData } timeTable={ timeTable }
 				verOffset={ verOffset } recordMap={ relRM } emptyWarn={ props.emptyWarn }
-				playDB={ props.playDB } rankKey={ rankKey } extraColList={ exAltList } key={ stageId + "_" + starDef.name + "_1" }></StarTable>);
+				playDB={ props.playDB } rankKey={ rankKey }
+				showRowId={ props.showRowId } extraColList={ exAltList } key={ stageId + "_" + starDef.name + "_1" }></StarTable>);
 		}
 	}
 
@@ -309,7 +350,7 @@ export function ViewBoard(props: ViewBoardProps): React.ReactNode
 			rColList = lightColList(fullColList, starDef, xFS);
 			stratList.push(rColList.map((colRef) => colRef[1].name));
 		}
-		rankTableNode = <StratRankTable stageId={ stageId } starDef={ starDef } stratList={ stratList }/>;
+		rankTableNode = <StratRankTable stageId={ stageId } starDef={ starDef } stratList={ stratList } showPts={ props.showPts }/>;
 		//rankTableNode  = <StratRankTableRaw stageId={ stageId } starDef={ starDef }/>;
 	}
 

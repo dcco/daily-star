@@ -103,6 +103,8 @@ function navData(board: string, subId: string, slug: string): [string, number, n
 		return ["/about", 2, 0];
 	} else if (board === "editor") {
 		return ["/editor", 3, 0];
+	} else if (board === "support") {
+		return ["/support", 5, 0];
 	}
 	return null;
 }

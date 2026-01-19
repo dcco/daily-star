@@ -3,21 +3,13 @@ import { Ident, AuthIdent, keyIdent } from './time_table'
 
 export type PlayDat = {
 	"nick": string,
+	"favColor": string | null,
 	"perm": string | null
 }
 
 export type PlayDatMap = {
 	[key: string]: PlayDat 
 };
-
-	/*
-		DEPRECATED CONCEPT	
-		* newUserSync: this flag is used to trigger a nickname data reload when a new user
-			may have potentially been created.
-				- "uninit": nickname data has not done initialize load (do not trigger any reloads)
-				- "sync": user id has been loaded + player id synced
-				- "unsync": user id has been changed, player id not synced yet
-	*/
 
 	/*
 		player data is split into two parts:
@@ -30,6 +22,7 @@ export type PlayDatMap = {
 			* userId: also stores the remote id. in cases where the user is changed, the
 				remote id is simply invalidated
 			* nick: current nickname - null if not set by user (can be replaced by remote result)
+			* favColor: current favorite color - null by default (use xcam sheet rank color)
 			* perm: personal mod status
 			* dirtyFlag: flag indicating whether nickname is out of date with the remote DB
 		> remote
@@ -43,6 +36,7 @@ export type DSPerm = "admin" | "mod" | "user"
 export type LocalPD = {
 	"userId": AuthIdent | null,
 	"nick": string | null,
+	"favColor": string | null,
 	"perm": DSPerm
 	"dirtyFlag": boolean
 }
@@ -58,6 +52,7 @@ export function newPlayData(): PlayData
 		"local": { 
 			"userId": null,
 			"nick": null,
+			"favColor": null,
 			"perm": "user",
 			"dirtyFlag": false
 		},
@@ -76,6 +71,7 @@ export function setUserLD(ld: LocalPD, userId: AuthIdent | null): LocalPD
 	return {
 		"userId": userId,
 		"nick": null,
+		"favColor": null,
 		"perm": "user",
 		"dirtyFlag": false
 	};
@@ -89,6 +85,18 @@ export function setUserNickLD(ld: LocalPD, nick: string, dirty: boolean): LocalP
 	return {
 		"userId": ld.userId,
 		"nick": nick,
+		"favColor": ld.favColor,
+		"perm": ld.perm,
+		"dirtyFlag": dirty
+	};
+}
+
+export function setUserFavLD(ld: LocalPD, favColor: string | null, dirty: boolean): LocalPD
+{
+	return {
+		"userId": ld.userId,
+		"nick": ld.nick,
+		"favColor": favColor,
 		"perm": ld.perm,
 		"dirtyFlag": dirty
 	};
@@ -113,7 +121,7 @@ export function setDirtyPD(ld: LocalPD): LocalPD
 
 function canonNickPD(pd: PlayData, userId: AuthIdent, remoteId: string): PlayDat | null
 {
-	if (pd.local.nick !== null) return { "nick": pd.local.nick, "perm": pd.local.perm };
+	if (pd.local.nick !== null) return { "nick": pd.local.nick, "favColor": pd.local.favColor, "perm": pd.local.perm };
 	var remotePX = pd.nickMap["remote@" + remoteId];
 	if (remotePX !== undefined) return remotePX;
 	return null;
@@ -134,6 +142,7 @@ export function linkUserRemotePD(pd: PlayData, remoteId: string): PlayData
 		var canonPX = canonNickPD(pd, pd.local.userId, remoteId);
 		if (canonPX !== null) {
 			pd.local.nick = canonPX.nick;
+			pd.local.favColor = canonPX.favColor;
 			pd.local.perm = readPerm(canonPX.perm);
 			pd.nickMap["google@" + pd.local.userId.name] = canonPX;
 			pd.nickMap["remote@" + remoteId] = canonPX;
@@ -177,6 +186,15 @@ export function strIdNickPD(pd: PlayData, id: Ident): string
 	else if (id.service === "xcam") return id.name;
 	return "@me"; // + id.name;
 }
+
+export function lookupDatPD(pd: PlayData, id: Ident): PlayDat | null
+{
+	var key = keyIdent(id);
+	if (pd.nickMap[key]) return pd.nickMap[key];
+	return null;
+}
+
+
 /*
 export function updateNick(nickMap: NickMap, id: Ident, nick: string)
 {

@@ -2,6 +2,8 @@
 import { Ver, VerInfo, VarSpace, buildVarList } from './variant_def'
 import { RowDef, newRowDef } from './row_def'
 
+import { allowStratRule } from './org_rules'
+
 	/*
 		row_id: [string, int] - a tuple referencing an xcam sheet + row id
 	*/
@@ -315,6 +317,21 @@ export function filterExtStratSet(vs: StratSet): StratSet {
 	Object.entries(vs).map((strat) => {
 		var [stratName, stratDef] = strat;
 		var fDef = filterExtStratDef(stratDef);
+		// keep the strat if not empty + not the auto-generated open column
+		var emptyOpen = (stratName.startsWith("Open") && stratDef.id_list.length === 0);
+		if (!emptyStratDef(fDef) && !emptyOpen) vsx[stratName] = fDef;
+	})
+	return vsx;
+}
+
+export function filterRulesStratSet(ruleCode: string, vs: StratSet): StratSet {
+	var vsx: StratSet = {};
+	Object.entries(vs).map((strat) => {
+		var [stratName, stratDef] = strat;
+		var fDef =
+			allowStratRule(ruleCode, stratName) ? copyStratDef(stratDef) :
+			filterExtStratDef(stratDef);
+		// keep the strat if not empty + not the auto-generated open column
 		var emptyOpen = (stratName.startsWith("Open") && stratDef.id_list.length === 0);
 		if (!emptyStratDef(fDef) && !emptyOpen) vsx[stratName] = fDef;
 	})

@@ -95,7 +95,7 @@ export function XcamBoard(props: XcamBoardProps): React.ReactNode {
 	// standard xcam player list
 	var playNameList: string[] = [];
 	if (G_SHEET.scoreData !== null) {
-		playNameList = Object.entries(G_SHEET.scoreData.user["ext$"].stats).map(([k, v]) => k);
+		playNameList = Object.entries(G_SHEET.scoreData.user["ext$"].stats).map(([k, v]) => v.id.name);
 	}
 	var playDB: PlayDB = {
 		"baseUrl": playerDir,//"/xcam/players",

@@ -294,7 +294,7 @@ type EditRowProps = {
 	"editPos": EditPos,
 	"cellClick": (a: CellAct, i: number | null, j: number, k: number) => void,
 	"submit": (id: Ident, timeList: TimeDat[], delList: TimeDat[], verifList: TimeDat[]) => void,
-	"extraColList": ExColumn[]
+	"extraColTotal"?: number
 }
 
 export function EditRow(props: EditRowProps): React.ReactNode {
@@ -309,7 +309,8 @@ export function EditRow(props: EditRowProps): React.ReactNode {
 	const starDef = editObj.starDef;
 	const editPos = props.editPos;
 	const cellClick = props.cellClick;
-	const exColList = props.extraColList;
+	var exColTotal = 0;
+	if (props.extraColTotal) exColTotal = props.extraColTotal;
 
 	const [ds, setDS] = useState(newDraftState());
 
@@ -367,20 +368,20 @@ export function EditRow(props: EditRowProps): React.ReactNode {
 				rowNodes.push(<td className="dark-cell" key={ i } colSpan={ 2 }></td>);
 			}
 		}
+		// numeric cell + extra columns
+		if (showRowId) {
+			if (rowId !== null && j === 0) rowNodes.unshift(<td className="time-cell" key="num">{ rowId + 1 }</td>);
+			else rowNodes.unshift(<td className="dark-cell" key="num"></td>);
+		}
+		for (let i = 0; i < exColTotal; i++) {
+			rowNodes.push(<td className="dark-cell" key={ "ex#" + i }></td>);
+		}
 		// player name cell
 		var nameAct: CellAct = "none";
 		if (hasSubRows(timeRow)) nameAct="view-toggle";
 		if (j === 0) rowNodes.unshift(<NameCell id={ userDat.id } pd={ pd } active={ nameAct !== "none" }
 			onClick={ () => cellClick(nameAct, rowId, -1, j) } key="name"/>);
 		else rowNodes.unshift(<td className="dark-cell" key="name"></td>);
-		// numeric cell + extra columns
-		if (showRowId) {
-			if (rowId !== null && j === 0) rowNodes.unshift(<td className="time-cell" key="num">{ rowId + 1 }</td>);
-			else rowNodes.unshift(<td className="dark-cell" key="num">-</td>);
-		}
-		for (const exCol of exColList) {
-			rowNodes.push(<td className="dark-cell" key="num"></td>);
-		}
 		editNodes.push(<tr className="time-row" key={ j }>{ rowNodes }</tr>);
 	}
 
@@ -401,7 +402,7 @@ export function EditRow(props: EditRowProps): React.ReactNode {
 		{ editNodes }
 		<tr className="time-row" key="edit-info-row">
 			{ submitPrefix }
-			<td className="submit-area" colSpan={ (timeRow.length * 2) + exColList.length }>
+			<td className="submit-area" colSpan={ (timeRow.length * 2) + exColTotal }>
 				<EditSubmitArea starDef={ starDef } cfg={ cfg } colId={ editPos.colId } vs={ vs }
 					curDat={ draftDat } oldDat={ oldDat }
 					editDat={ (f) => editLoc(editPos.colId, editPos.subRowId, f) }
@@ -410,7 +411,7 @@ export function EditRow(props: EditRowProps): React.ReactNode {
 						props.submit(userDat.id, timeList, delList, verifList);
 					} }
 					cancel={ () => cellClick("stop-edit", null, 0, 0) } delToggle={ delToggle }
-					style={ style } infoText={ infoText }/>
+					modFlag={ pd.local.perm === 'admin' || pd.local.perm === 'mod' } style={ style } infoText={ infoText }/>
 			</td>
 		</tr>
 	</React.Fragment>;

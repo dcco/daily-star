@@ -3,11 +3,12 @@ import React, { useState } from 'react'
 import { PlayData } from '../play_data'
 
 import { newIdent } from '../time_table'
-import { VerifToggle } from '../board_simple/rx_verif_toggle' 
-import { totalColumn, percentColumn, bestOfXColumn, best100cColumn, bestCompColumn,
-	numDetCol, scoreDetCol, timeDetCol, rankDetCol,
+import { SimpToggle } from '../board_simple/rx_simp_toggle' 
+import { totalColumn, percentColumn, bestOfXColumn_DS, best100cColumn_DS, bestCompColumn_DS,
+	numDetCol, placementDetCol, scoreDetCol, timeDetCol, rankDetCol,
 	rankPtsDetCol, bestStratDetCol, stratPtsDetCol, totalPtsDetCol } from './stat_columns'
-import { UserStatMap } from './stats_user_map' 
+import { UserStatMap, FilterCodeList, filterUserStatMap } from './stats_user_map' 
+import { UserScoreMetaMap, filterUserMetaMap } from './ds_scoring'
 import { ScoreCache, newScoreFilter, getUserDataScoreCache, getRankScoreCache, getDSScoreCache } from './score_cache'
 import { PlayerTableProps, PlayerTable } from './rx_player_table'
 import { DetailBaseProps, DetailTable } from './rx_detail_table'
@@ -19,27 +20,32 @@ import { DetailBaseProps, DetailTable } from './rx_detail_table'
 type DS_PBProps = PlayerTableProps & {
 	num: number,
 	num100: number,
-	starFilter?: (f: UserStatMap) => UserStatMap
+	userMetaMap: UserScoreMetaMap | null,
+	starFilter?: FilterCodeList
 }
 
 export function DSPlayerBoard(props: DS_PBProps): React.ReactNode
 {
-	if (props.userMap === null) return <div></div>;
+	if (props.userMap === null || props.userMetaMap === null) return <div></div>;
 	var userMap = props.userMap;
-	if (props.starFilter) userMap = props.starFilter(userMap);
+	var userMetaMap = props.userMetaMap;
+	if (props.starFilter) {
+		userMap = filterUserStatMap(userMap, props.starFilter);
+		userMetaMap = filterUserMetaMap(userMetaMap, props.starFilter);
+	}
 	const starTotal = userMap.starTotal;
 	const title100 = props.num100 === 1 ? "100c Pts" : "Best " + props.num100 + " (100c)";
 	const colList = [
-		totalColumn(userMap),
-		percentColumn(userMap),
-		bestOfXColumn(userMap, "Best of " + props.num, "best_" + props.num, props.num, true),
-		best100cColumn(userMap, title100, "best100", props.num100),
-		bestCompColumn(userMap, "Total", "total", props.num, props.num100),
-		bestOfXColumn(userMap, "Best of All (" + starTotal + ")", "all", starTotal, true)
+		totalColumn(userMap, 6),
+		percentColumn(userMap, 6),
+		bestOfXColumn_DS(userMetaMap, "Best of " + props.num, "best_" + props.num, props.num, 4),
+		best100cColumn_DS(userMetaMap, title100, "best100", props.num100, 1),
+		bestCompColumn_DS(userMetaMap, "Total", "total", [props.num, 4], [props.num100, 1]),
+		bestOfXColumn_DS(userMetaMap, "Best of All (" + starTotal + ")", "all", starTotal, 1)
 	];
 
-	return <PlayerTable hrefBase={ props.hrefBase } hrefEx={ props.hrefEx }
-		defSortId={ 2 } colList={ colList } userMap={ userMap } idType={ "remote" } pd={ props.pd }/>;
+	return <PlayerTable hrefBase={ props.hrefBase } hrefEx={ props.hrefEx } numCol={ 6 }
+		defSortId={ 4 } colList={ colList } userMap={ userMap } idType={ "remote" } pd={ props.pd }/>;
 }
 
 	/*
@@ -56,17 +62,19 @@ export function DSDetailBoard(props: DetailBaseProps & { showStd?: boolean }): R
 	const dsScore = getDSScoreCache(scoreData, props.scoreFilter);
 
 	const colList = [
-		numDetCol("#", 5),
-		scoreDetCol("Base", 6, dsScore),
-		timeDetCol("Time", 20, props.altFlag),
-		rankPtsDetCol("Rank", 6, dsScore),
-		rankDetCol(props.scoreData, props.scoreFilter, props.id, "Best Rank", 15),
-		stratPtsDetCol("Strat", 6, dsScore),
-		bestStratDetCol("Best Strat", 15, dsScore),
-		totalPtsDetCol("Total Pts", 10, dsScore)
+		numDetCol("#", 4),
+		placementDetCol("?/x", 6),
+		timeDetCol("Time", 18, props.altFlag),
+		scoreDetCol("Pts", 5, dsScore),
+		rankDetCol(props.scoreData, props.scoreFilter, props.id, "Best Rank", 14),
+		rankPtsDetCol("Pts", 5, dsScore),
+		bestStratDetCol("Best Strat", 14, dsScore),
+		stratPtsDetCol("Pts", 5, dsScore),
+		totalPtsDetCol("Total Pts", 9, dsScore)
 	];
 
-	return <DetailTable hrefBase={ props.hrefBase } hrefEx={ props.hrefEx } id={ props.id } colList={ colList }
+	return <DetailTable hrefBase={ props.hrefBase } hrefEx={ props.hrefEx } id={ props.id }
+		defSortId={ 7 } colList={ colList }
 		altFlag={ props.altFlag } scoreFilter={ props.scoreFilter } scoreData={ props.scoreData }
 		starFilter={ props.starFilter } pd={ props.pd } wideFlag={ true }/>;
 }
@@ -85,8 +93,11 @@ type DS_SBProps = {
 	num100: number,
 	aboutNode: React.ReactNode,
 	scoreData: ScoreCache | null,
-	defVerif: boolean,
-	starFilter?: (f: UserStatMap) => UserStatMap,
+	rulesFlag: boolean,
+	verifFlag: boolean,
+	setRulesFlag: (b: boolean) => void,
+	setVerifFlag: (b: boolean) => void,
+	starFilter?: FilterCodeList,
 	pd?: PlayData
 };
 
@@ -100,41 +111,29 @@ export function DSStatBoard(props: DS_SBProps): React.ReactNode
 	}*/
 
 	// setup flags
-	const [splitFlag, setSplitFlag] = useState(false);
 	const [altFlag, setAltFlag] = useState(false);
-	const [verifFlag, setVerifFlag] = useState(props.defVerif);
+	const [rulesFlag, setRulesFlag] = [props.rulesFlag, props.setRulesFlag];
+	const [verifFlag, setVerifFlag] = [props.verifFlag, props.setVerifFlag];
 	const [player, setPlayer] = useState(initPlayer);
 
 	// initialize get appropriate score data
 	var userMap: UserStatMap | null = null;
+	var userMetaMap: UserScoreMetaMap | null = null;
 
-	const fsx = newScoreFilter(false, splitFlag, verifFlag);
+	const fsx = newScoreFilter(rulesFlag ? "ext" : "rules", false, verifFlag);
 	if (props.scoreData !== null) {
 		var [_starMap, _userMap] = getUserDataScoreCache(props.scoreData, fsx);
 		userMap = _userMap;
+		userMetaMap = getDSScoreCache(props.scoreData, fsx);
 	}
 
 	// setup toggle nodes
 	var toggleNodeList: React.ReactNode[] = [];
 	// verification toggle
-	toggleNodeList.push(<div className="toggle-box slight-margin" key="verif">
-		<div className="toggle-button" data-plain="true"
-			data-active={ verifFlag.toString() } onClick={ () => setVerifFlag(!verifFlag) }>
-			<div className="toggle-inner">Require Video</div>
-		</div></div>);
-	/*toggleNodeList.push(<div className="toggle-box slight-margin" key="split">
-		<div className="toggle-button" data-plain="true"
-			data-active={ splitFlag.toString() } onClick={ () => setSplitFlag(!splitFlag) }>
-			<div className="toggle-inner">Split Offset Stars</div>
-		</div></div>);*/
-	/*
-		TODO: Allow this, but for "rules" instead
-	toggleNodeList.push(<div className="toggle-box slight-margin" key="ext">
-		<div className="toggle-button" data-plain="true"
-			data-active={ extFlag.toString() } onClick={ () => setExtFlag(!extFlag) }>
-			<div className="toggle-inner">Allow Extensions</div>
-		</div></div>);
-	*/
+	toggleNodeList.push(<SimpToggle key="rules" name={ "Allow Extensions*" } state={ rulesFlag }
+		toggle={ () => setRulesFlag(!rulesFlag) }/>);
+	toggleNodeList.push(<SimpToggle key="verif" name={ "Require Video" } state={ verifFlag }
+		toggle={ () => setVerifFlag(!verifFlag) }/>);
 	// - detailed table only toggle
 	if (player !== null) toggleNodeList.push(
 		<div className="toggle-box" key="alt">
@@ -145,8 +144,8 @@ export function DSStatBoard(props: DS_SBProps): React.ReactNode
 	var toggleNode = <div className="row-wrap no-space">{ toggleNodeList }</div>;
 
 	var board = null;
-	if (player === null) board = <DSPlayerBoard hrefBase={ props.hrefBase } hrefEx={ props.hrefEx }
-		userMap={ userMap } num={ props.num } num100={ props.num100 } starFilter={ props.starFilter } pd={ props.pd }/>;
+	if (player === null) board = <DSPlayerBoard hrefBase={ props.hrefBase } hrefEx={ props.hrefEx } userMap={ userMap }
+		userMetaMap={ userMetaMap } num={ props.num } num100={ props.num100 } starFilter={ props.starFilter } pd={ props.pd }/>;
 	else board = <DSDetailBoard hrefBase={ props.hrefBase } hrefEx={ props.hrefEx } id={ newIdent("remote", player) }
 		altFlag={ altFlag } starFilter={ props.starFilter } scoreFilter={ fsx } scoreData={ props.scoreData } pd={ props.pd }/>;
 		/*  */

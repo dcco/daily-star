@@ -4,33 +4,11 @@ import { StarLoadFun } from '../api_history'
 import { TimeDat, VerOffset, StratOffset } from '../time_dat'
 import { TimeTable, filterTimeTable, filterTimeTableEx } from '../time_table'
 import { ColList, filterVarColList } from '../org_strat_def'
-import { FilterState, StarDef, newFilterState, copyFilterState,
+import { ExtState, FilterState, StarDef, newFilterState, copyFilterState,
 	orgStarDef, verOffsetStarDef, stratOffsetStarDef, colListStarDef } from '../org_star_def'
 import { RecordMap, xcamRecordMap } from '../xcam_record_map'
 
-	/*
-		alt state: represents both what variant of a star is being used
-			and what variants it was compared against.
-		* state - whether the data represents the alt or the main (null = no alternates originally)
-		* source - the original comparison this alt comes from
-	*/
-
-export type AltState = {
-	"state": null | "main" | "alt",
-	"source": "all" | "self"
-}
-
-export function nullAlt(source: "all" | "self"): AltState {
-	return { "state": null, "source": source }
-}
-
-export function mainAlt(): AltState {
-	return { "state": "main", "source": "self" }
-}
-
-export function secondAlt(): AltState {
-	return { "state": "alt", "source": "self" }
-}
+import { AltType, StarRef, StarMap, altListStarRef, addStarMap, newStarMapAlt } from '../star_map'
 
 	/*
 		star ref: in general, star time data is attached to a star ref identifying
@@ -39,13 +17,14 @@ export function secondAlt(): AltState {
 		* main/alt - information relates to a specific variant
 	*/
 
-export type StarRef = {
+/*export type StarRef = {
 	"stageId": number,
 	"starId": string,
 	"alt": AltState,
 	"100c": boolean
-};
+};*/
 
+/*
 export function statKey(ref: StarRef): string
 {
 	var baseKey = ref.stageId + "_" + ref.starId;
@@ -55,11 +34,11 @@ export function statKey(ref: StarRef): string
 	return baseKey + "_alt";
 }
 
-export function statKeyRaw(stageId: number, starId: string, alt: string | null): string
+export function statKeyRaw(stageId: number, starId: string, alt: AltState): string
 {
 	var baseKey = stageId + "_" + starId;
-	if (alt === null) return baseKey;
-	if (alt === "main") return baseKey + "_main";
+	if (alt.state === null) return baseKey;
+	if (alt.state === "main") return baseKey + "_main";
 	return baseKey + "_alt";
 }
 
@@ -67,13 +46,13 @@ export function starOnlyKey(ref: StarRef): [string, AltState]
 {
 	var baseKey = ref.stageId + "_" + ref.starId;
 	return [baseKey, ref.alt];
-}
+}*/
 
 	/*
 		stats star data: structured storage for xcam data (stores all times + records for a star)
 	*/
 
-export type StxStarData = StarRef & {
+export type StxStarData = StarRef<AltType> & {
 	"vs": VerOffset,
 	"colList": ColList,
 	"recordMap": RecordMap,
@@ -94,10 +73,10 @@ function getStxStarData(f: StarLoadFun, stageId: number, starDef: StarDef, colLi
 	if (starDef.alt !== null) secondFlag = true;
 	return {
 		"stageId": stageId,
-		"starId": starDef.id,
-		"alt": nullAlt(secondFlag ? "all" : "self"),
+		"starDef": starDef,
+		"alt": null, //secondFlag ? "all" : "self"),
 			// TODO: replace with actual 100c flag from org_data
-		"100c": starDef.id.includes("100c"),
+		//"100c": starDef.id.includes("100c"),
 		"vs": verOffset,
 		"colList": colList,
 		"recordMap": relRM,
@@ -111,9 +90,8 @@ export function filterStxStarData(base: StxStarData, colList: ColList, alt: numb
 	if (filterColList.length === 0) return null;
 	return {
 		"stageId": base.stageId,
-		"starId": base.starId,
-		"alt": alt === null ? mainAlt() : secondAlt(),
-		"100c": base["100c"],
+		"starDef": base.starDef,
+		"alt": alt === null ? "main" : "alt", //mainAlt() : secondAlt(),
 		"vs": base.vs,
 		"colList": filterColList,
 		"recordMap": base.recordMap,
@@ -121,14 +99,16 @@ export function filterStxStarData(base: StxStarData, colList: ColList, alt: numb
 	}
 }
 
-export function recordStxStarData(starData: StxStarData, alt: AltState): TimeDat
+export function recordStxStarData(starData: StxStarData, alt: AltType): TimeDat
 {
+	if (alt === "alt") return starData.recordMap["Open#Alt"];
 	var recordDat = starData.recordMap["Open"];
-	if (alt.source === "self") {
+	if (alt === "main") return recordDat;
+	/*if (alt.source === "self") {
 		if (alt.state === null) return recordDat;
 		if (alt.state === "main") return recordDat;
 		return starData.recordMap["Open#Alt"];
-	}
+	}*/
 	var altDat = starData.recordMap["Open#Alt"];
 	if (altDat.time < recordDat.time) return altDat;
 	return recordDat;
@@ -138,56 +118,65 @@ export function recordStxStarData(starData: StxStarData, alt: AltState): TimeDat
 		stats star map: mapping of "star keys" into star time data. 
 	*/
 
-export type StxStarMap = {
-	[key: string]: StxStarData
-};
+export type StxStarMap = StarMap<AltType, StxStarData>;
 
-export function getStarTimeMap(f: StarLoadFun, starSet: [StarDef, number][][], extFlag: boolean, verifFlag: boolean): StxStarMap {
-	var starMap: StxStarMap = {};
+//export function getStarTimeMap(f: StarLoadFun, starSet: [StarDef, number][][], extFlag: ExtState, verifFlag: boolean): StxStarMap {
+export function getStarTimeMap(f: StarLoadFun, starSet: StarDef[], extFlag: ExtState, verifFlag: boolean): StxStarMap {
+	var starMap: StxStarMap = newStarMapAlt();
+	// for every star
+	for (const starDef of starSet) {
+		// setup filter
+		var varTotal = 0;
+		if (starDef.variants) varTotal = starDef.variants.length;
+		var fs = newFilterState([true, true], true, varTotal);
+		if (extFlag !== null) fs.extFlag = extFlag;
+		fs.verState = [true, true];
+		// load raw time data
+		var colList = colListStarDef(starDef, fs);
+		if (colList.length === 0) continue;
+		var timeData = getStxStarData(f, starDef.stageId, starDef, colList, fs, verifFlag);
+		// get relevant sub-star refs
+		var subRefList = altListStarRef(starDef);
+		for (const subRef of subRefList) {
+			if (subRef.alt === null) addStarMap(starMap, subRef, timeData);
+			else if (subRef.alt === "main") {
+				var mainData = filterStxStarData(timeData, colList, null);
+				if (mainData !== null) addStarMap(starMap, subRef, mainData);
+			} else {
+				var altData = filterStxStarData(timeData, colList, 1);
+				if (altData !== null) addStarMap(starMap, subRef, altData);
+			}
+		}
+	}
 	// for every stage + star
-	for (let i = 0; i < starSet.length; i++) {
+	/*for (let i = 0; i < starSet.length; i++) {
 		var starTotal = starSet[i].length;
 		for (let j = 0; j < starTotal; j++) {
 			// build strat key
 			var [starDef, starId] = starSet[i][j];
-			var key = i + "_" + starDef.id;
+			//var key = i + "_" + starDef.id;
 			// no extension data, combine alt strats when applicable
 			var varTotal = 0;
 			if (starDef.variants) varTotal = starDef.variants.length;
-			var fs = newFilterState([true, true], extFlag, varTotal);
-			if (extFlag) fs.extFlag = true;
+			var fs = newFilterState([true, true], true, varTotal);
+			if (extFlag !== null) fs.extFlag = extFlag;
 			fs.verState = [true, true];
 			// get un-split time data
 			var colList = colListStarDef(starDef, fs);
 			if (colList.length === 0) continue;
 			var timeData = getStxStarData(f, i, starDef, colList, fs, verifFlag);
 			// add the "all" comparison for regular stars + offset stars
-			if (starDef.alt === null || starDef.alt.status === "offset") starMap[key] = timeData;
+			if (starDef.alt === null || starDef.alt.status === "offset") addStarMapAlt(starMap, starDef, null, timeData);
 			// for any other alternates, add the variant comparison
 			if (starDef.alt !== null) {
 				var mainData = filterStxStarData(timeData, colList, null);
 				var altData = filterStxStarData(timeData, colList, 1);
-				if (mainData !== null) starMap[key + "_main"] = mainData;
-				if (altData !== null) starMap[key + "_alt"] = altData;
+				addStarMapAlt(starMap, starDef, "main", mainData);
+				addStarMapAlt(starMap, starDef, "alt", altData);
+				//if (mainData !== null) starMap[key + "_main"] = mainData;
+				//if (altData !== null) starMap[key + "_alt"] = altData;
 			}
-			// if normal / normal offset star, do not modify time data
-			/*if (starDef.alt === null || starDef.alt.status === "offset") {
-				starMap[key] = timeData;
-				// if offset applicable, we calculate the filter data anyway
-				if (starDef.alt !== null) {
-					var mainData = filterStxStarData(timeData, colList, null);
-					var altData = filterStxStarData(timeData, colList, 1);
-					if (mainData !== null) starMap[key + "_off1"] = mainData;
-					if (altData !== null) starMap[key + "_off2"] = altData;
-				}
-			} else {
-				// otherwise, split into variant information
-				var mainData = filterStxStarData(timeData, colList, null);
-				var altData = filterStxStarData(timeData, colList, 1);
-				if (mainData !== null) starMap[key] = mainData;
-				if (altData !== null) starMap[key + "_alt"] = altData;
-			}*/
 		}
-	}
+	}*/
 	return starMap;
 }

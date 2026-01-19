@@ -1,0 +1,125 @@
+{
+	"bob_2": {
+		"allow": [
+			["No Cutscene"]
+		]
+	},
+	"bbh_6": {
+		"allow": [
+			["DJ Kick Box"]
+		]
+	},
+	"hmc_1": {
+		"allow": [
+			["Sign Clip"]
+		]
+	},
+	"hmc_100c2": {
+		"allow": [
+			["No BLJ"]
+		]
+	},
+	"lll_100c5": {
+		"allow": [
+			["Lavaboost"]
+		],
+		"flags": ["noStratScore"]
+	},
+	"ssl_100c6": {
+		"allow": [
+			["Alt Pillar"]
+		]
+	},
+	"ddd_2": {
+		"allow": [
+			["Downwarp"]
+		]
+	},
+	"sl_4": {
+		"allow": [
+			["Leftside"]
+		]
+	},
+	"sl_100c5": {
+		"allow": [
+			["Moneybag Dupe"]
+		]
+	},
+	"wdw_2": {
+		"allow": [
+			["Direct TJ"]
+		]
+	},
+	"wdw_4": {
+		"allow": [
+			["Elevator Clip"]
+		]
+	},
+	"wdw_5": {
+		"allow": [
+			["Solo Reds"]
+		]
+	},
+	"ttm_6": {
+		"allow": [
+			["No Setup"]
+		]
+	},
+	"thi_2": {
+		"allow": [
+			["TJ Dive Start"]
+		]
+	},
+	"thi_3": {
+		"allow": [
+			["TJ Dive Start"]
+		]
+	},
+	"thi_100c3": {
+		"allow": [
+			["Standard"],
+			["Tiny Route"]
+		]
+	},
+	"thi_100c5": {
+		"allow": [
+			["11c Start + Pole"]
+		]
+	},
+	"thi_6": {
+		"allow": [
+			["TJ Dive Start"]
+		]
+	},
+	"rr_100c2": {
+		"allow": [
+			["No Cutscene"]
+		]
+	},
+	"rr_100c6": {
+		"allow": [
+			["No Cutscene"]
+		]
+	},
+	"sec_vc": {
+		"flags": ["noStratScore"]
+	},
+	"sec_wmotr": {
+		"allow": [
+			["No Cutscene"],
+			["Pole Red Early (NC)"],
+			["Stored Angle (NC)"]
+		]
+	},
+	"bow_3n": {
+		"ban": [
+			["w/ Manamo", "Left TJWK", "Pole"]
+		]
+	},
+	"bow_3r": {
+		"allow": [
+			["Early Cycle"],
+			["Ultimate Cycle"]
+		]
+	}
+}

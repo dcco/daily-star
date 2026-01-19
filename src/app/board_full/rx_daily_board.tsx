@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react'
 
+import { rawExCellCheck } from '../api_xcam'
 import { loadTimes, postNewTimes } from '../api_live'
 import { G_DAILY, GlobNorm, readCodeList } from '../api_season'
 import { updateCurrentHistory } from '../api_history'
@@ -47,7 +48,11 @@ export function DailyBoard(props: DailyBoardProps): React.ReactNode {
 	// main display content toggle
 	var failCode = 0;
 	var mainNode: React.ReactNode = <div className="load-cont">Loading the Daily Star...</div>;
+	// - message from external sheet
 	var message: string | null = null;
+	var msgCell = rawExCellCheck(1, 0);
+	if (msgCell !== null && msgCell !== "") message = msgCell;
+	// - daily star board portal
 	if (ds.status !== "null") {
 		if (ds.starGlob === undefined) {
 			if (ds.status === "early") mainNode = <div className="load-cont">Waiting for new season to start.</div>;

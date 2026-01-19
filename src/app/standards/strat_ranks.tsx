@@ -13,7 +13,8 @@ import { RecordMap, xcamRecordMap } from '../xcam_record_map'*/
 
 import { TimeDat } from '../time_dat'
 import { StarDef, newFilterState, hasExtOnlyStarDef,
-	colListStarDef, verOffsetStarDef, stratOffsetStarDef } from "../org_star_def"
+	colListStarDef, verOffsetStarDef, stratOffsetStarDef } from '../org_star_def'
+import { WeakStarMap, starKeyExtern, rawLookupStarMapW, addStarMapW } from '../star_map'
 import { xcamTimeTable } from "../xcam_time_table"
 import { xcamRecordMap } from "../xcam_record_map"
 import { newColConfig, recordListColConfig } from "../col_config"
@@ -26,25 +27,10 @@ import { StarRankSet, initStarRankSet, benchmarkStarRankSet, worstListColConfig,
 	killFromStarRankSet, fillVerOffsetStratRanks } from "./star_rank_set"
 
 	/*
-		TODO - de-duplicate
-	*/
-
-export const PERM = ["bob", "wf", "jrb", "ccm", "bbh", "hmc", "lll", "ssl",
-	"ddd", "sl", "wdw", "ttm", "thi", "ttc", "rr", "sec", "bow"];
-
-export function getStarKey(stageId: number, starDef: StarDef): string
-{
-	return PERM[stageId] + "_" + starDef.id;
-}
-
-	/*
 		star_rank_map: a mapping of star keys -> star strat rankings
 	*/
 
-export type SRMap = {
-	[key: string]: StarRankSet
-}
-
+export type SRMap = WeakStarMap<StarRankSet>;
 
 function genStarRankSetFull(starDef: StarDef, starKey: string): StarRankSet
 {
@@ -55,7 +41,7 @@ function genStarRankSetFull(starDef: StarDef, starKey: string): StarRankSet
 	fs.verState = [true, true];
 	// do extensions on the first pass if we need "No Cutscene" star versions
 	var extFirstPass = starDef.alt && starDef.alt.status === "cutscene";
-	if (extFirstPass) fs.extFlag = true;
+	if (extFirstPass) fs.extFlag = "ext";
 	// collect time data
 	const colList = colListStarDef(starDef, fs);
 	const verOffset = verOffsetStarDef(starDef, fs);
@@ -77,7 +63,7 @@ function genStarRankSetFull(starDef: StarDef, starKey: string): StarRankSet
 	var extRM = rm;
 	var extRL = rmNew;
 	if (hasExtOnlyStarDef(starDef)) {
-		fs.extFlag = true;
+		fs.extFlag = "ext";
 		var extColList = colListStarDef(starDef, fs);
 		//var extTT = xcamTimeTable(extColList, verOffset, sOffset);
 		var extRM = xcamRecordMap(extColList, fs, verOffset, sOffset);
@@ -106,10 +92,15 @@ function genStarRankSetFull(starDef: StarDef, starKey: string): StarRankSet
 	return ss;
 }
 
-export function genStarRankMap(starSet: [StarDef, number][][]): SRMap
+export function genStarRankMap(starSet: StarDef[]): SRMap
 {
-	var srMap: SRMap = {};
+	var srMap: SRMap = { "dat": {} };
 	// for every stage + star
+	for (const starDef of starSet) {
+		const starKey = starKeyExtern(starDef.stageId, starDef);
+		addStarMapW(srMap, starDef, genStarRankSetFull(starDef, starKey));
+	}
+	/*
 	for (let i = 0; i < starSet.length; i++) {
 		var starTotal = starSet[i].length;
 		for (let j = 0; j < starTotal; j++) {
@@ -118,7 +109,7 @@ export function genStarRankMap(starSet: [StarDef, number][][]): SRMap
 			// simpler key for convenience
 			srMap[i + "_" + starDef.id] = genStarRankSetFull(starDef, starKey);
 		}
-	}
+	}*/
 	return srMap;
 }
 
@@ -153,7 +144,7 @@ function parseStrat(note: string): string | null
 export function getRank(srMap: SRMap, rankKey: string, timeDat: TimeDat): string
 {
 	// lookup strat ranks
-	var stratSet = srMap[rankKey];
+	var stratSet = rawLookupStarMapW(srMap, rankKey);
 	var ver = timeDat.rowDef.ver;
 	/*var altSet = G_SHEET.srMap[rankKey + "#" + ver];
 	if (altSet !== undefined) {
@@ -161,7 +152,7 @@ export function getRank(srMap: SRMap, rankKey: string, timeDat: TimeDat): string
 		altFlag = true;
 	}*/
 	var stratName = timeDat.rowDef.name;
-	if (stratSet === undefined || stratSet[stratName] === undefined) return "Unranked";
+	if (stratSet === null || stratSet[stratName] === undefined) return "Unranked";
 	// notes allow for special names EX `use:{Half Cycle}`
 	if (timeDat.note !== null) {
 		var noteStrat = parseStrat(timeDat.note);

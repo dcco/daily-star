@@ -7,7 +7,7 @@ import { G_HISTORY, getMonthStars, getWeekStars, getLastDay,
 import { PlayData } from '../play_data'
 import { RouterMain, navRM } from '../router_main'
 import { ScoreCache } from './score_cache'
-import { UserStatMap, filterUserStatMap } from './stats_user_map'
+import { UserStatMap, FilterCodeList } from './stats_user_map'
 import { DSStatBoard } from './rx_ds_stat_board'
 import { SeasonSelProps, SeasonSel } from '../board_full/rx_season_sel'
 
@@ -67,7 +67,7 @@ export function ScoreBoard(props: ScoreBoardProps): React.ReactNode
 	};
 
 	// per-month / per-week state
-	const dayTotal = getLastDay(props.seasonId);
+	const dayTotal = getLastDay(props.seasonId) + 1;
 	const weekTotal = Math.ceil(dayTotal / 7);
 	const monthTotal = Math.ceil(dayTotal / 28);
 
@@ -84,6 +84,10 @@ export function ScoreBoard(props: ScoreBoardProps): React.ReactNode
 		else if (selId === 2 && weekId < weekTotal - 1) setWeekId(weekId + 1);
 	};
 
+	// store flag toggles out here
+	const [rulesFlag, setRulesFlag] = useState(false);
+	const [verifFlag, setVerifFlag] = useState(!noVerifSeason(props.seasonId));
+
 	// timespan select nodes
 	var scoreBtnNodes: React.ReactNode[] = SCORE_MODES.map((mode, i) => {
 		var flag = (selId === i) ? "true" : "false";
@@ -96,7 +100,7 @@ export function ScoreBoard(props: ScoreBoardProps): React.ReactNode
 		</div>);
 
 	// timespan filter fun
-	var filterFun: ((userMap: UserStatMap) => UserStatMap) | undefined = undefined;
+	var filterList: FilterCodeList | undefined = undefined;
 	if (selId !== 0) {
 		// read stars from timespan
 		var subStars: GlobObj[] = [];
@@ -112,42 +116,8 @@ export function ScoreBoard(props: ScoreBoardProps): React.ReactNode
 			var starList = readCodeList(globObj.stageid, globObj.staridlist);
 			codeList = codeList.concat(starList);
 		}
-		filterFun = (userMap: UserStatMap) => {
-			return filterUserStatMap(userMap, codeList);
-		};
+		filterList = codeList;
 	}
-
-	// score filtering
-	/*var lowNum = 30;
-	var midNum = 50;
-
-	if (selId !== 0 && scoreData !== null) {
-		var subStars: GlobObj[] = [];
-		if (selId === 1) {
-			subStars = getMonthStars(G_HISTORY.current, monthId);
-			lowNum = 14;
-			midNum = 20;
-		} else if (selId === 2) {
-			subStars = getWeekStars(G_HISTORY.current, weekId);
-			lowNum = 3;
-			midNum = 5;
-		}
-		var filterStarMap: StxStarMap = {};
-		var codeList: [number, string][] = [];
-		for (const globObj of subStars) {
-			if (globObj.special === "skip") continue;
-			var starList = readCodeList(globObj.stageid, globObj.staridlist);
-			codeList = codeList.concat(starList);
-			for (const [stageId, starId] of starList) {
-				var starKey = stageId + "_" + starId;
-				filterStarMap[starKey] = G_HISTORY.current.starMap[starKey];
-				filterStarMap[starKey + "_main"] = G_HISTORY.current.starMap[starKey + "_main"];
-				filterStarMap[starKey + "_alt"] = G_HISTORY.current.starMap[starKey + "_alt"];
-			}
-		}
-		starMap = filterStarMap;
-		userMap = filterUserStatMap(userMap, codeList);
-	}*/
 
 	// date notes
 	var startText = histObj.header.season.startdate;
@@ -196,39 +166,16 @@ export function ScoreBoard(props: ScoreBoardProps): React.ReactNode
 	*/
 	var defNum = 50;
 	var num100 = 6;
-	if (selId === 1) { defNum = 20; num100 = 2; }
+	if (selId === 1) { defNum = 14; num100 = 2; }
 	else if (selId === 2) { defNum = 5; num100 = 1; }
 
 	var hrefEx: string | undefined = undefined;
 	if (props.seasonId !== null) hrefEx = "season=" + props.seasonId;
 
 	var board = <DSStatBoard key={ selId } hrefBase={ [hrefMain, "/home/history"] } hrefEx={ hrefEx } idSlug={ idSlug }
-			aboutNode={ "" } num={ defNum } num100={ num100 } pd={ playData } starFilter={ filterFun }
-			scoreData={ scoreData } defVerif={ !noVerifSeason(props.seasonId) }/>;
-	/*if (selId === 0 || G_HISTORY.userMap === null) {
-		board = <PlayerBoard hrefBase={ ["/home/stats", "/home/history"] } slug={ props.rm.core.slug }
-			aboutNode={ "" } idType="remote" lowNum={ 30 } midNum={ 50 } pd={ playData }
-			starMap={ G_HISTORY.starMap } userMap={ G_HISTORY.userMap } userRankStore={ null }/>;
-	} else if (selId === 1) {
-		var monthStars = getMonthStars(0);
-		var filterStarMap: StxStarMap = {};
-		var codeList: [number, string][] = [];
-		for (const globObj of monthStars) {
-			if (globObj.special === "skip") continue;
-			var starList = readCodeList(globObj.stageid, globObj.staridlist);
-			codeList = codeList.concat(starList);
-			for (const [stageId, starId] of starList) {
-				var starKey = stageId + "_" + starId;
-				filterStarMap[starKey] = G_HISTORY.starMap[starKey];
-				filterStarMap[starKey + "_main"] = G_HISTORY.starMap[starKey + "_main"];
-				filterStarMap[starKey + "_alt"] = G_HISTORY.starMap[starKey + "_alt"];
-			}
-		}
-		var filterUserMap = filterUserStatMap(G_HISTORY.userMap, codeList);
-		board = <PlayerBoard hrefBase={ ["/home/stats", "/home/history"] } slug={ props.rm.core.slug }
-			aboutNode={ "" } idType="remote" lowNum={ 12 } midNum={ 20 } pd={ playData }
-			starMap={ filterStarMap } userMap={ filterUserMap } userRankStore={ null }/>;
-	}*/
+			aboutNode={ "" } num={ defNum } num100={ num100 } pd={ playData } starFilter={ filterList }
+			scoreData={ scoreData } rulesFlag={ rulesFlag } verifFlag={ verifFlag }
+			setRulesFlag={ setRulesFlag } setVerifFlag={ setVerifFlag }/>;
 
 	return <div>
 		<div className="row-wrap">

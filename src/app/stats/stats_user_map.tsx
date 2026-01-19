@@ -5,8 +5,11 @@ import { zeroRowDef } from '../row_def'
 import { TimeDat, maxTimeDat } from '../time_dat'
 import { Ident, keyIdent } from '../time_table'
 import { toSetColList } from '../org_strat_def'
-import { StarDef } from '../org_star_def'
-import { StarRef, StxStarData, StxStarMap, getStarTimeMap } from './stats_star_map'
+import { ExtState, StarDef } from '../org_star_def'
+import { AltType, AltTypeEx, StarRef, StarMap, canCombStarRef, tryCombStarMap, starCodeFull,
+	addStarMap, toListStarMap, newStarMapAlt, newStarMapAltEx, cleanupStarMap } from '../star_map'
+//import { StarMapAlt, AltState, lookupStarMapAlt, addStarMapAlt, toListStarMapAlt } from '../star_map'
+import { StxStarData, StxStarMap, getStarTimeMap } from './stats_star_map'
 
 	/*
 		user score: user score data for a specific star
@@ -18,21 +21,23 @@ export type StratScore = {
 	scorePts: number
 }
 
-export type UserScore = StarRef & StratScore & {
+export type UserScore = StarRef<AltType> & StratScore & {
 	comp: true,
+	srcAlt: AltType,
 	id: Ident,
 	stratMap: { [key: string]: StratScore },
 	obsolete: UserScore[]
 };
 
-export function newUserScore(ref: StarRef, id: Ident, timeDat: TimeDat): UserScore
+export function newUserScore(ref: StarRef<AltType>, id: Ident, timeDat: TimeDat): UserScore
 {
 	return {
 		"comp": true,
 		"stageId": ref.stageId,
-		"starId": ref.starId,
+		"starDef": ref.starDef,
 		"alt": ref.alt,
-		"100c": ref["100c"],
+		"srcAlt": ref.alt,
+		//"100c": ref["100c"],
 		"id": id,
 		"timeDat": timeDat,
 		"rank": [-1, 0],
@@ -190,21 +195,29 @@ function mergeUserScoreList(l1: UserScore[], l2: UserScore[]): UserScore[]
 			(compare user stat maps which map user keys -> user score lists + stats)
 	*/
 
-export type UserScoreMap = {
-	[key: string]: UserScore[]
-};
+export type SimpleScoreMap = StarMap<AltTypeEx, UserScore[]>;
 
-function _calcUserScoreMap(starSet: [StarDef, number][][], starMap: StxStarMap): UserScoreMap
+	/*
+		takes a list of stars, produces a list of user scores for each one		
+	*/
+function _calcSimpleScoreMap(starSet: StarDef[], starMap: StxStarMap): SimpleScoreMap
 {
 	// get rank data for all strats
-	var scoreMap: UserScoreMap = {};
-	for (const [key, starData] of Object.entries(starMap)) {
+	var scoreMap: SimpleScoreMap = newStarMapAltEx();
+	for (const [starRef, starData] of toListStarMap(starMap)) {
 		// find best time / ranks per user
 		var bestList = getUserScoreList(starData);
-		if (bestList.length > 0) scoreMap[key] = bestList;
+		if (bestList.length > 0) addStarMap(scoreMap, starRef, bestList);
 	}
 	// for every star w/ alt "cutscene" or "mergeOffset", we merge their best rankings
-	for (let i = 0; i < starSet.length; i++) {
+	for (const starDef of starSet) {
+		if (canCombStarRef(starDef)) {
+			tryCombStarMap<AltTypeEx, UserScore[]>(scoreMap, starDef, mergeUserScoreList, "comb");
+		}
+	}
+
+	// for every star w/ alt "cutscene" or "mergeOffset", we merge their best rankings
+	/*for (let i = 0; i < starSet.length; i++) {
 		var starTotal = starSet[i].length;
 		for (let j = 0; j < starTotal; j++) {
 			// build strat key
@@ -219,13 +232,19 @@ function _calcUserScoreMap(starSet: [StarDef, number][][], starMap: StxStarMap):
 				else scoreMap[baseKey + "_comb"] = mergeUserScoreList(mainDat, altDat);
 			}
 		}
-	}
+	}*/
 	return scoreMap;
 }
 
-export function filterScoreMap(starSet: [StarDef, number][][], scoreMap: UserScoreMap, split: boolean): UserScoreMap
+	/*
+		copies the user score map, but removes
+	*/
+/*export function filterScoreMap(starSet: StarDef[], scoreMap: SimpleScoreMap, split: boolean): SimpleScoreMap
 {
-	var newScoreMap: UserScoreMap = {};
+	var newScoreMap: SimpleScoreMap = { "dat": {} };
+	for (const star of starSet) {
+
+	}
 	// iterate through every star
 	for (let i = 0; i < starSet.length; i++) {
 		var starTotal = starSet[i].length;
@@ -256,27 +275,28 @@ export function filterScoreMap(starSet: [StarDef, number][][], scoreMap: UserSco
 		if (newScoreMap[key] === undefined) delete newScoreMap[key];
 	}
 	return newScoreMap;
-}
+}*/
 
 	/*
 		inc score: auxiliary object representing score data for a star that a user has not completed
 	*/
 
-export type IncScore = StarRef & {
+export type IncScore = StarRef<AltType> & {
 	comp: false,
+	srcAlt: AltType,
 	timeDat: TimeDat | null,
 	rank: number | null,
 	playTotal: number
 };
 
-export function newIncScore(ref: StarRef, total: number): IncScore
+export function newIncScore(ref: StarRef<AltType>, total: number): IncScore
 {
 	return {
 		"comp": false,
 		"stageId": ref.stageId,
-		"starId": ref.starId,
+		"starDef": ref.starDef,
 		"alt": ref.alt,
-		"100c": ref["100c"],
+		"srcAlt": ref.alt,
 		"timeDat": null,
 		"rank": null,
 		"playTotal": total
@@ -313,7 +333,7 @@ export type UserStats = {
 	standard: string
 };
 
-export function fillIncompleteStats(userSx: UserStats, refList: [string, StarRef, number][])
+export function fillIncompleteStats(userSx: UserStats, refList: [string, StarRef<AltType>, number][])
 {
 	for (const [key, ref, total] of refList) {
 		if (userSx.complete[key] === undefined) {
@@ -343,7 +363,7 @@ export function calcTop100cStats(userSx: UserStats, x: number): number
 	var topX = 0;
 	for (const star of userSx.starList) {
 		if (ix >= x) break;
-		if (star["100c"]) {
+		if (star.starDef["100c"]) {
 			topX = topX + star.scorePts;
 			ix = ix + 1;
 		}
@@ -357,7 +377,7 @@ export function filterUserStats(userSx: UserStats, codeList: [number, string][])
 	for (const [stageId, starId] of codeList) codeMap[stageId + "_" + starId] = 0;
 	
 	var newStarList = userSx.starList.filter((userScore) => {
-		return codeMap[userScore.stageId + "_" + userScore.starId] !== undefined;
+		return codeMap[userScore.stageId + "_" + userScore.starDef.id] !== undefined;
 	});
 	newStarList.sort(function (a, b) { return rankPts(b.rank) - rankPts(a.rank) });
 
@@ -375,15 +395,17 @@ export function filterUserStats(userSx: UserStats, codeList: [number, string][])
 	return newSx;
 }
 
-export function getStarUserStats(userSx: UserStats, stageId: number, starId: string, alt: string | null): UserScore | null
+export function getStarUserStats(userSx: UserStats, starRef: StarRef<AltType>): UserScore | null
 {
-	var code = stageId + "_" + starId;
-	//if (alt !== null) code = code + "_" + alt;
+	var code = starCodeFull(starRef);
+	/*var code = stageId + "_" + starId;
+	if (alt.state !== null && alt.source !== "all") code = code + "_" + alt.state;*/
 	if (userSx.complete[code] !== undefined) {
 		for (const star of userSx.starList) {
-			if (star.stageId === stageId && star.starId === starId) {
-				if (alt === null || star.alt.state === alt) return star;
-			}
+			if (code === starCodeFull(star)) return star; 
+			/*if (star.stageId === stageId && star.starId === starId) {
+				if (alt.state === null || star.alt.state === alt.state) return star;
+			}*/
 		}
 	}
 	return null;
@@ -446,7 +468,7 @@ export function addScoreStatMap(statMap: UserStatMap, cKey: string, userScore: U
 	userSx.starList.push(userScore);
 }
 
-export function fillIncompleteStatMap(statMap: UserStatMap, refList: [string, StarRef, number][])
+export function fillIncompleteStatMap(statMap: UserStatMap, refList: [string, StarRef<AltType>, number][])
 {
 	for (const userSx of Object.values(statMap.stats)) {
 		fillIncompleteStats(userSx, refList);
@@ -489,12 +511,12 @@ export function fillStandardsStatMap(statMap: UserStatMap, descale: boolean)
 		main user stat map calc function
 	*/
 
-export function calcUserScoreMap(starSet: [StarDef, number][][], f: StarLoadFun, extFlag: boolean, verifFlag: boolean): [StxStarMap, UserScoreMap]
+export function calcSimpleScoreMap(starSet: StarDef[], f: StarLoadFun, extFlag: ExtState, verifFlag: boolean): [StxStarMap, SimpleScoreMap]
 {
 	// for every stage/star, collect records + times
 	var starMap = getStarTimeMap(f, starSet, extFlag, verifFlag);
 	// calc user scores from star map data
-	var scoreMap = _calcUserScoreMap(starSet, starMap);
+	var scoreMap = _calcSimpleScoreMap(starSet, starMap);
 	return [starMap, scoreMap];
 }
 
@@ -502,35 +524,51 @@ export function calcUserScoreMap(starSet: [StarDef, number][][], f: StarLoadFun,
 		starSet: list of stars + indices for generating statistics
 		scoreMap: pre-generated map of user scores per star
 		split: determines whether to grade "offset" stars separately
+		dsFlag: changes how mergeOffset stars are scored
 		nobody: adds mr nobody to the statistics
 		descale: whether to allow users without the requisite number of stars to have a scaled up score
 	*/
-export function calcUserStatMap(starSet: [StarDef, number][][], scoreMap: UserScoreMap,
-	split: boolean, nobody: Ident | null, descale: boolean): UserStatMap
+
+export function calcUserStatMap(starSet: StarDef[], scoreMap: SimpleScoreMap,
+	split: boolean, dsFlag: boolean, nobody: Ident | null, descale: boolean): UserStatMap
 {
 	// filter based on split type
-	scoreMap = filterScoreMap(starSet, scoreMap, split);
+	//scoreMap = filterScoreMap(starSet, scoreMap, split);
+	var _scoreMap = cleanupStarMap(starSet, scoreMap, split, dsFlag);
 	// score players per star [convert user score map -> user stats]
-	var statMap = newUserStatMap(Object.entries(scoreMap).length);
-	for (const [cKey, bestList] of Object.entries(scoreMap)) {
+	const _scoreList = toListStarMap(_scoreMap);
+	const statMap = newUserStatMap(_scoreList.length);
+	for (const [ref, bestList] of _scoreList) {
+		const cKey = starCodeFull(ref);
 		for (const bestDat of bestList) {
 			addScoreStatMap(statMap, cKey, bestDat);
 		}
 	}
+	/*var statMap = newUserStatMap(Object.entries(scoreMap).length);
+	for (const [cKey, bestList] of Object.entries(scoreMap)) {
+		for (const bestDat of bestList) {
+			addScoreStatMap(statMap, cKey, bestDat);
+		}
+	}*/
 	// add mr nobody
 	if (nobody !== null) safeLookupStatMap(statMap, nobody);
 	// standards + incomplete stars calc
 	fillStandardsStatMap(statMap, descale);
-	var refList: [string, StarRef, number][] = Object.entries(scoreMap).map((entry) => {
+	/*var refList: [string, StarRef, number][] = Object.entries(scoreMap).map((entry) => {
 		var [key, ref] = entry;
 		return [key, ref[0], ref.length]
-	});
+	});*/
+	var refList: [string, StarRef<AltType>, number][] = _scoreList.map(([ref, bestList]) => {
+		return [starCodeFull(ref), ref, bestList.length];
+	})
 	fillIncompleteStatMap(statMap, refList);
 	return statMap;
 }
 
+export type FilterCodeList = [number, string][];
+
 	/* filters a user stat map based on a list of star codes */
-export function filterUserStatMap(userMap: UserStatMap, codeList: [number, string][]): UserStatMap
+export function filterUserStatMap(userMap: UserStatMap, codeList: FilterCodeList): UserStatMap
 {
 	var newMap: UserStatMap = {
 		stats: {},

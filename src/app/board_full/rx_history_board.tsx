@@ -8,13 +8,17 @@ import { G_HISTORY, SeasonHistory, findSeason, dateAndOffset, dispDate, historyT
 
 import { VerOffset, StratOffset } from '../time_dat'
 import { ColList } from '../org_strat_def'
-import { StarDef, orgStarId, orgStarDef } from '../org_star_def'
+import { StarDef, copyFilterState, orgStarId, orgStarDef } from '../org_star_def'
+import { AltType, specStarRef } from '../star_map'
 import { TimeTable } from '../time_table'
 import { PlayData } from '../play_data'
 import { procStarSlug, makeStarSlug, prependSeasonSlug } from '../router_slug'
 import { RouterMain, navRM } from '../router_main'
 import { PlayDB } from '../table_parts/rx_star_row'
+import { ExColumn } from '../table_parts/ex_column'
+import { SimpToggle } from '../board_simple/rx_simp_toggle'
 import { ViewBoard } from '../board_simple/rx_view_board'
+import { scoreColumn } from '../stats/stat_columns'
 import { SeasonSelProps, SeasonSel } from './rx_season_sel'
 
 function historyStageList(histObj: SeasonHistory): number[]
@@ -122,7 +126,7 @@ export function HistoryBoard(props: SeasonSelProps & { playData: PlayData, rm: R
 	//const [defStage, defStar] = fallbackDefault(starTable, defStageInit, starSlug);
 
 	// stage / star state -- NOTE: this is an id into the stage list, not the real stage id
-	var [_id1, setId1] = useState(stageList[rawId1]);
+	var [_id1, setId1] = useState(rawId1);
 	var defCache = Array(orgData.length).fill(0);
 	defCache[_id1] = rawId2;
 
@@ -135,6 +139,17 @@ export function HistoryBoard(props: SeasonSelProps & { playData: PlayData, rm: R
 	const stageId = stageList[id1];
 	var id2 = starTable[stageId][_id2] === undefined ? rawId2 : _id2;
 	const [starDef, globIx, globIx2] = starTable[stageId][id2];
+
+	// - triggers reload if rawId1 / rawId2 changes (important if more data loads in)
+	useEffect(() => {
+		setId1(rawId1);
+	}, [rawId1, rawId2]);
+
+	// external toggles
+	const [rulesFlag, setRulesFlag] = useState(false);
+	const [verifFlag, setVerifFlag] = useState(false);
+	var rulesNode = <SimpToggle name={ "Show Extensions*" } state={ rulesFlag } toggle={ () => { setRulesFlag(!rulesFlag) } }/>;
+	var verifNode = <SimpToggle name={ "Require Video" } state={ verifFlag } toggle={ () => { setVerifFlag(!verifFlag) } }/>;
 
 	// - clear cache if switching seasons
 	useEffect(() => {
@@ -222,10 +237,15 @@ export function HistoryBoard(props: SeasonSelProps & { playData: PlayData, rm: R
 			{ starBtnNodes }
 		</div>
 		<div className="sep"><hr/></div>
-		<div className="row-wrap row-margin no-space">
-			<div className='label-cont'>Day { glob.day + 1 }</div>
-			{ dateNode }
-			<div className='label-cont alt-label'>Players: { playCount }</div>
+		<div className="row-wrap row-margin">
+			<div className="no-space">
+				<div className='label-cont'>Day { glob.day + 1 }</div>
+				{ dateNode }
+				<div className='label-cont alt-label'>Players: { playCount }</div>
+			</div>
+			<div className="toggle-sidebar">
+				{ rulesNode } { verifNode }
+			</div>
 		</div>
 	</div>);
 
@@ -240,9 +260,18 @@ export function HistoryBoard(props: SeasonSelProps & { playData: PlayData, rm: R
 
 	var seasonSelNode = <SeasonSel seasonId={ props.seasonId } setSeasonId={ props.setSeasonId }/>;
 
+	//const exColList = [scoreColumn(histObj.scoreData, stageIdX, starCodeList[i][1], fs.extFlag, verifFlag, null)];
+	//console.log("scores", histObj.scoreData);	
+	const exColFun = (alt: AltType): ExColumn[] => {
+		//return [scoreColumn(histObj.scoreData, stageId, starDef.id, rulesFlag ? "ext" : "rules", verifFlag, alt)];
+		return [scoreColumn(histObj.scoreData, specStarRef(starDef, alt), rulesFlag ? "ext" : "rules", verifFlag)];
+	};
+
 	return (<div>
 		<ViewBoard kind="view" mergeRaw={ true } stageId={ stageId } starDef={ starDef }
-			playData={ props.playData } extAll={ true } ttFun= { ttFun } toggleNode={ seasonSelNode }
-			cornerNode={ stageSelNode } headerNode={ starSelNode } showStd={ true } playDB={ playDB } />
+			playData={ props.playData } extAll={ true } rulesFlag={ rulesFlag }
+			ttFun= { ttFun } toggleNode={ seasonSelNode }
+			cornerNode={ stageSelNode } headerNode={ starSelNode }
+			showStd={ true } showRowId={ true } showPts={ true } extraColFun={ exColFun } playDB={ playDB } />
 	</div>);
 }
