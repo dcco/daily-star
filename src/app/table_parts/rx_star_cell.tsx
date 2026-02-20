@@ -90,6 +90,7 @@ type TimeCellProps = {
 	"active": boolean,
 	"onClick": () => void,
 	"hiddenFlag": boolean,
+	"colSpan"?: number,
 	"super"?: string,
 	"complete"?: string,
 	"hideStratOffset"?: boolean,
@@ -144,13 +145,15 @@ export function TimeCell(props: TimeCellProps): React.ReactNode {
 	}
 
 	// re-wrap time in the actual time cell
+	var cSpan = hasRankNode ? 1 : 2;
+	if (props.colSpan) cSpan = props.colSpan;
 	timeNode = (<td className="time-cell tooltip" data-active={ active.toString() } data-complete={ props.complete }
-		colSpan={ hasRankNode ? 1 : 2 } onClick={ onClick }>{ timeNode } { hasRankNode ? "" : noteNodes }</td>);
+		colSpan={ cSpan } onClick={ onClick }>{ timeNode } { hasRankNode ? "" : noteNodes }</td>);
 	if (hasRankNode) {
 		timeNode = <React.Fragment>
 			{ timeNode }
 			<td className="time-cell tooltip invis-rank-cell" data-active={ active.toString() } onClick={ onClick }
-				colSpan={ 1 }>{ rankNode } { noteNodes }</td>
+				colSpan={ cSpan }>{ rankNode } { noteNodes }</td>
 		</React.Fragment>;
 	}
 	return timeNode;
@@ -187,6 +190,7 @@ export function RecordCell(props: RecordCellProps): React.ReactNode {
 	var verOffset = props.verOffset;
 	var hideStratOffset = false;
 	if (props.hideStratOffset !== undefined) hideStratOffset = props.hideStratOffset;
+	if (timeDat.rawTime >= 900000) return <td className="record-cell" colSpan={ 2 }>-</td>;
 	var [cellText, rawText] = timeDetail(timeDat, verOffset, hideStratOffset);
 	// link if link is relevant
 	var timeNode: React.ReactNode = cellText;

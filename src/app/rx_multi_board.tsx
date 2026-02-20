@@ -11,7 +11,7 @@ import { initDailyStar } from './api_season'
 import { G_HISTORY, initCurrentHistory, initPastHistory, calcHistoryStatData } from './api_history'
 import { loadNickMap, loadUserId, postNick } from './api_live'
 
-import { RouterMain, newRouterCore, newRouterMain, navRM, reloadRM } from './router_main'
+import { RouterMain, Slug, newRouterCore, newRouterMain, navRM, reloadRM } from './router_main'
 import { DailyStar } from './pages/rx_daily_star'
 import { XcamFull } from './pages/rx_xcam_full'
 import { XcamBeta } from './pages/rx_xcam_beta'
@@ -63,7 +63,7 @@ function HeadTab(props: HeadTabProps): React.ReactNode
 		- set nick: updates local data (triggers API call) [optional reload from remote]
 	*/
 
-export function MultiBoard(props: { boardId?: number, subId?: number, slug?: string }): React.ReactNode
+export function MultiBoard(props: { boardId?: number, subId?: number, slug?: Slug }): React.ReactNode
 {
 	// router stuff
 	var boardId = 0;
@@ -86,12 +86,12 @@ export function MultiBoard(props: { boardId?: number, subId?: number, slug?: str
 	};
 
 	const updateMainId = (i: number) => {
-		if (i === 1) navRM(rm, "xcam", "", "");
-		else if (i === 2) navRM(rm, "about", "", "");
-		else if (i === 3 && DEV) navRM(rm, "editor", "", "");
-		else if (i === 4) navRM(rm, "beta", "", "");
-		else if (i === 5) navRM(rm, "support", "", "");
-		else navRM(rm, "home", "", "");
+		if (i === 1) navRM(rm, "xcam", "", {});
+		else if (i === 2) navRM(rm, "about", "", {});
+		else if (i === 3 && DEV) navRM(rm, "editor", "", {});
+		else if (i === 4) navRM(rm, "beta", "", {});
+		else if (i === 5) navRM(rm, "support", "", {});
+		else navRM(rm, "home", "", {});
 	};
 
 	// the concept with play/local data is that the user modifies local data,

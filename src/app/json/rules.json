@@ -4,6 +4,55 @@
 			["No Cutscene"]
 		]
 	},
+	"bob_6": {
+		"ban": [
+			["Backflip Clip", "SJ Throw"],
+			["Backflip Clip", "Goomba Bounce"],
+			["Bomb Clip", "SJ Throw"],
+			["Bomb Clip", "Goomba Bounce"]
+		]
+	},
+	"wf_1": {
+		"ban": [
+			["Standard", "Tree Backflip"]
+		]
+	},
+	"wf_2": {
+		"ban": [
+			["Triple Jump", "Elevator TJ"],
+			["Triple Jump", "Tree Backflip"],
+			["Double Jump", "Tree Backflip"]
+		]
+	},
+	"wf_5": {
+		"ban": [
+			["TJ Owlless", "Tree Backflip"],
+			["DJ Owlless", "Tree Backflip"]
+		]
+	},
+	"wf_6": {
+		"disallow": [
+			["OG"]
+		],
+		"ban": [
+			["Sockfolder", "Tree Backflip"],
+			["Texture", "Tree Backflip"],
+			["Salt", "Tree Backflip"],
+			["OG", "Tree Backflip"],
+			["LJ", "Tree Backflip"]
+		],
+		"flags": ["mainStratScore"]
+	},
+	"jrb_3": {
+		"ban": [
+			["Standard", "Punchless Clip"]
+		]
+	},
+	"ccm_6": {
+		"ban": [
+			["Backflip WK", "GP Ending"]
+		]
+	},
 	"bbh_6": {
 		"allow": [
 			["DJ Kick Box"]
@@ -17,6 +66,12 @@
 	"hmc_100c2": {
 		"allow": [
 			["No BLJ"]
+		],
+		"flags": ["noStratScore"]
+	},
+	"lll_1": {
+		"ban": [
+			["Double Burn", "TODO:Platform Rollout"]
 		]
 	},
 	"lll_100c5": {
@@ -28,12 +83,21 @@
 	"ssl_100c6": {
 		"allow": [
 			["Alt Pillar"]
+		],
+		"flags": ["noStratScore"]
+	},
+	"ddd_1": {
+		"ban": [
+			["Back Sub", "Chip Clip"]
 		]
 	},
 	"ddd_2": {
 		"allow": [
 			["Downwarp"]
 		]
+	},
+	"ddd_100c3": {
+		"flags": ["noStratScore"]
 	},
 	"sl_4": {
 		"allow": [
@@ -43,11 +107,17 @@
 	"sl_100c5": {
 		"allow": [
 			["Moneybag Dupe"]
-		]
+		],
+		"flags": ["noStratScore"]
 	},
 	"wdw_2": {
 		"allow": [
 			["Direct TJ"]
+		]
+	},
+	"wdw_3": {
+		"ban": [
+			["Solo Secrets", "JD Ending"]
 		]
 	},
 	"wdw_4": {
@@ -65,9 +135,15 @@
 			["No Setup"]
 		]
 	},
+	"ttm_100c3": {
+		"flags": ["noStratScore"]
+	},
 	"thi_2": {
 		"allow": [
 			["TJ Dive Start"]
+		],
+		"ban": [
+			["TJ Dive Start", "Goomba Bounce"]
 		]
 	},
 	"thi_3": {
@@ -79,17 +155,32 @@
 		"allow": [
 			["Standard"],
 			["Tiny Route"]
+		],
+		"flags": ["noStratScore"]
+	},
+	"thi_4": {
+		"ban": [
+			["Standard", "Speedwalk Strat"]
 		]
 	},
 	"thi_100c5": {
 		"allow": [
 			["11c Start + Pole"]
-		]
+		],
+		"flags": ["noStratScore"]
 	},
 	"thi_6": {
 		"allow": [
 			["TJ Dive Start"]
 		]
+	},
+	"ttc_3": {
+		"ban": [
+			["3x LJ"]
+		]
+	},
+	"ttc_100c4": {
+		"flags": ["noStratScore"]
 	},
 	"rr_100c2": {
 		"allow": [
@@ -99,6 +190,18 @@
 	"rr_100c6": {
 		"allow": [
 			["No Cutscene"]
+		]
+	},
+	"rr_3": {
+		"flags": ["noStratScore"],
+		"ban": [
+			["Kick Recoil End", "GWK Start"],
+			["Kick Back End", "GWK Start"]
+		]
+	},
+	"rr_4": {
+		"ban": [
+			["Sideflip", "TODO:DJ Dive End"]
 		]
 	},
 	"sec_vc": {
@@ -111,9 +214,15 @@
 			["Stored Angle (NC)"]
 		]
 	},
+	"bow_1x": {
+		"ban": [
+			["Standard", "Bowser Dance"],
+			["Standard", "w/ Dive Rollout"]
+		]
+	},
 	"bow_3n": {
 		"ban": [
-			["w/ Manamo", "Left TJWK", "Pole"]
+			["Left TJWK", "w/ Manamo"]
 		]
 	},
 	"bow_3r": {

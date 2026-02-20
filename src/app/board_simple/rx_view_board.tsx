@@ -5,14 +5,14 @@ import React, { useState, useEffect } from 'react'
 
 import { VerOffset, StratOffset, formatFrames } from '../time_dat'
 import { ColList, filterVarColList } from '../org_strat_def'
-import { StarDef, FilterState, newFilterState, copyFilterState, fullFilterState,
+import { StarDef, FilterState, starCode, newFilterState, copyFilterState, fullFilterState,
 	verOffsetStarDef, stratOffsetStarDef, hasExtStarDef, colListStarDef } from '../org_star_def'
 import { AltType, starKeyExtern } from '../star_map'
 import { TimeTable } from '../time_table'
 import { PlayData, LocalPD, newPlayData } from '../play_data'
 import { ColConfig, newColConfig, primaryColConfig, lightColList,
 	mergeHeaderColConfig, splitVariantPosColConfig } from '../col_config'
-import { xcamRecordMapBan, sortColList } from '../xcam_record_map'
+import { xcamRecordMap, xcamRecordMapRules, xcamIdealMapRules, sortColList } from '../xcam_record_map'
 import { MenuOpt, MenuOptX } from './rx_menu_opt'
 import { ExColumn } from '../table_parts/ex_column'
 import { PlayDB } from "../table_parts/rx_star_row"
@@ -28,7 +28,7 @@ import { StratRankTable } from '../board_simple/rx_sr_table'
 import { TTLoadType } from '../api_live'
 import { G_SHEET } from "../api_xcam"
 
-export type TimeTableFun = ((colList: ColList, vs: VerOffset, ss: StratOffset) => TimeTable);
+export type TimeTableFun = ((colList: ColList, vs: VerOffset, ss: StratOffset, rulesKey: string | null) => TimeTable);
 
 export type EditProps = {
 	"playData": PlayData,
@@ -260,14 +260,16 @@ export function ViewBoard(props: ViewBoardProps): React.ReactNode
 	var fullColList = colListStarDef(starDef, fullFS);
 
 	// add sort record + relevant records
-	var banList: string[][] = [];
+	//var banList: string[][] = [];
 	var starKey = starKeyExtern(stageId, starDef);
 	/*if (DEV && RS_DATA[starKey]) {
 		var rs = RS_DATA[starKey];
 		if (rs.ban)	banList = rs.ban;
 	}*/
-	var sortRM = xcamRecordMapBan(fullColList, fullFS, verOffset, sOffset, banList);
-	var relRM = xcamRecordMapBan(colList, fs, verOffset, sOffset, banList);
+	const rulesKey = fs.extFlag === "rules" ? starCode(stageId, starDef) : null;
+	var sortRM = xcamRecordMap(fullColList, fullFS, verOffset, sOffset);
+	var relRM = xcamRecordMapRules(colList, fs, verOffset, sOffset, rulesKey);
+	var idealRM = xcamIdealMapRules(colList, fs, verOffset, sOffset, rulesKey);
 	sortColList(colList, sortRM);
 	sortColList(fullColList, sortRM);
 
@@ -295,7 +297,7 @@ export function ViewBoard(props: ViewBoardProps): React.ReactNode
 		}
 	// -- view mode
 	} else {
-		var timeTable = props.ttFun(colList, verOffset, sOffset);
+		var timeTable = props.ttFun(colList, verOffset, sOffset, rulesKey);
 		var cfg = filterConfig(stageId, starDef, fs, colList);
 		// scoring columns
 		var exColList: ExColumn[] | undefined = undefined;
@@ -310,7 +312,7 @@ export function ViewBoard(props: ViewBoardProps): React.ReactNode
 
 		// -- main table < can be either main / alt >
 		tableList.push(<StarTable cfg={ cfg } playData={ playData } timeTable={ timeTable }
-			verOffset={ verOffset } recordMap={ relRM } emptyWarn={ props.emptyWarn }
+			verOffset={ verOffset } recordMap={ relRM } idealMap={ idealRM } emptyWarn={ props.emptyWarn }
 			playDB={ props.playDB } rankKey={ rankKey }
 			showRowId={ props.showRowId } extraColList={ exColList } key={ stageId + "_" + starDef.name + "_0" }></StarTable>);
 		// -- alt table < this version only shows up on combination >
@@ -323,7 +325,7 @@ export function ViewBoard(props: ViewBoardProps): React.ReactNode
 			if (props.extraColFun) exAltList = props.extraColFun("alt");
 
 			tableList.push(<StarTable cfg={ altCFG } playData={ playData } timeTable={ timeTable }
-				verOffset={ verOffset } recordMap={ relRM } emptyWarn={ props.emptyWarn }
+				verOffset={ verOffset } recordMap={ relRM } idealMap={ idealRM } emptyWarn={ props.emptyWarn }
 				playDB={ props.playDB } rankKey={ rankKey }
 				showRowId={ props.showRowId } extraColList={ exAltList } key={ stageId + "_" + starDef.name + "_1" }></StarTable>);
 		}

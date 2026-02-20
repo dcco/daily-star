@@ -13043,6 +13043,97 @@
       "confidence": 0,
       "rankMethod": "rescale"
     },
+    "No Pless": {
+      "name": "No Pless",
+      "times": {
+        "Mario": {
+          "sr": "time",
+          "time": {
+            "time": 2580,
+            "alt": null
+          },
+          "method": {
+            "m": "force"
+          }
+        },
+        "Grandmaster": {
+          "sr": "time",
+          "time": {
+            "time": 2636,
+            "alt": null
+          },
+          "method": {
+            "m": "force"
+          }
+        },
+        "Master": {
+          "sr": "time",
+          "time": {
+            "time": 2690,
+            "alt": null
+          },
+          "method": {
+            "m": "force"
+          }
+        },
+        "Diamond": {
+          "sr": "time",
+          "time": {
+            "time": 2756,
+            "alt": null
+          },
+          "method": {
+            "m": "force"
+          }
+        },
+        "Platinum": {
+          "sr": "time",
+          "time": {
+            "time": 2810,
+            "alt": null
+          },
+          "method": {
+            "m": "force"
+          }
+        },
+        "Gold": {
+          "sr": "time",
+          "time": {
+            "time": 2856,
+            "alt": null
+          },
+          "method": {
+            "m": "force"
+          }
+        },
+        "Silver": {
+          "sr": "time",
+          "time": {
+            "time": 2996,
+            "alt": null
+          },
+          "method": {
+            "m": "force"
+          }
+        },
+        "Bronze": {
+          "sr": "time",
+          "time": {
+            "time": 3050,
+            "alt": null
+          },
+          "method": {
+            "m": "force"
+          }
+        },
+        "Iron": {
+          "sr": "none"
+        }
+      },
+      "skillMetric": 0,
+      "confidence": 0,
+      "rankMethod": "easy"
+    },
     "Shell": {
       "name": "Shell",
       "times": {
@@ -14111,7 +14202,7 @@
         "Gold": {
           "sr": "time",
           "time": {
-            "time": 4813,
+            "time": 3413,
             "alt": null
           },
           "method": {
@@ -14121,7 +14212,7 @@
         "Silver": {
           "sr": "time",
           "time": {
-            "time": 5013,
+            "time": 3613,
             "alt": null
           },
           "method": {
@@ -14131,7 +14222,7 @@
         "Bronze": {
           "sr": "time",
           "time": {
-            "time": 5710,
+            "time": 4310,
             "alt": null
           },
           "method": {
@@ -14236,6 +14327,97 @@
       "skillMetric": 0,
       "confidence": 0,
       "rankMethod": "hard"
+    },
+    "No Pless": {
+      "name": "No Pless",
+      "times": {
+        "Mario": {
+          "sr": "time",
+          "time": {
+            "time": 4006,
+            "alt": null
+          },
+          "method": {
+            "m": "force"
+          }
+        },
+        "Grandmaster": {
+          "sr": "time",
+          "time": {
+            "time": 4056,
+            "alt": null
+          },
+          "method": {
+            "m": "force"
+          }
+        },
+        "Master": {
+          "sr": "time",
+          "time": {
+            "time": 4126,
+            "alt": null
+          },
+          "method": {
+            "m": "force"
+          }
+        },
+        "Diamond": {
+          "sr": "time",
+          "time": {
+            "time": 4170,
+            "alt": null
+          },
+          "method": {
+            "m": "force"
+          }
+        },
+        "Platinum": {
+          "sr": "time",
+          "time": {
+            "time": 4393,
+            "alt": null
+          },
+          "method": {
+            "m": "force"
+          }
+        },
+        "Gold": {
+          "sr": "time",
+          "time": {
+            "time": 4540,
+            "alt": null
+          },
+          "method": {
+            "m": "force"
+          }
+        },
+        "Silver": {
+          "sr": "time",
+          "time": {
+            "time": 5013,
+            "alt": null
+          },
+          "method": {
+            "m": "force"
+          }
+        },
+        "Bronze": {
+          "sr": "time",
+          "time": {
+            "time": 5710,
+            "alt": null
+          },
+          "method": {
+            "m": "force"
+          }
+        },
+        "Iron": {
+          "sr": "none"
+        }
+      },
+      "skillMetric": 0.0006237469369570059,
+      "confidence": 4,
+      "rankMethod": "normal"
     }
   },
   "7_100c6": {
@@ -17290,7 +17472,7 @@
         "Mario": {
           "sr": "time",
           "time": {
-            "time": 1360,
+            "time": 1356,
             "alt": null
           },
           "method": {
@@ -21812,9 +21994,9 @@
         "Mario": {
           "sr": "time",
           "time": {
-            "time": 9780,
+            "time": 10080,
             "alt": [
-              9716,
+              10016,
               "us"
             ]
           },
@@ -21825,9 +22007,9 @@
         "Grandmaster": {
           "sr": "time",
           "time": {
-            "time": 10060,
+            "time": 10360,
             "alt": [
-              9996,
+              10296,
               "us"
             ]
           },
@@ -21838,9 +22020,9 @@
         "Master": {
           "sr": "time",
           "time": {
-            "time": 10620,
+            "time": 10920,
             "alt": [
-              10556,
+              10856,
               "us"
             ]
           },
@@ -21851,9 +22033,9 @@
         "Diamond": {
           "sr": "time",
           "time": {
-            "time": 11010,
+            "time": 11310,
             "alt": [
-              10946,
+              11246,
               "us"
             ]
           },
@@ -21864,9 +22046,9 @@
         "Platinum": {
           "sr": "time",
           "time": {
-            "time": 11506,
+            "time": 11806,
             "alt": [
-              11443,
+              11743,
               "us"
             ]
           },
@@ -21877,9 +22059,9 @@
         "Gold": {
           "sr": "time",
           "time": {
-            "time": 12123,
+            "time": 12423,
             "alt": [
-              12060,
+              12360,
               "us"
             ]
           },
@@ -21890,9 +22072,9 @@
         "Silver": {
           "sr": "time",
           "time": {
-            "time": 12616,
+            "time": 12916,
             "alt": [
-              12553,
+              12853,
               "us"
             ]
           },
@@ -21903,9 +22085,9 @@
         "Bronze": {
           "sr": "time",
           "time": {
-            "time": 14343,
+            "time": 14643,
             "alt": [
-              14280,
+              14580,
               "us"
             ]
           },
@@ -25237,6 +25419,96 @@
     }
   },
   "14_2": {
+    "Carpetful": {
+      "name": "Carpetful",
+      "times": {
+        "Mario": {
+          "sr": "time",
+          "time": {
+            "time": 1000,
+            "alt": null
+          },
+          "method": {
+            "m": "force"
+          }
+        },
+        "Grandmaster": {
+          "sr": "time",
+          "time": {
+            "time": 1003,
+            "alt": null
+          },
+          "method": {
+            "m": "force"
+          }
+        },
+        "Master": {
+          "sr": "time",
+          "time": {
+            "time": 1006,
+            "alt": null
+          },
+          "method": {
+            "m": "force"
+          }
+        },
+        "Diamond": {
+          "sr": "time",
+          "time": {
+            "time": 1010,
+            "alt": null
+          },
+          "method": {
+            "m": "force"
+          }
+        },
+        "Platinum": {
+          "sr": "time",
+          "time": {
+            "time": 11196,
+            "alt": null
+          },
+          "method": {
+            "m": "force"
+          }
+        },
+        "Gold": {
+          "sr": "time",
+          "time": {
+            "time": 11516,
+            "alt": null
+          },
+          "method": {
+            "m": "force"
+          }
+        },
+        "Silver": {
+          "sr": "time",
+          "time": {
+            "time": 12113,
+            "alt": null
+          },
+          "method": {
+            "m": "force"
+          }
+        },
+        "Bronze": {
+          "time": {
+            "time": 13073,
+            "alt": null
+          },
+          "method": {
+            "m": "interpolate"
+          }
+        },
+        "Iron": {
+          "sr": "none"
+        }
+      },
+      "skillMetric": 0,
+      "confidence": 0,
+      "rankMethod": "rescale"
+    },
     "Carpetless": {
       "name": "Carpetless",
       "times": {
@@ -25297,7 +25569,7 @@
         "Gold": {
           "sr": "time",
           "time": {
-            "time": 11516,
+            "time": 6930,
             "alt": null
           },
           "method": {
@@ -25307,7 +25579,7 @@
         "Silver": {
           "sr": "time",
           "time": {
-            "time": 12113,
+            "time": 8113,
             "alt": null
           },
           "method": {
@@ -25317,7 +25589,7 @@
         "Bronze": {
           "sr": "time",
           "time": {
-            "time": 13373,
+            "time": 9373,
             "alt": null
           },
           "method": {
@@ -30829,7 +31101,7 @@
         "Mario": {
           "sr": "time",
           "time": {
-            "time": 7020,
+            "time": 1000,
             "alt": null
           },
           "method": {
@@ -30839,7 +31111,7 @@
         "Grandmaster": {
           "sr": "time",
           "time": {
-            "time": 7043,
+            "time": 1003,
             "alt": null
           },
           "method": {
@@ -30849,7 +31121,7 @@
         "Master": {
           "sr": "time",
           "time": {
-            "time": 7076,
+            "time": 1006,
             "alt": null
           },
           "method": {
@@ -30859,7 +31131,7 @@
         "Diamond": {
           "sr": "time",
           "time": {
-            "time": 7106,
+            "time": 7076,
             "alt": null
           },
           "method": {
@@ -30920,9 +31192,9 @@
         "Mario": {
           "sr": "time",
           "time": {
-            "time": 7856,
+            "time": 1836,
             "alt": [
-              7850,
+              1830,
               "us"
             ]
           },
@@ -30933,9 +31205,9 @@
         "Grandmaster": {
           "sr": "time",
           "time": {
-            "time": 7880,
+            "time": 1840,
             "alt": [
-              7873,
+              1833,
               "us"
             ]
           },
@@ -30946,9 +31218,9 @@
         "Master": {
           "sr": "time",
           "time": {
-            "time": 7913,
+            "time": 1843,
             "alt": [
-              7906,
+              1836,
               "us"
             ]
           },
@@ -30959,9 +31231,9 @@
         "Diamond": {
           "sr": "time",
           "time": {
-            "time": 7943,
+            "time": 7913,
             "alt": [
-              7936,
+              7906,
               "us"
             ]
           },

@@ -2,7 +2,7 @@
 //import orgData from './json/org_data.json'
 //import playerData from './json/player_data.json'
 
-import { TimeDat, MultiDat, copyTimeDat, vtagTimeDat, hasSubTimes, applyManualOffset } from './time_dat'
+import { TimeDat, MultiDat, copyTimeDat, earlierTimeDat, vtagTimeDat, hasSubTimes, applyManualOffset } from './time_dat'
 import { ColList } from './org_strat_def'
 
 	/*
@@ -364,11 +364,19 @@ function compTimeRow(l1: CompRow, l2: CompRow): number
 	// start with the "best" times
 	var diff = l1[0][0].time - l2[0][0].time;
 	if (diff !== 0) return diff;
+	else {
+		var eDiff = earlierTimeDat(l1[0][0], l2[0][0]);
+		if (eDiff !== 0) return eDiff;
+	}
 	// otherwise, iterate through remaining times
 	var ml = Math.min(l1.length, l2.length);
 	for (let i = 1; i < ml; i++) {
 		var diff = l1[i][0].time - l2[i][0].time;
 		if (diff !== 0) return diff;
+		else {
+			var eDiff = earlierTimeDat(l1[0][0], l2[0][0]);
+			if (eDiff !== 0) return eDiff;
+		}
 	}
 	// length final tiebreaker
 	return l2.length - l1.length;

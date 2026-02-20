@@ -124,6 +124,10 @@ export function starCodeFull<K>(k: StarRef<K>): string {
 	return baseKey + "_" + k.alt;
 }
 
+export function starCodeBase<K>(k: StarRef<K>): string {
+	return k.stageId + "_" + k.starDef.id;
+}
+
 	/*
 		functions for specific types of star maps
 	*/
@@ -149,14 +153,23 @@ export function tryCombStarMap<K, V>(m: StarMap<K, V>, k: StarDef, f: (a: V, b: 
 	const baseKey = k.stageId + "_" + k.id;
 	const a = m.dat[baseKey + "_main"];
 	const b = m.dat[baseKey + "_alt"];
-	if (a !== undefined && b !== undefined) {
-		var newObj: BackRef<K, V> = {
-			"v": f(a.v, b.v),
-			"ref": specStarRef(k, _def)
-		};
-		const newKey = m.keyFun(newObj.ref);
-		if (m.dat[newKey] === undefined) m.dat[newKey] = newObj;
-	}
+	var v: V | null = null;
+	// get combined value
+	if (a !== undefined && b !== undefined) v = f(a.v, b.v);
+	else if (a !== undefined) v = a.v;
+	else if (b !== undefined) v = b.v;
+	// if value was found, add to map
+	if (v === null) return;
+	var newObj: BackRef<K, V> = {
+		"v": v,
+		"ref": specStarRef(k, _def)
+	};
+	const newKey = m.keyFun(newObj.ref);
+	if (m.dat[newKey] === undefined) m.dat[newKey] = newObj;
+	/*if (a !== undefined && b !== undefined) {
+	} else if (a !== undefined) {
+
+	}*/
 }
 
 export function eitherCombStarMap<K, V>(m: StarMap<K, V>, k: StarDef, f: (a: V, b: V) => V, _def: K)

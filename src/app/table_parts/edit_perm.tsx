@@ -70,15 +70,18 @@ export function checkNewPerm(ep: EditPerm): AuthIdent | null
 export type EditObj = {
 	"perm": EditPerm,
 	"starDef": StarDef,
-	"updateTT": (id: Ident, timeList: TimeDat[], delList: TimeDat[], verifList: TimeDat[]) => void
+	"updateTT": (id: Ident, timeList: TimeDat[], delList: TimeDat[], verifList: TimeDat[]) => void,
+	"rulesKey": string | null
 }
 
 export function newEditObj(ep: EditPerm, starDef: StarDef,
-	updateTT: (id: Ident, timeList: TimeDat[], delList: TimeDat[], verifList: TimeDat[]) => void): EditObj
+	updateTT: (id: Ident, timeList: TimeDat[], delList: TimeDat[], verifList: TimeDat[]) => void,
+	rulesKey: string | null): EditObj
 {
 	return {
 		"perm": ep,
 		"starDef": starDef,
-		"updateTT": updateTT
+		"updateTT": updateTT,
+		"rulesKey": rulesKey
 	};
 }

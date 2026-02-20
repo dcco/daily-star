@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import { G_SHEET } from '../api_xcam'
 
-import { RouterMain, navRM } from '../router_main'
+import { RouterMain, readSlug, navRM } from '../router_main'
 import { MenuOpt } from '../board_simple/rx_menu_opt'
 import { XcamBoard } from '../board_full/rx_xcam_board'
 import { XcamStatBoard } from '../stats/rx_xcam_stat_board'
@@ -20,13 +20,13 @@ export function XcamBeta(props: { rm: RouterMain }): React.ReactNode
 			scoreData={ G_SHEET.scoreData }
 			/*starMap={ G_SHEET.starMap } userMap={ G_SHEET.userMap } userRankStore={ G_SHEET.userRankStore }
 			altStarMap={ G_SHEET.extStarMap } altMap={ G_SHEET.altMap }*/
-			aboutNode={ <BetaAbout/> } showStd={ true } key={ props.rm.core.slug }/>;
+			aboutNode={ <BetaAbout/> } showStd={ true } key={ readSlug(props.rm.core.slug, "name") }/>;
 	} 
 
 	const updateMenuId = (i: number) => {
 		setMenuId(i);
-		if (i === 0) navRM(props.rm, "beta", "", "");
-		else if (i === 1) navRM(props.rm, "beta", "players", "");
+		if (i === 0) navRM(props.rm, "beta", "", {});
+		else if (i === 1) navRM(props.rm, "beta", "players", {});
 	};
 
 	return (<React.Fragment>

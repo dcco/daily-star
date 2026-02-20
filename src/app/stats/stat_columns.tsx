@@ -237,6 +237,25 @@ export function placementDetCol(name: string, w: number): DetColumn
 	};
 }
 
+export function otherPlaceDetCol(name: string, w: number, rival: Ident, userMap: UserStatMap, altFlag: boolean): DetColumn
+{
+	const rivalSx = userMap.stats[keyIdent(rival)];
+	const compFun = (score: UserScore | IncScore, i: number): [React.ReactNode, number[]] => {
+		// build time node	
+		var rivalScore = getStarUserStats(rivalSx, score, altFlag);
+		if (rivalScore === null || !rivalScore.comp) {
+			return [<td className="time-cell" data-complete="false" key="o-place">-</td>, [-1, i]];
+		}
+		var rankNo = rivalScore.rank[0] + 1;
+		return [<td className="time-cell" key="o-place">{ rankNo + "/" + rivalScore.rank[1] }</td>, [rivalScore.scorePts, 0]];
+	}
+	return {
+		"name": name, "key": "o-place", "widthRec": w,
+		"mainFun": compFun,
+		"incFun": compFun
+	};
+}
+
 export function scoreDetCol(name: string, w: number, dsScore?: UserScoreMetaMap): DetColumn
 {
 	return {
@@ -263,10 +282,74 @@ export function scoreDetCol(name: string, w: number, dsScore?: UserScoreMetaMap)
 	};
 }
 
-export function timeDetCol(name: string, w: number, altFlag: boolean): DetColumn
+export function otherScoreDetCol(name: string, w: number, rival: Ident, userMap: UserStatMap, altFlag: boolean): DetColumn
 {
+	const rivalSx = userMap.stats[keyIdent(rival)];
+	const compFun = (score: UserScore | IncScore, i: number, starData: StxStarData): [React.ReactNode, number[]] => {
+		// build time node	
+		var rivalScore = getStarUserStats(rivalSx, score, altFlag);
+		if (rivalScore === null) {
+			return [<td className="time-cell" data-complete="false" key="o-score">-</td>, [-1, i]];
+		}
+		var basePts = rivalScore.scorePts * 100;
+		return [<td className="time-cell" key="o-score">{ basePts.toFixed(2) }</td>, [-basePts, 0]];
+	}
 	return {
-		"name": name, "key": "time", "colSpan": 2, "widthRec": w,
+		"name": name, "key": "o-score", "widthRec": w,
+		"mainFun": compFun,	"incFun": compFun
+	};
+}
+
+export function diffScoreDetCol(name: string, w: number, rival: Ident, userMap: UserStatMap, altFlag: boolean): DetColumn
+{
+	const rivalSx = userMap.stats[keyIdent(rival)];
+	const compFun = (score: UserScore | IncScore, i: number, starData: StxStarData): [React.ReactNode, number[]] => {
+		// find normal pts
+		var anyTime = false;
+		var bothTime = true;
+		var myPts = 0;
+		if (score.comp) {
+			myPts = score.scorePts * 100;
+			anyTime = true
+		} else bothTime = false;
+		// find rival pts
+		var rivalScore = getStarUserStats(rivalSx, score, altFlag);
+		var rivalPts = 0;
+		if (rivalScore !== null) {
+			rivalPts = rivalScore.scorePts * 100;
+			anyTime = true;
+		} else bothTime = false;
+		// build time node
+		if (!anyTime) return [<td className="time-cell" data-complete="false" key="diff-score">-</td>, [999, i]];
+		var diff = myPts - rivalPts;
+		// calculate color -- (table neutral) #C0C0E8
+		// -- (full blue) #6060E8 - (lowest blue) #B0B0E8
+		// -- (lowest red) #C8C0E0 -- (full red) #C86060
+		var [r, g, b] = [192, 192, 232];
+		if (diff > 0) {
+			r = Math.ceil(((diff * 96) + ((100 - diff) * 176)) / 100);
+			g = Math.ceil(((diff * 96) + ((100 - diff) * 176)) / 100);
+		} else if (diff < 0) {
+			r = 200;
+			g = Math.ceil(((-diff * 96) + ((100 + diff) * 176)) / 100);
+			b = Math.ceil(((-diff * 96) + ((100 + diff) * 224)) / 100);
+		}
+		var color = "#" + (r.toString(16).padStart(2, '0')) + (g.toString(16).padStart(2, '0')) + (b.toString(16).padStart(2, '0'));
+		return [<td className="time-cell" style={{ backgroundColor: color }}
+			data-complete={ bothTime.toString() } key="diff-score">{ diff.toFixed(2) }</td>, [-diff, 0]];
+	}
+	return {
+		"name": name, "key": "diff-score", "widthRec": w,
+		"mainFun": compFun,	"incFun": compFun
+	};
+}
+
+export function timeDetCol(name: string, w: number, altFlag: boolean, cSpan?: number): DetColumn
+{
+	var colSpan = 2;
+	if (cSpan !== undefined) colSpan = cSpan;
+	return {
+		"name": name, "key": "time", "colSpan": colSpan, "widthRec": w,
 		"mainFun": (score: UserScore, i: number, starData: StxStarData) => {
 			// do not display offset for cutscene / mergeOffset stars unless show alternates is on
 			var starDef = score.starDef;
@@ -275,8 +358,8 @@ export function timeDetCol(name: string, w: number, altFlag: boolean): DetColumn
 				(starDef.alt.status === "cutscene" || starDef.alt.status === "mergeOffset")) showOffset = false;
 			// build time node
 			const timeNode = <TimeCell timeDat={ score.timeDat } verOffset={ starData.vs } hideStratOffset={ !showOffset }
-				active={ false } onClick={ () => {} } hiddenFlag={ false } key="time"/>
-			return [timeNode, [i, 0]];
+				colSpan={ colSpan } active={ false } onClick={ () => {} } hiddenFlag={ false } key="time"/>
+			return [timeNode, [score.timeDat.rawTime, 0]];
 		},
 		"incFun": (score: IncScore, i: number, starData: StxStarData) => {
 			// do not display offset for cutscene / mergeOffset stars unless show alternates is on
@@ -285,13 +368,36 @@ export function timeDetCol(name: string, w: number, altFlag: boolean): DetColumn
 			if (starDef.alt !== null && !altFlag &&
 				(starDef.alt.status === "cutscene" || starDef.alt.status === "mergeOffset")) showOffset = false;
 			// build time node
-			var timeNode: React.ReactNode = <td className="time-cell" colSpan={ 2 } key="time">-</td>;
+			var timeNode: React.ReactNode = <td className="time-cell" colSpan={ colSpan } key="time">-</td>;
 			if (score.timeDat !== null) {
 				timeNode = (<TimeCell timeDat={ score.timeDat } verOffset={ starData.vs } hideStratOffset={ !showOffset }
-					complete={ "false" } active={ false } onClick={ () => {} } hiddenFlag={ false } key="time"/>);
+					colSpan={ colSpan } complete={ "false" } active={ false }
+					onClick={ () => {} } hiddenFlag={ false } key="time"/>);
 			}
-			return [timeNode, [i, 1]];
+			return [timeNode, [999999, i]];
 		}
+	};
+}
+
+export function otherTimeDetCol(name: string, w: number, altFlag: boolean, rival: Ident, userMap: UserStatMap): DetColumn
+{
+	const rivalSx = userMap.stats[keyIdent(rival)];
+	const compFun = (score: UserScore | IncScore, i: number, starData: StxStarData): [React.ReactNode, number[]] => {
+		// do not display offset for cutscene / mergeOffset stars unless show alternates is on
+		var starDef = score.starDef;
+		var showOffset = true;
+		if (starDef.alt !== null && !altFlag &&
+			(starDef.alt.status === "cutscene" || starDef.alt.status === "mergeOffset")) showOffset = false;
+		// build time node	
+		var rivalScore = getStarUserStats(rivalSx, score, altFlag);
+		if (rivalScore === null) return [<td className="time-cell" colSpan={ 2 } key="o-time">-</td>, [999999, i]];
+		const timeNode = <TimeCell timeDat={ rivalScore.timeDat } verOffset={ starData.vs } hideStratOffset={ !showOffset }
+			active={ false } onClick={ () => {} } hiddenFlag={ false } key="o-time"/>
+		return [timeNode, [rivalScore.timeDat.rawTime, 0]];
+	}
+	return {
+		"name": name, "key": "o-time", "colSpan": 2, "widthRec": w,
+		"mainFun": compFun,	"incFun": compFun
 	};
 }
 

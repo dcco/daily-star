@@ -5,6 +5,9 @@ import { DraftDat, stratNameDraftDat, verDraftDat, getVarDraftDat, setVerDraftDa
 import { StarDef } from '../org_star_def' 
 import { ColConfig, stratListColConfig } from '../col_config'
 
+import { banStratRule } from '../org_rules'
+import { makeBanMap } from '../xcam_record_map'
+
 export type ValidStyle = "init" | "warning" | "error" | "valid";
 /*
 type OptionGroupProps = {
@@ -26,7 +29,8 @@ type OptionGroupProps = {
 	"textList": string[],
 	"selList": string[],
 	"curSel": string | null,
-	"actFun": (a: number) => void
+	"actFun": (a: number) => void,
+	"banList"?: boolean[]
 };
 
 function OptionGroup(props: OptionGroupProps): React.ReactNode
@@ -36,8 +40,9 @@ function OptionGroup(props: OptionGroupProps): React.ReactNode
 	if (props.connected) childClass = "opt-button for-setting";
 	// build child list
 	var childList = props.textList.map((text, i) => {
-		return (<div className={ childClass } data-sel={ props.selList[i] === props.curSel }
-			onClick={ () => { if (props.active) props.actFun(i) } } key={ i }>{ text }</div>);
+		var banFlag = props.banList ? props.banList[i] : false; 
+		return (<div className={ childClass } data-sel={ props.selList[i] === props.curSel } data-ban={ banFlag.toString() }
+			onClick={ () => { if (props.active && !banFlag) props.actFun(i) } } key={ i }>{ text }</div>);
 	});
 	// class container
 	var contClass = "opt-list";
@@ -60,7 +65,8 @@ type ESAProps = {
 	"delToggle": () => void,
 	"style": ValidStyle,
 	"infoText": string | null,
-	"modFlag"?: boolean
+	"modFlag"?: boolean,
+	"rulesKey": string | null
 };
 
 function cleanNameList(starDef: StarDef, nameList: string[]): string[] {
@@ -70,6 +76,21 @@ function cleanNameList(starDef: StarDef, nameList: string[]): string[] {
 		else if (name === "Open#Alt") return "Open (" + starDef.alt.info.option + ")";
 		return name;
 	})
+}
+
+function variantBanList(starDef: StarDef, stratName: string, varList: string[], rulesKey: string | null): boolean[] | undefined
+{
+	// get banned variants if relevant
+	if (rulesKey === null) return undefined;
+	var bm = makeBanMap(banStratRule(rulesKey));
+	// find list of banned variants
+	if (bm[stratName] === undefined) return undefined;
+	const banList = bm[stratName];
+	if (banList.length === 0) return undefined;
+	// for each variant name
+	return varList.map((varName) => {
+		return banList.includes(varName);
+	});
 }
 
 export function EditSubmitArea(props: ESAProps): React.ReactNode
@@ -119,8 +140,10 @@ export function EditSubmitArea(props: ESAProps): React.ReactNode
 		// title for first group
 		var title = "";
 		if (i === 0) title = "Variants:";
+		// get banList when relevant
+		const banList = variantBanList(props.starDef, curStrat, nameList, props.rulesKey);
 		// create the option nodes, using selVar to highlight
-		return <OptionGroup title={ title } connected={ true } active={ dynFlag }
+		return <OptionGroup title={ title } connected={ true } active={ dynFlag } banList={ banList }
 			textList={ nameList } selList={ selList.map((i) => i.toString()) } curSel={ selId }
 			actFun={ (i) => editDat((dat) => { setVarDraftDat(dat, varGroup.name, selList[i]); return dat; }) }
 			key={ i }/>;

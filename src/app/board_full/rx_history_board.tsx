@@ -13,7 +13,7 @@ import { AltType, specStarRef } from '../star_map'
 import { TimeTable } from '../time_table'
 import { PlayData } from '../play_data'
 import { procStarSlug, makeStarSlug, prependSeasonSlug } from '../router_slug'
-import { RouterMain, navRM } from '../router_main'
+import { RouterMain, Slug, readSlug, navRM } from '../router_main'
 import { PlayDB } from '../table_parts/rx_star_row'
 import { ExColumn } from '../table_parts/ex_column'
 import { SimpToggle } from '../board_simple/rx_simp_toggle'
@@ -84,10 +84,10 @@ function findStageStarIndex(stageList: number[], starTable: [StarDef, number, nu
 		if (stageX === stageId) defStage = i;
 	})
 	const starList = starTable[stageList[defStage]];
-	starList.map((entry, i) => {
-		const [starDef, _headIx, _globIx] = entry;
+	for (let i = 0; i < starList.length; i++) {
+		const [starDef, _headIx, _globIx] = starList[i];
 		if (starDef.id === starId) return [defStage, i];
-	})
+	}
 	return [defStage, 0];
 }
 
@@ -114,35 +114,36 @@ export function HistoryBoard(props: SeasonSelProps & { playData: PlayData, rm: R
 
 	// router state
 	// - since star table may be incomplete, ignore star id returned from processing slug
+	// - read the raw stage id + star slug
 	const rm = props.rm;
-	var [defStageInit, starSlug, _defStar] = procStarSlug(rm.core.slug);
+	var rawStarSlug = readSlug(rm.core.slug, "star");
+	var [defStageInit, starSlug, _defStar] = procStarSlug(rawStarSlug === null ? "" : rawStarSlug);
 
 	const [playCount, setPlayCount] = useState(0);
 
 	// build history star table, select defaults
+	// - search and find the relative stage id + relative star id
 	var stageList = historyStageList(histObj);
 	var starTable = historyStarTable(histObj, stageList);
 	const [rawId1, rawId2] = findStageStarIndex(stageList, starTable, defStageInit, starSlug);
-	//const [defStage, defStar] = fallbackDefault(starTable, defStageInit, starSlug);
 
 	// stage / star state -- NOTE: this is an id into the stage list, not the real stage id
-	var [_id1, setId1] = useState(rawId1);
+	const [id1, setId1] = useState(rawId1);
+	const stageId = stageList[id1];
 	var defCache = Array(orgData.length).fill(0);
-	defCache[_id1] = rawId2;
+	defCache[stageId] = rawId2;
 
 	// star state -- NOTE: this is an index into the star table, not the real star id
 	const [id2Cache, setId2Cache] = useState(defCache);
-	const _id2 = id2Cache[stageList[_id1]];
-
-	// - failsafe if ids are invalid (happens when switching seasons)
-	var id1 = starTable[stageList[_id1]].length === 0 ? rawId1 : _id1;
-	const stageId = stageList[id1];
-	var id2 = starTable[stageId][_id2] === undefined ? rawId2 : _id2;
+	const id2 = id2Cache[stageId];
 	const [starDef, globIx, globIx2] = starTable[stageId][id2];
 
 	// - triggers reload if rawId1 / rawId2 changes (important if more data loads in)
 	useEffect(() => {
 		setId1(rawId1);
+		const newCache = id2Cache.map((id2) => id2);
+		newCache[stageList[rawId1]] = rawId2;
+		setId2Cache(newCache);
 	}, [rawId1, rawId2]);
 
 	// external toggles
@@ -153,7 +154,7 @@ export function HistoryBoard(props: SeasonSelProps & { playData: PlayData, rm: R
 
 	// - clear cache if switching seasons
 	useEffect(() => {
-		setId2Cache(defCache);
+		setId2Cache(defCache.map((id2) => id2));
 	}, [props.seasonId]);
 
 	// stage/star functions
@@ -162,7 +163,9 @@ export function HistoryBoard(props: SeasonSelProps & { playData: PlayData, rm: R
 		var newStage = stageList[newId1];
 		var newStar = starTable[newStage][0][0].id;
 		setId1(newId1);
-		navRM(rm, "home", "history", prependSeasonSlug(props.seasonId, makeStarSlug(newStage, newStar)));
+		const newSlug: Slug = { "star": makeStarSlug(newStage, newStar) };
+		if (props.seasonId !== null ) newSlug["season"] = "" + props.seasonId;
+		navRM(rm, "home", "history", newSlug);
 		//router.push("/home/history?star=" + makeStarSlug(newStage, newStar));
 	};
 
@@ -170,13 +173,16 @@ export function HistoryBoard(props: SeasonSelProps & { playData: PlayData, rm: R
 		id2Cache[stageId] = i;
 		setId2Cache(id2Cache.map((x: number) => x));
 		var newStar = starTable[stageId][i][0].id;
-		navRM(rm, "home", "history", prependSeasonSlug(props.seasonId, makeStarSlug(stageId, newStar)));
+		const newSlug: Slug = { "star": makeStarSlug(stageId, newStar) };
+		if (props.seasonId !== null ) newSlug["season"] = "" + props.seasonId;
+		navRM(rm, "home", "history", newSlug);
 		//router.push("/home/history?star=" + makeStarSlug(id1, newStar));
 	};
 
 	// if route changes, re-render board
 	useEffect(() => {
-		const [newStageInit, newSlug, _xStar] = procStarSlug(rm.core.slug);
+		var curStarSlug = readSlug(rm.core.slug, "star");
+		const [newStageInit, newSlug, _xStar] = procStarSlug(curStarSlug === null ? "" : curStarSlug);
 		//const [newStage, newStar] = fallbackDefault(starTable, newStageInit, newSlug);
 		const [newStage, newStar] = findStageStarIndex(stageList, starTable, newStageInit, newSlug);
 		if (id1 !== newStage || starDef.id !== newSlug) {
@@ -249,8 +255,8 @@ export function HistoryBoard(props: SeasonSelProps & { playData: PlayData, rm: R
 		</div>
 	</div>);
 
-	const ttFun = (colList: ColList, verOffset: VerOffset, sOffset: StratOffset) => {
-		var newTable = historyTimeTable(histObj, globIx, globIx2, starDef, colList, verOffset, sOffset);
+	const ttFun = (colList: ColList, verOffset: VerOffset, sOffset: StratOffset, rulesKey: string | null) => {
+		var newTable = historyTimeTable(histObj, globIx, globIx2, starDef, colList, verOffset, sOffset, rulesKey);
 		// must be an effect to prevent illegal insta re-render
 		useEffect(() => {
 			if (playCount !== newTable.length) setPlayCount(newTable.length);

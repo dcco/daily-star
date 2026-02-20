@@ -8,7 +8,7 @@ import { G_DAILY, GlobNorm } from '../api_season'
 import { mostRecentWeekly } from '../api_history'
 
 import { splitSlug, prependSeasonSlug } from '../router_slug'
-import { RouterMain, navRM } from '../router_main'
+import { RouterMain, Slug, readSlug, navRM } from '../router_main'
 import { MenuOpt } from '../board_simple/rx_menu_opt'
 import { DailyBoard } from '../board_full/rx_daily_board'
 import { HistoryBoard } from '../board_full/rx_history_board'
@@ -66,24 +66,35 @@ export function DailyStar(props: DailyStarProps): React.ReactNode
 	// season state
 	// - initStarSlug is only used to determine which history board to use
 	// 		full contents are used elsewhere
-	const [initStarSlug, curSeason] = splitSlug(props.rm.core.slug); 
+	const slug = props.rm.core.slug;
+	const hasStarSlug = readSlug(slug, "star") !== null;
+	
+	const rawSeason = readSlug(slug, "season");
+	const curSeason = rawSeason === null ? null :
+		/^-?\d+$/.test(rawSeason) ? parseInt(rawSeason) : null;
+	const defHistSlug: Slug = {};
+	if (curSeason !== null) defHistSlug["season"] = "" + curSeason;
 	//const [curSeason, setSeason] = useState<number | null>(initSeason);
-	var defHistSlug = "";
-	if (curSeason !== null) defHistSlug = "null;" + curSeason;
+	//var defHistSlug = "";
+	//if (curSeason !== null) defHistSlug = "null;" + curSeason;
 
 	const setSeasonId = (subId: string, i: number | null) => {
-		var fullSlug = prependSeasonSlug(i, initStarSlug);
-		navRM(props.rm, "home", subId, fullSlug);
+		//var fullSlug = prependSeasonSlug(i, initStarSlug);
+		const newSlug: Slug = {};
+		if (slug["star"]) newSlug["star"] = slug["star"];
+		else if (slug["id"]) newSlug["id"] = slug["id"];
+		if (i !== null) newSlug["season"] = "" + i;
+		navRM(props.rm, "home", subId, newSlug);
 	}
 
 	// menu update
 	const updateMenuId = (i: number) => {
-		if (i === 0) navRM(props.rm, "home", "", "");
+		if (i === 0) navRM(props.rm, "home", "", {});
 		//else if (i === 1) navRM(props.rm, "home", "history", "def")
-		else if (i === 2) navRM(props.rm, "home", "weekly", "");
+		else if (i === 2) navRM(props.rm, "home", "weekly", {});
 		else if (i === 3) navRM(props.rm, "home", "history", defHistSlug);
-		else if (i === 4) navRM(props.rm, "home", "scores", defHistSlug);
-		else if (i === 5) navRM(props.rm, "home", "news", "");
+		else if (i === 4) navRM(props.rm, "home", "scores/monthly", defHistSlug);
+		else if (i === 5) navRM(props.rm, "home", "news", {});
 	};
 
 	// calculate whether season has ended (only matters for "current" season)
@@ -131,7 +142,7 @@ export function DailyStar(props: DailyStarProps): React.ReactNode
 			reloadPlayData={ () => reloadPlayData(null) } setPlayData={ updatePlayData }/>;
 	} else if (menuId === 3 || ((menuId === 0 || menuId === 2) && seasonEnd)) {
 		// build history board
-		if (initStarSlug === "") board = <HistoryTable seasonId={ curSeason }
+		if (!hasStarSlug) board = <HistoryTable seasonId={ curSeason }
 			setSeasonId={ (i) => setSeasonId("history", i) } playData={ playData }/>;
 		else board = <HistoryBoard seasonId={ curSeason }
 			setSeasonId={ (i) => setSeasonId("history", i) } rm={ props.rm } playData={ playData }/>;

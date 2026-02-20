@@ -19,6 +19,7 @@ export type ReadTimeUnit = {
 	"variants": string,
 	"link": string,
 	"note": string,
+	"recvtime": string,
 	"verifflag": string
 };
 
@@ -39,6 +40,7 @@ export function addTimeObj(readObj: ReadTimeObj, id: Ident, starDef: StarDef, ti
 		"variants": serialVarList(variants, timeDat.rowDef.variant_list),
 		"link": timeDat.link === null ? "" : timeDat.link,
 		"note": timeDat.note === null ? "" : timeDat.note,
+		"recvtime": timeDat.recvTime === null ? "" : timeDat.recvTime,
 		"verifflag": "maybe"
 	});
 }
@@ -46,7 +48,7 @@ export function addTimeObj(readObj: ReadTimeObj, id: Ident, starDef: StarDef, ti
 export function delTimeObj(readObj: ReadTimeObj, timeDat: TimeDat) {
 	if (timeDat.origin === null) return;
 	var d_id = timeDat.origin;
-	const i = readObj.findIndex((obj) => { console.log(obj.submit_id); return obj.submit_id === d_id });
+	const i = readObj.findIndex((obj) => obj.submit_id === d_id);
 	if (i !== -1) readObj.splice(i, 1);
 }
 

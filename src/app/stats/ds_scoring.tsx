@@ -72,8 +72,9 @@ function calcStarScoreMap(userSx: UserStats, rankMap: UserStarRankMap): StarScor
 			}
 		}
 		// fill in info
-		const basePts = userScore.scorePts * (stratFlag ? 60 : 80);
-		const bestPts = bestScore !== null ? bestScore.scorePts * 20 : 0;
+		const mainStratFlag = hasFlagStratRule(starKeyExtern(starDef.stageId, starDef), "mainStratScore");
+		const basePts = userScore.scorePts * (mainStratFlag ? 20 : (stratFlag ? 60 : 80));
+		const bestPts = bestScore !== null ? bestScore.scorePts * (mainStratFlag ? 60 : 20) : 0;
 		addStarMap(starScoreMap, userScore, {
 			"100c": starDef["100c"],
 			"basePts": basePts,
@@ -96,79 +97,8 @@ function calcStarScoreMap(userSx: UserStats, rankMap: UserStarRankMap): StarScor
 			}, null);
 		}
 	}
-		// find best strat
-	/*	var stratFlag = !hasFlagStratRule(starCodeX(starDat.stageId, starDat.starId), "noStratScore");
-		var bestScore: StratScore | null = null;
-		if (stratFlag) {
-			for (const [stratKey, stratScore] of Object.entries(userScore.stratMap)) {
-				if (bestScore === null || stratScore.scorePts >= bestScore.scorePts) bestScore = stratScore;
-			}
-		}
-		// fill in info
-		const basePts = userScore.scorePts * (stratFlag ? 60 : 80);
-		const bestPts = bestScore !== null ? bestScore.scorePts * 20 : 0;
-		starScoreMap[starKey] = {
-			"baseKey": baseKey,
-			"100c": starDat["100c"],
-			"basePts": basePts,
-			"basePlace": userScore.rank,
-			"rank": rankName,
-			"rankPts": RANK_PTS[rankName],
-			"bestStrat": bestScore !== null ? bestScore.timeDat.rowDef.name : null,
-			"stratPts": bestPts,
-			"stratPlace": bestScore !== null ? bestScore.rank : [-1, 0],
-			"totalPts": (Math.floor(basePts * 10) + (RANK_PTS[rankName] * 10) + Math.floor(bestPts * 10)) / 10
-		};
-	}*/
 	return starScoreMap;
 }
-
-/*function calcStarScoreMap(starMap: StxStarMap, userSx: UserStats, rankMap: UserStarRankMap): StarScoreMetaMap
-{
-	// for every star
-	const starScoreMap: StarScoreMetaMap = {};
-	for (const [starKey, starDat] of Object.entries(starMap))
-	{
-		// obtain user score for star
-		const userScore = getStarUserStats(userSx, starDat.stageId, starDat.starId, starDat.alt);
-		if (userScore === null) continue;
-		// get star rank
-		const [baseKey, starAlt] = starOnlyKey(starDat);
-		if (baseKey === "15_wmotr") console.log(starKey);
-		var rankName = "Unranked";
-		var rankData = rankMap[baseKey];
-		// - use combined rank if nothing specified, otherwise use main / alt
-		if (rankData !== undefined) {
-			if (starAlt.state === null && rankData.combRank) rankName = rankData.combRank;
-			else if (starAlt.state === "alt" && rankData.altRank) rankName = rankData.altRank;
-			else if (starAlt.state !== "alt") rankName = rankData.mainRank;
-		}
-		// find best strat
-		var stratFlag = !hasFlagStratRule(starCodeX(starDat.stageId, starDat.starId), "noStratScore");
-		var bestScore: StratScore | null = null;
-		if (stratFlag) {
-			for (const [stratKey, stratScore] of Object.entries(userScore.stratMap)) {
-				if (bestScore === null || stratScore.scorePts >= bestScore.scorePts) bestScore = stratScore;
-			}
-		}
-		// fill in info
-		const basePts = userScore.scorePts * (stratFlag ? 60 : 80);
-		const bestPts = bestScore !== null ? bestScore.scorePts * 20 : 0;
-		starScoreMap[starKey] = {
-			"baseKey": baseKey,
-			"100c": starDat["100c"],
-			"basePts": basePts,
-			"basePlace": userScore.rank,
-			"rank": rankName,
-			"rankPts": RANK_PTS[rankName],
-			"bestStrat": bestScore !== null ? bestScore.timeDat.rowDef.name : null,
-			"stratPts": bestPts,
-			"stratPlace": bestScore !== null ? bestScore.rank : [-1, 0],
-			"totalPts": (Math.floor(basePts * 10) + (RANK_PTS[rankName] * 10) + Math.floor(bestPts * 10)) / 10
-		};
-	}
-	return starScoreMap;
-}*/
 
 	/*
 		DS scoring algorithm per-user:
@@ -213,17 +143,6 @@ export function findWinnerDSScore(userMap: UserScoreMetaMap, starRef: StarRef<Al
 			bestUserList.push(userMeta.id);
 		}
 	}
-	/*for (const [userKey, userMeta] of Object.entries(userMap)) {
-		if (userMeta.starMap[starKey] !== undefined) {
-			var starScore = userMeta.starMap[starKey];
-			if (starScore.totalPts > bestScore) {
-				bestScore = starScore.totalPts;
-				bestUserList = [userMeta.id];
-			} else if (starScore.totalPts === bestScore) {
-				bestUserList.push(userMeta.id);
-			}
-		}
-	}*/
 	return bestUserList;
 }
 
@@ -279,11 +198,7 @@ function filterUserMeta(userMeta: UserScoreMeta, codeList: FilterCodeList): User
 	for (const [starRef, starScore] of toListStarMap(userMeta.starMap)) {
 		const baseKey = starCodeW(starRef.starDef);
 		if (codeMap[baseKey] !== undefined) addStarMap(newMeta.starMap, starRef, starScore); 
-	}/*
-	for (const [starKey, starScore] of Object.entries(userMeta.starMap)) {
-		const baseKey = starScore.baseKey;
-		if (codeMap[baseKey] !== undefined) newMeta.starMap[starKey] = starScore; 
-	};*/
+	}
 	return newMeta;
 }
 

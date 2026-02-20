@@ -375,17 +375,17 @@ export function dispDate(date: Date)
 	*/
 
 export type StarLoadFun = (stageId: number, starDef: StarDef, 
-	colList: ColList, verOffset: VerOffset, stratOffset: StratOffset) => TimeTable;
+	colList: ColList, verOffset: VerOffset, stratOffset: StratOffset, rulesKey: string | null) => TimeTable;
 
 export function historyTimeTable(histObj: SeasonHistory, ix: number, globIx: number, starDef: StarDef,
-	colList: ColList, verOffset: VerOffset, stratOffset: StratOffset): TimeTable
+	colList: ColList, verOffset: VerOffset, stratOffset: StratOffset, rulesKey: string | null): TimeTable
 {
 	var data = histObj.data[ix].times[globIx];
-	return readObjTimeTable(data, starDef, colList, verOffset, stratOffset);
+	return readObjTimeTable(data, starDef, colList, verOffset, stratOffset, rulesKey);
 }
 
 function historyTTFun(histObj: SeasonHistory): StarLoadFun {
-	return function (stageId, starDef, colList, verOffset, stratOffset) {
+	return function (stageId, starDef, colList, verOffset, stratOffset, rulesKey) {
 		for (let i = 0; i < histObj.data.length; i++) {
 			var starGlob = histObj.data[i].star;
 			if (starGlob.special !== null) continue;
@@ -393,7 +393,7 @@ function historyTTFun(histObj: SeasonHistory): StarLoadFun {
 			for (let j = 0; j < starCodeList.length; j++) {
 				var [globStageId, globStarCode] = starCodeList[j];
 				if (stageId === globStageId && starDef.id === globStarCode) {
-					return historyTimeTable(histObj, i, j, starDef, colList, verOffset, stratOffset);
+					return historyTimeTable(histObj, i, j, starDef, colList, verOffset, stratOffset, rulesKey);
 				}
 			}
 		}
@@ -432,6 +432,5 @@ export async function calcHistoryStatData(histObj: SeasonHistory, id: number | n
 	var userMap = calcUserStatMap(starSet, scoreMap, false, newIdent("remote", "Nobody"), false);
 	G_HISTORY.current.starMap = starMap;
 	G_HISTORY.current.userMap = userMap;*/
-
 	callback();
 }

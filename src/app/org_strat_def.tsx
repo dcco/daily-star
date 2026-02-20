@@ -2,7 +2,7 @@
 import { Ver, VerInfo, VarSpace, buildVarList } from './variant_def'
 import { RowDef, newRowDef } from './row_def'
 
-import { allowStratRule } from './org_rules'
+import { allowStratRule, disallowStratRule } from './org_rules'
 
 	/*
 		row_id: [string, int] - a tuple referencing an xcam sheet + row id
@@ -328,6 +328,7 @@ export function filterRulesStratSet(ruleCode: string, vs: StratSet): StratSet {
 	var vsx: StratSet = {};
 	Object.entries(vs).map((strat) => {
 		var [stratName, stratDef] = strat;
+		if (disallowStratRule(ruleCode, stratName)) return;
 		var fDef =
 			allowStratRule(ruleCode, stratName) ? copyStratDef(stratDef) :
 			filterExtStratDef(stratDef);

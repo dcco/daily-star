@@ -85,10 +85,10 @@ export async function initGSheet(callback: () => void)
 	var res = await getReq.json();
 	if (res.response === "Error") {
 		console.log(res.err);
+		console.log("Failed to load xcam data with error.");
 		return;
 	}
 	if (res.res === undefined) {
-		console.log(res);
 		console.log("Failed to load xcam data with unknown issue.");
 		return;
 	}

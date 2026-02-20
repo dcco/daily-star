@@ -5,48 +5,11 @@ import { TimeDat, VerOffset, StratOffset } from '../time_dat'
 import { TimeTable, filterTimeTable, filterTimeTableEx } from '../time_table'
 import { ColList, filterVarColList } from '../org_strat_def'
 import { ExtState, FilterState, StarDef, newFilterState, copyFilterState,
-	orgStarDef, verOffsetStarDef, stratOffsetStarDef, colListStarDef } from '../org_star_def'
+	starCode, orgStarDef, verOffsetStarDef, stratOffsetStarDef, colListStarDef } from '../org_star_def'
 import { RecordMap, xcamRecordMap } from '../xcam_record_map'
 
 import { AltType, StarRef, StarMap, altListStarRef, addStarMap, newStarMapAlt } from '../star_map'
 
-	/*
-		star ref: in general, star time data is attached to a star ref identifying
-			the original star + whether it refers to a specific alternate or not
-		* null - alternate does not exist OR data includes both variants
-		* main/alt - information relates to a specific variant
-	*/
-
-/*export type StarRef = {
-	"stageId": number,
-	"starId": string,
-	"alt": AltState,
-	"100c": boolean
-};*/
-
-/*
-export function statKey(ref: StarRef): string
-{
-	var baseKey = ref.stageId + "_" + ref.starId;
-	var alt = ref.alt;
-	if (alt.state === null || alt.source === "all") return baseKey;
-	if (alt.state === "main") return baseKey + "_main";
-	return baseKey + "_alt";
-}
-
-export function statKeyRaw(stageId: number, starId: string, alt: AltState): string
-{
-	var baseKey = stageId + "_" + starId;
-	if (alt.state === null) return baseKey;
-	if (alt.state === "main") return baseKey + "_main";
-	return baseKey + "_alt";
-}
-
-export function starOnlyKey(ref: StarRef): [string, AltState]
-{
-	var baseKey = ref.stageId + "_" + ref.starId;
-	return [baseKey, ref.alt];
-}*/
 
 	/*
 		stats star data: structured storage for xcam data (stores all times + records for a star)
@@ -64,8 +27,10 @@ function getStxStarData(f: StarLoadFun, stageId: number, starDef: StarDef, colLi
 	// read raw data
 	var verOffset = verOffsetStarDef(starDef, fs);
 	var sOffset = stratOffsetStarDef(starDef, fs);
-	var timeTable = f(stageId, starDef, colList, verOffset, sOffset);
+	var rulesKey = fs.extFlag === "rules" ? starCode(stageId, starDef) : null;
+	var timeTable = f(stageId, starDef, colList, verOffset, sOffset, rulesKey);
 	if (verifFlag) timeTable = filterTimeTableEx(timeTable, (dat) => { return dat.verifFlag === 'yes' || dat.verifFlag === 'maybe' });
+	else timeTable = filterTimeTableEx(timeTable, (dat) => { return dat.verifFlag !== 'no' || dat.link === null })
 	// transform into filtered data
 	var relRM = xcamRecordMap(colList, fs, verOffset, sOffset, 1);
 	// has alts
@@ -148,35 +113,5 @@ export function getStarTimeMap(f: StarLoadFun, starSet: StarDef[], extFlag: ExtS
 			}
 		}
 	}
-	// for every stage + star
-	/*for (let i = 0; i < starSet.length; i++) {
-		var starTotal = starSet[i].length;
-		for (let j = 0; j < starTotal; j++) {
-			// build strat key
-			var [starDef, starId] = starSet[i][j];
-			//var key = i + "_" + starDef.id;
-			// no extension data, combine alt strats when applicable
-			var varTotal = 0;
-			if (starDef.variants) varTotal = starDef.variants.length;
-			var fs = newFilterState([true, true], true, varTotal);
-			if (extFlag !== null) fs.extFlag = extFlag;
-			fs.verState = [true, true];
-			// get un-split time data
-			var colList = colListStarDef(starDef, fs);
-			if (colList.length === 0) continue;
-			var timeData = getStxStarData(f, i, starDef, colList, fs, verifFlag);
-			// add the "all" comparison for regular stars + offset stars
-			if (starDef.alt === null || starDef.alt.status === "offset") addStarMapAlt(starMap, starDef, null, timeData);
-			// for any other alternates, add the variant comparison
-			if (starDef.alt !== null) {
-				var mainData = filterStxStarData(timeData, colList, null);
-				var altData = filterStxStarData(timeData, colList, 1);
-				addStarMapAlt(starMap, starDef, "main", mainData);
-				addStarMapAlt(starMap, starDef, "alt", altData);
-				//if (mainData !== null) starMap[key + "_main"] = mainData;
-				//if (altData !== null) starMap[key + "_alt"] = altData;
-			}
-		}
-	}*/
 	return starMap;
 }

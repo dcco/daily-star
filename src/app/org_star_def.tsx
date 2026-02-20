@@ -177,6 +177,19 @@ export function sampleStratDef(starDef: RawStarDef, stratName: string): RawStrat
 	return stratDef;
 }
 
+export function extOnlyRawStarDef(starDef: RawStarDef): boolean
+{
+	var stratList = Object.entries(starDef.jp_set);
+	stratList = stratList.concat(Object.entries(starDef.us_set));
+	for (const [key, stratDef] of stratList) {
+		if (stratDef.virtual) continue;
+		for (const [sheet, rowId] of stratDef.id_list) {
+			if (sheet !== 'ext') return false;
+		}
+	}
+	return true;
+}
+
 function buildVerInfo(starDef: RawStarDef, stratName: string): VerInfo | null
 {
 	// determine which versions the strat is relevant to
@@ -228,6 +241,9 @@ function buildVarSpace(starDef: RawStarDef, stratName: string): VarSpace
 
 	/*
 		star_def: definition of a star with version/variant information processed into the strat sets
+		  * offset: jp/us offset (when relevant)
+		  * offsetNeed: whether the strat (or the secondary strat) is relevant
+		  * secondFlag: has a secondary strat
 		  * jp_set/us_set: mapping of strat names to (not raw) strat defs
 		  * open: list of columns that make up the open column
 		  		(if the open column should exist we will add it as a virtual strat)
@@ -235,6 +251,7 @@ function buildVarSpace(starDef: RawStarDef, stratName: string): VarSpace
 
 export type StarDef = StarDesc & {
 	"offset": OffsetDat,
+	"offsetNeed": boolean[],
 	"secondFlag": boolean,
 	"jp_set": StratSet,
 	"us_set": StratSet,
@@ -297,6 +314,7 @@ function addOpenStrat(stageId: number, starDef: RawStarDef, jp_set: StratSet, us
 function buildStarDef(stageId: number, starDef: RawStarDef): StarDef
 {
 	var secondFlag = false;
+	var offNeed = [false, false];
 
 	// process jp/us strat definitions
 	var jp_set: StratSet = {};
@@ -305,6 +323,7 @@ function buildStarDef(stageId: number, starDef: RawStarDef): StarDef
 		if (stratDef.diff === 'second') secondFlag = true;
 		var vs = buildVarSpace(starDef, stratName);
 		var ver: Ver = (vs.verInfo === null) ? "both" : "jp";
+		if (ver !== "both") offNeed[stratDef.diff === 'second' ? 1 : 0] = true;
 		jp_set[stratName] = buildStratDef(stratDef, "beg", ver, vs);
 	});
 
@@ -314,6 +333,7 @@ function buildStarDef(stageId: number, starDef: RawStarDef): StarDef
 		if (stratDef.diff === 'second') secondFlag = true;
 		var vs = buildVarSpace(starDef, stratName);
 		var ver: Ver = (vs.verInfo === null) ? "both" : "us";
+		if (ver !== "both") offNeed[stratDef.diff === 'second' ? 1 : 0] = true;
 		us_set[stratName] = buildStratDef(stratDef, "beg", ver, vs);
 	});
 
@@ -337,6 +357,7 @@ function buildStarDef(stageId: number, starDef: RawStarDef): StarDef
 		"100c": starDef["100c"],
 		"def": starDef.def,
 		"offset": buildOffsetDat(starDef.offset),
+		"offsetNeed": offNeed,
 		"secondFlag": secondFlag,
 		"variants": starDef.variants,
 		"jp_set": jp_set,
@@ -356,6 +377,7 @@ export function verOffsetStarDef(starDef: StarDef, fs: FilterState): VerOffset
 		if (verState[0]) focusVer = "jp";
 		else if (verState[1]) focusVer = "us";
 	}
+	// 
 	// build version offset
 	/*var offset = starDef.offset;
 	var complexOff = (offset !== null && typeof offset !== "number");*/
@@ -372,7 +394,15 @@ export function stratOffsetStarDef(starDef: StarDef, fs: FilterState): StratOffs
 	// merge offsets require a name
 	var name = "Raw";
 	if (starDef.alt.status === "mergeOffset") name = starDef.alt.info.option;
-	return newStratOffset(name, rawName, starDef.alt.status, offset);
+	var stratOffset = newStratOffset(name, rawName, starDef.alt.status, offset);
+	// if secondary strat is JP/US sensitive + main isn't + focus version is disabled, attach a version offset
+	if (!starDef.offsetNeed[0] && starDef.offsetNeed[1]) {
+		var verState = fs.verState;
+		var focusVer = mainVerStarDef(starDef);
+		if (focusVer === "jp" && !verState[0]) stratOffset.verOffset = ["jp", starDef.offset];
+		else if (focusVer === "us" && !verState[1]) stratOffset.verOffset = ["us", starDef.offset];
+	}
+	return stratOffset;
 }
 
 export function varSpaceStarDef(starDef: StarDef, stratName: string): VarSpace | null

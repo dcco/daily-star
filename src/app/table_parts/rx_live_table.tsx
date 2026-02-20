@@ -5,12 +5,12 @@ import { TimeDat } from '../time_dat'
 import { liftIdent } from '../time_table'
 import { StratDef, filterVarColList, toSetColList } from '../org_strat_def'
 import { StarDef, FilterState, fullFilterState, copyFilterState,
-	orgStarDef, verOffsetStarDef, stratOffsetStarDef, colListStarDef } from '../org_star_def'
+	starCode, orgStarDef, verOffsetStarDef, stratOffsetStarDef, colListStarDef } from '../org_star_def'
 import { AuthIdent, Ident, TimeTable, newIdent, dropIdent,
 	updateTimeTable, delTimeTable } from '../time_table'
 import { PlayData } from '../play_data'
 import { newColConfig, primaryColConfig } from '../col_config'
-import { xcamRecordMap, sortColList } from '../xcam_record_map'
+import { xcamRecordMap, xcamRecordMapRules, xcamIdealMapRules, sortColList } from '../xcam_record_map'
 
 import { newEditObj, userEditPerm } from './edit_perm'
 import { ExColumn } from './ex_column'
@@ -74,7 +74,8 @@ export function LiveStarTable(props: LiveStarTableProps): React.ReactNode
 	var colList = colListStarDef(starDef, ns);
 	var fullColList = colListStarDef(starDef, fullFilterState([true, true], varTotal));
 
-	// rank key
+	// rules / rank key
+	const rulesKey = starCode(stageId, starDef);
 	var rankKey: string | undefined = undefined;
 	if (props.showStd) rankKey = stageId + "_" + starDef.id;
 
@@ -82,7 +83,7 @@ export function LiveStarTable(props: LiveStarTableProps): React.ReactNode
 	const [readObj, setReadObj] = useState([] as ReadTimeObj);
 
 	// time table
-	const timeTable = readObjTimeTable(readObj, starDef, colList, verOffset, sOffset);
+	const timeTable = readObjTimeTable(readObj, starDef, colList, verOffset, sOffset, fs.extFlag === "rules" ? rulesKey : null);
 	const [firstInit, setFirstInit] = useState(true);
 	const [reload, setReload] = useState(1);
 
@@ -97,7 +98,7 @@ export function LiveStarTable(props: LiveStarTableProps): React.ReactNode
 				var readObj = await props.api.loadTimes(stageId, starDef, props.today);
 				setReadObj(readObj)
 				// update the player count
-				var newTable = readObjTimeTable(readObj, starDef, fullColList, verOffset, sOffset);
+				var newTable = readObjTimeTable(readObj, starDef, fullColList, verOffset, sOffset, fs.extFlag === "rules" ? rulesKey : null);
 				if (props.updatePlayCount !== undefined) props.updatePlayCount(newTable.map((table) => table.id));
 				// reloads the player data (if the previous table wasnt empty) since submitting a time
 				// may have created a new user
@@ -141,7 +142,8 @@ export function LiveStarTable(props: LiveStarTableProps): React.ReactNode
 
 	// add sort record + relevant records
 	var sortRM = xcamRecordMap(colList, fullFilterState([true, true], varTotal), verOffset, sOffset);
-	var relRM = xcamRecordMap(colList, fs, verOffset, sOffset);
+	var relRM = xcamRecordMapRules(colList, fs, verOffset, sOffset, rulesKey);
+	var idealRM = xcamIdealMapRules(colList, fs, verOffset, sOffset, rulesKey);
 	sortColList(colList, sortRM);
 
 	// create star table
@@ -152,9 +154,9 @@ export function LiveStarTable(props: LiveStarTableProps): React.ReactNode
 	var filterCFG = newColConfig(filterColList);
 	primaryColConfig(filterCFG, starDef, fs);
 	
-	var editObj = newEditObj(userEditPerm(userId, props.playData.local.perm), starDef, editTT);
+	var editObj = newEditObj(userEditPerm(userId, props.playData.local.perm), starDef, editTT, fs.extFlag === "rules" ? rulesKey : null);
 
 	return(<StarTable cfg={ filterCFG } playData={ playData } timeTable={ timeTable } verOffset={ verOffset }
-		recordMap={ relRM } showRowId={ props.showRowId } rankKey={ rankKey } editObj={ editObj } playDB={ props.playDB }
+		recordMap={ relRM } idealMap={ idealRM } showRowId={ props.showRowId } rankKey={ rankKey } editObj={ editObj } playDB={ props.playDB }
 		extraColList={ props.extraColList } key={ lastTime }></StarTable>);
 }

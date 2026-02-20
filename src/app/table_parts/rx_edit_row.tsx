@@ -205,7 +205,7 @@ function lookupEditDraftDS(cfg: ColConfig, starDef: StarDef, timeRow: TimeRow,
 
 type ValidMap = SGrid<ValidDat>;
 
-export function validateDS(starDef: StarDef, timeRow: TimeRow, ds: DraftState): [ValidMap, ValidStyle, string | null] {
+export function validateDS(starDef: StarDef, timeRow: TimeRow, ds: DraftState, rulesKey: string | null): [ValidMap, ValidStyle, string | null] {
 	// empty check
 	var validMap: ValidMap = {};
 	var ds = cleanupDS(timeRow, ds);
@@ -214,7 +214,7 @@ export function validateDS(starDef: StarDef, timeRow: TimeRow, ds: DraftState): 
 	for (const [k, _draftDat] of Object.entries(ds.grid)) {
 		var [draftDat, i, j] = _draftDat;
 		var oldDat = lookupTimeRow(timeRow, i, j);
-		var vDat = newValidDat(starDef, timeRow, oldDat, draftDat);
+		var vDat = newValidDat(starDef, timeRow, oldDat, draftDat, rulesKey);
 		setGrid(validMap, i, j, vDat);
 		/*if (!validTime(_draftDat[0].text)) {
 			return ["error", "Must fix invalid times."];
@@ -237,6 +237,9 @@ export function validateDS(starDef: StarDef, timeRow: TimeRow, ds: DraftState): 
 			if (prop === "improper") return [validMap, "error",
 				"Some submissions have times in other cells w/ the same strat variation w/out time improvement."];
 		}
+	}
+	for (const [k, vDat] of Object.entries(validMap)) {
+		if (vDat.vBan) return [validMap, "warning", "Some submissions include extensions only strat + variant combinations."];
 	}
 	if (warnFlag) return [validMap, "warning", "Some submissions have times in other cells w/ the same strat variation."];
 	for (const [k, vDat] of Object.entries(validMap)) {
@@ -269,7 +272,7 @@ export function convertDS(timeRow: TimeRow, ds: DraftState, verOffset: VerOffset
 			// it's just a big headache if we allow verif change + new submission at the same time
 			continue;
 		// edit case
-		} else if (oldDat !== null && oldDat.time === timeDat.time) delList.push(oldDat);
+		} else if (oldDat !== null && oldDat.rawTime === timeDat.rawTime) delList.push(oldDat);
 		// submit case
 		timeList.push(timeDat);
 	}
@@ -339,7 +342,7 @@ export function EditRow(props: EditRowProps): React.ReactNode {
 	if (vs === null) throw('Attempting to work on non-existent strat ' + stratNameDraftDat(draftDat) + '.');
 	
 	// validation
-	var [validMap, style, infoText] = validateDS(starDef, timeRow, ds);
+	var [validMap, style, infoText] = validateDS(starDef, timeRow, ds, editObj.rulesKey);
 
 	// generate edit cells
 	var editNodes: React.ReactNode[] = [];
@@ -411,7 +414,8 @@ export function EditRow(props: EditRowProps): React.ReactNode {
 						props.submit(userDat.id, timeList, delList, verifList);
 					} }
 					cancel={ () => cellClick("stop-edit", null, 0, 0) } delToggle={ delToggle }
-					modFlag={ pd.local.perm === 'admin' || pd.local.perm === 'mod' } style={ style } infoText={ infoText }/>
+					modFlag={ pd.local.perm === 'admin' || pd.local.perm === 'mod' } style={ style }
+					infoText={ infoText } rulesKey={ editObj.rulesKey }/>
 			</td>
 		</tr>
 	</React.Fragment>;

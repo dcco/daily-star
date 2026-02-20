@@ -6,17 +6,19 @@ import Link from 'next/link'
 
 import { G_SHEET } from '../api_xcam'
 
-import { RawStarDef, orgStarDef } from '../org_star_def'
+import { VerOffset, StratOffset } from '../time_dat'
+import { ColList } from '../org_strat_def'
+import { RawStarDef, orgStarDef, extOnlyRawStarDef } from '../org_star_def'
 import { xcamTimeTable } from '../xcam_time_table'
 import { PlayDB } from '../table_parts/rx_star_row'
 import { ViewBoard } from '../board_simple/rx_view_board'
 import { procStarSlug, makeStarSlug } from '../router_slug'
-import { RouterMain, navRM } from '../router_main'
+import { RouterMain, readSlug, navRM } from '../router_main'
 
 type XcamBoardProps = {
 	rm: RouterMain,
 	showStd: boolean,
-	// TO DELETE
+	// TO DO: DELETE
 	beta: boolean,
 	hrefBase: [string, string, string]
 }
@@ -24,7 +26,8 @@ type XcamBoardProps = {
 export function XcamBoard(props: XcamBoardProps): React.ReactNode {
 	// process slug when relevant
 	const slug = props.rm.core.slug;
-	const [defStage, _starSlug, defStar] = procStarSlug(slug);
+	const rawStarSlug = readSlug(slug, "star");
+	const [defStage, _starSlug, defStar] = procStarSlug(rawStarSlug === null ? "" : rawStarSlug);
 	var defCache = Array(orgData.length).fill(0);
 	defCache[defStage] = defStar;
 	
@@ -48,19 +51,20 @@ export function XcamBoard(props: XcamBoardProps): React.ReactNode {
 		var newStage = parseInt(e.target.value);
 		var newStar = orgData[stageId].starList[0].id;
 		setStageId(newStage);
-		navRM(props.rm, baseDir, subDir, makeStarSlug(newStage, newStar));
+		navRM(props.rm, baseDir, subDir, { "star": makeStarSlug(newStage, newStar) });
 	};
 
 	const changeStar = (i: number) => {
 		starIdCache[stageId] = i;
 		setStarIdCache(starIdCache.map((x) => x));
 		var newStar = orgData[stageId].starList[i].id;
-		navRM(props.rm, baseDir, subDir, makeStarSlug(stageId, newStar));
+		navRM(props.rm, baseDir, subDir, { "star": makeStarSlug(stageId, newStar) });
 	};
 
 	// if route changes, re-render board
 	useEffect(() => {
-		const [newStage, _, newStar] = procStarSlug(slug);
+		const newStarSlug = readSlug(slug, "star");
+		const [newStage, _, newStar] = procStarSlug(newStarSlug === null ? "" : newStarSlug);
 		if (stageId !== newStage || starIdCache[newStar] !== newStar) {
 			starIdCache[newStage] = newStar;
 			setStageId(newStage);
@@ -85,10 +89,9 @@ export function XcamBoard(props: XcamBoardProps): React.ReactNode {
 	// star select nodes
 	var starBtnNodes = starList.map(([star, i]) => {
 		var flag = (starIdCache[stageId] === i) ? "true" : "false";
-		//var starId = starList[i].id;
-		//var url = "/xcam?star=" + makeStarSlug(stageId, starId);
-		// <Link className="link-span" href={ "/xcam?star=" + makeStarSlug(stageId, starId) }></Link>
-		return <div key={ star.name } className="star-name link-cont" data-sel={ flag }
+		var cName = "star-name link-cont";
+		if (extOnlyRawStarDef(star)) cName = cName + " ext-only";
+		return <div key={ star.name } className={ cName } data-sel={ flag }
 			onClick={ () => { changeStar(i) } }>{ star.name }</div>;
 	});
 
@@ -115,6 +118,10 @@ export function XcamBoard(props: XcamBoardProps): React.ReactNode {
 			{ starBtnNodes }
 		</div>);
 
-	return <ViewBoard kind="view" stageId={ stageId } starDef={ starDef } ttFun={ xcamTimeTable } emptyWarn={ true }
+	const ttFun = (colList: ColList, verOffset: VerOffset, sOffset: StratOffset, rulesKey: string | null) => {
+		return xcamTimeTable(colList, verOffset, sOffset);
+	};
+
+	return <ViewBoard kind="view" stageId={ stageId } starDef={ starDef } ttFun={ ttFun } emptyWarn={ true }
 		cornerNode={ stageSelNode } headerNode={ starSelNode } showStd={ props.showStd } playDB={ playDB }/>;
 }

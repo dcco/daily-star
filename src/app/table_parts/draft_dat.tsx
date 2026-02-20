@@ -67,7 +67,7 @@ export function toTimeDat(draftDat: DraftDat, verOffset: VerOffset): TimeDat | n
 	var time = rawMS(draftDat.text);
 	if (draftDat.text === "" || time === null) return null;
 	var rowDef = toRowDef(draftDat.rowInfo);
-	var timeDat = newTimeDat(time, draftDat.link, draftDat.note, draftDat.verifFlag, rowDef);
+	var timeDat = newTimeDat(time, draftDat.link, draftDat.note, null, draftDat.verifFlag, rowDef);
 	applyVerOffset(timeDat, verOffset);
 	return timeDat;
 }

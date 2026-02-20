@@ -5,7 +5,7 @@ import { G_HISTORY, getMonthStars, getWeekStars, getLastDay,
 	dateAndOffset, dispDate, findSeason, noVerifSeason } from '../api_history'
 
 import { PlayData } from '../play_data'
-import { RouterMain, navRM } from '../router_main'
+import { RouterMain, Slug, navRM, readSlug } from '../router_main'
 import { ScoreCache } from './score_cache'
 import { UserStatMap, FilterCodeList } from './stats_user_map'
 import { DSStatBoard } from './rx_ds_stat_board'
@@ -38,20 +38,15 @@ export function ScoreBoard(props: ScoreBoardProps): React.ReactNode
 
 	// slug interpretation (ignores season, because season is parsed earlier already)
 	const rawSlug = props.rm.core.slug;
-	var idSlug: string | null = null;
-	if (rawSlug !== undefined && rawSlug !== "") {
-		const sll = rawSlug.split(";");
-		if (sll[0] !== "null") idSlug = sll[0];
-	}
-
-	// reconstruction of slug (for links)
-	var defClickSlug = "";
-	if (props.seasonId !== null) {
-		if (idSlug === null) defClickSlug = "null;" + props.seasonId;
-		else defClickSlug = idSlug + ";" + props.seasonId;
-	}
-	else if (idSlug !== null) defClickSlug = idSlug;
-	else defClickSlug = "";
+	const idSlug = readSlug(rawSlug, "id");
+	// - month / week selection slug
+	const monthSlug = readSlug(rawSlug, "month");
+	const weekSlug = readSlug(rawSlug, "week");
+	var initSelId: number | null = null;
+	if (monthSlug !== null && /^\d+$/.test(monthSlug)) initSelId = parseInt(monthSlug) - 1;
+	else if (weekSlug !== null && /^\d+$/.test(weekSlug)) initSelId = parseInt(weekSlug) - 1;
+	const hasMonth = monthSlug !== null;
+	const hasWeek = weekSlug !== null;
 
 	// timespan (all, monthly, weekly) menu
 	const menuId = props.rm.core.subId;
@@ -60,10 +55,20 @@ export function ScoreBoard(props: ScoreBoardProps): React.ReactNode
 	if (menuId === 10) { selId = 1; hrefMain = "/home/scores/monthly"; }
 	else if (menuId === 11) { selId = 2; hrefMain = "/home/scores/weekly"; }
 
+	var copySlug: Slug = {};
+	if (rawSlug["season"]) copySlug["season"] = rawSlug["season"];
+	else if (rawSlug["id"]) copySlug["id"] = rawSlug["id"];
+
+	const setSeasonFun = (i: number | null) => {
+		setMonthId(0);
+		setWeekId(0);
+		props.setSeasonId(i);
+	}
+
 	const updateMenuId = (i: number) => {
-		if (i === 1) navRM(props.rm, "home", "scores/monthly", defClickSlug);
-		else if (i === 2) navRM(props.rm, "home", "scores/weekly", defClickSlug);
-		else navRM(props.rm, "home", "scores", defClickSlug);
+		if (i === 1) navRM(props.rm, "home", "scores/monthly", copySlug);
+		else if (i === 2) navRM(props.rm, "home", "scores/weekly", copySlug);
+		else navRM(props.rm, "home", "scores", copySlug);
 	};
 
 	// per-month / per-week state
@@ -71,17 +76,33 @@ export function ScoreBoard(props: ScoreBoardProps): React.ReactNode
 	const weekTotal = Math.ceil(dayTotal / 7);
 	const monthTotal = Math.ceil(dayTotal / 28);
 
-	const [monthId, setMonthId] = useState(props.seasonId === null ? monthTotal - 1 : 0);
-	const [weekId, setWeekId] = useState(props.seasonId === null ? weekTotal - 1 : 0);
+	const [monthId, setMonthId] = useState(
+		hasMonth && initSelId !== null ? initSelId : (props.seasonId === null ? monthTotal - 1 : 0));
+	const [weekId, setWeekId] = useState(
+		hasWeek && initSelId !== null ? initSelId : (props.seasonId === null ? weekTotal - 1 : 0));
 
 	const decFun = function() {
-		if (selId === 1 && monthId > 0) setMonthId(monthId - 1);
-		else if (selId === 2 && weekId > 0) setWeekId(weekId - 1);
+		if (selId === 1 && monthId > 0) {
+			setMonthId(monthId - 1);
+			copySlug["month"] = "" + monthId;
+			navRM(props.rm, "home", "scores/monthly", copySlug);
+		} else if (selId === 2 && weekId > 0) {
+			setWeekId(weekId - 1);
+			copySlug["week"] = "" + weekId;
+			navRM(props.rm, "home", "scores/weekly", copySlug);
+		}
 	};
 
 	const incFun = function() {
-		if (selId === 1 && monthId < monthTotal - 1) setMonthId(monthId + 1);
-		else if (selId === 2 && weekId < weekTotal - 1) setWeekId(weekId + 1);
+		if (selId === 1 && monthId < monthTotal - 1) {
+			setMonthId(monthId + 1);
+			copySlug["month"] = "" + (monthId + 2);
+			navRM(props.rm, "home", "scores/monthly", copySlug);
+		} else if (selId === 2 && weekId < weekTotal - 1) {
+			setWeekId(weekId + 1);
+			copySlug["week"] = "" + (weekId + 2);
+			navRM(props.rm, "home", "scores/weekly", copySlug);
+		}
 	};
 
 	// store flag toggles out here
@@ -127,12 +148,14 @@ export function ScoreBoard(props: ScoreBoardProps): React.ReactNode
 		var startNum = 0;
 		var endNum = dayTotal;
 		if (selId === 1) {
-			endNum = 28;
+			startNum = monthId * 28;
+			endNum = startNum + 28;
 		} else if (selId === 2) {
-			endNum = 7;
+			startNum = weekId * 7;
+			endNum = startNum + 7;
 		}
 		// day display
-		var startDate = dispDate(dateAndOffset(startText, 0));
+		var startDate = dispDate(dateAndOffset(startText, startNum));
 		var endDate = dispDate(dateAndOffset(startText, endNum));
 		var dayText = startDate + " - " + endDate;
 		var dayWidth = "105px";
@@ -171,6 +194,13 @@ export function ScoreBoard(props: ScoreBoardProps): React.ReactNode
 
 	var hrefEx: string | undefined = undefined;
 	if (props.seasonId !== null) hrefEx = "season=" + props.seasonId;
+	if (selId === 1) {
+		var mx = "month=" + (monthId + 1);
+		if (hrefEx === undefined) { hrefEx = mx; } else { hrefEx = hrefEx + "&" + mx; }
+	} else if (selId === 2) {
+		var wx = "week=" + (weekId + 1);
+		if (hrefEx === undefined) { hrefEx = wx; } else { hrefEx = hrefEx + "&" + wx; }
+	}
 
 	var board = <DSStatBoard key={ selId } hrefBase={ [hrefMain, "/home/history"] } hrefEx={ hrefEx } idSlug={ idSlug }
 			aboutNode={ "" } num={ defNum } num100={ num100 } pd={ playData } starFilter={ filterList }
@@ -180,7 +210,7 @@ export function ScoreBoard(props: ScoreBoardProps): React.ReactNode
 	return <div>
 		<div className="row-wrap">
 			{ scoreSelNode }
-			<SeasonSel seasonId={ props.seasonId } setSeasonId={ props.setSeasonId }/>
+			<SeasonSel seasonId={ props.seasonId } setSeasonId={ setSeasonFun }/>
 		</div>
 		{ startNode }
 		{ board }

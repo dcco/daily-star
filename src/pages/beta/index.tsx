@@ -4,10 +4,10 @@ import { MultiBoard } from '../../app/rx_multi_board'
 
 export default function() {
 	const router = useRouter();
-	var slug: string = "";
-	if (typeof router.query.star === "string") slug = router.query.star;
+	var slug: { [key: string]: string } = {};
+	if (typeof router.query.star === "string") slug["star"] = router.query.star;
 	return (<main>
 		<div className="header">Daily Star</div>
-		<MultiBoard boardId={ 4 } subId={ 0 } slug={ slug } key={ slug }/>
+		<MultiBoard boardId={ 4 } subId={ 0 } slug={ slug } key={ slug["star"] }/>
 	</main>);
 }

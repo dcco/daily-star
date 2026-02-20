@@ -6,6 +6,9 @@ import { DraftDat, toTimeDat, stratNameDraftDat, vtagDraftDat, isCompleteDraftDa
 import { TimeRow } from '../time_table'
 import { timeDetail } from './rx_star_cell'
 
+import { banStratRule } from '../org_rules'
+import { makeBanMap } from '../xcam_record_map'
+
 	/*
 		validation data: unit of data defining validation state of cell.
 			saved as an object so we only need to calculate it once.
@@ -14,6 +17,7 @@ import { timeDetail } from './rx_star_cell'
 		  * complete - all variants have been filled out 
 		  * dirty - time is non-empty + not the same as the old time
 		  * proper - time is new or an improvement
+		  * vBan - strat variant combination is banned
 	*/
 
 type ProperState = "na" | "improper" | "new" | "fix";
@@ -23,7 +27,8 @@ export type ValidDat = {
 	"dirty": boolean,
 	"complete": boolean,
 	"proper": ProperState,
-	"properAll": [TimeDat, ProperState][]
+	"properAll": [TimeDat, ProperState][],
+	"vBan": boolean
 };
 
 export function validTime(s: string): boolean {
@@ -49,6 +54,26 @@ function completeDat(starDef: StarDef, draftDat: DraftDat, dirty: boolean): bool
 	var vs = varSpaceStarDef(starDef, stratNameDraftDat(draftDat));
 	if (vs === null) return false;
 	return isCompleteDraftDat(vs, draftDat);
+}
+
+function vbanDat(starDef: StarDef, draftDat: DraftDat, rulesKey: string | null): boolean {
+	const rowInfo = draftDat.rowInfo;
+	if (!rowInfo.dyn) return false;
+	// get banned variants if relevant
+	if (rulesKey === null) return false;
+	var bm = makeBanMap(banStratRule(rulesKey));
+	// find list of banned variants
+	if (bm[rowInfo.name] === undefined) return false;
+	const banList = bm[rowInfo.name];
+	if (banList.length === 0) return false;
+	// check if banned variant is select
+	for (const entry of Object.entries(rowInfo.variantSel)) {
+		const [_key, [vId, _group]] = entry;
+		if (vId === -1 || starDef.variants === undefined) continue;
+		const vName = starDef.variants[vId];
+		if (banList.includes(vName)) return true;
+	}
+	return false;
 }
 
 function properDat(oldDat: TimeDat | null, draftDat: DraftDat, valid: boolean, dirty: boolean, strict: boolean): ProperState {
@@ -85,7 +110,8 @@ export function nullValidDat(): ValidDat {
 		"dirty": false,
 		"complete": true,
 		"proper": "na",
-		"properAll": []
+		"properAll": [],
+		"vBan": false
 	};
 }
 
@@ -95,11 +121,12 @@ function delValidDat(): ValidDat {
 		"dirty": true,
 		"complete": true,
 		"proper": "na",
-		"properAll": []
+		"properAll": [],
+		"vBan": false
 	};
 }
 
-export function newValidDat(starDef: StarDef, timeRow: TimeRow, oldDat: TimeDat | null, draftDat: DraftDat): ValidDat {
+export function newValidDat(starDef: StarDef, timeRow: TimeRow, oldDat: TimeDat | null, draftDat: DraftDat, rulesKey: string | null): ValidDat {
 	if (draftDat.delFlag !== null) return delValidDat();
 	var valid = validTime(draftDat.text);
 	var dirty = dirtyDat(oldDat, draftDat);
@@ -111,7 +138,8 @@ export function newValidDat(starDef: StarDef, timeRow: TimeRow, oldDat: TimeDat 
 		"dirty": dirty,
 		"complete": complete,
 		"proper": properDat(oldDat, draftDat, valid, dirty, false),
-		"properAll": propList
+		"properAll": propList,
+		"vBan": vbanDat(starDef, draftDat, rulesKey)
 	};
 }
 
@@ -206,7 +234,7 @@ export function EditCell(props: EditCellProps): React.ReactNode {
 	//var complete = completeCell(starDef, draftDat, props.dirty);
 	var fErr = "na";
 	if (!validDat.complete || improperValidDat(validDat)) fErr = "error";
-	else if (validDat.properAll.length > 0 || validDat.proper === "fix") fErr = "warning";
+	else if (validDat.properAll.length > 0 || validDat.proper === "fix" || validDat.vBan) fErr = "warning";
 
 	return (<td className="edit-cell" colSpan={ 2 } onClick={ props.onClick }>
 		<div className="cell-wrap" data-use={ cellText !== "" } data-del={ delFlag.toString() }
@@ -242,7 +270,7 @@ export function InputCell(props: InputCellProps): React.ReactNode {
 	// misc error behavior
 	var fErr = "na";
 	if (!validDat.complete || improperValidDat(validDat)) fErr = "error";
-	else if (validDat.properAll.length > 0 || validDat.proper === "fix") fErr = "warning";
+	else if (validDat.properAll.length > 0 || validDat.proper === "fix" || validDat.vBan) fErr = "warning";
 
 	return (<td className="edit-cell" colSpan={ 2 } onClick={ () => {} }>
 		<div className="cell-wrap">

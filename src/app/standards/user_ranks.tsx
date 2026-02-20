@@ -42,19 +42,20 @@ function addStarUserRankMap(starRef: StarRef<AltType>, starData: StxStarData,
 			if (multiDat === null) continue;
 			for (const timeDat of multiDat) {
 				var rank = getRank(G_SHEET.srMap, starCodeW(starRef.starDef), timeDat);
-				if (curRank === null || betterRank(rank, curRank)) curRank = rank;
+				if (curRank === null) curRank = rank;
+				else curRank = betterRank(rank, curRank);
 			}
 		}
 		if (curRank === null) curRank = "Unranked";
 		addStarMap(userRankMap, starRef, curRank);
 	}
 }
-
+/*
 function takeBetterRank(r1: string, r2: string): string
 {
 	if (betterRank(r1, r2)) return r1;
 	return r2;
-}
+}*/
 
 export function calcUserRankMap(starMap: StxStarMap, virtFlag: boolean, extFlag: ExtState): UserRankMap
 {
@@ -71,7 +72,7 @@ export function calcUserRankMap(starMap: StxStarMap, virtFlag: boolean, extFlag:
 			const starDef = starRef.starDef;
 			const simpleCode = starDef.stageId + "_" + starDef.id;
 			if (starCache[simpleCode] === undefined && canCombStarRef(starDef)) {
-				tryCombStarMap(userRankMap, starDef, takeBetterRank, null);
+				tryCombStarMap(userRankMap, starDef, betterRank, null);
 				starCache[simpleCode] = 0;
 			}
 		}

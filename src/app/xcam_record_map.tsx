@@ -7,6 +7,41 @@ import { TimeDat, VerOffset, StratOffset, rawMS,
 import { zeroRowDef, begRowDef } from './row_def'
 import { StratDef, ColList, readRefMap } from './org_strat_def'
 import { FilterState } from './org_star_def'
+import { banStratRule } from './org_rules'
+
+	/*
+		ban functionality (also used in api_live + rx_edit_cell + rx_edit_submit_area)
+	*/
+
+export type BanMap = {
+	[key: string]: string[]
+	//[key: string]: [string, string][]
+}
+
+export function makeBanMap(banList: string[][]): BanMap
+{
+	var bm: BanMap = {};
+	for (const banData of banList)
+	{
+		if (bm[banData[0]] === undefined) bm[banData[0]] = [];
+		bm[banData[0]].push(banData[1]);
+	}
+	return bm;
+}
+
+export function checkBanMap(bm: BanMap, sDef: StratDef, timeDat: TimeDat): boolean
+{
+	if (bm[sDef.name] === undefined) return false;
+	var banList = bm[sDef.name];
+	if (banList.length === 0) return false;
+	for (const variant of timeDat.rowDef.variant_list)
+	{
+		var [vId, _] = variant;
+		var vName = sDef.vs.variants[vId];
+		if (banList.includes(vName)) return true;
+	}
+	return false;
+}
 
 	/*
 		record_map: a mapping of strat names to time_dats
@@ -16,21 +51,7 @@ export type RecordMap = {
 	[key: string]: TimeDat;
 }
 
-type BanMap = {
-	[key: string]: [string, string][]
-}
-
-function makeBanMap(banList: string[][]): BanMap
-{
-	var bm: BanMap = {};
-	for (const banData of banList)
-	{
-		if (bm[banData[1]] === undefined) bm[banData[1]] = [];
-		bm[banData[1]].push([banData[0], banData[2]]);
-	}
-	return bm;
-}
-
+/*
 function checkBanMap(bm: BanMap, sDef: StratDef, timeDat: TimeDat): string | null
 {
 	if (bm[sDef.name] === undefined) return null;
@@ -48,13 +69,14 @@ function checkBanMap(bm: BanMap, sDef: StratDef, timeDat: TimeDat): string | nul
 		}
 	}
 	return null;
-}
+}*/
 
-export function xcamRecordMapBan(colList: ColList, fs: FilterState,
-	verOffset: VerOffset, stratOffset: StratOffset, banList: string[][], forceAdjust?: number): RecordMap
+function xcamBestMapRules(cellFun: (cell: any) => number | null, linkFun: (cell: any) => any, virtFun: (cell: any) => number | null,
+	colList: ColList, fs: FilterState, verOffset: VerOffset, stratOffset: StratOffset, rulesKey: string | null, forceAdjust?: number): RecordMap
 {
 	var rowData = G_SHEET.rowData;
-	var bm = makeBanMap(banList);
+	var bm = makeBanMap(rulesKey !== null && fs.extFlag === "rules" ? banStratRule(rulesKey) : []);
+	//var bm = makeBanMap(banList);
 	// build record map
 	var recordMap: RecordMap = {};
 	var allRecord = maxTimeDat(zeroRowDef("Open"));
@@ -68,19 +90,20 @@ export function xcamRecordMapBan(colList: ColList, fs: FilterState,
 				var [xs, xcamId] = xcamRef;
 				var cellDat = rowData[xs][xcamId];
 				if (cellDat === undefined) continue;
-				var rawTime = rawMS(cellDat.record);
+				var rawTime = cellFun(cellDat);
 				if (rawTime === null) continue;
 				// apply version offset
-				var timeDat = newTimeDat(rawTime, cellDat.link, cellDat.note, null,
+				var timeDat = newTimeDat(rawTime, linkFun(cellDat), cellDat.note, null, null,
 					readRefMap(stratDef.row_map, xcamRef, "rm:" + stratDef.name));
 				applyVerOffset(timeDat, verOffset);
 				applyStratOffset(timeDat, secondFlag, stratOffset, forceAdjust);
-				var altName = checkBanMap(bm, stratDef, timeDat);
+				if (timeDat.time < record.time && !checkBanMap(bm, stratDef, timeDat)) record = timeDat;
+				/*var altName = checkBanMap(bm, stratDef, timeDat);
 				if (altName === null && timeDat.time < record.time) record = timeDat;
 				else if (altName !== null) {
 					var banRecord = recordMap[altName];
 					if (banRecord === undefined || timeDat.time < banRecord.time) recordMap[altName] = timeDat;
-				}
+				}*/
 				if (timeDat.time < allRecord.time && !secondFlag) allRecord = timeDat;
 				if (timeDat.time < allRecordAlt.time && secondFlag) allRecordAlt = timeDat;
 			}
@@ -89,9 +112,9 @@ export function xcamRecordMapBan(colList: ColList, fs: FilterState,
 			if (rowData.beg[stratDef.virtId.id] === undefined) {
 				throw ("No beginner strat found for " + stratDef.virtId.id);
 			}
-			var rawTime = rawMS(rowData.beg[stratDef.virtId.id][0]);
+			var rawTime = virtFun(rowData.beg[stratDef.virtId.id]);
 			if (rawTime === null) throw ("Bad beginner time listed for " + stratDef.name);
-			var timeDat = newTimeDat(rawTime, null, null, null, begRowDef(stratDef.name));
+			var timeDat = newTimeDat(rawTime, null, null, null, null, begRowDef(stratDef.name));
 			applyVerOffset(timeDat, verOffset);
 			applyStratOffset(timeDat, secondFlag, stratOffset, forceAdjust);
 			if (timeDat.time < record.time) record = timeDat;
@@ -105,10 +128,35 @@ export function xcamRecordMapBan(colList: ColList, fs: FilterState,
 	return recordMap;
 }
 
+export function xcamRecordMapRules(colList: ColList, fs: FilterState,
+	verOffset: VerOffset, stratOffset: StratOffset, rulesKey: string | null, forceAdjust?: number): RecordMap
+{
+	return xcamBestMapRules(
+		(cellDat) => cellDat.record === "" ? null : rawMS(cellDat.record),
+		(cellDat) => cellDat.link,
+		(virtDat) => virtDat[0] === "" ? null : rawMS(virtDat[0]),
+		colList, fs, verOffset, stratOffset, rulesKey, forceAdjust);
+}
+
 export function xcamRecordMap(colList: ColList, fs: FilterState,
 	verOffset: VerOffset, stratOffset: StratOffset, forceAdjust?: number): RecordMap
 {
-	return xcamRecordMapBan(colList, fs, verOffset, stratOffset, [], forceAdjust);
+	return xcamRecordMapRules(colList, fs, verOffset, stratOffset, null, forceAdjust);
+}
+
+export function xcamIdealMapRules(colList: ColList, fs: FilterState,
+	verOffset: VerOffset, stratOffset: StratOffset, rulesKey: string | null, forceAdjust?: number): RecordMap
+{
+	return xcamBestMapRules(
+		(cellDat) => cellDat === "" ? null : rawMS(cellDat.ideal),
+		(cellDat) => cellDat.idealLink, (virtDat) => 999990,
+		colList, fs, verOffset, stratOffset, rulesKey, forceAdjust);
+}
+
+export function xcamIdealMap(colList: ColList, fs: FilterState,
+	verOffset: VerOffset, stratOffset: StratOffset, forceAdjust?: number): RecordMap
+{
+	return xcamIdealMapRules(colList, fs, verOffset, stratOffset, null, forceAdjust);
 }
 
 export function sortColList(colList: ColList, recordMap: RecordMap)

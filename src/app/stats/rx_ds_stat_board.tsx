@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { PlayData } from '../play_data'
 
@@ -10,6 +10,7 @@ import { totalColumn, percentColumn, bestOfXColumn_DS, best100cColumn_DS, bestCo
 import { UserStatMap, FilterCodeList, filterUserStatMap } from './stats_user_map' 
 import { UserScoreMetaMap, filterUserMetaMap } from './ds_scoring'
 import { ScoreCache, newScoreFilter, getUserDataScoreCache, getRankScoreCache, getDSScoreCache } from './score_cache'
+import { GenInput } from './rx_gen_input'
 import { PlayerTableProps, PlayerTable } from './rx_player_table'
 import { DetailBaseProps, DetailTable } from './rx_detail_table'
 
@@ -74,7 +75,7 @@ export function DSDetailBoard(props: DetailBaseProps & { showStd?: boolean }): R
 	];
 
 	return <DetailTable hrefBase={ props.hrefBase } hrefEx={ props.hrefEx } id={ props.id }
-		defSortId={ 7 } colList={ colList }
+		defSortId={ 8 } colList={ colList }
 		altFlag={ props.altFlag } scoreFilter={ props.scoreFilter } scoreData={ props.scoreData }
 		starFilter={ props.starFilter } pd={ props.pd } wideFlag={ true }/>;
 }
@@ -127,6 +128,23 @@ export function DSStatBoard(props: DS_SBProps): React.ReactNode
 		userMetaMap = getDSScoreCache(props.scoreData, fsx);
 	}
 
+	// custom BEST OF number
+	const [number, setNumber] = useState(props.num);
+
+	useEffect(() => {
+		if (number <= 0) setNumber(props.num);
+	}, [number]);
+
+	const updateNumber = (x: string) => { setNumber(parseInt(x)); } 
+
+	const validNumber = (x: string) => {
+		var ii = parseInt(x);
+		if (isNaN(ii)) return false;
+		if (userMap === null) return false;
+		if (ii > 0 && ii <= userMap.starTotal) return true;
+		return false;
+	}
+
 	// setup toggle nodes
 	var toggleNodeList: React.ReactNode[] = [];
 	// verification toggle
@@ -145,7 +163,7 @@ export function DSStatBoard(props: DS_SBProps): React.ReactNode
 
 	var board = null;
 	if (player === null) board = <DSPlayerBoard hrefBase={ props.hrefBase } hrefEx={ props.hrefEx } userMap={ userMap }
-		userMetaMap={ userMetaMap } num={ props.num } num100={ props.num100 } starFilter={ props.starFilter } pd={ props.pd }/>;
+		userMetaMap={ userMetaMap } num={ number } num100={ props.num100 } starFilter={ props.starFilter } pd={ props.pd }/>;
 	else board = <DSDetailBoard hrefBase={ props.hrefBase } hrefEx={ props.hrefEx } id={ newIdent("remote", player) }
 		altFlag={ altFlag } starFilter={ props.starFilter } scoreFilter={ fsx } scoreData={ props.scoreData } pd={ props.pd }/>;
 		/*  */
@@ -154,6 +172,15 @@ export function DSStatBoard(props: DS_SBProps): React.ReactNode
 		<div className="row-wrap">
 			<div className="toggle-sidebar big-indent">
 				{ toggleNode }
+			</div>
+			<div className="right-indent">
+				<div className="toggle-sidebar">
+					<div className="passive-box">
+						<div className="passive-button">Custom Best:</div>
+					</div>
+					<GenInput value={ "" + number } inputWidth="54px"
+						setValue={ updateNumber } validFun={ validNumber }></GenInput>
+				</div>
 			</div>
 		</div>
 		{ board }

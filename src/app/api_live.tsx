@@ -10,6 +10,9 @@ import { PlayDatMap } from './play_data'
 import { ReadTimeObj, SubmitTimeUnit, SubmitTimeObj, ReadNickObj, SubmitNickObj } from './api_types'
 import { dateAndOffset } from './api_history'
 
+import { banStratRule } from './org_rules'
+import { makeBanMap, checkBanMap } from './xcam_record_map'
+
 // -- officially outdated
 //const API_endpoint = "http://ec2-3-14-80-190.us-east-2.compute.amazonaws.com:5500";
 //const API_endpoint = "https://0lcnm5wjck.execute-api.us-east-2.amazonaws.com/Main";
@@ -21,10 +24,10 @@ const API_endpoint = "https://kjcjfyxwwa.execute-api.us-east-2.amazonaws.com/Mai
 		xcam time API functions
 	*/
 
-//export function loadTTRaw(rawData: ReadTimeObj, starDef: StarDef,
 export function readObjTimeTable(rawData: ReadTimeObj, starDef: StarDef,
-	colList: ColList, verOffset: VerOffset, stratOffset: StratOffset): TimeTable
+	colList: ColList, verOffset: VerOffset, stratOffset: StratOffset, rulesKey: string | null): TimeTable
 {
+	var bm = makeBanMap(rulesKey !== null ? banStratRule(rulesKey) : []);
 	// enumerate strats
 	var [stratSet, indexSet] = toSetColList(colList);
 	// build time table
@@ -42,7 +45,8 @@ export function readObjTimeTable(rawData: ReadTimeObj, starDef: StarDef,
 		// add time data
 		var verifFlag = data.verifflag;
 		if (verifFlag === null) verifFlag = 'no';
-		var timeDat = newTimeDat(data.time, data.link, data.note, verifFlag, rowDef);
+		var timeDat = newTimeDat(data.time, data.link, data.note, data.recvtime, verifFlag, rowDef);
+		if (checkBanMap(bm, stratDef, timeDat)) continue;
 		timeDat.origin = data.submit_id;
 		applyVerOffset(timeDat, verOffset);
 		applyStratOffset(timeDat, stratDef.diff.includes("second"), stratOffset);
@@ -138,6 +142,7 @@ export function postNewTimes(stageId: number, starDef: StarDef,
 		"delList": delIdList,
 		"verifList": verifSetList
 	};
+	console.log("submission:", submitObj);
 	fetch(API_endpoint + "/times", {
 		method: "POST",
 		body: JSON.stringify(submitObj),

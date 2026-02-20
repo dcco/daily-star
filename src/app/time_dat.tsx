@@ -125,11 +125,12 @@ export type TimeDat = {
 	"link": string | null,
 	"note": string | null,
 	"verifFlag": string | null,
+	"recvTime": string | null,
 	"rowDef": RowDef,
 	"origin": number | null
 }
 
-export function newTimeDat(time: number, link: string | null, note: string | null, verifFlag: string | null, rowDef: RowDef): TimeDat
+export function newTimeDat(time: number, link: string | null, note: string | null, recvTime: string | null, verifFlag: string | null, rowDef: RowDef): TimeDat
 {
 	if (link === undefined || link === "") link = null;
 	if (note === undefined || note === "") note = null;
@@ -141,6 +142,7 @@ export function newTimeDat(time: number, link: string | null, note: string | nul
 		"adjustList": [],
 		"link": link,
 		"note": note,
+		"recvTime": recvTime,
 		"verifFlag": verifFlag,
 		"rowDef": rowDef,
 		"origin": null
@@ -157,6 +159,7 @@ export function adjustTimeDat(time: number, source: TimeDat): TimeDat
 		"adjustList": source.adjustList.map((a) => a),
 		"link": null,
 		"note": null,
+		"recvTime": null,
 		"verifFlag": null,
 		"rowDef": source.rowDef,
 		"origin": null
@@ -177,6 +180,7 @@ export function resetTimeDat(source: TimeDat): TimeDat
 		"adjustList": [],
 		"link": null,
 		"note": null,
+		"recvTime": null,
 		"verifFlag": null,
 		"rowDef": source.rowDef,
 		"origin": null
@@ -185,7 +189,7 @@ export function resetTimeDat(source: TimeDat): TimeDat
 
 export function maxTimeDat(rowDef: RowDef): TimeDat
 {
-	return newTimeDat(999900, null, null, null, rowDef);
+	return newTimeDat(999900, null, null, null, null, rowDef);
 }
 
 export function formatTimeDat(timeDat: TimeDat): string {
@@ -202,6 +206,19 @@ export function vtagTimeDat(timeDat: TimeDat): string {
 		vx = "#" + vList.map((i) => "" + i).join('_');
 	}*/
 	return rowDef.name + "_" + rowDef.ver + vtagVarList(rowDef.variant_list);
+}
+
+export function recvTimeDat(timeDat: TimeDat): number {
+	if (timeDat.recvTime === null || timeDat.recvTime === "") return 0;
+	return new Date(timeDat.recvTime).getTime();
+}
+
+export function earlierTimeDat(t1: TimeDat, t2: TimeDat): number {
+	if (t2.recvTime === null || t2.recvTime === "") return -1;
+	if (t1.recvTime === null || t1.recvTime === "") return 1;
+	var tt1 = new Date(t1.recvTime).getTime();
+	var tt2 = new Date(t2.recvTime).getTime();
+	return tt1 - tt2;
 }
 
 function adjustTime(timeDat: TimeDat, frames: number, adj: string) {
@@ -311,7 +328,8 @@ export type StratOffset = {
 	"name": string,
 	"rawName": [string, string],
 	"offsetType": string | null,
-	"offset": number
+	"offset": number,
+	"verOffset"?: [VerF, OffsetDat]
 };
 
 export function newStratOffset(name: string, rawName: [string, string], offsetType: string | null, offset: number): StratOffset
@@ -335,6 +353,12 @@ export function applyStratOffset(timeDat: TimeDat, second: boolean, sOffset: Str
 	if (forceAdjust !== undefined) {
 		if (second) offName = sOffset.rawName[1];
 		else offName = sOffset.rawName[0];
+	}
+	// apply secondary version offset if it exists + merge offset
+	// -- TODO: it's unclear if offset should use this. there are no such stars to test it on
+	if (sOffset.verOffset && sOffset.offsetType === "mergeOffset" && second) {
+		const [focusVer, vOffset] = sOffset.verOffset;
+		applyVerOffset(timeDat, { "focusVer": focusVer, "offset": vOffset });
 	}
 	// merge offset always offsets the secondary
 	if (sOffset.offsetType === "mergeOffset") {

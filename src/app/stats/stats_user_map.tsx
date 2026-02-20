@@ -6,7 +6,7 @@ import { TimeDat, maxTimeDat } from '../time_dat'
 import { Ident, keyIdent } from '../time_table'
 import { toSetColList } from '../org_strat_def'
 import { ExtState, StarDef } from '../org_star_def'
-import { AltType, AltTypeEx, StarRef, StarMap, canCombStarRef, tryCombStarMap, starCodeFull,
+import { AltType, AltTypeEx, StarRef, StarMap, canCombStarRef, tryCombStarMap, starCodeBase, starCodeFull,
 	addStarMap, toListStarMap, newStarMapAlt, newStarMapAltEx, cleanupStarMap } from '../star_map'
 //import { StarMapAlt, AltState, lookupStarMapAlt, addStarMapAlt, toListStarMapAlt } from '../star_map'
 import { StxStarData, StxStarMap, getStarTimeMap } from './stats_star_map'
@@ -119,58 +119,6 @@ function getUserScoreList(data: StxStarData): UserScore[]
 	finalList.sort(function (a, b) { return a.timeDat.time - b.timeDat.time; });
 	return finalList;
 }
-/*
-function getUserScoreList(data: StxStarData): UserScore[]
-{
-	// calculate best time for each player
-	var [stratSet, indexSet] = toSetColList(data.colList);
-	var bestList: UserScore[] = data.timeTable.map((userDat) => {
-		//var stratMap: { [key: string]: StratScore } = {};
-		var bestDat = maxTimeDat(zeroRowDef("Open"));
-		for (const multiDat of userDat.timeRow) {
-			if (multiDat === null) continue;
-			//var bestStrat: TimeDat | null = null;
-			for (const timeDat of multiDat) {
-				if (timeDat.time < bestDat.time) bestDat = timeDat;
-				//if (bestStrat === null || timeDat.time < bestStrat.time) bestStrat = timeDat;
-			}
-			if (bestStrat !== null) stratMap[bestStrat.rowDef.name] = {
-				"timeDat": bestStrat,
-				"rank": [-1, 0],
-				"scorePts": 0
-			};
-		}
-		// secondary status
-		var stratName = bestDat.rowDef.name;
-		var alt: null | "main" | "alt" = null;
-		if (data.alt !== null) {
-			if (stratSet[stratName].diff.includes("second")) alt = "alt";
-			else alt = "main";
-		}
-		// fill out best scores + per strat scores
-		var score = newUserScore(data, userDat.id, bestDat);
-		score.stratMap = {};
-		return score;
-	});
-	// calculate rank per individual strat
-	// filter + sort
-	bestList = bestList.filter(function (a) { return a.timeDat.time < 999900; });
-	bestList.sort(function (a, b) { return a.timeDat.time - b.timeDat.time; });
-	// assign ranks
-	var rank = 0;
-	var lastTime = 999900;
-	bestList.map((bestDat, ix) => {
-		if (bestDat.timeDat.time !== lastTime) {
-			lastTime = bestDat.timeDat.time;
-			rank = ix;
-		}
-		var rankTotal = bestList.length;
-		//if (rankTotal < 100) rankTotal = 100;
-		bestDat.rank = [rank, rankTotal];
-		bestDat.scorePts = rankPts(bestDat.rank);
-	});
-	return bestList;
-}*/
 
 function mergeUserScoreList(l1: UserScore[], l2: UserScore[]): UserScore[]
 {
@@ -215,24 +163,6 @@ function _calcSimpleScoreMap(starSet: StarDef[], starMap: StxStarMap): SimpleSco
 			tryCombStarMap<AltTypeEx, UserScore[]>(scoreMap, starDef, mergeUserScoreList, "comb");
 		}
 	}
-
-	// for every star w/ alt "cutscene" or "mergeOffset", we merge their best rankings
-	/*for (let i = 0; i < starSet.length; i++) {
-		var starTotal = starSet[i].length;
-		for (let j = 0; j < starTotal; j++) {
-			// build strat key
-			var starDef = starSet[i][j][0];
-			var baseKey = i + "_" + starDef.id;
-			// score merging
-			if (starDef.alt !== null && (starDef.alt.status === "cutscene" || starDef.alt.status === "mergeOffset")) {
-				var mainDat = scoreMap[baseKey + "_main"];
-				var altDat = scoreMap[baseKey + "_alt"];
-				if (mainDat === undefined) scoreMap[baseKey + "_comb"] = altDat;
-				else if (altDat === undefined) scoreMap[baseKey + "_comb"] = mainDat;
-				else scoreMap[baseKey + "_comb"] = mergeUserScoreList(mainDat, altDat);
-			}
-		}
-	}*/
 	return scoreMap;
 }
 
@@ -371,8 +301,16 @@ export function calcTop100cStats(userSx: UserStats, x: number): number
 	return (topX * 100) / x;
 }
 
+function chopBaseKey(key: string): string
+{
+	if (key.endsWith("_main")) return key.slice(0, -5);
+	if (key.endsWith("_alt")) return key.slice(0, -4);
+	return key;
+}
+
 export function filterUserStats(userSx: UserStats, codeList: [number, string][]): UserStats
 {
+	// filter (complete) stars based on list of codes
 	var codeMap: { [key: string]: number } = {};
 	for (const [stageId, starId] of codeList) codeMap[stageId + "_" + starId] = 0;
 	
@@ -381,6 +319,7 @@ export function filterUserStats(userSx: UserStats, codeList: [number, string][])
 	});
 	newStarList.sort(function (a, b) { return rankPts(b.rank) - rankPts(a.rank) });
 
+	// build new stat object
 	var newSx: UserStats = {
 		"id": userSx.id,
 		"starList": newStarList,
@@ -388,19 +327,24 @@ export function filterUserStats(userSx: UserStats, codeList: [number, string][])
 		"incomplete": {},
 		"standard": userSx.standard
 	};
-	for (const key of Object.keys(codeMap)) {
-		if (userSx.complete[key]) newSx.complete[key] = userSx.complete[key];
-		if (userSx.incomplete[key]) newSx.incomplete[key] = userSx.incomplete[key];
-	};
+
+	// get list of complete + incomplete stars
+	for (const [fullKey, v] of Object.entries(userSx.complete)) {
+		if (codeMap[chopBaseKey(fullKey)] !== undefined) newSx.complete[fullKey] = v;
+	}
+	for (const [fullKey, v] of Object.entries(userSx.incomplete)) {
+		if (codeMap[chopBaseKey(fullKey)] !== undefined) newSx.incomplete[fullKey] = v;
+	}
 	return newSx;
 }
 
-export function getStarUserStats(userSx: UserStats, starRef: StarRef<AltType>): UserScore | null
+export function getStarUserStats(userSx: UserStats, starRef: StarRef<AltType>, altFlag: boolean): UserScore | null
 {
 	var code = starCodeFull(starRef);
+	var baseCode = starCodeBase(starRef);
 	/*var code = stageId + "_" + starId;
 	if (alt.state !== null && alt.source !== "all") code = code + "_" + alt.state;*/
-	if (userSx.complete[code] !== undefined) {
+	if (userSx.complete[code] !== undefined || userSx.complete[baseCode] !== undefined) {
 		for (const star of userSx.starList) {
 			if (code === starCodeFull(star)) return star; 
 			/*if (star.stageId === stageId && star.starId === starId) {
@@ -408,30 +352,16 @@ export function getStarUserStats(userSx: UserStats, starRef: StarRef<AltType>): 
 			}*/
 		}
 	}
-	return null;
-}
-
-/*
-export function completeStatsList(starList: StarStats[], altFlag: boolean): (UserScore | IncScore)[]
-{
-	var retList: (IncStarRef | StarStats)[] = [];
-	for (const starDat of starList) {
-		retList.push(starDat);
-		if (altFlag && starDat.obsolete !== null) {
-			var [ref, userTime] = starDat.obsolete;
-			retList.push({
-				"weak": true,
-				"stageId": ref.stageId,
-				"starId": ref.starId,
-				"alt": userTime.alt,
-				"rank": userTime.rank[0],
-				"timeDat": userTime.timeDat,
-				"playTotal": userTime.rank[1]
-			});
-		}
+	// this case comes up for mergeOffset stars
+	if (altFlag) return null;
+	if (userSx.complete[baseCode] === undefined) return null;
+	var bestStar: UserScore | null = null;
+	for (const star of userSx.starList) {
+		if (baseCode === starCodeBase(star) &&
+			(bestStar === null || star.scorePts > bestStar.scorePts)) bestStar = star;
 	}
-	return retList;
-}*/
+	return bestStar;
+}
 
 	/*
 		user stat map: user data for the entire range of players

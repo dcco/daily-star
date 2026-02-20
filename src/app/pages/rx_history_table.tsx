@@ -52,7 +52,7 @@ function SepRow(props: { len: number }): React.ReactNode
 {
 	var sepNodes: React.ReactNode[] = [];
 	for (let i = 0; i < props.len; i++) {
-		sepNodes.push(<td className="sep-cell"></td>);
+		sepNodes.push(<td className="sep-cell" key={ i }></td>);
 	}
 	return <tr className="sep-row">{ sepNodes }</tr>;
 }

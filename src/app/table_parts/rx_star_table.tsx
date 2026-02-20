@@ -51,34 +51,43 @@ function sortEq(a: number[], b: number[]): boolean
 		star table: displays times from a time table
 		* cfg - column display configuration
 		* recordMap - record data for the time table
+		? idealMap - ideal data for time table
+		? verOffset - version offset for time display
 		* timeTable - time table
-		* verOffset - version offset for time display
-		* emptyWarn - warn if all rows are empty (outside of editing mode)
-		* editObj - params for editable tables
-		
+
 		* playData - player viewing the table
-		* playDB - information about players
-		* rankKey - key used for assigning ranks to times
+		? playDB - information about players
+		? rankKey - key used for assigning ranks to times
+
+		? showRowId - whether to show the row id
+		? emptyWarn - warn if all rows are empty (outside of editing mode)
+		? extraColList - miscellaneous columns
+
+		? editObj - params for editable tables
 	*/
 
 type StarTableProps = {
 	"cfg": ColConfig,
-	"verOffset"?: VerOffset,
 	"recordMap": RecordMap,
+	"idealMap"?: RecordMap,
+	"verOffset"?: VerOffset,
 	"timeTable": TimeTable,
+
 	"playData": PlayData,
-	"showRowId"?: boolean,
-	"emptyWarn"?: boolean,
-	"editObj"?: EditObj,
 	"playDB"?: PlayDB,
 	"rankKey"?: string,
-	"extraColList"?: ExColumn[]
+
+	"showRowId"?: boolean,
+	"emptyWarn"?: boolean,
+	"extraColList"?: ExColumn[],
+	"editObj"?: EditObj
 }
 
 export function StarTable(props: StarTableProps): React.ReactNode {
 	var cfg = props.cfg;
 	var stratTotal = cfg.stratTotal;
 	var recordMap = props.recordMap;
+	var idealMap = props.idealMap;
 	var timeTable = props.timeTable;
 	var playData = props.playData;
 
@@ -189,6 +198,22 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 		</td>);
 	});
 
+	/* ----- IDEAL ROW ----- */
+
+	var idealRow = null;
+	if (idealMap) {
+		var idealList = recordListColConfig(cfg, idealMap);
+		var idealNodes = idealList.map((record, i) => {
+			return <RecordCell timeDat={ record } verOffset={ verOffset } key={ record.rowDef.name + "_" + i }/>;
+		});
+		if (LB_NUM) idealNodes.unshift(<td className="time-cell" key="#"></td>);
+		idealNodes.unshift(<td className="record-cell" key="wr">Ideal Run</td>);
+		for (const exCol of exColList) {
+			idealNodes.push(<td className="time-cell" key={ exCol.key }></td>);
+		}
+		idealRow = <tr className="time-row ideal-row" key="ideal">{ idealNodes }</tr>;
+	}
+
 	/* ----- RECORD ROW ----- */
 
 	var recordList = recordListColConfig(cfg, recordMap);
@@ -265,9 +290,16 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 	});
 
 	if (props.emptyWarn && editObj === null && timeTableNodes.length === 0) {
-		timeTableNodes.push(<tr key="ext-special"><td className="time-special-note" colSpan={ headerNodes.length }>
-			Extensions-Only Star (Toggle Extensions On)
-		</td></tr>);
+		if (headerList.length === 0) {
+			timeTableNodes.push(<tr key="ext-special"><td className="time-special-note" colSpan={ headerNodes.length }>
+				Extensions-Only Star (Toggle Extensions On)
+			</td></tr>);
+		} else {
+			timeTableNodes.push(<tr key="ext-special">
+				<td className="time-special-note"/>
+				<td className="time-special-note" colSpan={ headerNodes.length }>Empty</td>
+			</tr>);
+		}
 	}
 
 	/* ----- INITIAL SUBMIT ROW ----- */
@@ -322,6 +354,7 @@ export function StarTable(props: StarTableProps): React.ReactNode {
 			<colgroup>{ colNodes }</colgroup>
 			<tbody>
 				<tr className="time-row" key="header">{ headerNodes }</tr>
+				{ idealRow }
 				<tr className="time-row" key="record">{ recordNodes }</tr>
 				{ timeTableNodes }
 			</tbody></table>

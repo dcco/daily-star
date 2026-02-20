@@ -26,7 +26,7 @@ export function xcamTimeTable(colList: ColList, verOffset: VerOffset, stratOffse
 			var timeList = xcamData[xs][xcamId].times;
 			// iterate through every time for the xcam row
 			for (const data of timeList) {
-				var timeDat = newTimeDat(data.ms, data.link, data.note, null,
+				var timeDat = newTimeDat(data.ms, data.link, data.note, null, null,
 					readRefMap(stratDef.row_map, xcamRef, "tt:" + stratDef.name));
 				applyVerOffset(timeDat, verOffset);
 				applyStratOffset(timeDat, stratDef.diff.includes("second"), stratOffset, forceAdjust);

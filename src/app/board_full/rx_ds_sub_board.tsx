@@ -3,7 +3,7 @@ import React from 'react'
 import { lightColList } from '../col_config'
 import { FilterState, colListStarDef, fullFilterState, copyFilterState,
 	verOffsetStarDef, stratOffsetStarDef } from '../org_star_def'
-import { xcamRecordMapBan, sortColList } from '../xcam_record_map'
+import { xcamRecordMap, sortColList } from '../xcam_record_map'
 import { LiveStarTableProps } from '../table_parts/rx_live_table'
 import { LiveStarTable } from '../table_parts/rx_live_table'
 import { VariantToggle } from '../board_simple/rx_variant_toggle'
@@ -25,7 +25,7 @@ export function DSSubBoard(props: LiveStarTableProps &
 	// sort the full column list
 	var verOffset = verOffsetStarDef(starDef, fullFS);
 	var sOffset = stratOffsetStarDef(starDef, fullFS);
-	var sortRM = xcamRecordMapBan(fullColList, fullFS, verOffset, sOffset, []);
+	var sortRM = xcamRecordMap(fullColList, fullFS, verOffset, sOffset);
 	sortColList(fullColList, sortRM);
 
 	// standards board
@@ -35,12 +35,12 @@ export function DSSubBoard(props: LiveStarTableProps &
 		var rColList = lightColList(fullColList, starDef, fs);
 		stratList.push(rColList.map((colRef) => colRef[1].name));
 		// secondary strat rank table when necessary
-		if (props.combFlag) {
+		/*if (!props.combFlag) {
 			var xFS = copyFilterState(fullFS);
 			xFS.altState = [false, true];
 			rColList = lightColList(fullColList, starDef, xFS);
 			stratList.push(rColList.map((colRef) => colRef[1].name));
-		}
+		}*/
 		rankTableNode = <StratRankTable stageId={ stageId } starDef={ starDef } stratList={ stratList } showPts={ true }/>;
 	}
 

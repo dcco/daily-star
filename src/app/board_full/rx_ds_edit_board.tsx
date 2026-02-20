@@ -12,7 +12,7 @@ import { Ident, keyIdent } from '../time_table'
 import { PlayData } from '../play_data'
 import { newRulesFilterState, copyFilterState, starCode,
 	orgStarId, orgStarDef, verOffsetStarDef } from '../org_star_def'
-import { specStarRef } from '../star_map'
+import { AltType, specStarRef } from '../star_map'
 import { ExColumn } from '../table_parts/ex_column'
 import { PlayDB } from '../table_parts/rx_star_row'
 import { LiveStarIface } from '../table_parts/rx_live_table'
@@ -230,8 +230,10 @@ export function DSEditBoard(props: DSEditBoardProps): React.ReactNode {
 			mainFS = copyFilterState(fs);
 			mainFS.altState = [true, false];
 		}
-		const exColList = [scoreColumn(G_HISTORY.current.scoreData, specStarRef(starDef, null), fs.extFlag, verifFlag)];
-		//const exColList = [scoreColumn(G_HISTORY.current.scoreData, stageIdX, starCodeList[i][1], fs.extFlag, verifFlag, null)];
+		const exColFun = (alt: AltType): ExColumn[] => {
+			return [scoreColumn(G_HISTORY.current.scoreData, specStarRef(starDef, alt), fs.extFlag, verifFlag)];
+		};
+		const exColList = (starDef.alt !== null && (!combFlagList[i] || !showComb)) ? exColFun("main") : exColFun(null);
 		// -- separator if not the first node
 		var sepNode: React.ReactNode = <div></div>;
 		if (i !== 0) {
@@ -250,13 +252,14 @@ export function DSEditBoard(props: DSEditBoardProps): React.ReactNode {
 		</React.Fragment>);
 		// variant tables
 		if (starDefList[i].alt !== null && (!combFlagList[i] || !showComb)) {
+			const exAltList = (starDef.alt !== null && (!combFlagList[i] || !showComb)) ? exColFun("alt") : exColFun(null);
 			var altFS = copyFilterState(fs);
 			altFS.altState = [false, true];
 			tableList.push(
 				<DSSubBoard stageId={ stageIdX } starDef={ starDef } today={ loadType } fs={ altFS }
 					showStd={ true } showRowId={ true } showVar={ false } combFlag={ false } api={ props.api }
 					updatePlayCount={ updatePlayCount("" + i) } playData={ playData } reloadPlayData={ reloadPlayDataEx }
-					playDB={ playDB } extraColList={ exColList } key={ stageIdX + "_" + starIdX + "_" + i + "_alt" }/>
+					playDB={ playDB } extraColList={ exAltList } key={ stageIdX + "_" + starIdX + "_" + i + "_alt" }/>
 			);
 		}
 	});
