@@ -4,7 +4,9 @@ import { Ident, AuthIdent, keyIdent } from './time_table'
 export type PlayDat = {
 	"nick": string,
 	"favColor": string | null,
-	"perm": string | null
+	"textColor": string | null,
+	"perm": string | null,
+	"status": string | null
 }
 
 export type PlayDatMap = {
@@ -32,12 +34,15 @@ export type PlayDatMap = {
 	*/
 
 export type DSPerm = "admin" | "mod" | "user"
+export type DSStatus = null | "paid"
 
 export type LocalPD = {
 	"userId": AuthIdent | null,
 	"nick": string | null,
 	"favColor": string | null,
-	"perm": DSPerm
+	"textColor": string | null,
+	"status": DSStatus,
+	"perm": DSPerm,
 	"dirtyFlag": boolean
 }
 
@@ -53,7 +58,9 @@ export function newPlayData(): PlayData
 			"userId": null,
 			"nick": null,
 			"favColor": null,
+			"textColor": null,
 			"perm": "user",
+			"status": null,
 			"dirtyFlag": false
 		},
 		"nickMap": {}
@@ -72,7 +79,9 @@ export function setUserLD(ld: LocalPD, userId: AuthIdent | null): LocalPD
 		"userId": userId,
 		"nick": null,
 		"favColor": null,
+		"textColor": null,
 		"perm": "user",
+		"status": null,
 		"dirtyFlag": false
 	};
 }
@@ -86,7 +95,9 @@ export function setUserNickLD(ld: LocalPD, nick: string, dirty: boolean): LocalP
 		"userId": ld.userId,
 		"nick": nick,
 		"favColor": ld.favColor,
+		"textColor": ld.textColor,
 		"perm": ld.perm,
+		"status": ld.status,
 		"dirtyFlag": dirty
 	};
 }
@@ -97,7 +108,22 @@ export function setUserFavLD(ld: LocalPD, favColor: string | null, dirty: boolea
 		"userId": ld.userId,
 		"nick": ld.nick,
 		"favColor": favColor,
+		"textColor": ld.textColor,
 		"perm": ld.perm,
+		"status": ld.status,
+		"dirtyFlag": dirty
+	};
+}
+
+export function setUserCustomFavLD(ld: LocalPD, customColor: string, textColor: string | null, dirty: boolean): LocalPD
+{
+	return {
+		"userId": ld.userId,
+		"nick": ld.nick,
+		"favColor": customColor,
+		"textColor": textColor,
+		"perm": ld.perm,
+		"status": ld.status,
 		"dirtyFlag": dirty
 	};
 }
@@ -109,19 +135,16 @@ export function setNickMapPD(pd: PlayData, nickMap: PlayDatMap): PlayData
 		"nickMap": nickMap
 	};
 }
-/*
-export function setDirtyPD(ld: LocalPD): LocalPD
-{
-	return {
-		"userId": ld.userId,
-		"nickMap": ld.nickMap,
-		"dirtyFlag": false
-	};
-}*/
 
 function canonNickPD(pd: PlayData, userId: AuthIdent, remoteId: string): PlayDat | null
 {
-	if (pd.local.nick !== null) return { "nick": pd.local.nick, "favColor": pd.local.favColor, "perm": pd.local.perm };
+	if (pd.local.nick !== null) return {
+		"nick": pd.local.nick,
+		"favColor": pd.local.favColor,
+		"textColor": pd.local.textColor,
+		"perm": pd.local.perm,
+		"status": pd.local.status
+	};
 	var remotePX = pd.nickMap["remote@" + remoteId];
 	if (remotePX !== undefined) return remotePX;
 	return null;
@@ -143,7 +166,9 @@ export function linkUserRemotePD(pd: PlayData, remoteId: string): PlayData
 		if (canonPX !== null) {
 			pd.local.nick = canonPX.nick;
 			pd.local.favColor = canonPX.favColor;
+			pd.local.textColor = canonPX.textColor;
 			pd.local.perm = readPerm(canonPX.perm);
+			pd.local.status = canonPX.status === 'paid' ? 'paid' : null;
 			pd.nickMap["google@" + pd.local.userId.name] = canonPX;
 			pd.nickMap["remote@" + remoteId] = canonPX;
 		}

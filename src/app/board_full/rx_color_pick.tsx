@@ -3,7 +3,7 @@ import { G_SHEET } from '../api_xcam'
 import React, { useState, useEffect, useRef } from 'react'
 
 import { AuthIdent, dropIdent } from '../time_table'
-import { PlayData, LocalPD, strIdNickPD, setUserFavLD } from '../play_data'
+import { PlayData, LocalPD, strIdNickPD, setUserFavLD, setUserCustomFavLD } from '../play_data'
 import { useOutsideClick } from './rx_dropdown_menu'
 
 	/*
@@ -64,6 +64,11 @@ function idToColorSel(id: number): string | null {
 	return DS_COLOR_LIST[id][0];
 }
 
+function idToColorHex(id: number): string | null {
+	if (id === -1) return null;
+	return DS_COLOR_LIST[id][1];
+}
+
 export function ColorPick(props: ColorPickProps): React.ReactNode
 {
 	// menu open state
@@ -71,7 +76,20 @@ export function ColorPick(props: ColorPickProps): React.ReactNode
 	const ref = useRef(null);
 
 	// menu selection
-	const [curSel, setSel] = useState(getColorSel(props.playData));
+	const defSel = getColorSel(props.playData);
+	const [curSel, setSel] = useState(defSel);
+	
+	// custom color initialization
+	var defCustom = idToColorHex(defSel);
+	var defCustom2 = "";
+	const defFav = props.playData.local.favColor;
+	if (defFav !== null && defFav[0] === '#') {
+		defCustom = defFav.replace('#', '');
+		const defTextFav = props.playData.local.textColor;
+		if (defTextFav !== null) defCustom2 = defTextFav.replace('#', '');
+	}
+	const [customText, setCustomText] = useState(defCustom === null ? "" : defCustom);
+	const [customText2, setCustomText2] = useState(defCustom2);
 
 	useEffect(() => {
 		setSel(getColorSel(props.playData));
@@ -83,38 +101,90 @@ export function ColorPick(props: ColorPickProps): React.ReactNode
 		setActive(false);
 	});
 
+	// explicit set selection + reset custom selection
+	const manualSetSel = (i: number) => {
+		setSel(i);
+		const newCustom = idToColorHex(i);
+		setCustomText(newCustom === null ? "" : newCustom);
+		setCustomText2("");
+	} 
+
+	// read custom color from text (if valid)
+	var customColor: string | null = null;
+	if (/^([0-9A-Fa-f]{6})$/.test(customText)) customColor = customText;
+	var customTextColor: string = "000000";
+	if (customColor !== null && /^([0-9A-Fa-f]{6})$/.test(customText2)) {
+		customTextColor = customText2;
+	}
+
+	// color save protocol
 	const saveColor = () => {
-		var newLocal = setUserFavLD(props.playData.local, idToColorSel(curSel), true);
-		props.setPlayData(newLocal);
+		var selColor = idToColorHex(curSel);
+		var validTextColor: string | null = null;
+		if (/^([0-9A-Fa-f]{6})$/.test(customText2)) validTextColor = "#" + customText2;
+		// only save custom color if distinct from main selection OR custom text color
+		if (customColor !== null && (customColor !== selColor || validTextColor !== null)) {
+			var newLocal = setUserCustomFavLD(props.playData.local, "#" + customColor, validTextColor, true);
+			props.setPlayData(newLocal);
+		} else {
+			var newLocal = setUserFavLD(props.playData.local, idToColorSel(curSel), true);
+			props.setPlayData(newLocal);
+		}
 		setActive(false);
 	}
 
 	var menuNode = null;
 	if (active) {
+		// read custom color (if it exists)
+		// color bubbles
 		var colorNodes: React.ReactNode[] = [];
 		DS_COLOR_LIST.map((colorDef, i) => {
 			const c = colorDef[1];
 			var style: any = { "backgroundColor": "#" + c };
-			if (curSel === i) style["boxShadow"] = "0 0 10px #" + c + "B3";
+			if (customColor === null && curSel === i) style["boxShadow"] = "0 0 10px #" + c + "B3";
 			colorNodes.push(
 				<div className="color-bubble-small" key={ colorDef[0] }
-					style={ style } onClick={ () => setSel(i) }/>
+					style={ style } onClick={ () => manualSetSel(i) }/>
 			);
 		});
 		var eStyle: any = {};
 		if (curSel === -1) eStyle["boxShadow"] = "0 0 10px #D0D0D0B3";
 		colorNodes.push(<div className="color-bubble-empty" key="empty"
-			style={ eStyle } onClick={ () => setSel(-1) }></div>);
-		menuNode = <div className="dropdown-menu-inner"><div className="color-box">
-			{ colorNodes }
-		</div>
-		<div className="dropdown-opt" data-active="true"
-			onClick={ saveColor }>Save Color</div>
+			style={ eStyle } onClick={ () => manualSetSel(-1) }></div>);
+		// paid only custom color
+		var customNode: React.ReactNode = null;
+		if (props.playData.local.status === 'paid') {
+			var innerBubble = customColor === null
+				? <div className="color-bubble-empty"></div>
+				: <div className="color-bubble-small" style={{
+						"backgroundColor": "#" + customColor,
+						"color": "#" + customTextColor
+					}}> <div className="color-bubble-text">a</div></div>
+			customNode = <div className="input-color-cont">
+				<div className="color-align">{ innerBubble }</div>
+				<div>
+					<div className="input-color-cont">
+						#<input className="input-color" value={ customText }
+							onChange={ (e) => setCustomText(e.target.value) }/>
+					</div>
+					<div className="input-color-cont">
+						#<input className="input-color" value={ customText2 }
+							onChange={ (e) => setCustomText2(e.target.value) }/>
+					</div>
+				</div>
+			</div>;
+		}
+		menuNode = <div className="dropdown-menu-inner">
+			<div className="color-box">{ colorNodes }</div>
+			{ customNode }
+			<div className="dropdown-opt" data-active="true"
+				onClick={ saveColor }>Save Color</div>
 		</div>;
 	}
 
 	var curColor = "FFFFFF";
-	if (curSel !== -1) curColor = DS_COLOR_LIST[curSel][1];
+	if (customColor !== null) curColor = customColor;
+	else if (curSel !== -1) curColor = DS_COLOR_LIST[curSel][1];
 	else {
 		// get play standard if it exists
 		var playStd = "Unranked";

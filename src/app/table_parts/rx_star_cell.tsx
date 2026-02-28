@@ -210,6 +210,15 @@ type NameCellProps = {
 	"href"?: string
 };
 
+function brightness(hex: string): number {
+	const n = hex.replace('#', '');
+	const r = parseInt(n.substring(0, 2), 16);
+	const g = parseInt(n.substring(2, 4), 16);
+	const b = parseInt(n.substring(4, 6), 16);
+	// returns value from 0-255 [itu-r recommendation bt.601]
+	return (r * 299 + g * 587 + b * 114) / 1000;
+}
+
 export function NameCell(props: NameCellProps): React.ReactNode {
 	// get play standard when applicable
 	var playStd = "Unranked";
@@ -227,18 +236,26 @@ export function NameCell(props: NameCellProps): React.ReactNode {
 	}
 	// custom color when applicable
 	var style: any = {};
-	var myDat = lookupDatPD(props.pd, props.id);
+	const myDat = lookupDatPD(props.pd, props.id);
 	if (myDat !== null && myDat.favColor !== null) {
-		// -- for typescript
-		var _myDat = myDat;
-		var i = DS_COLOR_LIST.findIndex((elem) => elem[0] === _myDat.favColor);
-		if (i !== -1) {
-			const colorDef = DS_COLOR_LIST[i];
-			style = {
-				"backgroundColor": "#" + colorDef[1],
-				"color": "#" + colorDef[2],
+		if (myDat.favColor[0] === '#') {
+			var defColor = brightness(myDat.favColor) < 50 ? "#D0D0D0" : "#101010";
+			if (myDat.textColor !== null) defColor = myDat.textColor;
+			style={
+				"backgroundColor": myDat.favColor,
+				"color": defColor,
 				"fontStyle": "normal"
-			};
+			}
+		} else {
+			var i = DS_COLOR_LIST.findIndex((elem) => elem[0] === myDat.favColor);
+			if (i !== -1) {
+				const colorDef = DS_COLOR_LIST[i];
+				style = {
+					"backgroundColor": "#" + colorDef[1],
+					"color": "#" + colorDef[2],
+					"fontStyle": "normal"
+				};
+			}
 		}
 	}
 	// name + ending cell

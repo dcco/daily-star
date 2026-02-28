@@ -169,7 +169,9 @@ export async function loadNickMap(): Promise<PlayDatMap> {
 		if (data.nick !== null) nickMap["remote@" + data.p_id] = {
 			"nick": data.nick,
 			"favColor": data.favcolor,
-			"perm": data.perm
+			"textColor": data.textcolor,
+			"perm": data.perm,
+			"status": data.status
 		};
 	}
 	console.log("Successfully loaded nickname data.");
@@ -192,13 +194,14 @@ export async function loadUserId(userId: AuthIdent): Promise<string | null> {
 	return "" + res.res;
 }
 
-export function postNick(userId: AuthIdent, nick: string, favColor: string | null) {
+export function postNick(userId: AuthIdent, nick: string, favColor: string | null, textColor: string | null) {
 	// api request - submit new nickname
 	var submitObj: SubmitNickObj = {
 		"player": userId,
 		"accessToken": userId.token.accessToken,
 		"nick": nick,
-		"favColor": favColor
+		"favColor": favColor,
+		"textColor": textColor
 	};
 	fetch(API_endpoint + "/players/nicks", {
 		method: "POST",

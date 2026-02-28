@@ -164,7 +164,7 @@
     "32": {
       "name": "Backflip Clip",
       "record": "11.76",
-      "recordPlayer": "taihou",
+      "recordPlayer": "Multiple [2]",
       "ideal": "",
       "ver": "us"
     },
@@ -219,14 +219,14 @@
     },
     "48": {
       "name": "Pro Cycle",
-      "record": "57.43",
-      "recordPlayer": "manXmud",
+      "record": "57.00",
+      "recordPlayer": "Banova",
       "ideal": "56.70",
       "ver": "jp"
     },
     "49": {
       "name": "Pro Cycle",
-      "record": "56.90",
+      "record": "56.70",
       "recordPlayer": "darkdog47",
       "ideal": "56.33",
       "ver": "us"
@@ -534,7 +534,7 @@
     },
     "129": {
       "name": "Standard",
-      "record": "37.23",
+      "record": "37.20",
       "recordPlayer": "Suigi",
       "ideal": "",
       "ver": "us"
@@ -983,7 +983,7 @@
     "247": {
       "name": "Speed Pres",
       "record": "15.76",
-      "recordPlayer": "Paracusia",
+      "recordPlayer": "Multiple [2]",
       "ideal": "16.06",
       "ver": "us"
     },
@@ -1129,8 +1129,8 @@
     },
     "285": {
       "name": "Front Sub",
-      "record": "32.26",
-      "recordPlayer": "Raisn",
+      "record": "32.00",
+      "recordPlayer": "kusabi",
       "ideal": "32.23",
       "ver": "us"
     },
@@ -1143,8 +1143,8 @@
     },
     "287": {
       "name": "Front Sub",
-      "record": "31.23",
-      "recordPlayer": "Banova",
+      "record": "31.16",
+      "recordPlayer": "kusabi",
       "ideal": "",
       "ver": "us"
     },
@@ -1242,14 +1242,14 @@
     "310": {
       "name": "Standard",
       "record": "12.50",
-      "recordPlayer": "Multiple [25]",
+      "recordPlayer": "Multiple [26]",
       "ideal": "12.50",
       "ver": "us"
     },
     "311": {
       "name": "Crouch Kill",
       "record": "12.30",
-      "recordPlayer": "Multiple [25]",
+      "recordPlayer": "Multiple [26]",
       "ideal": "12.30",
       "ver": "us"
     },
@@ -1613,7 +1613,7 @@
     "404": {
       "name": "Standard",
       "record": "10.46",
-      "recordPlayer": "Multiple [12]",
+      "recordPlayer": "Multiple [13]",
       "ideal": "10.43",
       "ver": "us"
     },
@@ -2326,8 +2326,8 @@
     },
     "567": {
       "name": "Standard",
-      "record": "26.10",
-      "recordPlayer": "stevenashe",
+      "record": "26.03",
+      "recordPlayer": "Raisn",
       "ideal": "",
       "ver": "jp"
     },
@@ -2559,7 +2559,7 @@
     },
     "5": {
       "name": "Left Side",
-      "record": "42.86",
+      "record": "42.53",
       "recordPlayer": "Kally",
       "ideal": "42.03",
       "ver": "jp"
@@ -2580,8 +2580,8 @@
     },
     "10": {
       "name": "No Cutscene",
-      "record": "1:18.50",
-      "recordPlayer": "egasyelir",
+      "record": "1:17.80",
+      "recordPlayer": "NMSpeedruns",
       "ideal": "",
       "ver": "us"
     },
@@ -2589,7 +2589,7 @@
       "name": "No Cutscene",
       "record": "3:01.23",
       "recordPlayer": "Twig64",
-      "ideal": "1:58.90",
+      "ideal": "1:52.43",
       "ver": "jp"
     },
     "12": {
@@ -2615,8 +2615,8 @@
     },
     "15": {
       "name": "TJ Ihop",
-      "record": "19.13",
-      "recordPlayer": "Benji",
+      "record": "18.93",
+      "recordPlayer": "Weegee",
       "ideal": "",
       "ver": "us"
     },
@@ -3000,8 +3000,8 @@
     },
     "83": {
       "name": "Standard",
-      "record": "",
-      "recordPlayer": "",
+      "record": "53.63",
+      "recordPlayer": "Zinsch",
       "ideal": "47.36",
       "ver": "us"
     },
@@ -3175,8 +3175,8 @@
     },
     "124": {
       "name": "No BLJ",
-      "record": "2:11.93",
-      "recordPlayer": "BigCheese",
+      "record": "2:07.60",
+      "recordPlayer": "Raisn",
       "ideal": "1:54.03",
       "ver": "jp"
     },
@@ -3231,8 +3231,8 @@
     },
     "134": {
       "name": "Sign Clip",
-      "record": "23.46",
-      "recordPlayer": "K",
+      "record": "22.60",
+      "recordPlayer": "Weegee",
       "ideal": "",
       "ver": "us"
     },

@@ -89,7 +89,9 @@ export type ReadNickUnit = {
 	"p_id": number,
 	"nick": string | null,
 	"perm": string | null,
-	"favcolor": string | null
+	"status": string | null,
+	"favcolor": string | null,
+	"textcolor": string | null
 };
 
 export type ReadNickObj = ReadNickUnit[];
@@ -100,5 +102,6 @@ export type SubmitNickObj = {
 	"player": AuthIdent,
 	"accessToken": number,
 	"nick": string,
-	"favColor"?: string | null
+	"favColor"?: string | null,
+	"textColor"?: string | null
 };

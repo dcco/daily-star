@@ -108,7 +108,7 @@ export function MultiBoard(props: { boardId?: number, subId?: number, slug?: Slu
 		if (ld.dirtyFlag && ld.userId !== null) {
 			var nick = ld.nick;
 			if (nick !== null) {
-				postNick(ld.userId, nick, ld.favColor);
+				postNick(ld.userId, nick, ld.favColor, ld.textColor);
 			}
 		}
 	};
